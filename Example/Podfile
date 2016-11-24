@@ -1,0 +1,9 @@
+# Podfile
+use_frameworks!
+
+target 'Sample1' do
+    pod 'KabuKit', :path => '../'
+    pod 'RxSwift', '3.0'
+    pod 'RxCocoa', '3.0'
+end
+

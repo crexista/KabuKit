@@ -1,0 +1,682 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4E7084101DE60D890072F7EE /* SceneSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E70840E1DE60D890072F7EE /* SceneSequence.swift */; };
+		4E7084111DE60D890072F7EE /* SceneTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E70840F1DE60D890072F7EE /* SceneTransition.swift */; };
+		4E7084161DE60FBB0072F7EE /* ViewControllerXIBFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7084151DE60FBB0072F7EE /* ViewControllerXIBFile.swift */; };
+		4E7084181DE60FCD0072F7EE /* ActionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7084171DE60FCD0072F7EE /* ActionScene.swift */; };
+		4EF5CCF01DE30A0C00683D1E /* KabuKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */; };
+		4EF5CCF71DE30A0C00683D1E /* KabuKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF5CCE91DE30A0C00683D1E /* KabuKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4EF5CD4A1DE30E3200683D1E /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD381DE30E3200683D1E /* Frame.swift */; };
+		4EF5CD4B1DE30E3200683D1E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD391DE30E3200683D1E /* Link.swift */; };
+		4EF5CD4C1DE30E3200683D1E /* Maker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD3A1DE30E3200683D1E /* Maker.swift */; };
+		4EF5CD4D1DE30E3200683D1E /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD3C1DE30E3200683D1E /* Action.swift */; };
+		4EF5CD4E1DE30E3200683D1E /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD3D1DE30E3200683D1E /* Actor.swift */; };
+		4EF5CD501DE30E3200683D1E /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD3F1DE30E3200683D1E /* Scenario.swift */; };
+		4EF5CD511DE30E3200683D1E /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD401DE30E3200683D1E /* Scene.swift */; };
+		4EF5CD521DE30E3200683D1E /* SceneGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD411DE30E3200683D1E /* SceneGenerator.swift */; };
+		6C289ACDBB3B93D4009CF8A9 /* Pods_KabuKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70BD19804116618B41BCA903 /* Pods_KabuKitTests.framework */; };
+		F85EB1CDB95A0CF25051D860 /* Pods_KabuKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1936A2064B1933440503B524 /* Pods_KabuKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4EF5CCF11DE30A0C00683D1E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4EF5CCDD1DE30A0C00683D1E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4EF5CCE51DE30A0C00683D1E;
+			remoteInfo = KabuKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1936A2064B1933440503B524 /* Pods_KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		36ECF06D3AB8A4EEC2C90D3B /* Pods-KabuKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit.release.xcconfig"; sourceTree = "<group>"; };
+		4DC74D11E4722F083D18D976 /* Pods-KabuKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKitTests/Pods-KabuKitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4E70840E1DE60D890072F7EE /* SceneSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneSequence.swift; sourceTree = "<group>"; };
+		4E70840F1DE60D890072F7EE /* SceneTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTransition.swift; sourceTree = "<group>"; };
+		4E7084151DE60FBB0072F7EE /* ViewControllerXIBFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerXIBFile.swift; sourceTree = "<group>"; };
+		4E7084171DE60FCD0072F7EE /* ActionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionScene.swift; sourceTree = "<group>"; };
+		4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EF5CCE91DE30A0C00683D1E /* KabuKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KabuKit.h; sourceTree = "<group>"; };
+		4EF5CCEA1DE30A0C00683D1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4EF5CCEF1DE30A0C00683D1E /* KabuKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KabuKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EF5CCF61DE30A0C00683D1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4EF5CD381DE30E3200683D1E /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
+		4EF5CD391DE30E3200683D1E /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
+		4EF5CD3A1DE30E3200683D1E /* Maker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maker.swift; sourceTree = "<group>"; };
+		4EF5CD3C1DE30E3200683D1E /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		4EF5CD3D1DE30E3200683D1E /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
+		4EF5CD3F1DE30E3200683D1E /* Scenario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scenario.swift; sourceTree = "<group>"; };
+		4EF5CD401DE30E3200683D1E /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		4EF5CD411DE30E3200683D1E /* SceneGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneGenerator.swift; sourceTree = "<group>"; };
+		70BD19804116618B41BCA903 /* Pods_KabuKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KabuKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A26D6A4DD87C05D577497305 /* Pods-KabuKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit.debug.xcconfig"; sourceTree = "<group>"; };
+		B8CD26C938C33D82821D9964 /* Pods-KabuKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKitTests/Pods-KabuKitTests.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4EF5CCE21DE30A0C00683D1E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F85EB1CDB95A0CF25051D860 /* Pods_KabuKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4EF5CCEC1DE30A0C00683D1E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EF5CCF01DE30A0C00683D1E /* KabuKit.framework in Frameworks */,
+				6C289ACDBB3B93D4009CF8A9 /* Pods_KabuKitTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		39AA932D9064789D245CD832 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A26D6A4DD87C05D577497305 /* Pods-KabuKit.debug.xcconfig */,
+				36ECF06D3AB8A4EEC2C90D3B /* Pods-KabuKit.release.xcconfig */,
+				4DC74D11E4722F083D18D976 /* Pods-KabuKitTests.debug.xcconfig */,
+				B8CD26C938C33D82821D9964 /* Pods-KabuKitTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		4E7084121DE60EA60072F7EE /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4E7084131DE60EA60072F7EE /* core */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		4E7084131DE60EA60072F7EE /* core */ = {
+			isa = PBXGroup;
+			children = (
+				4E7084141DE60EA60072F7EE /* Swift */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		4E7084141DE60EA60072F7EE /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Swift;
+			sourceTree = "<group>";
+		};
+		4EF5CCDC1DE30A0C00683D1E = {
+			isa = PBXGroup;
+			children = (
+				4EF5CCE81DE30A0C00683D1E /* KabuKit */,
+				4EF5CCF31DE30A0C00683D1E /* KabuKitTests */,
+				4EF5CCE71DE30A0C00683D1E /* Products */,
+				39AA932D9064789D245CD832 /* Pods */,
+				DD923A86CAC47147C0714F07 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		4EF5CCE71DE30A0C00683D1E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */,
+				4EF5CCEF1DE30A0C00683D1E /* KabuKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4EF5CCE81DE30A0C00683D1E /* KabuKit */ = {
+			isa = PBXGroup;
+			children = (
+				4EF5CD341DE30E3200683D1E /* Classes */,
+				4EF5CCE91DE30A0C00683D1E /* KabuKit.h */,
+				4EF5CCEA1DE30A0C00683D1E /* Info.plist */,
+			);
+			path = KabuKit;
+			sourceTree = "<group>";
+		};
+		4EF5CCF31DE30A0C00683D1E /* KabuKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				4E7084121DE60EA60072F7EE /* Classes */,
+				4EF5CCF61DE30A0C00683D1E /* Info.plist */,
+			);
+			path = KabuKitTests;
+			sourceTree = "<group>";
+		};
+		4EF5CD341DE30E3200683D1E /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4EF5CD351DE30E3200683D1E /* core */,
+				4EF5CD441DE30E3200683D1E /* ios */,
+				4EF5CD491DE30E3200683D1E /* osx */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		4EF5CD351DE30E3200683D1E /* core */ = {
+			isa = PBXGroup;
+			children = (
+				4EF5CD361DE30E3200683D1E /* Objective-C */,
+				4EF5CD371DE30E3200683D1E /* Swift */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		4EF5CD361DE30E3200683D1E /* Objective-C */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Objective-C";
+			sourceTree = "<group>";
+		};
+		4EF5CD371DE30E3200683D1E /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				4E70840E1DE60D890072F7EE /* SceneSequence.swift */,
+				4E70840F1DE60D890072F7EE /* SceneTransition.swift */,
+				4EF5CD381DE30E3200683D1E /* Frame.swift */,
+				4EF5CD391DE30E3200683D1E /* Link.swift */,
+				4EF5CD3A1DE30E3200683D1E /* Maker.swift */,
+				4EF5CD3B1DE30E3200683D1E /* Rx */,
+				4EF5CD3F1DE30E3200683D1E /* Scenario.swift */,
+				4EF5CD401DE30E3200683D1E /* Scene.swift */,
+				4EF5CD411DE30E3200683D1E /* SceneGenerator.swift */,
+			);
+			path = Swift;
+			sourceTree = "<group>";
+		};
+		4EF5CD3B1DE30E3200683D1E /* Rx */ = {
+			isa = PBXGroup;
+			children = (
+				4E7084171DE60FCD0072F7EE /* ActionScene.swift */,
+				4EF5CD3C1DE30E3200683D1E /* Action.swift */,
+				4EF5CD3D1DE30E3200683D1E /* Actor.swift */,
+			);
+			path = Rx;
+			sourceTree = "<group>";
+		};
+		4EF5CD441DE30E3200683D1E /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				4EF5CD451DE30E3200683D1E /* Objective-C */,
+				4EF5CD461DE30E3200683D1E /* Swift */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		4EF5CD451DE30E3200683D1E /* Objective-C */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Objective-C";
+			sourceTree = "<group>";
+		};
+		4EF5CD461DE30E3200683D1E /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				4E7084151DE60FBB0072F7EE /* ViewControllerXIBFile.swift */,
+				4EF5CD481DE30E3200683D1E /* Rx */,
+			);
+			path = Swift;
+			sourceTree = "<group>";
+		};
+		4EF5CD481DE30E3200683D1E /* Rx */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Rx;
+			sourceTree = "<group>";
+		};
+		4EF5CD491DE30E3200683D1E /* osx */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = osx;
+			sourceTree = "<group>";
+		};
+		DD923A86CAC47147C0714F07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1936A2064B1933440503B524 /* Pods_KabuKit.framework */,
+				70BD19804116618B41BCA903 /* Pods_KabuKitTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4EF5CCE31DE30A0C00683D1E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EF5CCF71DE30A0C00683D1E /* KabuKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		4EF5CCE51DE30A0C00683D1E /* KabuKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4EF5CCFA1DE30A0C00683D1E /* Build configuration list for PBXNativeTarget "KabuKit" */;
+			buildPhases = (
+				4D286322F4FD3E46231E45CD /* [CP] Check Pods Manifest.lock */,
+				4EF5CCE11DE30A0C00683D1E /* Sources */,
+				4EF5CCE21DE30A0C00683D1E /* Frameworks */,
+				4EF5CCE31DE30A0C00683D1E /* Headers */,
+				4EF5CCE41DE30A0C00683D1E /* Resources */,
+				7750FBC78671C17959E4E850 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KabuKit;
+			productName = KabuKit;
+			productReference = 4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		4EF5CCEE1DE30A0C00683D1E /* KabuKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4EF5CCFD1DE30A0C00683D1E /* Build configuration list for PBXNativeTarget "KabuKitTests" */;
+			buildPhases = (
+				5DE2680468FAA45A4BE07D36 /* [CP] Check Pods Manifest.lock */,
+				4EF5CCEB1DE30A0C00683D1E /* Sources */,
+				4EF5CCEC1DE30A0C00683D1E /* Frameworks */,
+				4EF5CCED1DE30A0C00683D1E /* Resources */,
+				DD3C60FC780153DDEFC52A5E /* [CP] Embed Pods Frameworks */,
+				E07EA2C3D7E5E6B3D4631A04 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4EF5CCF21DE30A0C00683D1E /* PBXTargetDependency */,
+			);
+			name = KabuKitTests;
+			productName = KabuKitTests;
+			productReference = 4EF5CCEF1DE30A0C00683D1E /* KabuKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4EF5CCDD1DE30A0C00683D1E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = crexista;
+				TargetAttributes = {
+					4EF5CCE51DE30A0C00683D1E = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Manual;
+					};
+					4EF5CCEE1DE30A0C00683D1E = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 4EF5CCE01DE30A0C00683D1E /* Build configuration list for PBXProject "KabuKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4EF5CCDC1DE30A0C00683D1E;
+			productRefGroup = 4EF5CCE71DE30A0C00683D1E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4EF5CCE51DE30A0C00683D1E /* KabuKit */,
+				4EF5CCEE1DE30A0C00683D1E /* KabuKitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4EF5CCE41DE30A0C00683D1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4EF5CCED1DE30A0C00683D1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4D286322F4FD3E46231E45CD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5DE2680468FAA45A4BE07D36 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7750FBC78671C17959E4E850 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DD3C60FC780153DDEFC52A5E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KabuKitTests/Pods-KabuKitTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E07EA2C3D7E5E6B3D4631A04 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KabuKitTests/Pods-KabuKitTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4EF5CCE11DE30A0C00683D1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EF5CD4A1DE30E3200683D1E /* Frame.swift in Sources */,
+				4EF5CD4D1DE30E3200683D1E /* Action.swift in Sources */,
+				4EF5CD4B1DE30E3200683D1E /* Link.swift in Sources */,
+				4EF5CD4C1DE30E3200683D1E /* Maker.swift in Sources */,
+				4EF5CD511DE30E3200683D1E /* Scene.swift in Sources */,
+				4E7084181DE60FCD0072F7EE /* ActionScene.swift in Sources */,
+				4E7084101DE60D890072F7EE /* SceneSequence.swift in Sources */,
+				4E7084111DE60D890072F7EE /* SceneTransition.swift in Sources */,
+				4EF5CD4E1DE30E3200683D1E /* Actor.swift in Sources */,
+				4EF5CD521DE30E3200683D1E /* SceneGenerator.swift in Sources */,
+				4EF5CD501DE30E3200683D1E /* Scenario.swift in Sources */,
+				4E7084161DE60FBB0072F7EE /* ViewControllerXIBFile.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4EF5CCEB1DE30A0C00683D1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4EF5CCF21DE30A0C00683D1E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4EF5CCE51DE30A0C00683D1E /* KabuKit */;
+			targetProxy = 4EF5CCF11DE30A0C00683D1E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		4EF5CCF81DE30A0C00683D1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		4EF5CCF91DE30A0C00683D1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		4EF5CCFB1DE30A0C00683D1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A26D6A4DD87C05D577497305 /* Pods-KabuKit.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = KabuKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.KabuKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		4EF5CCFC1DE30A0C00683D1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 36ECF06D3AB8A4EEC2C90D3B /* Pods-KabuKit.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = KabuKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.KabuKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		4EF5CCFE1DE30A0C00683D1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DC74D11E4722F083D18D976 /* Pods-KabuKitTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				INFOPLIST_FILE = KabuKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.KabuKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		4EF5CCFF1DE30A0C00683D1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8CD26C938C33D82821D9964 /* Pods-KabuKitTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				INFOPLIST_FILE = KabuKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.KabuKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4EF5CCE01DE30A0C00683D1E /* Build configuration list for PBXProject "KabuKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EF5CCF81DE30A0C00683D1E /* Debug */,
+				4EF5CCF91DE30A0C00683D1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4EF5CCFA1DE30A0C00683D1E /* Build configuration list for PBXNativeTarget "KabuKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EF5CCFB1DE30A0C00683D1E /* Debug */,
+				4EF5CCFC1DE30A0C00683D1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4EF5CCFD1DE30A0C00683D1E /* Build configuration list for PBXNativeTarget "KabuKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EF5CCFE1DE30A0C00683D1E /* Debug */,
+				4EF5CCFF1DE30A0C00683D1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4EF5CCDD1DE30A0C00683D1E /* Project object */;
+}
