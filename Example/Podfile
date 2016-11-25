@@ -7,3 +7,8 @@ target 'Sample1' do
     pod 'RxCocoa', '3.0'
 end
 
+target 'Sample2' do
+    pod 'KabuKit', :path => '../'
+    pod 'RxSwift', '3.0'
+    pod 'RxCocoa', '3.0'
+end

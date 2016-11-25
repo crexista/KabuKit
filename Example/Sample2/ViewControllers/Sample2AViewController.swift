@@ -1,5 +1,5 @@
 //
-//  Sample1BViewController.swift
+//  Sample2AViewController.swift
 //  Example
 //
 //  Created by crexista on 2016/11/24.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Sample1BViewController: UIViewController {
+class Sample2AViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

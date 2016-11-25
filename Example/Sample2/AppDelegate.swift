@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Sample1
+//  Sample2
 //
-//  Created by crexista on 2016/11/21.
+//  Created by crexista on 2016/11/24.
 //  Copyright © 2016年 crexista. All rights reserved.
 //
 
@@ -13,8 +13,7 @@ import KabuKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    var sceneSequence: SceneSequence<UIViewController>?
+    var scenario: Sample2Scenario?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -22,17 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //rootViewControllerにviewControllerを指定
         let root = UIViewController()
         self.window!.rootViewController = UINavigationController(rootViewController: root)
-        self.window!.rootViewController?.view.backgroundColor = UIColor.brown
-        self.window!.backgroundColor = UIColor.white
         self.window!.makeKeyAndVisible()
-        sceneSequence = SceneSequence(root)
-        let xibName = "Sample1AViewController"
-        root.navigationController?.setNavigationBarHidden(true, animated: true)
-        sceneSequence?.start(ViewControllerXIBFile(xibName, Bundle.main), Sample1AViewController.self, false, { (stage, scene) in
-            stage.addChildViewController(scene)
-            stage.view.addSubview(scene.view)
-        })
-
+        
+        scenario =  Sample2Scenario()
+        scenario?.start(root: self.window!.rootViewController!)
         return true
     }
 
@@ -58,4 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+
 }
+
