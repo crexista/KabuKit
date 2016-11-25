@@ -26,12 +26,12 @@ extension ActionScene {
 
 extension Frame where Self: ActionScene {
     
-    func setup(stage: AnyObject, container: FrameContainer, scenario: Scenario?) {
+    public func setup(stage: AnyObject, container: FrameContainer, scenario: Scenario?) {
         set(transition: SceneTransition<linkType>(stage, container, scenario))
         set(actor: Actor())
     }
 
-    func close() {
+    public func close() {
         let actor = FrameStore.actors.object(forKey: self as AnyObject) as! Actor
         actor.terminate()
         FrameStore.transitions.removeObject(forKey: self as AnyObject)        

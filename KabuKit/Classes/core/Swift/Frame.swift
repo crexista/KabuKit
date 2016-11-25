@@ -28,7 +28,7 @@ internal class FrameStore {
 
 public class FrameContainer {
     
-    internal var frames: [Frame] = [Frame]()
+    public var frames: [Frame] = [Frame]()
 }
 
 extension Frame {
@@ -48,6 +48,7 @@ extension Frame {
     public func close() {
         FrameStore.transitions.removeObject(forKey: self as AnyObject)
         FrameStore.contexts.removeObject(forKey: self as AnyObject)
+        FrameStore.actors.removeObject(forKey: self as AnyObject)
     }
 }
 

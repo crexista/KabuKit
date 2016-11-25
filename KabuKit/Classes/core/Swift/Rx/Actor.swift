@@ -36,12 +36,15 @@ public class Actor {
     }
     
     internal func terminate(){
-        actions.dictionaryRepresentation().forEach { (key, value) in
-            (value as? [Disposable])?.forEach({ (disposable) in
+        let enumerator = actions.keyEnumerator()
+        while let key = enumerator.nextObject() {
+            let disposables = actions.object(forKey: key as AnyObject) as? [Disposable]
+            disposables?.forEach({ (disposable) in
                 disposable.dispose()
             })
             (key as! OnStop).onStop()
         }
+
         actions.removeAllObjects()
     }
         

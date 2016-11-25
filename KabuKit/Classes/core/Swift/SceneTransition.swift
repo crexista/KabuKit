@@ -14,9 +14,9 @@ import Foundation
  */
 public class SceneTransition<linkType: Link> {
         
-    private unowned let stage: AnyObject
+    private let stage: AnyObject
     
-    private unowned let frames: FrameContainer
+    private let frames: FrameContainer
     
     private weak var scenario: Scenario?
     
@@ -44,7 +44,7 @@ public class SceneTransition<linkType: Link> {
     }
     
     deinit {
-        print("transition deinit", self)
+        print("transition deinit")
     }
     
     init(_ stage: AnyObject, _ container: FrameContainer, _ scenario: Scenario?) {

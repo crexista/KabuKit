@@ -27,7 +27,7 @@ public protocol Scene : Frame {
 
 extension Frame where Self: Scene {
 
-    func setup(stage: AnyObject, container: FrameContainer, scenario: Scenario?) {
+    public func setup(stage: AnyObject, container: FrameContainer, scenario: Scenario?) {
         set(transition: SceneTransition<linkType>(stage, container, scenario))
     }
     
@@ -36,7 +36,7 @@ extension Frame where Self: Scene {
     }
 
 
-    func transit<T: Link>(link: T, maker: Maker) -> Frame? {
+    public func transit<T: Link>(link: T, maker: Maker) -> Frame? {
 
         return onSceneTransitionRequest(container: maker.stage as! stageType,
                                    link: link as! linkType,
@@ -49,11 +49,12 @@ extension Frame where Self: Scene {
 extension Scene {
     
     public unowned var transition: SceneTransition<linkType> {
+        print(FrameStore.transitions)
         return FrameStore.transitions.object(forKey: self as AnyObject) as! SceneTransition<linkType>
     }
     
     public var context: contextType? {
-        return FrameStore.transitions.object(forKey: self as AnyObject) as? contextType
+        return FrameStore.contexts.object(forKey: self as AnyObject) as? contextType
     }
 
 }
