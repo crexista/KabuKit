@@ -9,6 +9,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Sample2AViewController" customModule="Sample2" customModuleProvider="target">
             <connections>
+                <outlet property="nextButtonA" destination="fjI-X1-Yyz" id="1pM-cJ-wAt"/>
+                <outlet property="nextButtonB" destination="9QQ-wJ-SG5" id="fbs-E8-xEE"/>
+                <outlet property="prevButton" destination="AHb-g4-VDS" id="6iU-Eq-PBZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

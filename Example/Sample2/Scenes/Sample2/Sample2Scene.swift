@@ -32,6 +32,6 @@ extension Sample2ViewController: ActionScene {
     }
     
     func onBackRequest(container: UIViewController) {
-        
+        _ = container.navigationController?.popViewController(animated: true)
     }
 }

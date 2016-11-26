@@ -41,8 +41,15 @@ class Sample2Scenario: UITabBarController, UITabBarControllerDelegate, Scenario 
     
     func start(root: UIViewController) {
         aStage.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarSystemItem.featured, tag: 1)
-        bStage.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarSystemItem.bookmarks, tag: 2)
-        self.setViewControllers([aStage, bStage], animated: false)
+        bStage.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarSystemItem.bookmarks, tag: 2)        
+        self.setViewControllers([UINavigationController(rootViewController: aStage), UINavigationController(rootViewController: bStage)], animated: false)
+        
+        aStage.navigationItem.hidesBackButton = true
+        aStage.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        bStage.navigationItem.hidesBackButton = true
+        bStage.navigationController?.setNavigationBarHidden(true, animated: true)
+
         self.delegate = self
         self.selectedIndex = 0
         self.root = root

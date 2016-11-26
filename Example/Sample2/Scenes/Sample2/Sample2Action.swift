@@ -16,7 +16,7 @@ class Sample2Action: Action {
     typealias linkType = Sample2ViewController.Sample2Link
     typealias contextType = Void
     
-    unowned let startButton: UIButton    
+    unowned let startButton: UIButton
 
     func start(transition: SceneTransition<Sample2ViewController.Sample2Link>, context: ()?) -> [Observable<()>] {
         return [

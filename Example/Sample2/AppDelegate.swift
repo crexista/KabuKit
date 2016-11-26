@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         //rootViewControllerにviewControllerを指定
         let root = UIViewController()
-        self.window!.rootViewController = UINavigationController(rootViewController: root)
+        self.window!.rootViewController = root
         self.window!.makeKeyAndVisible()
         
         scenario =  Sample2Scenario()
