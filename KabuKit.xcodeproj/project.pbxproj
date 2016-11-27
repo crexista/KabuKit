@@ -11,11 +11,12 @@
 		4E7084111DE60D890072F7EE /* SceneTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E70840F1DE60D890072F7EE /* SceneTransition.swift */; };
 		4E7084161DE60FBB0072F7EE /* ViewControllerXIBFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7084151DE60FBB0072F7EE /* ViewControllerXIBFile.swift */; };
 		4E7084181DE60FCD0072F7EE /* ActionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7084171DE60FCD0072F7EE /* ActionScene.swift */; };
+		4E9FC24F1DEB7C8B0009649D /* SceneRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC24E1DEB7C8B0009649D /* SceneRequest.swift */; };
 		4EF5CCF01DE30A0C00683D1E /* KabuKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */; };
 		4EF5CCF71DE30A0C00683D1E /* KabuKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF5CCE91DE30A0C00683D1E /* KabuKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EF5CD4A1DE30E3200683D1E /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD381DE30E3200683D1E /* Frame.swift */; };
 		4EF5CD4B1DE30E3200683D1E /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD391DE30E3200683D1E /* Link.swift */; };
-		4EF5CD4C1DE30E3200683D1E /* Maker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD3A1DE30E3200683D1E /* Maker.swift */; };
+		4EF5CD4C1DE30E3200683D1E /* SceneFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD3A1DE30E3200683D1E /* SceneFactory.swift */; };
 		4EF5CD4D1DE30E3200683D1E /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD3C1DE30E3200683D1E /* Action.swift */; };
 		4EF5CD4E1DE30E3200683D1E /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD3D1DE30E3200683D1E /* Actor.swift */; };
 		4EF5CD501DE30E3200683D1E /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD3F1DE30E3200683D1E /* Scenario.swift */; };
@@ -43,6 +44,7 @@
 		4E70840F1DE60D890072F7EE /* SceneTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTransition.swift; sourceTree = "<group>"; };
 		4E7084151DE60FBB0072F7EE /* ViewControllerXIBFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerXIBFile.swift; sourceTree = "<group>"; };
 		4E7084171DE60FCD0072F7EE /* ActionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionScene.swift; sourceTree = "<group>"; };
+		4E9FC24E1DEB7C8B0009649D /* SceneRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneRequest.swift; sourceTree = "<group>"; };
 		4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EF5CCE91DE30A0C00683D1E /* KabuKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KabuKit.h; sourceTree = "<group>"; };
 		4EF5CCEA1DE30A0C00683D1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -50,7 +52,7 @@
 		4EF5CCF61DE30A0C00683D1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4EF5CD381DE30E3200683D1E /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		4EF5CD391DE30E3200683D1E /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
-		4EF5CD3A1DE30E3200683D1E /* Maker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maker.swift; sourceTree = "<group>"; };
+		4EF5CD3A1DE30E3200683D1E /* SceneFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneFactory.swift; sourceTree = "<group>"; };
 		4EF5CD3C1DE30E3200683D1E /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		4EF5CD3D1DE30E3200683D1E /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		4EF5CD3F1DE30E3200683D1E /* Scenario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scenario.swift; sourceTree = "<group>"; };
@@ -184,14 +186,15 @@
 		4EF5CD371DE30E3200683D1E /* Swift */ = {
 			isa = PBXGroup;
 			children = (
-				4E70840E1DE60D890072F7EE /* SceneSequence.swift */,
-				4E70840F1DE60D890072F7EE /* SceneTransition.swift */,
-				4EF5CD381DE30E3200683D1E /* Frame.swift */,
-				4EF5CD391DE30E3200683D1E /* Link.swift */,
-				4EF5CD3A1DE30E3200683D1E /* Maker.swift */,
 				4EF5CD3F1DE30E3200683D1E /* Scenario.swift */,
 				4EF5CD401DE30E3200683D1E /* Scene.swift */,
+				4E70840E1DE60D890072F7EE /* SceneSequence.swift */,
+				4E70840F1DE60D890072F7EE /* SceneTransition.swift */,
+				4EF5CD3A1DE30E3200683D1E /* SceneFactory.swift */,
+				4E9FC24E1DEB7C8B0009649D /* SceneRequest.swift */,
 				4EF5CD411DE30E3200683D1E /* SceneGenerator.swift */,
+				4EF5CD381DE30E3200683D1E /* Frame.swift */,
+				4EF5CD391DE30E3200683D1E /* Link.swift */,
 				4EF5CD3B1DE30E3200683D1E /* Rx */,
 			);
 			path = Swift;
@@ -451,10 +454,11 @@
 				4EF5CD4A1DE30E3200683D1E /* Frame.swift in Sources */,
 				4EF5CD4D1DE30E3200683D1E /* Action.swift in Sources */,
 				4EF5CD4B1DE30E3200683D1E /* Link.swift in Sources */,
-				4EF5CD4C1DE30E3200683D1E /* Maker.swift in Sources */,
+				4EF5CD4C1DE30E3200683D1E /* SceneFactory.swift in Sources */,
 				4EF5CD511DE30E3200683D1E /* Scene.swift in Sources */,
 				4E7084181DE60FCD0072F7EE /* ActionScene.swift in Sources */,
 				4E7084101DE60D890072F7EE /* SceneSequence.swift in Sources */,
+				4E9FC24F1DEB7C8B0009649D /* SceneRequest.swift in Sources */,
 				4E7084111DE60D890072F7EE /* SceneTransition.swift in Sources */,
 				4EF5CD4E1DE30E3200683D1E /* Actor.swift in Sources */,
 				4EF5CD521DE30E3200683D1E /* SceneGenerator.swift in Sources */,

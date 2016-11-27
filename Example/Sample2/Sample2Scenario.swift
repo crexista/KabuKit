@@ -12,10 +12,6 @@ import UIKit
 
 @objc class Sample2Scenario: NSObject, UITabBarControllerDelegate, Scenario {
     
-    enum ScenarioLink {
-        case Main
-    }
-    
     let aStage: UIViewController = UIViewController()
     
     let bStage: UIViewController = UIViewController()

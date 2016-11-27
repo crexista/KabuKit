@@ -25,7 +25,7 @@ extension Sample2ViewController: ActionScene {
         actor.activate(action: action, transition: transition, context: context)
     }
         
-    func onSceneTransitionRequest(link: Sample2Link, maker: Maker<UIViewController>, scenario: Scenario?) -> Request? {
+    func onSceneTransitionRequest(link: Sample2Link, factory: SceneFactory<UIViewController>, scenario: Scenario?) -> SceneRequest? {
         scenario?.handleContext(context: "hoge")
         return nil
     }
