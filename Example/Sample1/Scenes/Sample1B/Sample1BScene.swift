@@ -45,13 +45,14 @@ extension Sample1BViewController : ActionScene {
         }
     }
     
-    func onBackRequest(container: UIViewController) {
+    func onBackRequest(container: UIViewController) -> Bool {
         _ = container.navigationController?.popViewController(animated: true)
+        return true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         if (self.navigationController == nil) {
-//            transition.back()
+            close()
         }
     }
     

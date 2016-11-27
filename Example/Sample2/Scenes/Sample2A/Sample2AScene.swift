@@ -47,7 +47,8 @@ extension Sample2AViewController: ActionScene {
         return request
     }
     
-    func onBackRequest(container: UIViewController) {
+    func onBackRequest(container: UIViewController) -> Bool {
         _ = container.navigationController?.popViewController(animated: true)
+        return true
     }
 }

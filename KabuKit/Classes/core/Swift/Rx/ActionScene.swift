@@ -28,14 +28,14 @@ extension Frame where Self: ActionScene {
     
     public func setup<S: AnyObject>(stage: S, container: FrameContainer, scenario: Scenario?) {
         let stages = stage as! Stage
-        let transition = SceneTransition<Link>(stages, container, scenario)
+        let transition = SceneTransition<Link>(stages, self, container, scenario)
         set(transition: transition)
         set(actor: Actor())
     }
 
     public func close() {
-        let actor = FrameStore.actors.object(forKey: self as AnyObject) as! Actor
-        actor.terminate()
+        let actor = FrameStore.actors.object(forKey: self as AnyObject) as? Actor
+        actor?.terminate()
         FrameStore.transitions.removeObject(forKey: self as AnyObject)        
         FrameStore.actors.removeObject(forKey: self as AnyObject)
         FrameStore.contexts.removeObject(forKey: self as AnyObject)

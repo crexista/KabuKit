@@ -14,9 +14,11 @@ import Foundation
  */
 public class SceneTransition<Link: SceneLink> {
     
-    private let stage: AnyObject
+    private unowned let stage: AnyObject
     
-    private let frames: FrameContainer
+    private unowned let frames: FrameContainer
+    
+    private weak var currentFrame: Frame?
     
     private weak var scenario: Scenario?
     
@@ -25,7 +27,6 @@ public class SceneTransition<Link: SceneLink> {
      
      */
     public func transitTo(link: Link) {
-        let currentFrame = frames.frames.last
         let frame = currentFrame?.transit(link: link, stage: stage, frames: frames, scenario: scenario)?.execute()
         if let newFrame = frame {
             frames.frames.append(newFrame)
@@ -37,20 +38,24 @@ public class SceneTransition<Link: SceneLink> {
      
      */
     public func back() {
-        if let target = frames.frames.popLast() {
-            target.back(stage: stage as AnyObject)
-            target.close()
+        currentFrame.map { (frame) -> Void in
+            if (frame.back(stage: stage)) {
+                frame.close()
+                _ = frames.frames.popLast()
+            }
         }
+
     }
     
     deinit {
         print("transition deinit")
     }
     
-    init(_ stage: AnyObject, _ container: FrameContainer, _ scenario: Scenario?) {
+    init(_ stage: AnyObject, _ frame: Frame, _ container: FrameContainer, _ scenario: Scenario?) {
         self.stage = stage
         self.frames = container
         self.scenario = scenario
+        self.currentFrame = frame
     }
     
 }

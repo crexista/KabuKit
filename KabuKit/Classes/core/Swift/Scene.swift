@@ -22,21 +22,21 @@ public protocol Scene : Frame {
     
     func onSceneTransitionRequest(link: Link, maker: Maker<Stage>, scenario: Scenario?) -> Request?
     
-    func onBackRequest(container: Stage)
+    func onBackRequest(container: Stage) -> Bool
 }
 
 extension Frame where Self: Scene {
 
-    public func back(stage: Stage) {
-        onBackRequest(container: stage)
+    public func back(stage: Stage) -> Bool {
+        return onBackRequest(container: stage)
     }
 
-    public func back<S>(stage: S) {
-        onBackRequest(container: stage as! Stage)
+    public func back<S: AnyObject>(stage: S) -> Bool {
+        return onBackRequest(container: stage as! Stage)
     }
 
     public func setup<S: AnyObject>(stage: S, container: FrameContainer, scenario: Scenario?) {
-        let transition = SceneTransition<Self.Link>(stage, container, scenario)
+        let transition = SceneTransition<Self.Link>(stage, self, container, scenario)
         set(transition: transition)
     }
     

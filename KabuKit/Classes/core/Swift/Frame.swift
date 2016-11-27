@@ -8,9 +8,9 @@
 
 import Foundation
 
-public protocol Frame {
+public protocol Frame : class {
 
-    func back<S: AnyObject>(stage: S)
+    func back<S: AnyObject>(stage: S) -> Bool
     
     func setup<S: AnyObject>(stage: S, container: FrameContainer, scenario: Scenario?)
     
