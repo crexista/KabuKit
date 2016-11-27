@@ -16,9 +16,9 @@ extension Sample2AViewController: ActionScene {
         case B
     }
     
-    typealias Stage = UIViewController
-    typealias Context = Bool
-    typealias Link = Sample2Link
+    typealias StageType = UIViewController
+    typealias ContextType = Bool
+    typealias LinkType = Sample2Link
     
     override func viewDidLoad() {
         self.navigationItem.hidesBackButton = true

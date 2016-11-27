@@ -31,8 +31,8 @@ public class SceneSequence<T: AnyObject> {
      */
     public func start<S: Scene, G: SceneGenerator>(_ generator: G,
                                                    _ sceneType: S.Type,
-                                                   _ context: S.Context? = nil,
-                                                   _ setup: (T, S) -> Void) where T == S.Stage {
+                                                   _ context: S.ContextType? = nil,
+                                                   _ setup: (T, S) -> Void) where T == S.StageType {
         
         let sceneClass = sceneType as! G.implType.Type
         let scene = generator.generater(impl: sceneClass, argument: generator.argument) as! S

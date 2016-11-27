@@ -15,9 +15,9 @@ extension Sample2ViewController: ActionScene {
         case A
     }
     
-    typealias Stage = UIViewController
-    typealias Context = Void
-    typealias Link = Sample2Link
+    typealias StageType = UIViewController
+    typealias ContextType = Void
+    typealias LinkType = Sample2Link
     
     override func viewDidLoad() {
         let action = Sample2Action(startButton: startButton)

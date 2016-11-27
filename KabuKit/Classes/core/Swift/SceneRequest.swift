@@ -19,7 +19,7 @@ struct SceneRequestImpl<StageType, SceneType: Scene, GeneratorType: SceneGenerat
     private let method: (_ stage: StageType, _ scene: SceneType) -> Void
     private let stage: StageType
     private let sceneType: SceneType.Type
-    private let context: SceneType.Context?
+    private let context: SceneType.ContextType?
     private let generator: GeneratorType
     private let frames: FrameContainer
     private let scenario: Scenario?
@@ -27,7 +27,7 @@ struct SceneRequestImpl<StageType, SceneType: Scene, GeneratorType: SceneGenerat
     func execute() -> Frame? {
         let sceneClass = sceneType as! GeneratorType.implType.Type
         let newScene = generator.generater(impl: sceneClass, argument: generator.argument) as? SceneType
-        newScene?.setup(stage: stage as! SceneType.Stage, container: frames, scenario: scenario)
+        newScene?.setup(stage: stage as! SceneType.StageType, container: frames, scenario: scenario)
         newScene?.set(context: context)
         if let scene = newScene {
             method(stage, scene)
@@ -40,7 +40,7 @@ struct SceneRequestImpl<StageType, SceneType: Scene, GeneratorType: SceneGenerat
          sceneType: SceneType.Type,
          frames: FrameContainer,
          scenario: Scenario?,
-         context: SceneType.Context?,
+         context: SceneType.ContextType?,
          f: @escaping (_ stage: StageType, _ scene: SceneType) -> Void) {
         
         self.method = f

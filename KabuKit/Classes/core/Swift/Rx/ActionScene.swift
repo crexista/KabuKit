@@ -27,8 +27,8 @@ extension ActionScene {
 extension Frame where Self: ActionScene {
     
     public func setup<S: AnyObject>(stage: S, container: FrameContainer, scenario: Scenario?) {
-        let stages = stage as! Stage
-        let transition = SceneTransition<Link>(stages, self, container, scenario)
+        let stages = stage as! StageType
+        let transition = SceneTransition<LinkType>(stages, self, container, scenario)
         set(transition: transition)
         set(actor: Actor())
     }

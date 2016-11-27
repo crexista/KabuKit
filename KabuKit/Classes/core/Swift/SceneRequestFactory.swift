@@ -8,16 +8,16 @@
 
 import Foundation
 
-public class SceneRequestFactory<Stage: AnyObject> {
+public class SceneRequestFactory<StageType: AnyObject> {
     
     internal unowned let frames: FrameContainer
-    internal unowned let stage: Stage
+    internal unowned let stage: StageType
     internal weak var scenario: Scenario?
     
     public func createSceneRequest<T: SceneGenerator, S: Scene>(_ generator: T,
                                                                 _ sceneType: S.Type,
-                                                                _ context: S.Context?,
-                                                                _ setup: @escaping (_ stage: Stage, _ scene: S) -> Void) -> SceneRequest where S.Stage == Stage {
+                                                                _ context: S.ContextType?,
+                                                                _ setup: @escaping (_ stage: StageType, _ scene: S) -> Void) -> SceneRequest where S.StageType == StageType {
         
         return SceneRequestImpl(generator: generator,
                                 stage: stage,
@@ -29,7 +29,7 @@ public class SceneRequestFactory<Stage: AnyObject> {
     }
     
     
-    public func createOtherScenarioRequest(_ setup: @escaping (_ stage: Stage, _ scene: Scenario?) -> Void) -> SceneRequest {
+    public func createOtherScenarioRequest(_ setup: @escaping (_ stage: StageType, _ scene: Scenario?) -> Void) -> SceneRequest {
         return ScenarioRequestImpl(stage: stage, scenario: scenario, f: setup)
     }
     
@@ -37,7 +37,7 @@ public class SceneRequestFactory<Stage: AnyObject> {
         print("SceneRequestFactory deinit")
     }
     
-    init(_ stage: Stage, _ container: FrameContainer, _ scenario: Scenario?) {
+    init(_ stage: StageType, _ container: FrameContainer, _ scenario: Scenario?) {
         self.stage = stage
         self.frames = container
         self.scenario = scenario
