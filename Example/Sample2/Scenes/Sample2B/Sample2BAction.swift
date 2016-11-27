@@ -13,14 +13,14 @@ import RxCocoa
 
 class Sample2BAction : Action {
     
-    typealias contextType = Bool
-    typealias linkType = Sample2BViewController.Sample2Link
+    typealias SceneType = Sample2BViewController
     
     unowned let nextButtonA: UIButton
     
     unowned let nextButtonB: UIButton
     
     unowned let prevButton: UIButton
+    
 
     
     func start(transition: SceneTransition<Sample2BViewController.Sample2Link>, context: Bool?) -> [Observable<()>] {
@@ -39,6 +39,11 @@ class Sample2BAction : Action {
     func onError(error: Error) {
 
     }
+    
+    deinit {
+        print("Sample2B action deinit")
+    }
+
     
     init (nextButtonA: UIButton, nextButtonB: UIButton, prevButton: UIButton) {
         self.nextButtonA = nextButtonA

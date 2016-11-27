@@ -23,5 +23,3 @@ public struct ViewControllerXIBFile : SceneGenerator {
         self.argument = (fileName, bundle)
     }
 }
-
-

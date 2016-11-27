@@ -11,39 +11,41 @@ import KabuKit
 
 extension Sample2BViewController: ActionScene {
     
-    enum Sample2Link: Link {
+    enum Sample2Link: SceneLink {
         case A
         case B
     }
     
-    typealias stageType = UIViewController
-    typealias contextType = Bool
-    typealias linkType = Sample2Link
+    typealias Stage = UIViewController
+    typealias Context = Bool
+    typealias Link = Sample2Link
     
     override func viewDidLoad() {
-//        self.navigationItem.hidesBackButton = true
         let action = Sample2BAction(nextButtonA: nextButtonA, nextButtonB: nextButtonB, prevButton: prevButton)
         actor.activate(action: action, transition: transition, context: context)
     }
 
-    
-    func onSceneTransitionRequest(container: UIViewController, link: Sample2BViewController.Sample2Link, maker: Maker, scenario: Scenario?) -> Frame? {
-        let aName : String = "Sample2AViewController"
-        let bName : String = "Sample2BViewController"
-        print(container.navigationController)
+    func onSceneTransitionRequest(link: Sample2Link, maker: Maker<UIViewController>, scenario: Scenario?) -> Request? {
+        var request: Request?
+        
         switch link {
         case .A:
-            let vc = maker.make(ViewControllerXIBFile(aName, Bundle.main), Sample2AViewController.self, true)
-            container.navigationController?.pushViewController(vc, animated: true)
-            
-            return vc
+            let File2A = ViewControllerXIBFile("Sample2AViewController", Bundle.main)
+            request = maker.make(File2A, Sample2AViewController.self, true) { (stage, scene) in
+                stage.navigationController?.pushViewController(scene, animated: true)
+            }
+            break;
         case .B:
-            let vc = maker.make(ViewControllerXIBFile(bName, Bundle.main), Sample2BViewController.self, true)
-            container.navigationController?.pushViewController(vc, animated: true)
-            return vc
+            let File2B = ViewControllerXIBFile("Sample2BViewController", Bundle.main)
+            request = maker.make(File2B, Sample2BViewController.self, true) { (stage, scene) in
+
+                stage.navigationController?.pushViewController(scene, animated: true)
+            }
         }
+        
+        return request
     }
-    
+
     func onBackRequest(container: UIViewController) {
         _ = container.navigationController?.popViewController(animated: true)
     }

@@ -27,12 +27,12 @@
 		4E9FC2381DE737110009649D /* Sample2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC2361DE737110009649D /* Sample2ViewController.swift */; };
 		4E9FC2391DE737110009649D /* Sample2ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E9FC2371DE737110009649D /* Sample2ViewController.xib */; };
 		4E9FC23B1DE755A50009649D /* Sample2Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC23A1DE755A50009649D /* Sample2Scenario.swift */; };
-		4E9FC2411DE75EC80009649D /* Sample2AScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC23F1DE75EC80009649D /* Sample2AScene.swift */; };
 		4E9FC2431DE75F0F0009649D /* Sample2BScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC2421DE75F0F0009649D /* Sample2BScene.swift */; };
 		4E9FC2461DE767F80009649D /* Sample2Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC2451DE767F80009649D /* Sample2Scene.swift */; };
 		4E9FC2481DE76C120009649D /* Sample2Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC2471DE76C120009649D /* Sample2Action.swift */; };
 		4E9FC24A1DE890740009649D /* Sample2AAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC2491DE890740009649D /* Sample2AAction.swift */; };
 		4E9FC24C1DE891F00009649D /* Sample2BAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC24B1DE891F00009649D /* Sample2BAction.swift */; };
+		4E9FC24D1DEB561A0009649D /* Sample2AScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC23F1DE75EC80009649D /* Sample2AScene.swift */; };
 		4EF5CD251DE30BFC00683D1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD241DE30BFC00683D1E /* AppDelegate.swift */; };
 		4EF5CD2C1DE30BFC00683D1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EF5CD2B1DE30BFC00683D1E /* Assets.xcassets */; };
 		4EF5CD2F1DE30BFC00683D1E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EF5CD2D1DE30BFC00683D1E /* LaunchScreen.storyboard */; };
@@ -465,8 +465,8 @@
 				4E9FC2381DE737110009649D /* Sample2ViewController.swift in Sources */,
 				4E9FC2481DE76C120009649D /* Sample2Action.swift in Sources */,
 				4E9FC23B1DE755A50009649D /* Sample2Scenario.swift in Sources */,
-				4E9FC2411DE75EC80009649D /* Sample2AScene.swift in Sources */,
 				4E9FC2341DE736870009649D /* Sample2BViewController.swift in Sources */,
+				4E9FC24D1DEB561A0009649D /* Sample2AScene.swift in Sources */,
 				4E9FC24A1DE890740009649D /* Sample2AAction.swift in Sources */,
 				4E9FC2301DE735F50009649D /* Sample2AViewController.swift in Sources */,
 				4E9FC2431DE75F0F0009649D /* Sample2BScene.swift in Sources */,

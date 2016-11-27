@@ -11,14 +11,14 @@ import KabuKit
 
 extension Sample1AViewController: ActionScene {
     
-    enum Sample1Link : Link {
+    enum Sample1Link : SceneLink {
         case A
         case B
     }
     
-    typealias stageType = UIViewController
-    typealias contextType = Bool
-    typealias linkType = Sample1Link
+    typealias Stage = UIViewController
+    typealias Context = Bool
+    typealias Link = Sample1Link
     
     override func viewDidLoad() {
         self.navigationItem.hidesBackButton = true
@@ -27,19 +27,20 @@ extension Sample1AViewController: ActionScene {
         actor.activate(action: action, transition: self.transition, context: self.context)
     }
     
-    func onSceneTransitionRequest(container: UIViewController, link: Sample1AViewController.Sample1Link, maker: Maker, scenario: Scenario?) -> Frame? {
-        let aName : String = "Sample1AViewController"
-        let bName : String = "Sample1BViewController"
+    func onSceneTransitionRequest(link: Sample1Link, maker: Maker<UIViewController>, scenario: Scenario?) -> Request? {
         
         switch link {
         case .A:
-            let vc = maker.make(ViewControllerXIBFile(aName, Bundle.main), Sample1AViewController.self, true)
-            container.navigationController?.pushViewController(vc, animated: true)
-
+            let xib = ViewControllerXIBFile("Sample1AViewController", Bundle.main)
+            let vc = maker.make(xib, Sample1AViewController.self, true) { (stage, scene) in
+                stage.navigationController?.pushViewController(scene, animated: true)
+            }
             return vc
         case .B:
-            let vc = maker.make(ViewControllerXIBFile(bName, Bundle.main), Sample1BViewController.self, nil)
-            container.navigationController?.pushViewController(vc, animated: true)
+            let xib = ViewControllerXIBFile("Sample1BViewController", Bundle.main)
+            let vc = maker.make(xib, Sample1BViewController.self, nil) { (stage, scene) in
+                stage.navigationController?.pushViewController(scene, animated: true)
+            }
             return vc
         }
     }

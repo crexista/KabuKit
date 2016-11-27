@@ -12,8 +12,8 @@ import Foundation
  This class supply transition that current scene to next scene, or back to previous scene.
  
  */
-public class SceneTransition<linkType: Link> {
-        
+public class SceneTransition<Link: SceneLink> {
+    
     private let stage: AnyObject
     
     private let frames: FrameContainer
@@ -24,9 +24,9 @@ public class SceneTransition<linkType: Link> {
      transit to next scene
      
      */
-    public func transitTo(link: linkType) {
+    public func transitTo(link: Link) {
         let currentFrame = frames.frames.last
-        let frame = currentFrame?.transit(link: link, maker: Maker(stage, frames, scenario))
+        let frame = currentFrame?.transit(link: link, stage: stage, frames: frames, scenario: scenario)?.execute()
         if let newFrame = frame {
             frames.frames.append(newFrame)
         }
@@ -38,7 +38,7 @@ public class SceneTransition<linkType: Link> {
      */
     public func back() {
         if let target = frames.frames.popLast() {
-            target.back(stage: stage)
+            target.back(stage: stage as AnyObject)
             target.close()
         }
     }

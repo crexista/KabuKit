@@ -8,41 +8,79 @@
 
 import Foundation
 import KabuKit
+import UIKit
 
-class Sample2Scenario: UITabBarController, UITabBarControllerDelegate, Scenario {
+@objc class Sample2Scenario: NSObject, UITabBarControllerDelegate, Scenario {
+    
+    enum ScenarioLink {
+        case Main
+    }
     
     let aStage: UIViewController = UIViewController()
     
     let bStage: UIViewController = UIViewController()
     
+    let tabBarController: UITabBarController = UITabBarController()
+    
+    var loginSequence: SceneSequence<UIViewController>?
+    var aSequence: SceneSequence<UIViewController>?
+    var bSequence: SceneSequence<UIViewController>?
+    
     weak var root: UIViewController?
     
     func handleContext<T>(context: T) {
-        let sequence = SceneSequence(aStage)
-        let aName = "Sample2AViewController"
-        
-        root?.addChildViewController(self)
-        root?.view.addSubview(self.view)
-        sequence.start(ViewControllerXIBFile(aName, Bundle.main), Sample2AViewController.self, false) { (stage, scene) in
-            stage.addChildViewController(scene)
-            stage.view.addSubview(scene.view)
-        }
-    }
-    
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        let sequence = SceneSequence(bStage)
-        let aName = "Sample2BViewController"
-        sequence.start(ViewControllerXIBFile(aName, Bundle.main), Sample2BViewController.self, false) { (stage, scene) in
-            stage.addChildViewController(scene)
-            stage.view.addSubview(scene.view)
+        if (aSequence == nil) {
+            let aXIB = ViewControllerXIBFile("Sample2AViewController", Bundle.main)
+            aSequence = SceneSequence(aStage)
+            aSequence?.start(aXIB, Sample2AViewController.self, false) { (stage, scene) in
+                stage.addChildViewController(scene)
+                stage.view.addSubview(scene.view)
+            }
+            root?.addChildViewController(tabBarController)
+            root?.view.addSubview(tabBarController.view)
         }
 
     }
     
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        switch tabBarController.selectedIndex {
+        case 0:
+            if (aSequence == nil) {
+                let aXIB = ViewControllerXIBFile("Sample2AViewController", Bundle.main)
+                aSequence = SceneSequence(aStage)
+                aSequence?.start(aXIB, Sample2AViewController.self, false) { (stage, scene) in
+                    stage.addChildViewController(scene)
+                    stage.view.addSubview(scene.view)
+                }
+            }
+            break
+        case 1:
+            if (bSequence == nil) {
+                let aXIB = ViewControllerXIBFile("Sample2BViewController", Bundle.main)
+                aSequence = SceneSequence(bStage)
+                aSequence?.start(aXIB, Sample2BViewController.self, false) { (stage, scene) in
+                    stage.addChildViewController(scene)
+                    stage.view.addSubview(scene.view)
+                }
+            }
+
+            break
+        default:
+            break
+        }
+    }
+    
     func start(root: UIViewController) {
+        // Set up Root
+        self.root = root
+        
+        // Set up UITabBarController
         aStage.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarSystemItem.featured, tag: 1)
-        bStage.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarSystemItem.bookmarks, tag: 2)        
-        self.setViewControllers([UINavigationController(rootViewController: aStage), UINavigationController(rootViewController: bStage)], animated: false)
+        bStage.tabBarItem = UITabBarItem(tabBarSystemItem: UITabBarSystemItem.bookmarks, tag: 2)
+
+        tabBarController.setViewControllers([UINavigationController(rootViewController: aStage),
+                                             UINavigationController(rootViewController: bStage)], animated: false)
         
         aStage.navigationItem.hidesBackButton = true
         aStage.navigationController?.setNavigationBarHidden(true, animated: true)
@@ -50,12 +88,13 @@ class Sample2Scenario: UITabBarController, UITabBarControllerDelegate, Scenario 
         bStage.navigationItem.hidesBackButton = true
         bStage.navigationController?.setNavigationBarHidden(true, animated: true)
 
-        self.delegate = self
-        self.selectedIndex = 0
-        self.root = root
-        let sequence = SceneSequence(root, self)
+        tabBarController.delegate = self
+        tabBarController.selectedIndex = 0
+        
+        // Start Sequence
+        loginSequence = SceneSequence(root, self)
         let name = "Sample2ViewController"
-        sequence.start(ViewControllerXIBFile(name, Bundle.main), Sample2ViewController.self) { (stage, scene) in
+        loginSequence?.start(ViewControllerXIBFile(name, Bundle.main), Sample2ViewController.self) { (stage, scene) in
             stage.addChildViewController(scene)
             stage.view.addSubview(scene.view)
         }

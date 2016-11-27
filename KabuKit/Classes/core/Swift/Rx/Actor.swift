@@ -13,12 +13,14 @@ public class Actor {
     
     fileprivate var actions: NSMapTable<AnyObject, AnyObject>
     
-    public func activate<T: Action>(action: T, transition: SceneTransition<T.linkType>, context: T.contextType?) {
+    public func activate<T: Action>(action: T, transition: SceneTransition<T.SceneType.Link>, context: T.SceneType.Context?) {
+
         let disposables = action.start(transition: transition, context: context).map { (observable) -> Disposable in
             return observable.subscribe(onError: action.onError)
         }
         
         actions.setObject(disposables as AnyObject, forKey: action as AnyObject)
+
     }
     
     public func deactivate<T: Action>(action: T) {
@@ -35,7 +37,7 @@ public class Actor {
         print("actor deinit")
     }
     
-    internal func terminate(){
+    internal func terminate() {
         let enumerator = actions.keyEnumerator()
         while let key = enumerator.nextObject() {
             let disposables = actions.object(forKey: key as AnyObject) as? [Disposable]

@@ -10,11 +10,11 @@ import Foundation
 
 public protocol Frame {
 
-    func back(stage: AnyObject)
+    func back<S: AnyObject>(stage: S)
     
-    func setup(stage: AnyObject, container: FrameContainer, scenario: Scenario?)
+    func setup<S: AnyObject>(stage: S, container: FrameContainer, scenario: Scenario?)
     
-    func transit<T: Link>(link: T, maker: Maker) -> Frame?
+    func transit(link: SceneLink, stage: AnyObject, frames: FrameContainer, scenario: Scenario?) -> Request?
     
     func close()
 
@@ -33,7 +33,7 @@ public class FrameContainer {
 
 extension Frame {
     
-    func set<linkType: Link>(transition: SceneTransition<linkType>) {
+    func set<Link: SceneLink>(transition: SceneTransition<Link>) {
         FrameStore.transitions.setObject(transition, forKey: self as AnyObject)
     }
     

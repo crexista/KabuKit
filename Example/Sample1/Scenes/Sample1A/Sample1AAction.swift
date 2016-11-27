@@ -13,9 +13,7 @@ import RxCocoa
 
 class Sample1AAction: Action {
     
-    typealias linkType = Sample1AViewController.Sample1Link
-    
-    typealias contextType = Bool
+    typealias SceneType = Sample1AViewController
     
     unowned let label: UILabel
     

@@ -13,12 +13,12 @@ import RxCocoa
 
 class Sample2Action: Action {
     
-    typealias linkType = Sample2ViewController.Sample2Link
-    typealias contextType = Void
+    typealias SceneType = Sample2ViewController
     
     unowned let startButton: UIButton
 
     func start(transition: SceneTransition<Sample2ViewController.Sample2Link>, context: ()?) -> [Observable<()>] {
+
         return [
             startButton.rx.tap.do(onNext: { () in transition.transitTo(link: Sample2ViewController.Sample2Link.A)})
         ]
@@ -32,7 +32,7 @@ class Sample2Action: Action {
     }
     
     deinit {
-        print("action deinit")
+        print("Sample2 action deinit")
     }
     
     

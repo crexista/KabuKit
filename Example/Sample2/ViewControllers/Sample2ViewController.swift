@@ -12,4 +12,7 @@ class Sample2ViewController: UIViewController {
 
     @IBOutlet weak var startButton: UIButton!
     
+    deinit {
+        print("sample2 deinit")
+    }
 }

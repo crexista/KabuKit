@@ -16,4 +16,7 @@ class Sample2BViewController: UIViewController {
     
     @IBOutlet weak var prevButton: UIButton!
     
+    deinit {
+        print("sample2B deinit")
+    }
 }

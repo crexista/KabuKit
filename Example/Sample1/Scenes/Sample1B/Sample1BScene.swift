@@ -11,14 +11,14 @@ import KabuKit
 
 extension Sample1BViewController : ActionScene {
     
-    enum Sample1BLink : Link {
+    enum Sample1BLink : SceneLink {
         case A
         case B
     }
     
-    typealias stageType = UIViewController
-    typealias contextType = Void
-    typealias linkType = Sample1BLink
+    typealias Stage = UIViewController
+    typealias Context = Void
+    typealias Link = Sample1BLink
     
     override func viewDidLoad() {
         self.navigationItem.hidesBackButton = true
@@ -26,18 +26,21 @@ extension Sample1BViewController : ActionScene {
         actor.activate(action: action, transition: self.transition, context: self.context)
     }
     
-    func onSceneTransitionRequest(container: UIViewController, link: Sample1BViewController.Sample1BLink, maker: Maker, scenario: Scenario?) -> Frame? {
-        let aName : String = "Sample1AViewController"
-        let bName : String = "Sample1BViewController"
+    func onSceneTransitionRequest(link: Sample1BLink, maker: Maker<UIViewController>, scenario: Scenario?) -> Request? {
+
         switch link {
         case .A:
-            let vc = maker.make(ViewControllerXIBFile(aName, Bundle.main), Sample1AViewController.self, true)
-            container.navigationController?.pushViewController(vc, animated: true)
+            let xib = ViewControllerXIBFile("Sample1AViewController", Bundle.main)
+            let vc = maker.make(xib, Sample1AViewController.self, true) { (stage, scene) in
+                stage.navigationController?.pushViewController(scene, animated: true)
+            }
             
             return vc
         case .B:
-            let vc = maker.make(ViewControllerXIBFile(bName, Bundle.main), Sample1BViewController.self, nil)
-            container.navigationController?.pushViewController(vc, animated: true)
+            let xib = ViewControllerXIBFile("Sample1BViewController", Bundle.main)
+            let vc = maker.make(xib, Sample1BViewController.self, nil) { (stage, scene) in
+                stage.navigationController?.pushViewController(scene, animated: true)
+            }
             return vc
         }
     }

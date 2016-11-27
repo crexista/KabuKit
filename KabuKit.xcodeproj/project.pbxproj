@@ -189,10 +189,10 @@
 				4EF5CD381DE30E3200683D1E /* Frame.swift */,
 				4EF5CD391DE30E3200683D1E /* Link.swift */,
 				4EF5CD3A1DE30E3200683D1E /* Maker.swift */,
-				4EF5CD3B1DE30E3200683D1E /* Rx */,
 				4EF5CD3F1DE30E3200683D1E /* Scenario.swift */,
 				4EF5CD401DE30E3200683D1E /* Scene.swift */,
 				4EF5CD411DE30E3200683D1E /* SceneGenerator.swift */,
+				4EF5CD3B1DE30E3200683D1E /* Rx */,
 			);
 			path = Swift;
 			sourceTree = "<group>";

@@ -11,22 +11,21 @@ import KabuKit
 
 extension Sample2ViewController: ActionScene {
     
-    enum Sample2Link: Link {
+    enum Sample2Link: SceneLink {
         case A
     }
     
-    typealias stageType = UIViewController
-    typealias contextType = Void
-    typealias linkType = Sample2Link
+    typealias Stage = UIViewController
+    typealias Context = Void
+    typealias Link = Sample2Link
     
 
     override func viewDidLoad() {
         let action = Sample2Action(startButton: startButton)
         actor.activate(action: action, transition: transition, context: context)
     }
-
-    
-    func onSceneTransitionRequest(container: UIViewController, link: Sample2ViewController.Sample2Link, maker: Maker, scenario: Scenario?) -> Frame? {
+        
+    func onSceneTransitionRequest(link: Sample2Link, maker: Maker<UIViewController>, scenario: Scenario?) -> Request? {
         scenario?.handleContext(context: "hoge")
         return nil
     }

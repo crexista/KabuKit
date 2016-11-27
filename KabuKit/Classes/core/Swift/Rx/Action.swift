@@ -10,12 +10,10 @@ import Foundation
 import RxSwift
 
 public protocol Action : class, OnStop, OnError {
-  
-    associatedtype linkType: Link
     
-    associatedtype contextType
+    associatedtype SceneType: Scene
     
-    func start(transition: SceneTransition<linkType>, context: contextType?)->[Observable<()>]
+    func start(transition: SceneTransition<SceneType.Link>, context: SceneType.Context?)->[Observable<()>]
 }
 
 public protocol OnStop {

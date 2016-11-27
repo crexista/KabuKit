@@ -10,51 +10,53 @@ import Foundation
 
 public protocol Scene : Frame {
     
-    associatedtype linkType: Link
+    associatedtype Link: SceneLink
     
-    associatedtype contextType
+    associatedtype Context
     
-    associatedtype stageType
+    associatedtype Stage: AnyObject
     
-    var context: contextType? { get }
+    var context: Context? { get }
     
-    unowned var transition: SceneTransition<linkType> { get }
-
-    func onSceneTransitionRequest(container: stageType, link: linkType, maker: Maker, scenario: Scenario?) -> Frame?
+    unowned var transition: SceneTransition<Link> { get }
     
-    func onBackRequest(container: stageType)
+    func onSceneTransitionRequest(link: Link, maker: Maker<Stage>, scenario: Scenario?) -> Request?
+    
+    func onBackRequest(container: Stage)
 }
 
 extension Frame where Self: Scene {
 
-    public func setup(stage: AnyObject, container: FrameContainer, scenario: Scenario?) {
-        set(transition: SceneTransition<linkType>(stage, container, scenario))
+    public func back(stage: Stage) {
+        onBackRequest(container: stage)
+    }
+
+    public func back<S>(stage: S) {
+        onBackRequest(container: stage as! Stage)
+    }
+
+    public func setup<S: AnyObject>(stage: S, container: FrameContainer, scenario: Scenario?) {
+        let transition = SceneTransition<Self.Link>(stage, container, scenario)
+        set(transition: transition)
     }
     
-    public func back(stage: AnyObject) {
-        onBackRequest(container: stage as! stageType)
+    public func transit(link: SceneLink, stage: AnyObject, frames: FrameContainer, scenario: Scenario?) -> Request? {
+        let link2 = link as! Self.Link
+        let stage2 = stage as! Self.Stage
+        let maker = Maker<Self.Stage>(stage2, frames, scenario)
+        return onSceneTransitionRequest(link: link2, maker: maker, scenario: scenario)
     }
 
-
-    public func transit<T: Link>(link: T, maker: Maker) -> Frame? {
-
-        return onSceneTransitionRequest(container: maker.stage as! stageType,
-                                   link: link as! linkType,
-                                   maker: maker,
-                                   scenario: maker.scenario)
-    }
-    
 }
 
 extension Scene {
     
-    public unowned var transition: SceneTransition<linkType> {
-        print(FrameStore.transitions)
-        return FrameStore.transitions.object(forKey: self as AnyObject) as! SceneTransition<linkType>
+    public unowned var transition: SceneTransition<Link> {
+        return FrameStore.transitions.object(forKey: self as AnyObject) as! SceneTransition<Link>
     }
     
-    public var context: contextType? {
-        return FrameStore.contexts.object(forKey: self as AnyObject) as? contextType
+    public var context: Context? {
+        return FrameStore.contexts.object(forKey: self as AnyObject) as? Context
     }
 
 }
