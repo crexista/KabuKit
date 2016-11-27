@@ -26,20 +26,20 @@ extension Sample2AViewController: ActionScene {
         actor.activate(action: action, transition: transition, context: context)
     }
     
-    func onChangeSceneRequest(link: Sample2Link, factory: SceneRequestFactory<UIViewController>) -> SceneRequest? {
+    func onChangeSceneRequest(link: Sample2Link, factory: SceneChangeRequestFactory<UIViewController>) -> SceneChangeRequest? {
         
-        var request: SceneRequest?
+        var request: SceneChangeRequest?
         
         switch link {
         case .A:
             let File2A = ViewControllerXIBFile("Sample2AViewController", Bundle.main)
-            request = factory.createSceneRequest(File2A, Sample2AViewController.self, true) { (stage, scene) in
+            request = factory.createSceneChangeRequest(File2A, Sample2AViewController.self, true) { (stage, scene) in
                 stage.navigationController?.pushViewController(scene, animated: true)
             }
             break;
         case .B:
             let File2B = ViewControllerXIBFile("Sample2BViewController", Bundle.main)
-            request = factory.createSceneRequest(File2B, Sample2BViewController.self, true) { (stage, scene) in
+            request = factory.createSceneChangeRequest(File2B, Sample2BViewController.self, true) { (stage, scene) in
                 stage.navigationController?.pushViewController(scene, animated: true)
             }
         }

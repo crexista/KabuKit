@@ -22,13 +22,13 @@ public protocol Scene : Frame {
     
     /**
      違うSceneへの遷移リクエストが飛んできたときに呼ばれるメソッドです
-     このメソッドが呼ばれた段階で遷移するわけではなく、このメソッドが返すSceneRequestが実行されたタイミングで画面遷移を行います
+     このメソッドが呼ばれた段階で遷移するわけではなく、このメソッドが返すSceneChangeRequestが実行されたタイミングで画面遷移を行います
      
      - Parameter link: どのSceneへリンクするかの指定です。このlinkをみてこのメソッドないでハンドリングすることになります
-     - Parameter factory: SceneRequestを生成するFactoryです
-     - Returns: SceneRequest
+     - Parameter factory: SceneChangeRequestを生成するFactoryです
+     - Returns: SceneChangeRequest
      */
-    func onChangeSceneRequest(link: LinkType, factory: SceneRequestFactory<StageType>) -> SceneRequest?
+    func onChangeSceneRequest(link: LinkType, factory: SceneChangeRequestFactory<StageType>) -> SceneChangeRequest?
     
     /**
      前の画面への遷移リクエストが飛んできたときに呼ばれるメソッドです
@@ -52,10 +52,10 @@ extension Frame where Self: Scene {
         set(transition: transition)
     }
     
-    public func transit(link: SceneLink, stage: AnyObject, frames: FrameContainer, scenario: Scenario?) -> SceneRequest? {
+    public func transit(link: SceneLink, stage: AnyObject, frames: FrameContainer, scenario: Scenario?) -> SceneChangeRequest? {
         let link2 = link as! Self.LinkType
         let stage2 = stage as! Self.StageType
-        let sceneFactory = SceneRequestFactory<Self.StageType>(stage2, frames, scenario)
+        let sceneFactory = SceneChangeRequestFactory<Self.StageType>(stage2, frames, scenario)
         return onChangeSceneRequest(link: link2, factory: sceneFactory)
     }
 

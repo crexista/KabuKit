@@ -14,7 +14,7 @@ public protocol Frame : class {
     
     func setup<S: AnyObject>(stage: S, container: FrameContainer, scenario: Scenario?)
     
-    func transit(link: SceneLink, stage: AnyObject, frames: FrameContainer, scenario: Scenario?) -> SceneRequest?
+    func transit(link: SceneLink, stage: AnyObject, frames: FrameContainer, scenario: Scenario?) -> SceneChangeRequest?
     
     /**
      このフレームワークによって現在表示中の画面に紐づけられた全てのインスタンスを終了させます

@@ -1,5 +1,5 @@
 //
-//  SceneRequest.swift
+//  SceneChangeRequest.swift
 //  KabuKit
 //
 //  Created by crexista on 2016/11/28.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-public protocol SceneRequest {
+public protocol SceneChangeRequest {
     
     func execute() -> Frame?
     
 }
 
-struct SceneRequestImpl<StageType, SceneType: Scene, GeneratorType: SceneGenerator> : SceneRequest {
+struct SceneChangeRequestImpl<StageType, SceneType: Scene, GeneratorType: SceneGenerator> : SceneChangeRequest {
     
     private let method: (_ stage: StageType, _ scene: SceneType) -> Void
     private let stage: StageType
@@ -54,7 +54,7 @@ struct SceneRequestImpl<StageType, SceneType: Scene, GeneratorType: SceneGenerat
     
 }
 
-struct ScenarioRequestImpl<StageType>: SceneRequest {
+struct ScenarioRequestImpl<StageType>: SceneChangeRequest {
     
     let method: (_ stage: StageType, _ scene: Scenario?) -> Void
     
