@@ -14,10 +14,10 @@ public class SceneRequestFactory<Stage: AnyObject> {
     internal unowned let stage: Stage
     internal weak var scenario: Scenario?
     
-    public func create<T: SceneGenerator, S: Scene>(_ generator: T,
-                                                    _ sceneType: S.Type,
-                                                    _ context: S.Context?,
-                                                    _ setup: @escaping (_ stage: Stage, _ scene: S) -> Void) -> SceneRequest where S.Stage == Stage {
+    public func createSceneRequest<T: SceneGenerator, S: Scene>(_ generator: T,
+                                                                _ sceneType: S.Type,
+                                                                _ context: S.Context?,
+                                                                _ setup: @escaping (_ stage: Stage, _ scene: S) -> Void) -> SceneRequest where S.Stage == Stage {
         
         return SceneRequestImpl(generator: generator,
                                 stage: stage,
@@ -26,6 +26,11 @@ public class SceneRequestFactory<Stage: AnyObject> {
                                 scenario: scenario,
                                 context: context,
                                 f: setup)
+    }
+    
+    
+    public func createOtherScenarioRequest(_ setup: @escaping (_ stage: Stage, _ scene: Scenario?) -> Void) -> SceneRequest {
+        return ScenarioRequestImpl(stage: stage, scenario: scenario, f: setup)
     }
     
     deinit {

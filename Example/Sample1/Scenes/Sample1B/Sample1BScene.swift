@@ -26,18 +26,18 @@ extension Sample1BViewController : ActionScene {
         actor.activate(action: action, transition: self.transition, context: self.context)
     }
     
-    func onSceneTransitionRequest(link: Sample1BLink, factory: SceneFactory<UIViewController>, scenario: Scenario?) -> SceneRequest? {
+    func onSceneTransitionRequest(link: Sample1BLink, factory: SceneRequestFactory<UIViewController>) -> SceneRequest? {
 
         switch link {
         case .A:
             let xib = ViewControllerXIBFile("Sample1AViewController", Bundle.main)
-            let vc = factory.create(xib, Sample1AViewController.self, true) { (stage, scene) in
+            let vc = factory.createSceneRequest(xib, Sample1AViewController.self, true) { (stage, scene) in
                 stage.navigationController?.pushViewController(scene, animated: true)
             }
             return vc
         case .B:
             let xib = ViewControllerXIBFile("Sample1BViewController", Bundle.main)
-            let vc = factory.create(xib, Sample1BViewController.self, nil) { (stage, scene) in
+            let vc = factory.createSceneRequest(xib, Sample1BViewController.self, nil) { (stage, scene) in
                 stage.navigationController?.pushViewController(scene, animated: true)
             }
             return vc

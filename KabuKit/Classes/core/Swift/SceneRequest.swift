@@ -53,3 +53,23 @@ struct SceneRequestImpl<StageType, SceneType: Scene, GeneratorType: SceneGenerat
     }
     
 }
+
+struct ScenarioRequestImpl<StageType>: SceneRequest {
+    
+    let method: (_ stage: StageType, _ scene: Scenario?) -> Void
+    
+    let scenario: Scenario?
+    
+    let stage: StageType
+    
+    func execute() -> Frame? {
+        method(stage, scenario)
+        return nil
+    }
+    
+    init(stage: StageType, scenario: Scenario?, f: @escaping (_ stage: StageType, _ scene: Scenario?) -> Void) {
+        self.scenario = scenario
+        self.stage = stage
+        method = f
+    }
+}

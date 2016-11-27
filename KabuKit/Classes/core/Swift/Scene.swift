@@ -20,7 +20,7 @@ public protocol Scene : Frame {
     
     unowned var transition: SceneTransition<Link> { get }
     
-    func onSceneTransitionRequest(link: Link, factory: SceneRequestFactory<Stage>, scenario: Scenario?) -> SceneRequest?
+    func onSceneTransitionRequest(link: Link, factory: SceneRequestFactory<Stage>) -> SceneRequest?
     
     func onBackRequest(container: Stage) -> Bool
 }
@@ -44,7 +44,7 @@ extension Frame where Self: Scene {
         let link2 = link as! Self.Link
         let stage2 = stage as! Self.Stage
         let sceneFactory = SceneRequestFactory<Self.Stage>(stage2, frames, scenario)
-        return onSceneTransitionRequest(link: link2, factory: sceneFactory, scenario: scenario)
+        return onSceneTransitionRequest(link: link2, factory: sceneFactory)
     }
 
 }

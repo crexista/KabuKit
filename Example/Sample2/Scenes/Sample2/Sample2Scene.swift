@@ -19,15 +19,15 @@ extension Sample2ViewController: ActionScene {
     typealias Context = Void
     typealias Link = Sample2Link
     
-
     override func viewDidLoad() {
         let action = Sample2Action(startButton: startButton)
         actor.activate(action: action, transition: transition, context: context)
     }
         
-    func onSceneTransitionRequest(link: Sample2Link, factory: SceneFactory<UIViewController>, scenario: Scenario?) -> SceneRequest? {
-        scenario?.handleContext(context: "hoge")
-        return nil
+    func onSceneTransitionRequest(link: Sample2Link, factory: SceneRequestFactory<UIViewController>) -> SceneRequest? {
+        return factory.createOtherScenarioRequest { (stage, scenario) in
+            scenario?.handleContext(context: "Main")
+        }
     }
     
     func onBackRequest(container: UIViewController) -> Bool {
