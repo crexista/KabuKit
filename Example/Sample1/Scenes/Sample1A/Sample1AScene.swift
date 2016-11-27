@@ -27,7 +27,7 @@ extension Sample1AViewController: ActionScene {
         actor.activate(action: action, transition: self.transition, context: self.context)
     }
     
-    func onSceneTransitionRequest(link: Sample1Link, factory: SceneRequestFactory<UIViewController>) -> SceneRequest? {
+    func onChangeSceneRequest(link: Sample1Link, factory: SceneRequestFactory<UIViewController>) -> SceneRequest? {
         
         switch link {
         case .A:

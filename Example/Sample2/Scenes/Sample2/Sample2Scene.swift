@@ -24,7 +24,7 @@ extension Sample2ViewController: ActionScene {
         actor.activate(action: action, transition: transition, context: context)
     }
         
-    func onSceneTransitionRequest(link: Sample2Link, factory: SceneRequestFactory<UIViewController>) -> SceneRequest? {
+    func onChangeSceneRequest(link: Sample2Link, factory: SceneRequestFactory<UIViewController>) -> SceneRequest? {
         return factory.createOtherScenarioRequest { (stage, scenario) in
             scenario?.handleContext(context: "Main")
         }
