@@ -16,7 +16,13 @@ public protocol Frame : class {
     
     func transit(link: SceneLink, stage: AnyObject, frames: FrameContainer, scenario: Scenario?) -> SceneRequest?
     
-    func close()
+    /**
+     このフレームワークによって現在表示中の画面に紐づけられた全てのインスタンスを終了させます
+     インスタンスを終了させるだけであるため、別に表示そのものが変わるというわけではありません
+     表示の変更に関しては実装する必要があります
+     
+     */
+    func end()
 
 }
 
@@ -45,7 +51,7 @@ extension Frame {
         FrameStore.actors.setObject(actor, forKey: self as AnyObject)
     }
     
-    public func close() {
+    public func end() {
         FrameStore.transitions.removeObject(forKey: self as AnyObject)
         FrameStore.contexts.removeObject(forKey: self as AnyObject)
         FrameStore.actors.removeObject(forKey: self as AnyObject)

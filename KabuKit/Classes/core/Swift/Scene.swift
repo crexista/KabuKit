@@ -32,9 +32,10 @@ public protocol Scene : Frame {
     
     /**
      前の画面への遷移リクエストが飛んできたときに呼ばれるメソッドです
+     このメソッドが返すSceneBackRequestのexecuteが呼ばれた際にtrueを返すとこの画面のに紐づくメモリが解放されます
      
      - Parameter factory: 前の画面への遷移リクエストを生成するインスタンスです
-     - Returns: Bool 
+     - Returns: SceneBackRequest 前の画面への遷移リクエストが成功したらSceneBackRequestはtrueを返します
      */
     func onBackRequest(factory: SceneBackRequestFactory<StageType>) -> SceneBackRequest?
 }

@@ -40,7 +40,7 @@ public class SceneTransition<Link: SceneLink> {
     public func back() {
         currentFrame.map { (frame) -> Void in
             if (frame.back(stage: stage)?.execute())! {
-                frame.close()
+                frame.end()
                 _ = frames.frames.popLast()
             }
         }

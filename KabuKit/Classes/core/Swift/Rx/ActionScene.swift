@@ -33,7 +33,7 @@ extension Frame where Self: ActionScene {
         set(actor: Actor())
     }
 
-    public func close() {
+    public func end() {
         let actor = FrameStore.actors.object(forKey: self as AnyObject) as? Actor
         actor?.terminate()
         FrameStore.transitions.removeObject(forKey: self as AnyObject)        
