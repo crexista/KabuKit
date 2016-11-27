@@ -73,3 +73,4 @@ struct ScenarioRequestImpl<StageType>: SceneRequest {
         method = f
     }
 }
+

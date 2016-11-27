@@ -44,3 +44,16 @@ public class SceneRequestFactory<Stage: AnyObject> {
     }
     
 }
+
+public class SceneBackRequestFactory<StageType: AnyObject> {
+    
+    private let stage: StageType
+    
+    public func createBackRequest(_ setup: @escaping (StageType) -> Bool) -> SceneBackRequest {
+        return SceneBackRequestImpl<StageType>(stage: stage, f: setup)
+    }
+    
+    init(stage: StageType) {
+        self.stage = stage
+    }
+}

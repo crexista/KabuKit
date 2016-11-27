@@ -10,7 +10,7 @@ import Foundation
 
 public protocol Frame : class {
 
-    func back<S: AnyObject>(stage: S) -> Bool
+    func back<S: AnyObject>(stage: S) -> SceneBackRequest?
     
     func setup<S: AnyObject>(stage: S, container: FrameContainer, scenario: Scenario?)
     
