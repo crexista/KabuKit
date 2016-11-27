@@ -10,7 +10,7 @@ import Foundation
 
 public protocol Request {
     
-    func execute() -> Frame
+    func execute() -> Frame?
 
 }
 
@@ -56,13 +56,14 @@ public struct SceneRequest<StageType, SceneType: Scene, GeneratorType: SceneGene
     private let frames: FrameContainer
     private let scenario: Scenario?
     
-    public func execute() -> Frame {
+    public func execute() -> Frame? {
         let sceneClass = sceneType as! GeneratorType.implType.Type
-        let newScene = generator.generater(impl: sceneClass, argument: generator.argument) as! SceneType
-        newScene.setup(stage: stage as! SceneType.Stage, container: frames, scenario: scenario)
-        newScene.set(context: context)
-        method(stage, newScene)
-    
+        let newScene = generator.generater(impl: sceneClass, argument: generator.argument) as? SceneType
+        newScene?.setup(stage: stage as! SceneType.Stage, container: frames, scenario: scenario)
+        newScene?.set(context: context)
+        if let scene = newScene {
+            method(stage, scene)
+        }    
         return newScene
     }
     
