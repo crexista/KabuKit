@@ -12,9 +12,9 @@ import Foundation
  This class supply director that current scene to next scene, or back to previous scene.
  
  */
-public class SceneDirector<Transition: SceneTransition> {
+public class SceneDirector<TransitionType: SceneTransition> {
     
-    private unowned let stage: AnyObject
+    internal unowned let stage: TransitionType.StageType
     
     private unowned let frames: FrameManager
     
@@ -24,30 +24,31 @@ public class SceneDirector<Transition: SceneTransition> {
     
     /**
      transit to next scene
+     TODO 後でlinkの名前とtransitionに変更する
      
      */
-    public func transitTo(link: Transition) {
-        _ = currentFrame?.transit(link: link, stage: stage, frames: frames, scenario: scenario)?.execute()
+    public func transitTo(link: TransitionType) {        
+        let factory = SceneChangeRequestFactory(stage, frames, scenario)
+        link.request(factory: factory)?.execute()
     }
     
     /**
      transit to previous scene, and try to destruct previous scene
      
      */
-    public func back() {
-        currentFrame.map { (frame) -> Void in
-            if (frame.back(stage: stage)?.execute())! {
+    public func exit() {
+        if let frame = currentFrame {
+            if (frame.clear(stage: stage)) {
                 frames.release(frame: frame)
             }
         }
-
     }
     
     deinit {
         print("director deinit")
     }
     
-    init(_ stage: AnyObject, _ frame: Frame, _ container: FrameManager, _ scenario: Scenario?) {
+    init(_ stage: TransitionType.StageType, _ frame: Frame, _ container: FrameManager, _ scenario: Scenario?) {
         self.stage = stage
         self.frames = container
         self.scenario = scenario

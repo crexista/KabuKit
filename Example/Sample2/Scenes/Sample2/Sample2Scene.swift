@@ -12,29 +12,32 @@ import KabuKit
 extension Sample2ViewController: ActionScene {
     
     enum Sample2Link: SceneTransition {
+
+        typealias StageType = UIViewController
         case A
+        
+        public func request(factory: SceneChangeRequestFactory<UIViewController>) -> SceneChangeRequest? {
+            return nil
+        }
+        
     }
     
-    typealias StageType = UIViewController
     typealias ContextType = Void
-    typealias LinkType = Sample2Link
-    
+    typealias TransitionType = Sample2Link
+
     override func viewDidLoad() {
         let action = Sample2Action(startButton: startButton)
         actor.activate(action: action, director: director, context: context)
     }
-        
-    func onChangeSceneRequest(link: Sample2Link, factory: SceneChangeRequestFactory<UIViewController>) -> SceneChangeRequest? {
-        return factory.createOtherScenarioRequest { (stage, scenario) in
-            scenario?.handleContext(context: "Main")
-        }
-    }
     
-    func onBackRequest(factory: SceneBackRequestFactory<UIViewController>) -> SceneBackRequest? {
-        return factory.createBackRequest({ (stage) -> Bool in
-            _ = stage.navigationController?.popViewController(animated: true)
-            return true
-        })
+    /**
+     前の画面への遷移リクエストが飛んできたときに呼ばれるメソッドです
+     このメソッドが返すSceneBackRequestのexecuteが呼ばれた際にtrueを返すとこの画面のに紐づくメモリが解放されます
+     
+     - Parameter factory: 前の画面への遷移リクエストを生成するインスタンスです
+     - Returns: SceneBackRequest 前の画面への遷移リクエストが成功したらSceneBackRequestはtrueを返します
+     */
+    public func onRelease(stage: UIViewController) -> Bool {
+        return true
     }
-    
 }

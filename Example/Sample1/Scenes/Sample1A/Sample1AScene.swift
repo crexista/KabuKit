@@ -11,15 +11,29 @@ import KabuKit
 
 extension Sample1AViewController: ActionScene {
     
-    enum Sample1Link : SceneTransition {
-        case A
-        case B
-    }
-    
-    typealias StageType = UIViewController
+    typealias TransitionType = Sample1Link
     typealias ContextType = Bool
-    typealias LinkType = Sample1Link
     
+    enum Sample1Link : SceneTransition {
+        typealias StageType = UIViewController
+        case A, B
+        
+        func request(factory: SceneChangeRequestFactory<UIViewController>) -> SceneChangeRequest? {
+            switch self {
+            case .A:
+                let xib = ViewControllerXIBFile("Sample1AViewController", Bundle.main)
+                return factory.createSceneChangeRequest(xib, Sample1AViewController.self, true) { (stage, scene) in
+                    stage.navigationController?.pushViewController(scene, animated: true)
+                }
+            case .B:
+                let xib = ViewControllerXIBFile("Sample1BViewController", Bundle.main)
+                return factory.createSceneChangeRequest(xib, Sample1BViewController.self, nil) { (stage, scene) in
+                    stage.navigationController?.pushViewController(scene, animated: true)
+                }
+            }
+        }
+    }
+
     override func viewDidLoad() {
         self.navigationItem.hidesBackButton = true
         prevButton.isEnabled = context!
@@ -27,34 +41,14 @@ extension Sample1AViewController: ActionScene {
         actor.activate(action: action, director: self.director, context: self.context)
     }
     
-    func onChangeSceneRequest(link: Sample1Link, factory: SceneChangeRequestFactory<UIViewController>) -> SceneChangeRequest? {
-        
-        switch link {
-        case .A:
-            let xib = ViewControllerXIBFile("Sample1AViewController", Bundle.main)
-            let vc = factory.createSceneChangeRequest(xib, Sample1AViewController.self, true) { (stage, scene) in
-                stage.navigationController?.pushViewController(scene, animated: true)
-            }
-            return vc
-        case .B:
-            let xib = ViewControllerXIBFile("Sample1BViewController", Bundle.main)
-            let vc = factory.createSceneChangeRequest(xib, Sample1BViewController.self, nil) { (stage, scene) in
-                stage.navigationController?.pushViewController(scene, animated: true)
-            }
-            return vc
-        }
-    }
-    
-    func onBackRequest(factory: SceneBackRequestFactory<UIViewController>) -> SceneBackRequest? {
-        return factory.createBackRequest({ (stage) -> Bool in
-            _ = stage.navigationController?.popViewController(animated: true)
-            return true
-        })
+    func onRelease(stage: UIViewController) -> Bool {
+        _ = stage.navigationController?.popViewController(animated: true)
+        return true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        if (self.navigationController == nil) {
-            //director.back()
+        if (self.navigationController == nil && !isReleased) {
+            director.exit()
         }
     }
 

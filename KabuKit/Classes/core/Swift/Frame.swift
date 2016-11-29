@@ -8,14 +8,26 @@
 
 import Foundation
 
+/**
+ TODO 後でScreenという名前に変更する
+ 
+ */
 public protocol Frame : class {
-
-    func back<S: AnyObject>(stage: S) -> SceneBackRequest?
     
-    func setup<S: AnyObject, C>(stage: S, context: C, container: FrameManager, scenario: Scenario?)
+    /**
+     画面表示をセットアップします
+     
+     */
+    func setup<S, C>(stage: S, context: C, container: FrameManager, scenario: Scenario?)
     
-    func transit(link: SceneTransition, stage: AnyObject, frames: FrameManager, scenario: Scenario?) -> SceneChangeRequest?
-
+    /**
+     画面表示周りを破棄します
+     
+     - returns: Bool
+       - true 表示のクリアに成功
+       - false 表示のクリアに失敗
+     */
+    func clear<S>(stage: S) -> Bool
 }
 
 public class FrameManager {

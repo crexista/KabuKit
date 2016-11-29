@@ -27,7 +27,7 @@ class Sample1BAction: Action {
         return [
             self.nextButtonA.rx.tap.do(onNext: { () in director.transitTo(link: Sample1BViewController.Sample1BLink.A)}),
             self.nextButtonB.rx.tap.do(onNext: { () in director.transitTo(link: Sample1BViewController.Sample1BLink.B)}),
-            self.prevButton.rx.tap.do(onNext: { () in director.back()})
+            self.prevButton.rx.tap.do(onNext: { () in _ = director.exit()})
         ]
     }
     

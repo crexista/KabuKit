@@ -8,4 +8,9 @@
 
 import Foundation
 
-public protocol SceneTransition {}
+public protocol SceneTransition {
+    
+    associatedtype StageType: AnyObject
+    
+    func request(factory: SceneChangeRequestFactory<StageType>) -> SceneChangeRequest?
+}

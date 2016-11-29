@@ -10,37 +10,36 @@ import Foundation
 
 public protocol SceneChangeRequest {
     
-    func execute() -> Frame?
-    
+    func execute()    
 }
 
-struct SceneChangeRequestImpl<StageType, SceneType: Scene, GeneratorType: SceneGenerator> : SceneChangeRequest {
+struct SceneChangeRequestImpl<SceneType: Scene, GeneratorType: SceneGenerator> : SceneChangeRequest {
     
-    private let method: (_ stage: StageType, _ scene: SceneType) -> Void
-    private let stage: StageType
+    private let method: (_ stage: SceneType.TransitionType.StageType, _ scene: SceneType) -> Void
+    private let stage: SceneType.TransitionType.StageType
     private let sceneType: SceneType.Type
     private let context: SceneType.ContextType?
     private let generator: GeneratorType
     private let frames: FrameManager
     private let scenario: Scenario?
     
-    func execute() -> Frame? {
+    func execute() {
         let sceneClass = sceneType as! GeneratorType.implType.Type
         let newScene = generator.generater(impl: sceneClass, argument: generator.argument) as? SceneType
-        newScene?.setup(stage: stage as! SceneType.StageType, context: context, container: frames, scenario: scenario)
+        newScene?.setup(stage: stage, context: context, container: frames, scenario: scenario)
         if let scene = newScene {
             method(stage, scene)
         }
-        return newScene
+
     }
     
     init(generator: GeneratorType,
-         stage: StageType,
+         stage: SceneType.TransitionType.StageType,
          sceneType: SceneType.Type,
          frames: FrameManager,
          scenario: Scenario?,
          context: SceneType.ContextType?,
-         f: @escaping (_ stage: StageType, _ scene: SceneType) -> Void) {
+         f: @escaping (_ stage: SceneType.TransitionType.StageType, _ scene: SceneType) -> Void) {
         
         self.method = f
         self.stage = stage
@@ -61,9 +60,8 @@ struct ScenarioRequestImpl<StageType>: SceneChangeRequest {
     
     let stage: StageType
     
-    func execute() -> Frame? {
+    func execute() {
         method(stage, scenario)
-        return nil
     }
     
     init(stage: StageType, scenario: Scenario?, f: @escaping (_ stage: StageType, _ scene: Scenario?) -> Void) {

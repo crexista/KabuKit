@@ -15,17 +15,17 @@ public class SceneChangeRequestFactory<StageType: AnyObject> {
     internal weak var scenario: Scenario?
     
     public func createSceneChangeRequest<T: SceneGenerator, S: Scene>(_ generator: T,
-                                                                _ sceneType: S.Type,
-                                                                _ context: S.ContextType?,
-                                                                _ setup: @escaping (_ stage: StageType, _ scene: S) -> Void) -> SceneChangeRequest where S.StageType == StageType {
-        
+                                                                      _ sceneType: S.Type,
+                                                                      _ context: S.ContextType?,
+                                                                      _ setup: @escaping (_ stage: StageType, _ scene: S) -> Void) -> SceneChangeRequest where T.implType == S.TransitionType.StageType, StageType == S.TransitionType.StageType {
+
         return SceneChangeRequestImpl(generator: generator,
-                                stage: stage,
-                                sceneType: sceneType,
-                                frames: frames,
-                                scenario: scenario,
-                                context: context,
-                                f: setup)
+                                      stage: stage,
+                                      sceneType: sceneType,
+                                      frames: frames,
+                                      scenario: scenario,
+                                      context: context,
+                                      f: setup)
     }
     
     

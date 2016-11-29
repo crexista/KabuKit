@@ -11,46 +11,48 @@ import KabuKit
 
 extension Sample2AViewController: ActionScene {
     
+    typealias ContextType = Bool
+    typealias TransitionType = Sample2Link
+    
     enum Sample2Link: SceneTransition {
+        typealias StageType = UIViewController
         case A
         case B
+        
+        func request(factory: SceneChangeRequestFactory<UIViewController>) -> SceneChangeRequest? {
+            
+            switch self {
+            case .A:
+                let File2A = ViewControllerXIBFile("Sample2AViewController", Bundle.main)
+                return factory.createSceneChangeRequest(File2A, Sample2AViewController.self, true) { (stage, scene) in
+                    stage.navigationController?.pushViewController(scene, animated: true)
+                }
+
+            case .B:
+                let File2B = ViewControllerXIBFile("Sample2BViewController", Bundle.main)
+                return factory.createSceneChangeRequest(File2B, Sample2BViewController.self, true) { (stage, scene) in
+                    stage.navigationController?.pushViewController(scene, animated: true)
+                }
+            }
+        }
     }
-    
-    typealias StageType = UIViewController
-    typealias ContextType = Bool
-    typealias LinkType = Sample2Link
     
     override func viewDidLoad() {
         self.navigationItem.hidesBackButton = true
         let action = Sample2AAction(nextButtonA: nextButtonA, nextButtonB: nextButtonB, prevButton: prevButton)
         actor.activate(action: action, director: director, context: context)
-    }
-    
-    func onChangeSceneRequest(link: Sample2Link, factory: SceneChangeRequestFactory<UIViewController>) -> SceneChangeRequest? {
-        
-        var request: SceneChangeRequest?
-        
-        switch link {
-        case .A:
-            let File2A = ViewControllerXIBFile("Sample2AViewController", Bundle.main)
-            request = factory.createSceneChangeRequest(File2A, Sample2AViewController.self, true) { (stage, scene) in
-                stage.navigationController?.pushViewController(scene, animated: true)
-            }
-            break;
-        case .B:
-            let File2B = ViewControllerXIBFile("Sample2BViewController", Bundle.main)
-            request = factory.createSceneChangeRequest(File2B, Sample2BViewController.self, true) { (stage, scene) in
-                stage.navigationController?.pushViewController(scene, animated: true)
-            }
-        }
+    } 
 
-        return request
+    /**
+     前の画面への遷移リクエストが飛んできたときに呼ばれるメソッドです
+     このメソッドが返すSceneBackRequestのexecuteが呼ばれた際にtrueを返すとこの画面のに紐づくメモリが解放されます
+     
+     - Parameter factory: 前の画面への遷移リクエストを生成するインスタンスです
+     - Returns: SceneBackRequest 前の画面への遷移リクエストが成功したらSceneBackRequestはtrueを返します
+     */
+    public func onRelease(stage: UIViewController) -> Bool {
+        _ = stage.navigationController?.popViewController(animated: true)
+        return true
     }
-    
-    func onBackRequest(factory: SceneBackRequestFactory<UIViewController>) -> SceneBackRequest? {
-        return factory.createBackRequest({ (stage) -> Bool in
-            _ = stage.navigationController?.popViewController(animated: true)
-            return true
-        })
-    }
+
 }

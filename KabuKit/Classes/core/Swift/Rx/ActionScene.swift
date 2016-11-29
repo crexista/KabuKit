@@ -34,9 +34,9 @@ extension ActionScene {
 }
 
 extension Frame where Self: ActionScene {
-        
-    public func setup<S: AnyObject, C>(stage: S, context: C, container: FrameManager, scenario: Scenario?) {
-        let director = SceneDirector<Self.TransitionType>(stage, self, container, scenario)
+    
+    public func setup<S, C>(stage: S, context: C, container: FrameManager, scenario: Scenario?) {
+        let director = SceneDirector<Self.TransitionType>(stage as! TransitionType.StageType, self, container, scenario)
         container.set(frame: self, stuff: (director, context, Actor()) as AnyObject)
     }
 
