@@ -21,12 +21,13 @@ struct SceneChangeRequestImpl<SceneType: Scene, GeneratorType: SceneGenerator> :
     private let context: SceneType.ContextType?
     private let generator: GeneratorType
     private let frames: FrameManager
+    private let sequence: AnyObject
     private let scenario: Scenario?
     
     func execute() {
         let sceneClass = sceneType as! GeneratorType.implType.Type
         let newScene = generator.generater(impl: sceneClass, argument: generator.argument) as? SceneType
-        newScene?.setup(stage: stage, context: context, container: frames, scenario: scenario)
+        newScene?.setup(sequence: sequence, stage: stage, context: context, container: frames, scenario: scenario)
         if let scene = newScene {
             method(stage, scene)
         }
@@ -34,6 +35,7 @@ struct SceneChangeRequestImpl<SceneType: Scene, GeneratorType: SceneGenerator> :
     }
     
     init(generator: GeneratorType,
+         sequence: AnyObject,
          stage: SceneType.TransitionType.StageType,
          sceneType: SceneType.Type,
          frames: FrameManager,
@@ -48,25 +50,38 @@ struct SceneChangeRequestImpl<SceneType: Scene, GeneratorType: SceneGenerator> :
         self.context = context
         self.frames = frames
         self.scenario = scenario
+        self.sequence = sequence
     }
     
 }
 
-struct ScenarioRequestImpl<StageType>: SceneChangeRequest {
+struct ScenarioRequestImpl<StageType: AnyObject>: SceneChangeRequest {
+//    typealias StageType = SceneType.TransitionType.StageType
     
-    let method: (_ stage: StageType, _ scene: Scenario?) -> Void
+    let method: () -> AnyObject
     
     let scenario: Scenario?
     
     let stage: StageType
     
+    let sequnce: AnyObject
+    
+    let scene: Frame
+    
     func execute() {
-        method(stage, scenario)
+        if let sce = scenario {
+            let seq = sequnce as! SceneSequence<StageType>
+            let event = method()
+
+            sce.onEvent(currentStage: stage, currentSequence: seq, currentScene: scene, event: event)
+        }
     }
     
-    init(stage: StageType, scenario: Scenario?, f: @escaping (_ stage: StageType, _ scene: Scenario?) -> Void) {
+    init(sequence: AnyObject, scene: Frame, stage: StageType, scenario: Scenario?, f: @escaping () -> AnyObject) {
         self.scenario = scenario
         self.stage = stage
+        self.sequnce = sequence
+        self.scene = scene
         method = f
     }
 }

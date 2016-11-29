@@ -10,6 +10,8 @@ import Foundation
 
 public protocol Scenario : class {
     
-    func handleContext<T>(context: T)
-
+    func onEvent<StageType: AnyObject, EventType>(currentStage: StageType,
+                                                  currentSequence: SceneSequence<StageType>,
+                                                  currentScene: Frame,
+                                                  event: EventType)
 }

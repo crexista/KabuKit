@@ -14,13 +14,17 @@ import Foundation
  */
 public class SceneDirector<TransitionType: SceneTransition> {
     
-    internal unowned let stage: TransitionType.StageType
+    private unowned let stage: TransitionType.StageType
     
     private unowned let frames: FrameManager
+    
+    private unowned let sequence: AnyObject
     
     private weak var currentFrame: Frame?
     
     private weak var scenario: Scenario?
+    
+
     
     /**
      transit to next scene
@@ -28,7 +32,7 @@ public class SceneDirector<TransitionType: SceneTransition> {
      
      */
     public func transitTo(link: TransitionType) {        
-        let factory = SceneChangeRequestFactory(stage, frames, scenario)
+        let factory = SceneChangeRequestFactory(sequence, currentFrame!, stage, frames, scenario)
         link.request(factory: factory)?.execute()
     }
     
@@ -48,11 +52,12 @@ public class SceneDirector<TransitionType: SceneTransition> {
         print("director deinit")
     }
     
-    init(_ stage: TransitionType.StageType, _ frame: Frame, _ container: FrameManager, _ scenario: Scenario?) {
+    init(_ sequence: AnyObject, _ stage: TransitionType.StageType, _ frame: Frame, _ container: FrameManager, _ scenario: Scenario?) {
         self.stage = stage
         self.frames = container
         self.scenario = scenario
         self.currentFrame = frame
+        self.sequence = sequence
     }
     
 }

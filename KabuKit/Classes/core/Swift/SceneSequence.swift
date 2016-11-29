@@ -36,7 +36,7 @@ public class SceneSequence<T: AnyObject> {
         
         let sceneClass = sceneType as! G.implType.Type
         let scene = generator.generater(impl: sceneClass, argument: generator.argument) as! S
-        scene.setup(stage: container, context: context, container: frames, scenario: scenario)
+        scene.setup(sequence: self, stage: container, context: context, container: frames, scenario: scenario)
         setup(container, scene)
     }
 

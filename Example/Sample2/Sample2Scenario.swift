@@ -24,7 +24,10 @@ import UIKit
     
     weak var root: UIViewController?
     
-    func handleContext<T>(context: T) {
+    func onEvent<StageType : AnyObject, EventType>(currentStage: StageType,
+                                                   currentSequence: SceneSequence<StageType>,
+                                                   currentScene: Frame,
+                                                   event: EventType) {
         if (aSequence == nil) {
             let aXIB = ViewControllerXIBFile("Sample2AViewController", Bundle.main)
             aSequence = SceneSequence(aStage)
@@ -36,8 +39,8 @@ import UIKit
             root?.view.addSubview(tabBarController.view)
         }
 
+
     }
-    
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         switch tabBarController.selectedIndex {

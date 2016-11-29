@@ -18,7 +18,7 @@ public protocol Frame : class {
      画面表示をセットアップします
      
      */
-    func setup<S, C>(stage: S, context: C, container: FrameManager, scenario: Scenario?)
+    func setup<S, C>(sequence:AnyObject, stage: S, context: C, container: FrameManager, scenario: Scenario?)
     
     /**
      画面表示周りを破棄します
