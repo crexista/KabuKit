@@ -10,7 +10,7 @@ import Foundation
 
 public class SceneChangeRequestFactory<StageType: AnyObject> {
     
-    internal unowned let frames: FrameContainer
+    internal unowned let frames: FrameManager
     internal unowned let stage: StageType
     internal weak var scenario: Scenario?
     
@@ -37,7 +37,7 @@ public class SceneChangeRequestFactory<StageType: AnyObject> {
         print("SceneChangeRequestFactory deinit")
     }
     
-    init(_ stage: StageType, _ container: FrameContainer, _ scenario: Scenario?) {
+    init(_ stage: StageType, _ container: FrameManager, _ scenario: Scenario?) {
         self.stage = stage
         self.frames = container
         self.scenario = scenario

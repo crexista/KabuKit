@@ -12,49 +12,45 @@ public protocol Frame : class {
 
     func back<S: AnyObject>(stage: S) -> SceneBackRequest?
     
-    func setup<S: AnyObject>(stage: S, container: FrameContainer, scenario: Scenario?)
+    func setup<S: AnyObject, C>(stage: S, context: C, container: FrameManager, scenario: Scenario?)
     
-    func transit(link: SceneLink, stage: AnyObject, frames: FrameContainer, scenario: Scenario?) -> SceneChangeRequest?
+    func transit(link: SceneLink, stage: AnyObject, frames: FrameManager, scenario: Scenario?) -> SceneChangeRequest?
+
+}
+
+public class FrameManager {
+    
+    // key: Scene
+    private static var managers: NSMapTable<AnyObject, FrameManager> = NSMapTable.weakToWeakObjects()
+    
+    // key: Scene, value: (transition, context) のタプルか (transition, context, actor) のタプル
+    private var frameHashMap: NSMapTable<AnyObject, AnyObject> = NSMapTable.strongToStrongObjects()
     
     /**
-     このフレームワークによって現在表示中の画面に紐づけられた全てのインスタンスを終了させます
-     インスタンスを終了させるだけであるため、別に表示そのものが変わるというわけではありません
-     表示の変更に関しては実装する必要があります
+     FrameManagerで管理されているSceneを解放し、内部で保持されているTransitionやContextへの参照を外します
      
      */
-    func end()
-
-}
-
-internal class FrameStore {
-    static var transitions: NSMapTable<AnyObject, AnyObject> = NSMapTable.weakToStrongObjects()
-    static var contexts: NSMapTable<AnyObject, AnyObject> = NSMapTable.weakToStrongObjects()
-    static var actors: NSMapTable<AnyObject, AnyObject> = NSMapTable.strongToStrongObjects()
-}
-
-public class FrameContainer {
-    
-    public var frames: [Frame] = [Frame]()
-}
-
-extension Frame {
-    
-    func set<Link: SceneLink>(transition: SceneTransition<Link>) {
-        FrameStore.transitions.setObject(transition, forKey: self as AnyObject)
+    internal func release(frame: Frame) {
+        FrameManager.managers.removeObject(forKey: frame)
+        frameHashMap.removeObject(forKey: frame)
     }
     
-    func set<contextType>(context: contextType?) {
-        FrameStore.contexts.setObject(context as AnyObject?, forKey: self as AnyObject)
+    internal func set(frame: Frame, stuff: AnyObject) {
+        frameHashMap.setObject(stuff, forKey: frame)
+        FrameManager.managers.setObject(self, forKey: frame)
     }
     
-    func set(actor: Actor) {
-        FrameStore.actors.setObject(actor, forKey: self as AnyObject)
+    internal func getStuff(frame: Frame) -> AnyObject? {
+        return frameHashMap.object(forKey: frame)
     }
     
-    public func end() {
-        FrameStore.transitions.removeObject(forKey: self as AnyObject)
-        FrameStore.contexts.removeObject(forKey: self as AnyObject)
-        FrameStore.actors.removeObject(forKey: self as AnyObject)
+    internal static func managerByScene<S: Scene>(scene: S) -> FrameManager? {
+        return FrameManager.managers.object(forKey: scene)
     }
+    
+    /**
+     このライブラリ外からinstance化させないため、コンストラクタをinternal化
+
+     */
+    internal init (){}
 }
-

@@ -53,7 +53,7 @@ extension Sample1BViewController : ActionScene {
     
     override func viewDidDisappear(_ animated: Bool) {
         if (self.navigationController == nil) {
-            end()
+            release()
         }
     }
     

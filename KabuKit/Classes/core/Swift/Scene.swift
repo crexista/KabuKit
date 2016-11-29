@@ -38,6 +38,15 @@ public protocol Scene : Frame {
      - Returns: SceneBackRequest 前の画面への遷移リクエストが成功したらSceneBackRequestはtrueを返します
      */
     func onBackRequest(factory: SceneBackRequestFactory<StageType>) -> SceneBackRequest?
+    
+    
+    /**
+     このメソッドを呼ぶと画面に紐づけられたtransitionやcontext(ActionSceneの場合はActorも)が解放されます
+     ただし、メモリ解放をするだけであり別に表示そのものが変わるというわけではありません
+     表示の変更に関しては実装する必要があります
+     
+     */
+    func release()
 }
 
 extension Frame where Self: Scene {
@@ -46,13 +55,13 @@ extension Frame where Self: Scene {
         let factory = SceneBackRequestFactory(stage: stage as! StageType)
         return onBackRequest(factory: factory)
     }
-
-    public func setup<S: AnyObject>(stage: S, container: FrameContainer, scenario: Scenario?) {
+   
+    public func setup<S: AnyObject, C>(stage: S, context: C, container: FrameManager, scenario: Scenario?) {
         let transition = SceneTransition<Self.LinkType>(stage, self, container, scenario)
-        set(transition: transition)
+        container.set(frame: self, stuff: (transition, context) as AnyObject)
     }
     
-    public func transit(link: SceneLink, stage: AnyObject, frames: FrameContainer, scenario: Scenario?) -> SceneChangeRequest? {
+    public func transit(link: SceneLink, stage: AnyObject, frames: FrameManager, scenario: Scenario?) -> SceneChangeRequest? {
         let link2 = link as! Self.LinkType
         let stage2 = stage as! Self.StageType
         let sceneFactory = SceneChangeRequestFactory<Self.StageType>(stage2, frames, scenario)
@@ -64,11 +73,21 @@ extension Frame where Self: Scene {
 extension Scene {
     
     public unowned var transition: SceneTransition<LinkType> {
-        return FrameStore.transitions.object(forKey: self as AnyObject) as! SceneTransition<LinkType>
+        let manager = FrameManager.managerByScene(scene: self)!
+        let result = manager.getStuff(frame: self) as! (SceneTransition<LinkType>, ContextType?)
+        return result.0
     }
     
     public var context: ContextType? {
-        return FrameStore.contexts.object(forKey: self as AnyObject) as? ContextType
+        let manager = FrameManager.managerByScene(scene: self)!
+        let result = manager.getStuff(frame: self) as! (SceneTransition<LinkType>, ContextType?)
+        return result.1
+    }
+    
+    public func release() {
+        if let manager = FrameManager.managerByScene(scene: self) {
+            manager.release(frame: self)
+        }        
     }
 
 }

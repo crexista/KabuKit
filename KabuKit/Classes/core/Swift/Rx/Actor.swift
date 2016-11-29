@@ -33,11 +33,12 @@ public class Actor {
         action.onStop()
     }
 
-    deinit {
-        print("actor deinit")
-    }
-    
-    internal func terminate() {
+    /**
+     保持しているActionを全て解放します
+     internalにしているのはテストのためです
+     
+     */
+    internal func release() {
         let enumerator = actions.keyEnumerator()
         while let key = enumerator.nextObject() {
             let disposables = actions.object(forKey: key as AnyObject) as? [Disposable]
@@ -46,10 +47,15 @@ public class Actor {
             })
             (key as! OnStop).onStop()
         }
-
         actions.removeAllObjects()
     }
-        
+    
+    deinit {
+        print("actor deinit")
+        release()
+    }
+
+    
     init() {
         actions = NSMapTable.strongToStrongObjects()
     }

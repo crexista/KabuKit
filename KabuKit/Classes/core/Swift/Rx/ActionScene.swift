@@ -9,36 +9,35 @@
 import Foundation
 
 public protocol ActionScene : Scene {
-    var actor: Actor { get }
+    unowned var actor: Actor { get }
 }
 
 extension ActionScene {
     
-    public var actor: Actor {
-        return FrameStore.actors.object(forKey: self as AnyObject) as! Actor
+    public unowned var transition: SceneTransition<LinkType> {
+        let manager = FrameManager.managerByScene(scene: self)!
+        let result = manager.getStuff(frame: self) as! (SceneTransition<LinkType>, ContextType?, Actor)
+        return result.0
     }
     
-    internal func set(actor: Actor) {
-        FrameStore.actors.setObject(actor, forKey: self as AnyObject)
+    public var context: ContextType? {
+        let manager = FrameManager.managerByScene(scene: self)!
+        let result = manager.getStuff(frame: self) as! (SceneTransition<LinkType>, ContextType?, Actor)
+        return result.1
     }
     
+    public unowned var actor: Actor {
+        let manager = FrameManager.managerByScene(scene: self)!
+        let result = manager.getStuff(frame: self) as! (SceneTransition<LinkType>, ContextType?, Actor)
+        return result.2
+    }
 }
 
 extension Frame where Self: ActionScene {
-    
-    public func setup<S: AnyObject>(stage: S, container: FrameContainer, scenario: Scenario?) {
-        let stages = stage as! StageType
-        let transition = SceneTransition<LinkType>(stages, self, container, scenario)
-        set(transition: transition)
-        set(actor: Actor())
-    }
-
-    public func end() {
-        let actor = FrameStore.actors.object(forKey: self as AnyObject) as? Actor
-        actor?.terminate()
-        FrameStore.transitions.removeObject(forKey: self as AnyObject)        
-        FrameStore.actors.removeObject(forKey: self as AnyObject)
-        FrameStore.contexts.removeObject(forKey: self as AnyObject)
+        
+    public func setup<S: AnyObject, C>(stage: S, context: C, container: FrameManager, scenario: Scenario?) {
+        let transition = SceneTransition<Self.LinkType>(stage, self, container, scenario)
+        container.set(frame: self, stuff: (transition, context, Actor()) as AnyObject)
     }
 
 }

@@ -15,7 +15,7 @@ import UIKit
  */
 public class SceneSequence<T: AnyObject> {
     
-    internal var frames: FrameContainer
+    internal var frames: FrameManager
     
     internal unowned var container: T // Scene.stageType
     
@@ -36,20 +36,18 @@ public class SceneSequence<T: AnyObject> {
         
         let sceneClass = sceneType as! G.implType.Type
         let scene = generator.generater(impl: sceneClass, argument: generator.argument) as! S
-        frames.frames.append(scene)
-        scene.setup(stage: container, container: frames, scenario: scenario)
-        scene.set(context: context)
+        scene.setup(stage: container, context: context, container: frames, scenario: scenario)
         setup(container, scene)
     }
 
     public init(_ container: T) {
         self.container = container
-        frames = FrameContainer()
+        frames = FrameManager()
     }
 
     public init(_ container: T, _ scenario: Scenario?) {
         self.scenario = scenario
         self.container = container
-        frames = FrameContainer()
+        frames = FrameManager()
     }
 }
