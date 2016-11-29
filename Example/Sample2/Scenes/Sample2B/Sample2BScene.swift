@@ -11,7 +11,7 @@ import KabuKit
 
 extension Sample2BViewController: ActionScene {
     
-    enum Sample2Link: SceneLink {
+    enum Sample2Link: SceneTransition {
         case A
         case B
     }
@@ -22,7 +22,7 @@ extension Sample2BViewController: ActionScene {
     
     override func viewDidLoad() {
         let action = Sample2BAction(nextButtonA: nextButtonA, nextButtonB: nextButtonB, prevButton: prevButton)
-        actor.activate(action: action, transition: transition, context: context)
+        actor.activate(action: action, director: director, context: context)
     }
 
     func onChangeSceneRequest(link: Sample2Link, factory: SceneChangeRequestFactory<UIViewController>) -> SceneChangeRequest? {

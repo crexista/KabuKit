@@ -12,7 +12,7 @@ import Foundation
  This class supply director that current scene to next scene, or back to previous scene.
  
  */
-public class SceneDirector<Link: SceneLink> {
+public class SceneDirector<Transition: SceneTransition> {
     
     private unowned let stage: AnyObject
     
@@ -26,7 +26,7 @@ public class SceneDirector<Link: SceneLink> {
      transit to next scene
      
      */
-    public func transitTo(link: Link) {
+    public func transitTo(link: Transition) {
         _ = currentFrame?.transit(link: link, stage: stage, frames: frames, scenario: scenario)?.execute()
     }
     

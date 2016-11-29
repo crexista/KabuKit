@@ -1,5 +1,5 @@
 //
-//  Link.swift
+//  Transition.swift
 //  KabuKit
 //
 //  Created by crexista on 2016/11/15.
@@ -8,4 +8,4 @@
 
 import Foundation
 
-public protocol SceneLink {}
+public protocol SceneTransition {}

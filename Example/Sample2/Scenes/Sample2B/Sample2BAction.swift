@@ -23,12 +23,12 @@ class Sample2BAction : Action {
     
 
     
-    func start(transition: SceneTransition<Sample2BViewController.Sample2Link>, context: Bool?) -> [Observable<()>] {
+    func start(director: SceneDirector<Sample2BViewController.Sample2Link>, context: Bool?) -> [Observable<()>] {
         prevButton.isEnabled = context!
         return [
-            nextButtonA.rx.tap.do(onNext: { () in transition.transitTo(link: Sample2BViewController.Sample2Link.A)}),
-            nextButtonB.rx.tap.do(onNext: { () in transition.transitTo(link: Sample2BViewController.Sample2Link.B)}),
-            prevButton.rx.tap.do(onNext: { () in transition.back()})
+            nextButtonA.rx.tap.do(onNext: { () in director.transitTo(link: Sample2BViewController.Sample2Link.A)}),
+            nextButtonB.rx.tap.do(onNext: { () in director.transitTo(link: Sample2BViewController.Sample2Link.B)}),
+            prevButton.rx.tap.do(onNext: { () in director.back()})
         ]
     }
     

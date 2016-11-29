@@ -11,7 +11,7 @@ import KabuKit
 
 extension Sample1AViewController: ActionScene {
     
-    enum Sample1Link : SceneLink {
+    enum Sample1Link : SceneTransition {
         case A
         case B
     }
@@ -24,7 +24,7 @@ extension Sample1AViewController: ActionScene {
         self.navigationItem.hidesBackButton = true
         prevButton.isEnabled = context!
         let action = Sample1AAction(label: label, buttonA: nextButtonA, buttonB: nextButtonB, prevButton: prevButton)
-        actor.activate(action: action, transition: self.transition, context: self.context)
+        actor.activate(action: action, director: self.director, context: self.context)
     }
     
     func onChangeSceneRequest(link: Sample1Link, factory: SceneChangeRequestFactory<UIViewController>) -> SceneChangeRequest? {
@@ -54,7 +54,7 @@ extension Sample1AViewController: ActionScene {
     
     override func viewDidDisappear(_ animated: Bool) {
         if (self.navigationController == nil) {
-            //transition.back()
+            //director.back()
         }
     }
 

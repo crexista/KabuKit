@@ -23,11 +23,11 @@ class Sample1AAction: Action {
     
     unowned let prevButton: UIButton
     
-    func start(transition: SceneTransition<Sample1AViewController.Sample1Link>, context: Bool?) -> [Observable<()>] {
+    func start(director: SceneDirector<Sample1AViewController.Sample1Link>, context: Bool?) -> [Observable<()>] {
         return [
-            self.nextButtonA.rx.tap.do(onNext: { () in transition.transitTo(link: Sample1AViewController.Sample1Link.A)}),
-            self.nextButtonB.rx.tap.do(onNext: { () in transition.transitTo(link: Sample1AViewController.Sample1Link.B)}),
-            self.prevButton.rx.tap.do(onNext: { () in transition.back()})
+            self.nextButtonA.rx.tap.do(onNext: { () in director.transitTo(link: Sample1AViewController.Sample1Link.A)}),
+            self.nextButtonB.rx.tap.do(onNext: { () in director.transitTo(link: Sample1AViewController.Sample1Link.B)}),
+            self.prevButton.rx.tap.do(onNext: { () in director.back()})
         ]
     }
     

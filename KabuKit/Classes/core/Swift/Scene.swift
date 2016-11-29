@@ -10,7 +10,7 @@ import Foundation
 
 public protocol Scene : Frame {
     
-    associatedtype LinkType: SceneLink
+    associatedtype TransitionType: SceneTransition
     
     associatedtype ContextType
     
@@ -18,7 +18,7 @@ public protocol Scene : Frame {
     
     var context: ContextType? { get }
     
-    unowned var director: SceneDirector<LinkType> { get }
+    unowned var director: SceneDirector<TransitionType> { get }
     
     /**
      違うSceneへの遷移リクエストが飛んできたときに呼ばれるメソッドです
@@ -28,7 +28,7 @@ public protocol Scene : Frame {
      - Parameter factory: SceneChangeRequestを生成するFactoryです
      - Returns: SceneChangeRequest
      */
-    func onChangeSceneRequest(link: LinkType, factory: SceneChangeRequestFactory<StageType>) -> SceneChangeRequest?
+    func onChangeSceneRequest(link: TransitionType, factory: SceneChangeRequestFactory<StageType>) -> SceneChangeRequest?
     
     /**
      前の画面への遷移リクエストが飛んできたときに呼ばれるメソッドです
@@ -57,12 +57,12 @@ extension Frame where Self: Scene {
     }
    
     public func setup<S: AnyObject, C>(stage: S, context: C, container: FrameManager, scenario: Scenario?) {
-        let director = SceneDirector<Self.LinkType>(stage, self, container, scenario)
+        let director = SceneDirector<Self.TransitionType>(stage, self, container, scenario)
         container.set(frame: self, stuff: (director, context) as AnyObject)
     }
     
-    public func transit(link: SceneLink, stage: AnyObject, frames: FrameManager, scenario: Scenario?) -> SceneChangeRequest? {
-        let link2 = link as! Self.LinkType
+    public func transit(link: SceneTransition, stage: AnyObject, frames: FrameManager, scenario: Scenario?) -> SceneChangeRequest? {
+        let link2 = link as! Self.TransitionType
         let stage2 = stage as! Self.StageType
         let sceneFactory = SceneChangeRequestFactory<Self.StageType>(stage2, frames, scenario)
         return onChangeSceneRequest(link: link2, factory: sceneFactory)
@@ -72,15 +72,15 @@ extension Frame where Self: Scene {
 
 extension Scene {
     
-    public unowned var director: SceneDirector<LinkType> {
+    public unowned var director: SceneDirector<TransitionType> {
         let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneDirector<LinkType>, ContextType?)
+        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ContextType?)
         return result.0
     }
     
     public var context: ContextType? {
         let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneDirector<LinkType>, ContextType?)
+        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ContextType?)
         return result.1
     }
     

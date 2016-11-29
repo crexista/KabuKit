@@ -14,7 +14,7 @@ public protocol Frame : class {
     
     func setup<S: AnyObject, C>(stage: S, context: C, container: FrameManager, scenario: Scenario?)
     
-    func transit(link: SceneLink, stage: AnyObject, frames: FrameManager, scenario: Scenario?) -> SceneChangeRequest?
+    func transit(link: SceneTransition, stage: AnyObject, frames: FrameManager, scenario: Scenario?) -> SceneChangeRequest?
 
 }
 

@@ -14,21 +14,21 @@ public protocol ActionScene : Scene {
 
 extension ActionScene {
     
-    public unowned var director: SceneDirector<LinkType> {
+    public unowned var director: SceneDirector<TransitionType> {
         let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneDirector<LinkType>, ContextType?, Actor)
+        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ContextType?, Actor)
         return result.0
     }
     
     public var context: ContextType? {
         let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneDirector<LinkType>, ContextType?, Actor)
+        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ContextType?, Actor)
         return result.1
     }
     
     public unowned var actor: Actor {
         let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneDirector<LinkType>, ContextType?, Actor)
+        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ContextType?, Actor)
         return result.2
     }
 }
@@ -36,7 +36,7 @@ extension ActionScene {
 extension Frame where Self: ActionScene {
         
     public func setup<S: AnyObject, C>(stage: S, context: C, container: FrameManager, scenario: Scenario?) {
-        let director = SceneDirector<Self.LinkType>(stage, self, container, scenario)
+        let director = SceneDirector<Self.TransitionType>(stage, self, container, scenario)
         container.set(frame: self, stuff: (director, context, Actor()) as AnyObject)
     }
 
