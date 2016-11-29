@@ -18,7 +18,7 @@ public protocol Frame : class {
      画面表示をセットアップします
      
      */
-    func setup<S, C>(sequence:AnyObject, stage: S, context: C, container: FrameManager, scenario: Scenario?)
+    func setup<S, C>(sequence:AnyObject, stage: S, argument: C, container: FrameManager, scenario: Scenario?)
     
     /**
      画面表示周りを破棄します
@@ -35,7 +35,7 @@ public class FrameManager {
     // key: Scene
     private static var managers: NSMapTable<AnyObject, FrameManager> = NSMapTable.weakToWeakObjects()
     
-    // key: Scene, value: (director, context) のタプルか (director, context, actor) のタプル
+    // key: Scene, value: (director, argument) のタプルか (director, argument, actor) のタプル
     private var frameHashMap: NSMapTable<AnyObject, AnyObject> = NSMapTable.strongToStrongObjects()
     
     /**

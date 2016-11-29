@@ -26,17 +26,17 @@ public class SceneSequence<T: AnyObject> {
      
      - Parameter generator: Generator is logic that is required to generate `Scene` instance.
      - Parameter sceneType: SceneType is `Scene`'s Class
-     - Parameter context: Context is parameter that is required to invoke `Scene`.
+     - Parameter argument: Context is parameter that is required to invoke `Scene`.
      - Parameter setup: This is function. This function will be executed when `Scene` is generated
      */
     public func start<S: Scene, G: SceneGenerator>(_ generator: G,
                                                    _ sceneType: S.Type,
-                                                   _ context: S.ContextType? = nil,
+                                                   _ argument: S.ArgumentType? = nil,
                                                    _ setup: (T, S) -> Void) where T == S.TransitionType.StageType {
         
         let sceneClass = sceneType as! G.implType.Type
         let scene = generator.generater(impl: sceneClass, argument: generator.argument) as! S
-        scene.setup(sequence: self, stage: container, context: context, container: frames, scenario: scenario)
+        scene.setup(sequence: self, stage: container, argument: argument, container: frames, scenario: scenario)
         setup(container, scene)
     }
 

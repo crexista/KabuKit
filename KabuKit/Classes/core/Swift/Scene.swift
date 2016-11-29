@@ -12,9 +12,9 @@ public protocol Scene : Frame {
     
     associatedtype TransitionType: SceneTransition
     
-    associatedtype ContextType
+    associatedtype ArgumentType
     
-    var context: ContextType? { get }
+    var argument: ArgumentType? { get }
     
     unowned var director: SceneDirector<TransitionType> { get }
     
@@ -30,9 +30,9 @@ public protocol Scene : Frame {
 
 extension Frame where Self: Scene {
    
-    public func setup<S, C>(sequence:AnyObject, stage: S, context: C, container: FrameManager, scenario: Scenario?) {
+    public func setup<S, C>(sequence:AnyObject, stage: S, argument: C, container: FrameManager, scenario: Scenario?) {
         let director = SceneDirector<TransitionType>(sequence, stage as! TransitionType.StageType, self, container, scenario)
-        container.set(frame: self, stuff: (director, context) as AnyObject)
+        container.set(frame: self, stuff: (director, argument) as AnyObject)
     }
     
     public func clear<S>(stage: S) -> Bool {
@@ -48,13 +48,13 @@ extension Scene {
     
     public unowned var director: SceneDirector<TransitionType> {
         let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ContextType?)
+        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ArgumentType?)
         return result.0
     }
     
-    public var context: ContextType? {
+    public var argument: ArgumentType? {
         let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ContextType?)
+        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ArgumentType?)
         return result.1
     }
 

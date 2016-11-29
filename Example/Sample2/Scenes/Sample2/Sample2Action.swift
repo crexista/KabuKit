@@ -17,7 +17,7 @@ class Sample2Action: Action {
     
     unowned let startButton: UIButton
 
-    func start(director: SceneDirector<Sample2ViewController.Sample2Link>, context: ()?) -> [Observable<()>] {
+    func start(director: SceneDirector<Sample2ViewController.Sample2Link>, argument: ()?) -> [Observable<()>] {
 
         return [
             startButton.rx.tap.do(onNext: { () in director.transitTo(link: Sample2ViewController.Sample2Link.A)})

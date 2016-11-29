@@ -18,7 +18,7 @@ struct SceneChangeRequestImpl<SceneType: Scene, GeneratorType: SceneGenerator> :
     private let method: (_ stage: SceneType.TransitionType.StageType, _ scene: SceneType) -> Void
     private let stage: SceneType.TransitionType.StageType
     private let sceneType: SceneType.Type
-    private let context: SceneType.ContextType?
+    private let argument: SceneType.ArgumentType?
     private let generator: GeneratorType
     private let frames: FrameManager
     private let sequence: AnyObject
@@ -27,7 +27,7 @@ struct SceneChangeRequestImpl<SceneType: Scene, GeneratorType: SceneGenerator> :
     func execute() {
         let sceneClass = sceneType as! GeneratorType.implType.Type
         let newScene = generator.generater(impl: sceneClass, argument: generator.argument) as? SceneType
-        newScene?.setup(sequence: sequence, stage: stage, context: context, container: frames, scenario: scenario)
+        newScene?.setup(sequence: sequence, stage: stage, argument: argument, container: frames, scenario: scenario)
         if let scene = newScene {
             method(stage, scene)
         }
@@ -40,14 +40,14 @@ struct SceneChangeRequestImpl<SceneType: Scene, GeneratorType: SceneGenerator> :
          sceneType: SceneType.Type,
          frames: FrameManager,
          scenario: Scenario?,
-         context: SceneType.ContextType?,
+         argument: SceneType.ArgumentType?,
          f: @escaping (_ stage: SceneType.TransitionType.StageType, _ scene: SceneType) -> Void) {
         
         self.method = f
         self.stage = stage
         self.sceneType = sceneType
         self.generator = generator
-        self.context = context
+        self.argument = argument
         self.frames = frames
         self.scenario = scenario
         self.sequence = sequence

@@ -16,27 +16,27 @@ extension ActionScene {
     
     public unowned var director: SceneDirector<TransitionType> {
         let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ContextType?, Actor)
+        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ArgumentType?, Actor)
         return result.0
     }
     
-    public var context: ContextType? {
+    public var argument: ArgumentType? {
         let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ContextType?, Actor)
+        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ArgumentType?, Actor)
         return result.1
     }
     
     public unowned var actor: Actor {
         let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ContextType?, Actor)
+        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ArgumentType?, Actor)
         return result.2
     }
 }
 
 extension Frame where Self: ActionScene {
-    public func setup<S, C>(sequence:AnyObject, stage: S, context: C, container: FrameManager, scenario: Scenario?) {
+    public func setup<S, C>(sequence:AnyObject, stage: S, argument: C, container: FrameManager, scenario: Scenario?) {
         let director = SceneDirector<TransitionType>(sequence, stage as! TransitionType.StageType, self, container, scenario)
-        container.set(frame: self, stuff: (director, context, Actor()) as AnyObject)
+        container.set(frame: self, stuff: (director, argument, Actor()) as AnyObject)
     }
 
 }

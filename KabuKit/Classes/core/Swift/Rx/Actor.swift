@@ -13,9 +13,9 @@ public class Actor {
     
     fileprivate var actions: NSMapTable<AnyObject, AnyObject>
     
-    public func activate<T: Action>(action: T, director: SceneDirector<T.SceneType.TransitionType>, context: T.SceneType.ContextType?) {
+    public func activate<T: Action>(action: T, director: SceneDirector<T.SceneType.TransitionType>, argument: T.SceneType.ArgumentType?) {
 
-        let disposables = action.start(director: director, context: context).map { (observable) -> Disposable in
+        let disposables = action.start(director: director, argument: argument).map { (observable) -> Disposable in
             return observable.subscribe(onError: action.onError)
         }
         

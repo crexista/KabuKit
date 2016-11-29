@@ -13,7 +13,7 @@ public protocol Action : class, OnStop, OnError {
     
     associatedtype SceneType: Scene
     
-    func start(director: SceneDirector<SceneType.TransitionType>, context: SceneType.ContextType?)->[Observable<()>]
+    func start(director: SceneDirector<SceneType.TransitionType>, argument: SceneType.ArgumentType?)->[Observable<()>]
 }
 
 public protocol OnStop {

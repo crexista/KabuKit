@@ -11,7 +11,7 @@ import KabuKit
 
 extension Sample2BViewController: ActionScene {
     
-    typealias ContextType = Bool
+    typealias ArgumentType = Bool
     typealias TransitionType = Sample2Link
 
     enum Sample2Link: SceneTransition {
@@ -36,7 +36,7 @@ extension Sample2BViewController: ActionScene {
     
     override func viewDidLoad() {
         let action = Sample2BAction(nextButtonA: nextButtonA, nextButtonB: nextButtonB, prevButton: prevButton)
-        actor.activate(action: action, director: director, context: context)
+        actor.activate(action: action, director: director, argument: argument)
     }
     
     /**

@@ -22,12 +22,12 @@ extension Sample2ViewController: ActionScene {
         
     }
     
-    typealias ContextType = Void
+    typealias ArgumentType = Void
     typealias TransitionType = Sample2Link
 
     override func viewDidLoad() {
         let action = Sample2Action(startButton: startButton)
-        actor.activate(action: action, director: director, context: context)
+        actor.activate(action: action, director: director, argument: argument)
     }
     
     /**

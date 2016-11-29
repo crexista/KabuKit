@@ -19,7 +19,7 @@ public class SceneChangeRequestFactory<StageType: AnyObject> {
     
     public func createSceneChangeRequest<T: SceneGenerator, S: Scene>(_ generator: T,
                                                                       _ sceneType: S.Type,
-                                                                      _ context: S.ContextType?,
+                                                                      _ argument: S.ArgumentType?,
                                                                       _ setup: @escaping (_ stage: StageType, _ scene: S) -> Void) -> SceneChangeRequest where T.implType == S.TransitionType.StageType, StageType == S.TransitionType.StageType {
 
         return SceneChangeRequestImpl(generator: generator,
@@ -28,7 +28,7 @@ public class SceneChangeRequestFactory<StageType: AnyObject> {
                                       sceneType: sceneType,
                                       frames: frames,
                                       scenario: scenario,
-                                      context: context,
+                                      argument: argument,
                                       f: setup)
     }
     

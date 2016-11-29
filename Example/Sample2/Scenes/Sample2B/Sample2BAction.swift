@@ -23,8 +23,8 @@ class Sample2BAction : Action {
     
 
     
-    func start(director: SceneDirector<Sample2BViewController.Sample2Link>, context: Bool?) -> [Observable<()>] {
-        prevButton.isEnabled = context!
+    func start(director: SceneDirector<Sample2BViewController.Sample2Link>, argument: Bool?) -> [Observable<()>] {
+        prevButton.isEnabled = argument!
         return [
             nextButtonA.rx.tap.do(onNext: { () in director.transitTo(link: Sample2BViewController.Sample2Link.A)}),
             nextButtonB.rx.tap.do(onNext: { () in director.transitTo(link: Sample2BViewController.Sample2Link.B)}),
