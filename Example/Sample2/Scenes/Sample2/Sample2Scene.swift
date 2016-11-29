@@ -16,8 +16,10 @@ extension Sample2ViewController: ActionScene {
         typealias StageType = UIViewController
         case A
         
-        public func request(factory: SceneChangeRequestFactory<UIViewController>) -> SceneChangeRequest? {
-            return nil
+        public func request(context: SceneContext<UIViewController>) -> SceneChangeRequest? {
+            return context.sequenceRequest({ () -> AnyObject in
+                return "Main" as AnyObject
+            })
         }
         
     }

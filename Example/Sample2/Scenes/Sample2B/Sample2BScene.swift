@@ -18,16 +18,16 @@ extension Sample2BViewController: ActionScene {
         typealias StageType = UIViewController
         case A, B
         
-        public func request(factory: SceneChangeRequestFactory<UIViewController>) -> SceneChangeRequest? {
+        public func request(context: SceneContext<UIViewController>) -> SceneChangeRequest? {
             switch self {
             case .A:
                 let File2A = ViewControllerXIBFile("Sample2AViewController", Bundle.main)
-                return factory.createSceneChangeRequest(File2A, Sample2AViewController.self, true) { (stage, scene) in
+                return context.sceneRequest(File2A, Sample2AViewController.self, true) { (stage, scene) in
                     stage.navigationController?.pushViewController(scene, animated: true)
                 }
             case .B:
                 let File2B = ViewControllerXIBFile("Sample2BViewController", Bundle.main)
-                return factory.createSceneChangeRequest(File2B, Sample2BViewController.self, true) { (stage, scene) in
+                return context.sceneRequest(File2B, Sample2BViewController.self, true) { (stage, scene) in
                     stage.navigationController?.pushViewController(scene, animated: true)
                 }
             }

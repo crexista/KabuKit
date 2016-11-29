@@ -32,8 +32,8 @@ public class SceneDirector<TransitionType: SceneTransition> {
      
      */
     public func transitTo(link: TransitionType) {        
-        let factory = SceneChangeRequestFactory(sequence, currentFrame!, stage, frames, scenario)
-        link.request(factory: factory)?.execute()
+        let factory = SceneContext(sequence, currentFrame!, stage, frames, scenario)
+        link.request(context: factory)?.execute()
     }
     
     /**

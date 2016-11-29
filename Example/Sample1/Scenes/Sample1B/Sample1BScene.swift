@@ -19,16 +19,16 @@ extension Sample1BViewController : ActionScene {
         case A
         case B
         
-        func request(factory: SceneChangeRequestFactory<UIViewController>) -> SceneChangeRequest? {
+        func request(context: SceneContext<UIViewController>) -> SceneChangeRequest? {
             switch self {
             case .A:
                 let xib = ViewControllerXIBFile("Sample1AViewController", Bundle.main)
-                return factory.createSceneChangeRequest(xib, Sample1AViewController.self, true) { (stage, scene) in
+                return context.sceneRequest(xib, Sample1AViewController.self, true) { (stage, scene) in
                     stage.navigationController?.pushViewController(scene, animated: true)
                 }
             case .B:
                 let xib = ViewControllerXIBFile("Sample1BViewController", Bundle.main)
-                return factory.createSceneChangeRequest(xib, Sample1BViewController.self, nil) { (stage, scene) in
+                return context.sceneRequest(xib, Sample1BViewController.self, nil) { (stage, scene) in
                     stage.navigationController?.pushViewController(scene, animated: true)
                 }
             }
