@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4E7084101DE60D890072F7EE /* SceneSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E70840E1DE60D890072F7EE /* SceneSequence.swift */; };
-		4E7084111DE60D890072F7EE /* SceneTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E70840F1DE60D890072F7EE /* SceneTransition.swift */; };
+		4E7084111DE60D890072F7EE /* SceneDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E70840F1DE60D890072F7EE /* SceneDirector.swift */; };
 		4E7084161DE60FBB0072F7EE /* ViewControllerXIBFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7084151DE60FBB0072F7EE /* ViewControllerXIBFile.swift */; };
 		4E7084181DE60FCD0072F7EE /* ActionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7084171DE60FCD0072F7EE /* ActionScene.swift */; };
 		4E9FC24F1DEB7C8B0009649D /* SceneChangeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC24E1DEB7C8B0009649D /* SceneChangeRequest.swift */; };
@@ -43,7 +43,7 @@
 		36ECF06D3AB8A4EEC2C90D3B /* Pods-KabuKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit.release.xcconfig"; sourceTree = "<group>"; };
 		4DC74D11E4722F083D18D976 /* Pods-KabuKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKitTests/Pods-KabuKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4E70840E1DE60D890072F7EE /* SceneSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneSequence.swift; sourceTree = "<group>"; };
-		4E70840F1DE60D890072F7EE /* SceneTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTransition.swift; sourceTree = "<group>"; };
+		4E70840F1DE60D890072F7EE /* SceneDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDirector.swift; sourceTree = "<group>"; };
 		4E7084151DE60FBB0072F7EE /* ViewControllerXIBFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerXIBFile.swift; sourceTree = "<group>"; };
 		4E7084171DE60FCD0072F7EE /* ActionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionScene.swift; sourceTree = "<group>"; };
 		4E9FC24E1DEB7C8B0009649D /* SceneChangeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneChangeRequest.swift; sourceTree = "<group>"; };
@@ -193,7 +193,7 @@
 				4EF5CD3F1DE30E3200683D1E /* Scenario.swift */,
 				4EF5CD401DE30E3200683D1E /* Scene.swift */,
 				4E70840E1DE60D890072F7EE /* SceneSequence.swift */,
-				4E70840F1DE60D890072F7EE /* SceneTransition.swift */,
+				4E70840F1DE60D890072F7EE /* SceneDirector.swift */,
 				4EF5CD3A1DE30E3200683D1E /* SceneChangeRequestFactory.swift */,
 				4E9FC24E1DEB7C8B0009649D /* SceneChangeRequest.swift */,
 				4E9FC2501DEB8D300009649D /* SceneBackRequest.swift */,
@@ -466,7 +466,7 @@
 				4E7084181DE60FCD0072F7EE /* ActionScene.swift in Sources */,
 				4E7084101DE60D890072F7EE /* SceneSequence.swift in Sources */,
 				4E9FC24F1DEB7C8B0009649D /* SceneChangeRequest.swift in Sources */,
-				4E7084111DE60D890072F7EE /* SceneTransition.swift in Sources */,
+				4E7084111DE60D890072F7EE /* SceneDirector.swift in Sources */,
 				4E9FC2511DEB8D300009649D /* SceneBackRequest.swift in Sources */,
 				4EF5CD4E1DE30E3200683D1E /* Actor.swift in Sources */,
 				4EF5CD521DE30E3200683D1E /* SceneGenerator.swift in Sources */,

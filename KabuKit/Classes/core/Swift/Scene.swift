@@ -18,7 +18,7 @@ public protocol Scene : Frame {
     
     var context: ContextType? { get }
     
-    unowned var transition: SceneTransition<LinkType> { get }
+    unowned var director: SceneDirector<LinkType> { get }
     
     /**
      違うSceneへの遷移リクエストが飛んできたときに呼ばれるメソッドです
@@ -41,7 +41,7 @@ public protocol Scene : Frame {
     
     
     /**
-     このメソッドを呼ぶと画面に紐づけられたtransitionやcontext(ActionSceneの場合はActorも)が解放されます
+     このメソッドを呼ぶと画面に紐づけられたdirectorやcontext(ActionSceneの場合はActorも)が解放されます
      ただし、メモリ解放をするだけであり別に表示そのものが変わるというわけではありません
      表示の変更に関しては実装する必要があります
      
@@ -57,8 +57,8 @@ extension Frame where Self: Scene {
     }
    
     public func setup<S: AnyObject, C>(stage: S, context: C, container: FrameManager, scenario: Scenario?) {
-        let transition = SceneTransition<Self.LinkType>(stage, self, container, scenario)
-        container.set(frame: self, stuff: (transition, context) as AnyObject)
+        let director = SceneDirector<Self.LinkType>(stage, self, container, scenario)
+        container.set(frame: self, stuff: (director, context) as AnyObject)
     }
     
     public func transit(link: SceneLink, stage: AnyObject, frames: FrameManager, scenario: Scenario?) -> SceneChangeRequest? {
@@ -72,15 +72,15 @@ extension Frame where Self: Scene {
 
 extension Scene {
     
-    public unowned var transition: SceneTransition<LinkType> {
+    public unowned var director: SceneDirector<LinkType> {
         let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneTransition<LinkType>, ContextType?)
+        let result = manager.getStuff(frame: self) as! (SceneDirector<LinkType>, ContextType?)
         return result.0
     }
     
     public var context: ContextType? {
         let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneTransition<LinkType>, ContextType?)
+        let result = manager.getStuff(frame: self) as! (SceneDirector<LinkType>, ContextType?)
         return result.1
     }
     

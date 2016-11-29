@@ -23,11 +23,11 @@ public class FrameManager {
     // key: Scene
     private static var managers: NSMapTable<AnyObject, FrameManager> = NSMapTable.weakToWeakObjects()
     
-    // key: Scene, value: (transition, context) のタプルか (transition, context, actor) のタプル
+    // key: Scene, value: (director, context) のタプルか (director, context, actor) のタプル
     private var frameHashMap: NSMapTable<AnyObject, AnyObject> = NSMapTable.strongToStrongObjects()
     
     /**
-     FrameManagerで管理されているSceneを解放し、内部で保持されているTransitionやContextへの参照を外します
+     FrameManagerで管理されているSceneを解放し、内部で保持されているdirectorやContextへの参照を外します
      
      */
     internal func release(frame: Frame) {

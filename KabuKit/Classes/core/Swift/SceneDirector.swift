@@ -1,5 +1,5 @@
 //
-//  SceneTransition.swift
+//  SceneDirector.swift
 //  KabuKit
 //
 //  Created by crexista on 2016/11/21.
@@ -9,10 +9,10 @@
 import Foundation
 
 /**
- This class supply transition that current scene to next scene, or back to previous scene.
+ This class supply director that current scene to next scene, or back to previous scene.
  
  */
-public class SceneTransition<Link: SceneLink> {
+public class SceneDirector<Link: SceneLink> {
     
     private unowned let stage: AnyObject
     
@@ -44,7 +44,7 @@ public class SceneTransition<Link: SceneLink> {
     }
     
     deinit {
-        print("transition deinit")
+        print("director deinit")
     }
     
     init(_ stage: AnyObject, _ frame: Frame, _ container: FrameManager, _ scenario: Scenario?) {
