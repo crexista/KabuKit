@@ -31,7 +31,7 @@ public protocol Scene : Frame {
 extension Frame where Self: Scene {
    
     public func setup<S, C>(sequence:AnyObject, stage: S, argument: C, container: FrameManager, scenario: Scenario?) {
-        let director = SceneDirector<TransitionType>(sequence, stage as! TransitionType.StageType, self, container, scenario)
+        let director = DefaultSceneDirector<TransitionType>(sequence, stage as! TransitionType.StageType, self, container, scenario)
         container.set(frame: self, stuff: (director, argument) as AnyObject)
     }
     
@@ -47,14 +47,18 @@ extension Scene {
     }
     
     public unowned var director: SceneDirector<TransitionType> {
-        let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ArgumentType?)
-        return result.0
+        if let manager = FrameManager.managerByScene(scene: self) {
+            let result = manager.getStuff(frame: self) as! (DefaultSceneDirector<TransitionType>, ArgumentType?)
+            return result.0
+        } else {
+            return SceneDirector<TransitionType>()
+        }
     }
     
+
     public var argument: ArgumentType? {
         let manager = FrameManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (SceneDirector<TransitionType>, ArgumentType?)
+        let result = manager.getStuff(frame: self) as! (DefaultSceneDirector<TransitionType>, ArgumentType?)
         return result.1
     }
 

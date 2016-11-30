@@ -12,7 +12,7 @@ import Foundation
  This class supply director that current scene to next scene, or back to previous scene.
  
  */
-public class SceneDirector<TransitionType: SceneTransition> {
+public class DefaultSceneDirector<TransitionType: SceneTransition> : SceneDirector<TransitionType> {
     
     private unowned let stage: TransitionType.StageType
     
@@ -31,7 +31,7 @@ public class SceneDirector<TransitionType: SceneTransition> {
      TODO 後でlinkの名前とtransitionに変更する
      
      */
-    public func transitTo(link: TransitionType) {        
+    override public func transitTo(link: TransitionType) {
         let factory = SceneContext(sequence, currentFrame!, stage, frames, scenario)
         link.request(context: factory)?.execute()
     }
@@ -40,7 +40,7 @@ public class SceneDirector<TransitionType: SceneTransition> {
      transit to previous scene, and try to destruct previous scene
      
      */
-    public func exit() {
+    override public func exit() {
         if let frame = currentFrame {
             if (frame.clear(stage: stage)) {
                 frames.release(frame: frame)
@@ -60,4 +60,11 @@ public class SceneDirector<TransitionType: SceneTransition> {
         self.sequence = sequence
     }
     
+}
+
+public class SceneDirector<TransitionType: SceneTransition> {
+    
+    public func transitTo(link: TransitionType) {}
+    
+    public func exit() {}
 }
