@@ -3,7 +3,7 @@
 //  Sample1
 //
 //  Created by crexista on 2016/11/21.
-//  Copyright © 2016年 crexista. All rights reserved.
+//  Copyright © crexista. All rights reserved.
 //
 
 import UIKit
