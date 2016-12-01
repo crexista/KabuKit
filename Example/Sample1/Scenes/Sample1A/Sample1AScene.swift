@@ -48,7 +48,7 @@ extension Sample1AViewController: ActionScene {
     
     override func viewDidDisappear(_ animated: Bool) {
         if (self.navigationController == nil && !isReleased) {
-            director.exit()
+            director?.exit()
         }
     }
 

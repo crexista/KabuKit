@@ -14,7 +14,7 @@ public protocol ActionScene : Scene {
 
 extension ActionScene {
     
-    public unowned var director: SceneDirector<TransitionType> {
+    public weak var director: SceneDirector<TransitionType>? {
         let manager = FrameManager.managerByScene(scene: self)!
         let result = manager.getStuff(frame: self) as! (DefaultSceneDirector<TransitionType>, ArgumentType?, Actor)
         return result.0

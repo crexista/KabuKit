@@ -16,7 +16,7 @@ public protocol Scene : Frame {
     
     var argument: ArgumentType? { get }
     
-    unowned var director: SceneDirector<TransitionType> { get }
+    weak var director: SceneDirector<TransitionType>? { get }
     
     /**
      前の画面への遷移リクエストが飛んできたときに呼ばれるメソッドです
@@ -46,7 +46,7 @@ extension Scene {
         return FrameManager.managerByScene(scene: self) == nil
     }
     
-    public unowned var director: SceneDirector<TransitionType> {
+    public weak var director: SceneDirector<TransitionType>? {
         if let manager = FrameManager.managerByScene(scene: self) {
             let result = manager.getStuff(frame: self) as! (DefaultSceneDirector<TransitionType>, ArgumentType?)
             return result.0

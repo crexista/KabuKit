@@ -22,12 +22,12 @@ class Sample2AAction : Action {
     
     unowned let prevButton: UIButton
   
-    func start(director: SceneDirector<Sample2AViewController.Sample2Link>, argument: Bool?) -> [Observable<()>] {
+    func start(director: SceneDirector<Sample2AViewController.Sample2Link>?, argument: Bool?) -> [Observable<()>] {
         prevButton.isEnabled = argument!
         return [
-            nextButtonA.rx.tap.do(onNext: { () in director.transitTo(link: Sample2AViewController.Sample2Link.A)}),
-            nextButtonB.rx.tap.do(onNext: { () in director.transitTo(link: Sample2AViewController.Sample2Link.B)}),
-            prevButton.rx.tap.do(onNext: { () in _ = director.exit()})
+            nextButtonA.rx.tap.do(onNext: { () in director?.transitTo(link: Sample2AViewController.Sample2Link.A)}),
+            nextButtonB.rx.tap.do(onNext: { () in director?.transitTo(link: Sample2AViewController.Sample2Link.B)}),
+            prevButton.rx.tap.do(onNext: { () in _ = director?.exit()})
         ]
     }
 
