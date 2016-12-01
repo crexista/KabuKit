@@ -56,7 +56,6 @@ struct SceneChangeRequestImpl<SceneType: Scene, GeneratorType: SceneGenerator> :
 }
 
 struct ScenarioRequestImpl<StageType: AnyObject>: SceneChangeRequest {
-//    typealias StageType = SceneType.TransitionType.StageType
     
     let method: () -> AnyObject
     

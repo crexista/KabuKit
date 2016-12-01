@@ -31,12 +31,19 @@ public protocol Scene : BaseScene {
 extension BaseScene where Self: Scene {
    
     public func setup<S, C>(sequence:AnyObject, stage: S, argument: C, container: SceneManager, scenario: Scenario?) {
-        let director = DefaultSceneDirector<TransitionType>(sequence, stage as! TransitionType.StageType, self, container, scenario)
+        guard let stageType = stage as? TransitionType.StageType else {
+            assert(false, "cannot setup scene")
+        }
+
+        let director = DefaultSceneDirector<TransitionType>(sequence, stageType, self, container, scenario)
         container.set(frame: self, stuff: (director, argument) as AnyObject)
     }
     
     public func clear<S>(stage: S) -> Bool {
-        return onRelease(stage: stage as! TransitionType.StageType)
+        guard let stageType = stage as? TransitionType.StageType else {
+            assert(false, "cannot clear scene")
+        }
+        return onRelease(stage: stageType)
     }
 }
 
@@ -47,19 +54,26 @@ extension Scene {
     }
     
     public weak var director: SceneDirector<TransitionType>? {
-        if let manager = SceneManager.managerByScene(scene: self) {
-            let result = manager.getStuff(frame: self) as! (DefaultSceneDirector<TransitionType>, ArgumentType?)
-            return result.0
-        } else {
-            return SceneDirector<TransitionType>()
+        guard let manager = SceneManager.managerByScene(scene: self) else {
+            return nil
         }
+        guard let sceneContents = manager.getStuff(frame: self) as? (DefaultSceneDirector<TransitionType>, ArgumentType?) else {
+            assert(false, "Illegal Operation Error")
+        }
+
+        return sceneContents.0
     }
     
 
     public var argument: ArgumentType? {
-        let manager = SceneManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (DefaultSceneDirector<TransitionType>, ArgumentType?)
-        return result.1
+        guard let manager = SceneManager.managerByScene(scene: self) else {
+            return nil
+        }
+        guard let sceneContents = manager.getStuff(frame: self) as? (DefaultSceneDirector<TransitionType>, ArgumentType?) else {
+            assert(false, "Illegal Operation Error")
+        }
+        
+        return sceneContents.1
     }
 
 }

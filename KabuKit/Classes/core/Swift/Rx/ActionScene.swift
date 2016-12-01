@@ -15,21 +15,30 @@ public protocol ActionScene : Scene {
 extension ActionScene {
     
     public weak var director: SceneDirector<TransitionType>? {
-        let manager = SceneManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (DefaultSceneDirector<TransitionType>, ArgumentType?, Actor)
-        return result.0
+        guard let manager = SceneManager.managerByScene(scene: self) else {
+            return nil
+        }
+        guard let sceneContents = manager.getStuff(frame: self) as? (DefaultSceneDirector<TransitionType>, ArgumentType?, Actor) else {
+            assert(false, "Illegal Operation Error")
+        }
+        return sceneContents.0
     }
     
     public var argument: ArgumentType? {
-        let manager = SceneManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (DefaultSceneDirector<TransitionType>, ArgumentType?, Actor)
-        return result.1
+        guard let manager = SceneManager.managerByScene(scene: self) else {
+            return nil
+        }
+        guard let sceneContents = manager.getStuff(frame: self) as? (DefaultSceneDirector<TransitionType>, ArgumentType?, Actor) else {
+            assert(false, "Illegal Operation Error")
+        }
+        return sceneContents.1
     }
     
     public unowned var actor: Actor {
-        let manager = SceneManager.managerByScene(scene: self)!
-        let result = manager.getStuff(frame: self) as! (DefaultSceneDirector<TransitionType>, ArgumentType?, Actor)
-        return result.2
+        guard let sceneContents = SceneManager.managerByScene(scene: self)?.getStuff(frame: self) as? (DefaultSceneDirector<TransitionType>, ArgumentType?, Actor) else {
+            assert(false, "Illegal Operation Error")
+        }
+        return sceneContents.2
     }
 }
 
