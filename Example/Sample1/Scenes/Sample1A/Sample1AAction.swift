@@ -13,8 +13,6 @@ import RxCocoa
 
 class Sample1AAction: Action {
     
-    typealias SceneType = Sample1AViewController
-    
     unowned let label: UILabel
     
     unowned let nextButtonA: UIButton
@@ -22,6 +20,8 @@ class Sample1AAction: Action {
     unowned let nextButtonB: UIButton
     
     unowned let prevButton: UIButton
+    
+    typealias SceneType = Sample1AViewController
     
     func start(director: SceneDirector<Sample1AViewController.Sample1Link>?, argument: Bool?) -> [Observable<()>] {
         return [

@@ -11,9 +11,7 @@ import KabuKit
 
 extension Sample1AViewController: ActionScene {
     
-    typealias TransitionType = Sample1Link
-    typealias ArgumentType = Bool
-    
+    // MARK: - SceneTransition Protocol
     enum Sample1Link : SceneTransition {
         typealias StageType = UIViewController
         case A, B
@@ -34,6 +32,16 @@ extension Sample1AViewController: ActionScene {
         }
     }
 
+    // MARK: - ActionScene Protocol
+    typealias TransitionType = Sample1Link
+    typealias ArgumentType = Bool
+
+    func onRelease(stage: UIViewController) -> Bool {
+        _ = stage.navigationController?.popViewController(animated: true)
+        return true
+    }
+
+    // MARK: - Override
     override func viewDidLoad() {
         self.navigationItem.hidesBackButton = true
         prevButton.isEnabled = argument!
@@ -41,10 +49,6 @@ extension Sample1AViewController: ActionScene {
         actor.activate(action: action, director: self.director, argument: self.argument)
     }
     
-    func onRelease(stage: UIViewController) -> Bool {
-        _ = stage.navigationController?.popViewController(animated: true)
-        return true
-    }
     
     override func viewDidDisappear(_ animated: Bool) {
         if (self.navigationController == nil && !isReleased) {
