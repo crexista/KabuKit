@@ -26,7 +26,7 @@ import UIKit
     
     func onEvent<StageType : AnyObject, EventType>(currentStage: StageType,
                                                    currentSequence: SceneSequence<StageType>,
-                                                   currentScene: Frame,
+                                                   currentScene: BaseScene,
                                                    event: EventType) {
         if (aSequence == nil) {
             let aXIB = ViewControllerXIBFile("Sample2AViewController", Bundle.main)

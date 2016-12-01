@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Scene : Frame {
+public protocol Scene : BaseScene {
     
     associatedtype TransitionType: SceneTransition
     
@@ -28,9 +28,9 @@ public protocol Scene : Frame {
     func onRelease(stage: TransitionType.StageType) -> Bool
 }
 
-extension Frame where Self: Scene {
+extension BaseScene where Self: Scene {
    
-    public func setup<S, C>(sequence:AnyObject, stage: S, argument: C, container: FrameManager, scenario: Scenario?) {
+    public func setup<S, C>(sequence:AnyObject, stage: S, argument: C, container: SceneManager, scenario: Scenario?) {
         let director = DefaultSceneDirector<TransitionType>(sequence, stage as! TransitionType.StageType, self, container, scenario)
         container.set(frame: self, stuff: (director, argument) as AnyObject)
     }
@@ -43,11 +43,11 @@ extension Frame where Self: Scene {
 extension Scene {
     
     public var isReleased: Bool {
-        return FrameManager.managerByScene(scene: self) == nil
+        return SceneManager.managerByScene(scene: self) == nil
     }
     
     public weak var director: SceneDirector<TransitionType>? {
-        if let manager = FrameManager.managerByScene(scene: self) {
+        if let manager = SceneManager.managerByScene(scene: self) {
             let result = manager.getStuff(frame: self) as! (DefaultSceneDirector<TransitionType>, ArgumentType?)
             return result.0
         } else {
@@ -57,7 +57,7 @@ extension Scene {
     
 
     public var argument: ArgumentType? {
-        let manager = FrameManager.managerByScene(scene: self)!
+        let manager = SceneManager.managerByScene(scene: self)!
         let result = manager.getStuff(frame: self) as! (DefaultSceneDirector<TransitionType>, ArgumentType?)
         return result.1
     }

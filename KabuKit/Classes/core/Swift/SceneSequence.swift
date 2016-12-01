@@ -15,7 +15,7 @@ import UIKit
  */
 public class SceneSequence<T: AnyObject> {
     
-    internal var frames: FrameManager
+    internal var frames: SceneManager
     
     internal unowned var container: T // Scene.stageType
     
@@ -42,12 +42,12 @@ public class SceneSequence<T: AnyObject> {
 
     public init(_ container: T) {
         self.container = container
-        frames = FrameManager()
+        frames = SceneManager()
     }
 
     public init(_ container: T, _ scenario: Scenario?) {
         self.scenario = scenario
         self.container = container
-        frames = FrameManager()
+        frames = SceneManager()
     }
 }

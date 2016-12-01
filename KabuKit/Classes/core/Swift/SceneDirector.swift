@@ -16,11 +16,11 @@ public class DefaultSceneDirector<TransitionType: SceneTransition> : SceneDirect
     
     private unowned let stage: TransitionType.StageType
     
-    private unowned let frames: FrameManager
+    private unowned let frames: SceneManager
     
     private unowned let sequence: AnyObject
     
-    private weak var currentFrame: Frame?
+    private weak var currentScene: BaseScene?
     
     private weak var scenario: Scenario?
     
@@ -32,7 +32,7 @@ public class DefaultSceneDirector<TransitionType: SceneTransition> : SceneDirect
      
      */
     override public func transitTo(link: TransitionType) {
-        let factory = SceneContext(sequence, currentFrame!, stage, frames, scenario)
+        let factory = SceneContext(sequence, currentScene!, stage, frames, scenario)
         link.request(context: factory)?.execute()
     }
     
@@ -41,7 +41,7 @@ public class DefaultSceneDirector<TransitionType: SceneTransition> : SceneDirect
      
      */
     override public func exit() {
-        if let frame = currentFrame {
+        if let frame = currentScene {
             if (frame.clear(stage: stage)) {
                 frames.release(frame: frame)
             }
@@ -52,11 +52,11 @@ public class DefaultSceneDirector<TransitionType: SceneTransition> : SceneDirect
         print("director deinit")
     }
     
-    init(_ sequence: AnyObject, _ stage: TransitionType.StageType, _ frame: Frame, _ container: FrameManager, _ scenario: Scenario?) {
+    init(_ sequence: AnyObject, _ stage: TransitionType.StageType, _ frame: BaseScene, _ container: SceneManager, _ scenario: Scenario?) {
         self.stage = stage
         self.frames = container
         self.scenario = scenario
-        self.currentFrame = frame
+        self.currentScene = frame
         self.sequence = sequence
     }
     

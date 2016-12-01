@@ -12,6 +12,6 @@ public protocol Scenario : class {
     
     func onEvent<StageType: AnyObject, EventType>(currentStage: StageType,
                                                   currentSequence: SceneSequence<StageType>,
-                                                  currentScene: Frame,
+                                                  currentScene: BaseScene,
                                                   event: EventType)
 }
