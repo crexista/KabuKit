@@ -174,17 +174,36 @@ ex) Sample1AViewController
           return true
       }
     ```
-    ActionScene Protocolの実装である事を宣言した場合、上記のようなコードを書く必要があり以下の1つのメソッドと2つのtypealiasを宣言する必要があります
-    1. ArgumentType  
-    ActionSceneを実装しているクラスが画面を描画する際に必要となる情報の型です。  
-    このサンプルでは戻るボタンを有効にするか否かの情報を送るためにBool型を指定しています
-    1. TransitionType  
-    ユーザーからのなんらかのアクションによって画面遷移をする事になった際、どのような時にどのような遷移を行うか  
-    というのを記述したクラス(正確にはSceneTransitionを実装したクラス)の型をここに指定します。  
-    今回に場合はクラス内に記述されている実装したEnum、`Sample1Link` を指定しています。  
-    1. onRelease  
-    `dissmissViewController` や `popViewController` などで画面が解放され、捨てられる時に呼ばれます。
-    その際このクラスが指定しているSceneTransitionクラスのStageTypeのクラスが引数としてよばれます
+    ActionScene Protocolの実装である事を宣言した場合、上記のようなコードを書く必要があり以下の1つのメソッドと2つのtypealiasを宣言する必要があり、
+    そして3つのプロパティが提供されます
+    - 宣言すべき typealias
+      1. ArgumentType  
+      ActionSceneを実装しているクラスが画面を描画する際に必要となる情報の型です。  
+      このサンプルでは戻るボタンを有効にするか否かの情報を送るためにBool型を指定しています
+      1. TransitionType  
+      ユーザーからのなんらかのアクションによって画面遷移をする事になった際、どのような時にどのような遷移を行うか  
+      というのを記述したクラス(正確にはSceneTransitionを実装したクラス)の型をここに指定します。  
+      今回に場合はクラス内に記述されている実装したEnum、`Sample1Link` を指定しています。  
+    - 実装すべきメソッド
+      1. onRelease  
+      `dissmissViewController` や `popViewController` などで画面が解放され、捨てられる時に呼ばれます。
+      その際このクラスが指定しているSceneTransitionクラスのStageTypeのクラスが引数としてよばれます
+    
+    - 提供されるプロパティ
+      1. director?  
+      Sceneを変更させるメソッド `transitTo` と `exit` を提供します。  
+       - `transitTo`  
+       TransitionType で定義されたクラスのインスタンスを引数に取ります。このメソッドを呼ぶとSceneTransitionクラスが呼ばれ画面遷移がされます
+       ```Swift
+       typealias TransitionType = Sample1Link
+       director.transitTo(Sample1Link.A)
+       ```
+       - `exit`
+       現状の画面から離脱します、が、離脱できない場合(SinglePage Application)何も起きません
+       
+      1. argument?  
+      Sceneを初期化させるのに必要なプロパティです
+    
 
 - その他
   ```Swift
@@ -266,17 +285,18 @@ class Sample1AAction: Action {
   }
   ```
   Action Protocolを宣言した場合は上記のようなメソッドとtypealiasを指定する必要があります
-  1. SceneType
+  1. SceneType  
   このActionがどのSceneに紐付いているか定義します。
-  1. start
+  1. start  
   Actionを起動させます。具体的にはここで返しているRxSwiftのObservableを一括でsubscribeします。  
-  1. onStop
+  1. onStop  
   このActionを停止した際に呼ばれます。  
   終了処理ではなく、停止した際、という事に注意してください。
-  1. onError
+  1. onError  
   startでsubscribeされたSigalがなんらかのエラーを起こし、そしてキャッチし損ねた場合、ここに辿りつきます
 
 #### 3. AppDelegateにて初期化
+以下のコードをAppDelegateに書きます
 
 ```Swift
   let root = UIViewController()
@@ -289,3 +309,5 @@ class Sample1AAction: Action {
       stage.view.addSubview(scene.view)
   })
 ```
+SceneSequenceをスタートさせます
+
