@@ -18,7 +18,7 @@ extension Sample2BViewController: ActionScene {
         typealias StageType = UIViewController
         case A, B
         
-        public func request(context: SceneContext<UIViewController>) -> SceneChangeRequest? {
+        public func request(context: SceneContext<UIViewController>) -> SceneRequest? {
             switch self {
             case .A:
                 let File2A = ViewControllerXIBFile("Sample2AViewController", Bundle.main)
@@ -36,7 +36,7 @@ extension Sample2BViewController: ActionScene {
     
     override func viewDidLoad() {
         let action = Sample2BAction(nextButtonA: nextButtonA, nextButtonB: nextButtonB, prevButton: prevButton)
-        actor.activate(action: action, director: director, argument: argument)
+        observer.activate(action: action, director: director, argument: argument)
     }
     
     /**

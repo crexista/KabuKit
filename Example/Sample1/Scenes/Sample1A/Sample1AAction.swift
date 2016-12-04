@@ -25,9 +25,9 @@ class Sample1AAction: Action {
     
     func start(director: SceneDirector<Sample1AViewController.Sample1Link>?, argument: Bool?) -> [Observable<()>] {
         return [
-            self.nextButtonA.rx.tap.do(onNext: { () in director?.transitTo(link: Sample1AViewController.Sample1Link.A)}),
-            self.nextButtonB.rx.tap.do(onNext: { () in director?.transitTo(link: Sample1AViewController.Sample1Link.B)}),
-            self.prevButton.rx.tap.do(onNext: { () in _ = director?.exit()})
+            self.nextButtonA.rx.tap.do(onNext: { () in director?.changeScene(transition: Sample1AViewController.Sample1Link.A)}),
+            self.nextButtonB.rx.tap.do(onNext: { () in director?.changeScene(transition: Sample1AViewController.Sample1Link.B)}),
+            self.prevButton.rx.tap.do(onNext: { () in _ = director?.exitScene()})
         ]
     }
     

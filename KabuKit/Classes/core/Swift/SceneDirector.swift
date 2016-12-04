@@ -12,7 +12,7 @@ import Foundation
  This class supply director that current scene to next scene, or back to previous scene.
  
  */
-public class DefaultSceneDirector<TransitionType: SceneTransition> : SceneDirector<TransitionType> {
+public class SceneDirector<TransitionType: SceneTransition> {
     
     private unowned let stage: TransitionType.StageType
     
@@ -24,23 +24,20 @@ public class DefaultSceneDirector<TransitionType: SceneTransition> : SceneDirect
     
     private weak var scenario: Scenario?
     
-
-    
     /**
      transit to next scene
-     TODO 後でlinkの名前とtransitionに変更する
      
      */
-    override public func transitTo(link: TransitionType) {
+    public func changeScene(transition: TransitionType) {
         let factory = SceneContext(sequence, currentScene!, stage, manager, scenario)
-        link.request(context: factory)?.execute()
+        transition.request(context: factory)?.execute()
     }
     
     /**
      transit to previous scene, and try to destruct previous scene
      
      */
-    override public func exit() {
+    public func exitScene() {
         if let frame = currentScene {
             if (frame.clear(guard: SceneBaseGuard.sharedInstance, stage: stage)) {
                 manager.release(frame: frame)
@@ -52,19 +49,12 @@ public class DefaultSceneDirector<TransitionType: SceneTransition> : SceneDirect
         print("director deinit")
     }
     
-    init(_ sequence: AnyObject, _ stage: TransitionType.StageType, _ frame: SceneBase, _ container: SceneManager, _ scenario: Scenario?) {
+    init(_ sequence: AnyObject, _ stage: TransitionType.StageType, _ frame: SceneBase, _ manager: SceneManager, _ scenario: Scenario?) {
         self.stage = stage
-        self.manager = container
+        self.manager = manager
         self.scenario = scenario
         self.currentScene = frame
         self.sequence = sequence
     }
     
-}
-
-public class SceneDirector<TransitionType: SceneTransition> {
-    
-    public func transitTo(link: TransitionType) {}
-    
-    public func exit() {}
 }

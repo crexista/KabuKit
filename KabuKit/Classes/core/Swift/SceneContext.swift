@@ -20,9 +20,9 @@ public class SceneContext<StageType: AnyObject> {
     public func sceneRequest<T: SceneGenerator, S: Scene>(_ generator: T,
                                                           _ sceneType: S.Type,
                                                           _ argument: S.ArgumentType?,
-                                                          _ setup: @escaping (_ stage: StageType, _ scene: S) -> Void) -> SceneChangeRequest where T.implType == S.TransitionType.StageType, StageType == S.TransitionType.StageType {
+                                                          _ setup: @escaping (_ stage: StageType, _ scene: S) -> Void) -> SceneRequest where T.implType == S.TransitionType.StageType, StageType == S.TransitionType.StageType {
 
-        return SceneChangeRequestImpl(generator: generator,
+        return SceneRequestImpl(generator: generator,
                                       sequence: sequence,
                                       stage: stage,
                                       sceneType: sceneType,
@@ -33,7 +33,7 @@ public class SceneContext<StageType: AnyObject> {
     }
     
 
-    public func sequenceRequest(_ setup: @escaping () -> AnyObject) -> SceneChangeRequest {
+    public func sequenceRequest(_ setup: @escaping () -> AnyObject) -> SceneRequest {
         return ScenarioRequestImpl(sequence: sequence, scene: scene, stage: stage, scenario: scenario, f: setup)
     }
 
@@ -41,9 +41,9 @@ public class SceneContext<StageType: AnyObject> {
         print("SceneContext deinit")
     }
     
-    init(_ sequence: AnyObject, _ scene: SceneBase, _ stage: StageType, _ container: SceneManager, _ scenario: Scenario?) {
+    init(_ sequence: AnyObject, _ scene: SceneBase, _ stage: StageType, _ manager: SceneManager, _ scenario: Scenario?) {
         self.stage = stage
-        self.manager = container
+        self.manager = manager
         self.scenario = scenario
         self.sequence = sequence
         self.scene = scene

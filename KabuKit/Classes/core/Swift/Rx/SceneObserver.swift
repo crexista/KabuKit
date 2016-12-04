@@ -1,5 +1,5 @@
 //
-//  Actor.swift
+//  SceneObserver.swift
 //  KabuKit
 //
 //  Created by crexista on 2016/11/14.
@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-public class Actor {
+public class SceneObserver {
     
     fileprivate var actions: NSMapTable<AnyObject, AnyObject>
     
@@ -31,6 +31,18 @@ public class Actor {
             disposable.dispose()
         })
         action.onStop()
+        actions.removeObject(forKey: action)
+    }
+    
+    /**
+     指定のActionが現在有効(動いている)かどうかを返します
+     
+     */
+    public func isActive<T: Action>(action: T) -> Bool {
+        if (actions.object(forKey: action) == nil) {
+            return false
+        }
+        return true
     }
 
     /**

@@ -16,7 +16,7 @@ extension Sample2ViewController: ActionScene {
         typealias StageType = UIViewController
         case A
         
-        public func request(context: SceneContext<UIViewController>) -> SceneChangeRequest? {
+        public func request(context: SceneContext<UIViewController>) -> SceneRequest? {
             return context.sequenceRequest({ () -> AnyObject in
                 return "Main" as AnyObject
             })
@@ -29,7 +29,7 @@ extension Sample2ViewController: ActionScene {
 
     override func viewDidLoad() {
         let action = Sample2Action(startButton: startButton)
-        actor.activate(action: action, director: director, argument: argument)
+        observer.activate(action: action, director: director, argument: argument)
     }
     
     /**

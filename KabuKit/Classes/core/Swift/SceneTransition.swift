@@ -12,5 +12,5 @@ public protocol SceneTransition {
     
     associatedtype StageType: AnyObject
     
-    func request(context: SceneContext<StageType>) -> SceneChangeRequest?
+    func request(context: SceneContext<StageType>) -> SceneRequest?
 }

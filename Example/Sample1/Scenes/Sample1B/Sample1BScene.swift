@@ -19,7 +19,7 @@ extension Sample1BViewController : ActionScene {
         case A
         case B
         
-        func request(context: SceneContext<UIViewController>) -> SceneChangeRequest? {
+        func request(context: SceneContext<UIViewController>) -> SceneRequest? {
             switch self {
             case .A:
                 let xib = ViewControllerXIBFile("Sample1AViewController", Bundle.main)
@@ -38,7 +38,7 @@ extension Sample1BViewController : ActionScene {
     override func viewDidLoad() {
         self.navigationItem.hidesBackButton = true
         let action = Sample1BAction(label: label, buttonA: nextButtonA, buttonB: nextButtonB, prevButton: prevButton)
-        actor.activate(action: action, director: self.director, argument: self.argument)
+        observer.activate(action: action, director: self.director, argument: self.argument)
     }
     
     func onRelease(stage: UIViewController) -> Bool {
@@ -48,7 +48,7 @@ extension Sample1BViewController : ActionScene {
     
     override func viewDidDisappear(_ animated: Bool) {
         if (self.navigationController == nil && !isReleased) {
-            _ = director?.exit()
+            _ = director?.exitScene()
         }
     }
     

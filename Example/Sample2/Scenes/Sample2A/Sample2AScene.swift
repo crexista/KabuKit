@@ -19,7 +19,7 @@ extension Sample2AViewController: ActionScene {
         case A
         case B
         
-        func request(context: SceneContext<UIViewController>) -> SceneChangeRequest? {
+        func request(context: SceneContext<UIViewController>) -> SceneRequest? {
             
             switch self {
             case .A:
@@ -40,7 +40,7 @@ extension Sample2AViewController: ActionScene {
     override func viewDidLoad() {
         self.navigationItem.hidesBackButton = true
         let action = Sample2AAction(nextButtonA: nextButtonA, nextButtonB: nextButtonB, prevButton: prevButton)
-        actor.activate(action: action, director: director, argument: argument)
+        observer.activate(action: action, director: director, argument: argument)
     } 
 
     /**

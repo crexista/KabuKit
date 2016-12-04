@@ -35,7 +35,7 @@ extension SceneBase where Self: Scene {
             assert(false, "cannot setup scene")
         }
 
-        let director = DefaultSceneDirector<TransitionType>(sequence, stageType, self, manager, scenario)
+        let director = SceneDirector<TransitionType>(sequence, stageType, self, manager, scenario)
         manager.set(frame: self, stuff: (director, argument) as AnyObject)
     }
     
@@ -57,7 +57,7 @@ extension Scene {
         guard let manager = SceneManager.managerByScene(scene: self) else {
             return nil
         }
-        guard let sceneContents = manager.getStuff(frame: self) as? (DefaultSceneDirector<TransitionType>, ArgumentType?) else {
+        guard let sceneContents = manager.getStuff(frame: self) as? (SceneDirector<TransitionType>, ArgumentType?) else {
             assert(false, "Illegal Operation Error")
         }
 
@@ -69,7 +69,7 @@ extension Scene {
         guard let manager = SceneManager.managerByScene(scene: self) else {
             return nil
         }
-        guard let sceneContents = manager.getStuff(frame: self) as? (DefaultSceneDirector<TransitionType>, ArgumentType?) else {
+        guard let sceneContents = manager.getStuff(frame: self) as? (SceneDirector<TransitionType>, ArgumentType?) else {
             assert(false, "Illegal Operation Error")
         }
         
