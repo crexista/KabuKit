@@ -13,7 +13,7 @@ public class SceneContext<StageType: AnyObject> {
     internal unowned let frames: SceneManager
     internal unowned let stage: StageType
     internal unowned let sequence: AnyObject
-    internal unowned let scene: BaseScene
+    internal unowned let scene: SceneBase
     
     internal weak var scenario: Scenario?
     
@@ -41,7 +41,7 @@ public class SceneContext<StageType: AnyObject> {
         print("SceneContext deinit")
     }
     
-    init(_ sequence: AnyObject, _ scene: BaseScene, _ stage: StageType, _ container: SceneManager, _ scenario: Scenario?) {
+    init(_ sequence: AnyObject, _ scene: SceneBase, _ stage: StageType, _ container: SceneManager, _ scenario: Scenario?) {
         self.stage = stage
         self.frames = container
         self.scenario = scenario

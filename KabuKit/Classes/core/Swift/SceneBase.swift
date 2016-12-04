@@ -1,5 +1,5 @@
 //
-//  BaseScene.swift
+//  SceneBase.swift
 //  KabuKit
 //
 //  Created by crexista on 2016/11/17.
@@ -12,7 +12,7 @@ import Foundation
  TODO 後でScreenという名前に変更する
  
  */
-public protocol BaseScene : class {
+public protocol SceneBase : class {
     
     /**
      画面表示をセットアップします
@@ -41,7 +41,7 @@ public class SceneManager {
     private var sceneHashMap: NSMapTable<AnyObject, AnyObject> = NSMapTable.strongToStrongObjects()
     
     // Sceneをスタックし、現在有効なSceneを取り出せるようにします
-    private var scenes: [BaseScene]
+    private var scenes: [SceneBase]
     
     // frameHashMap, scens その両方を操作する際に必要となるdispatch queue
     private let sceneQueue: DispatchQueue
@@ -52,7 +52,7 @@ public class SceneManager {
      内部的にsyncをしているため呼びだす際にsyncを使う必要はありません
      
      */
-    internal var currentScene: BaseScene? {
+    internal var currentScene: SceneBase? {
         return sceneQueue.sync {
             return self.scenes.last
         }
@@ -65,7 +65,7 @@ public class SceneManager {
      内部的には非同期のbarrier queue で行われています
      
      */
-    internal func release(frame: BaseScene) {
+    internal func release(frame: SceneBase) {
         sceneQueue.async(flags: .barrier) {
             
             // SceneManagerはstaticであり違うスレッドからリクエストされる可能性があるため2重ロックにしてます
@@ -84,7 +84,7 @@ public class SceneManager {
      内部的には非同期のbarrier queue で行われています
      
      */
-    internal func set(frame: BaseScene, stuff: AnyObject) {
+    internal func set(frame: SceneBase, stuff: AnyObject) {
         sceneQueue.async(flags: .barrier) {
             self.sceneHashMap.setObject(stuff, forKey: frame)
             self.scenes.append(frame)
@@ -101,7 +101,7 @@ public class SceneManager {
      同期Queuedで実行されているため呼びだす側でsyncをかける必要はありません
      
      */
-    internal func getStuff(frame: BaseScene) -> AnyObject? {
+    internal func getStuff(frame: SceneBase) -> AnyObject? {
         var object: AnyObject?
         sceneQueue.sync {
             object = sceneHashMap.object(forKey: frame)
@@ -130,7 +130,7 @@ public class SceneManager {
 
      */
     internal init (){
-        self.scenes = [BaseScene]()
+        self.scenes = [SceneBase]()
         self.sceneQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
     }
 }

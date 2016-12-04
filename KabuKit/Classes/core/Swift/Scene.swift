@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Scene : BaseScene {
+public protocol Scene : SceneBase {
     
     associatedtype TransitionType: SceneTransition
     
@@ -28,7 +28,7 @@ public protocol Scene : BaseScene {
     func onRelease(stage: TransitionType.StageType) -> Bool
 }
 
-extension BaseScene where Self: Scene {
+extension SceneBase where Self: Scene {
    
     public func setup<S, C>(sequence:AnyObject, stage: S, argument: C, container: SceneManager, scenario: Scenario?) {
         guard let stageType = stage as? TransitionType.StageType else {

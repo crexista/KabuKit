@@ -20,7 +20,7 @@ public class DefaultSceneDirector<TransitionType: SceneTransition> : SceneDirect
     
     private unowned let sequence: AnyObject
     
-    private weak var currentScene: BaseScene?
+    private weak var currentScene: SceneBase?
     
     private weak var scenario: Scenario?
     
@@ -52,7 +52,7 @@ public class DefaultSceneDirector<TransitionType: SceneTransition> : SceneDirect
         print("director deinit")
     }
     
-    init(_ sequence: AnyObject, _ stage: TransitionType.StageType, _ frame: BaseScene, _ container: SceneManager, _ scenario: Scenario?) {
+    init(_ sequence: AnyObject, _ stage: TransitionType.StageType, _ frame: SceneBase, _ container: SceneManager, _ scenario: Scenario?) {
         self.stage = stage
         self.frames = container
         self.scenario = scenario

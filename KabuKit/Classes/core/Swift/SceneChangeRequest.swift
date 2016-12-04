@@ -65,7 +65,7 @@ struct ScenarioRequestImpl<StageType: AnyObject>: SceneChangeRequest {
     
     let sequnce: AnyObject
     
-    let scene: BaseScene
+    let scene: SceneBase
     
     func execute() {
         if let sce = scenario {
@@ -76,7 +76,7 @@ struct ScenarioRequestImpl<StageType: AnyObject>: SceneChangeRequest {
         }
     }
     
-    init(sequence: AnyObject, scene: BaseScene, stage: StageType, scenario: Scenario?, f: @escaping () -> AnyObject) {
+    init(sequence: AnyObject, scene: SceneBase, stage: StageType, scenario: Scenario?, f: @escaping () -> AnyObject) {
         self.scenario = scenario
         self.stage = stage
         self.sequnce = sequence

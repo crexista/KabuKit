@@ -1,5 +1,5 @@
 //
-//  Transition.swift
+//  SceneTransition.swift
 //  KabuKit
 //
 //  Created by crexista on 2016/11/15.
