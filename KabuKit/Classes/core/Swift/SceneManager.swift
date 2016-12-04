@@ -14,7 +14,7 @@ import Foundation
  不必要となってどこからも参照がされなくなったSceneのメモリ解放を行ったりします
  
  */
-public class SceneManager : Hashable, Equatable {
+final public class SceneManager : Hashable, Equatable {
     
     // key: Scene
     private static let managers: NSMapTable<AnyObject, SceneManager> = NSMapTable.weakToWeakObjects()
@@ -51,13 +51,13 @@ public class SceneManager : Hashable, Equatable {
      内部的には非同期のbarrier queue で行われています
      
      */
-    internal func release(frame: SceneBase) {
+    internal func release(scene: SceneBase) {
         sceneQueue.sync(flags: .barrier) {
             SceneManager.managerQueue.sync {
-                SceneManager.managers.removeObject(forKey: frame)
+                SceneManager.managers.removeObject(forKey: scene)
             }
             _ = self.scenes.popLast()
-            self.sceneHashMap.removeObject(forKey: frame)
+            self.sceneHashMap.removeObject(forKey: scene)
         }
     }
     
@@ -86,12 +86,12 @@ public class SceneManager : Hashable, Equatable {
      内部的には非同期のbarrier queue で行われています
      
      */
-    internal func set(frame: SceneBase, stuff: AnyObject) {
+    internal func set(scene: SceneBase, stuff: AnyObject) {
         sceneQueue.sync(flags: .barrier) {
-            self.sceneHashMap.setObject(stuff, forKey: frame)
-            self.scenes.append(frame)
+            self.sceneHashMap.setObject(stuff, forKey: scene)
+            self.scenes.append(scene)
             SceneManager.managerQueue.sync(flags: .barrier) {
-                SceneManager.managers.setObject(self, forKey: frame)
+                SceneManager.managers.setObject(self, forKey: scene)
             }
         }
     }
@@ -103,9 +103,9 @@ public class SceneManager : Hashable, Equatable {
      同期Queuedで実行されているため呼びだす側でsyncをかける必要はありません
      
      */
-    internal func getStuff(frame: SceneBase) -> AnyObject? {
+    internal func getStuff(scene: SceneBase) -> AnyObject? {
         return sceneQueue.sync {
-            return sceneHashMap.object(forKey: frame)
+            return sceneHashMap.object(forKey: scene)
         }
     }
     

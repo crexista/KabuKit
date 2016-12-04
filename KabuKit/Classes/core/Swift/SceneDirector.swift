@@ -39,9 +39,7 @@ public class SceneDirector<TransitionType: SceneTransition> {
      */
     public func exitScene() {
         if let frame = currentScene {
-            if (frame.clear(guard: SceneBaseGuard.sharedInstance, stage: stage)) {
-                manager.release(frame: frame)
-            }
+            frame.clear(stage: stage, manager: manager)
         }
     }
     
@@ -49,11 +47,11 @@ public class SceneDirector<TransitionType: SceneTransition> {
         print("director deinit")
     }
     
-    init(_ sequence: AnyObject, _ stage: TransitionType.StageType, _ frame: SceneBase, _ manager: SceneManager, _ scenario: Scenario?) {
+    init(_ sequence: AnyObject, _ stage: TransitionType.StageType, _ scene: SceneBase, _ manager: SceneManager, _ scenario: Scenario?) {
         self.stage = stage
         self.manager = manager
         self.scenario = scenario
-        self.currentScene = frame
+        self.currentScene = scene
         self.sequence = sequence
     }
     

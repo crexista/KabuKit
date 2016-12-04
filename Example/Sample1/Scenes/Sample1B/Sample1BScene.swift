@@ -35,16 +35,21 @@ extension Sample1BViewController : ActionScene {
         }
     }
     
+    var isRemoval: Bool {
+        return false
+    }
+    
+    func onRemove(stage: UIViewController) {
+        _ = stage.navigationController?.popViewController(animated: true)
+    }
+
+    
     override func viewDidLoad() {
         self.navigationItem.hidesBackButton = true
         let action = Sample1BAction(label: label, buttonA: nextButtonA, buttonB: nextButtonB, prevButton: prevButton)
         observer.activate(action: action, director: self.director, argument: self.argument)
     }
     
-    func onRelease(stage: UIViewController) -> Bool {
-        _ = stage.navigationController?.popViewController(animated: true)
-        return true
-    }
     
     override func viewDidDisappear(_ animated: Bool) {
         if (self.navigationController == nil && !isReleased) {

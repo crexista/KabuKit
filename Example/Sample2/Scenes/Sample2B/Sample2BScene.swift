@@ -19,6 +19,7 @@ extension Sample2BViewController: ActionScene {
         case A, B
         
         public func request(context: SceneContext<UIViewController>) -> SceneRequest? {
+
             switch self {
             case .A:
                 let File2A = ViewControllerXIBFile("Sample2AViewController", Bundle.main)
@@ -34,10 +35,10 @@ extension Sample2BViewController: ActionScene {
         }
     }
     
-    override func viewDidLoad() {
-        let action = Sample2BAction(nextButtonA: nextButtonA, nextButtonB: nextButtonB, prevButton: prevButton)
-        observer.activate(action: action, director: director, argument: argument)
+    public var isRemoval: Bool {
+        return false
     }
+
     
     /**
      前の画面への遷移リクエストが飛んできたときに呼ばれるメソッドです
@@ -46,9 +47,14 @@ extension Sample2BViewController: ActionScene {
      - Parameter factory: 前の画面への遷移リクエストを生成するインスタンスです
      - Returns: SceneBackRequest 前の画面への遷移リクエストが成功したらSceneBackRequestはtrueを返します
      */
-    public func onRelease(stage: UIViewController) -> Bool {
+    public func onRemove(stage: UIViewController) {
         _ = stage.navigationController?.popViewController(animated: true)
-        return true
     }
+    
+    override func viewDidLoad() {
+        let action = Sample2BAction(nextButtonA: nextButtonA, nextButtonB: nextButtonB, prevButton: prevButton)
+        observer.activate(action: action, director: director, argument: argument)
+    }
+
     
 }

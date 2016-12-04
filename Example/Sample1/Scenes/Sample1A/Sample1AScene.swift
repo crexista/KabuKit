@@ -35,10 +35,13 @@ extension Sample1AViewController: ActionScene {
     // MARK: - ActionScene Protocol
     typealias TransitionType = Sample1Link
     typealias ArgumentType = Bool
+    
+    public var isRemoval: Bool {
+        return argument!
+    }
 
-    func onRelease(stage: UIViewController) -> Bool {
+    func onRemove(stage: UIViewController) {
         _ = stage.navigationController?.popViewController(animated: true)
-        return true
     }
 
     // MARK: - Override

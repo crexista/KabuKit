@@ -22,7 +22,7 @@ public protocol SceneBase : class {
      このメソッドは呼び出さないでください
      
      */
-    func setup<S, C>(guard: SceneBaseGuard, sequence:AnyObject, stage: S, argument: C, manager: SceneManager, scenario: Scenario?)
+    func setup<S, C>(sequence:AnyObject, stage: S, argument: C, manager: SceneManager, scenario: Scenario?)
     
     /**
      画面表示周りを破棄します
@@ -31,16 +31,5 @@ public protocol SceneBase : class {
      このメソッドは呼び出さないでください
 
      */
-    func clear<S>(guard: SceneBaseGuard, stage: S) -> Bool
-}
-
-/**
- SceneBaseを直接呼び出して使う事を防ぐためだけのクラスです
- 
- */
-public class SceneBaseGuard {
-    
-    internal static let sharedInstance: SceneBaseGuard = SceneBaseGuard()
-    
-    private init() {}
+    func clear<S>(stage: S, manager: SceneManager)
 }

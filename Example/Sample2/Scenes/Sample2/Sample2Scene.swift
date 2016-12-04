@@ -32,6 +32,11 @@ extension Sample2ViewController: ActionScene {
         observer.activate(action: action, director: director, argument: argument)
     }
     
+    public var isRemoval: Bool {
+        return false
+    }
+
+    
     /**
      前の画面への遷移リクエストが飛んできたときに呼ばれるメソッドです
      このメソッドが返すSceneBackRequestのexecuteが呼ばれた際にtrueを返すとこの画面のに紐づくメモリが解放されます
@@ -39,7 +44,6 @@ extension Sample2ViewController: ActionScene {
      - Parameter factory: 前の画面への遷移リクエストを生成するインスタンスです
      - Returns: SceneBackRequest 前の画面への遷移リクエストが成功したらSceneBackRequestはtrueを返します
      */
-    public func onRelease(stage: UIViewController) -> Bool {
-        return true
+    public func onRemove(stage: UIViewController) {
     }
 }
