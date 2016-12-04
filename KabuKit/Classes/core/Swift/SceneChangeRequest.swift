@@ -27,7 +27,7 @@ struct SceneChangeRequestImpl<SceneType: Scene, GeneratorType: SceneGenerator> :
     func execute() {
         let sceneClass = sceneType as! GeneratorType.implType.Type
         let newScene = generator.generater(impl: sceneClass, argument: generator.argument) as? SceneType
-        newScene?.setup(sequence: sequence, stage: stage, argument: argument, container: frames, scenario: scenario)
+        newScene?.setup(guard: SceneBaseGuard.sharedInstance,sequence: sequence, stage: stage, argument: argument, container: frames, scenario: scenario)
         if let scene = newScene {
             method(stage, scene)
         }

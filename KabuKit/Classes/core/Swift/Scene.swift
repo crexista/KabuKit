@@ -30,7 +30,7 @@ public protocol Scene : SceneBase {
 
 extension SceneBase where Self: Scene {
    
-    public func setup<S, C>(sequence:AnyObject, stage: S, argument: C, container: SceneManager, scenario: Scenario?) {
+    public func setup<S, C>(guard: SceneBaseGuard, sequence:AnyObject, stage: S, argument: C, container: SceneManager, scenario: Scenario?) {
         guard let stageType = stage as? TransitionType.StageType else {
             assert(false, "cannot setup scene")
         }
@@ -39,7 +39,7 @@ extension SceneBase where Self: Scene {
         container.set(frame: self, stuff: (director, argument) as AnyObject)
     }
     
-    public func clear<S>(stage: S) -> Bool {
+    public func clear<S>(guard: SceneBaseGuard, stage: S) -> Bool {
         guard let stageType = stage as? TransitionType.StageType else {
             assert(false, "cannot clear scene")
         }

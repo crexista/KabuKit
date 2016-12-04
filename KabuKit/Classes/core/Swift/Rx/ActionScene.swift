@@ -43,7 +43,8 @@ extension ActionScene {
 }
 
 extension SceneBase where Self: ActionScene {
-    public func setup<S, C>(sequence:AnyObject, stage: S, argument: C, container: SceneManager, scenario: Scenario?) {
+    
+    public func setup<S, C>(guard: SceneBaseGuard, sequence:AnyObject, stage: S, argument: C, container: SceneManager, scenario: Scenario?) {
         let director = DefaultSceneDirector<TransitionType>(sequence, stage as! TransitionType.StageType, self, container, scenario)
         container.set(frame: self, stuff: (director, argument, Actor()) as AnyObject)
     }

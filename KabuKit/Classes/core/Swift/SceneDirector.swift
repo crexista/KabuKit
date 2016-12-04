@@ -42,7 +42,7 @@ public class DefaultSceneDirector<TransitionType: SceneTransition> : SceneDirect
      */
     override public func exit() {
         if let frame = currentScene {
-            if (frame.clear(stage: stage)) {
+            if (frame.clear(guard: SceneBaseGuard.sharedInstance, stage: stage)) {
                 frames.release(frame: frame)
             }
         }
