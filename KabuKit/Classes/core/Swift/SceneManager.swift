@@ -8,10 +8,16 @@
 
 import Foundation
 
-public class SceneManager {
+/**
+ SceneのLifeCycleの管理をします。
+ 現在有効(表示されている)Sceneを返したり、
+ 不必要となってどこからも参照がされなくなったSceneのメモリ解放を行ったりします
+ 
+ */
+public class SceneManager : Hashable, Equatable {
     
     // key: Scene
-    private static var managers: NSMapTable<AnyObject, SceneManager> = NSMapTable.weakToWeakObjects()
+    private static let managers: NSMapTable<AnyObject, SceneManager> = NSMapTable.weakToWeakObjects()
     
     private static let managerQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
     
@@ -23,6 +29,8 @@ public class SceneManager {
     
     // frameHashMap, scens その両方を操作する際に必要となるdispatch queue
     private let sceneQueue: DispatchQueue
+    
+    public let hashValue: Int
     
     /**
      現在有効(ユーザに表示しているであろう)Sceneを返します
@@ -44,14 +52,30 @@ public class SceneManager {
      
      */
     internal func release(frame: SceneBase) {
-        sceneQueue.async(flags: .barrier) {
-            
-            // SceneManagerはstaticであり違うスレッドからリクエストされる可能性があるため2重ロックにしてます
-            SceneManager.managerQueue.async(flags: .barrier) {
+        sceneQueue.sync(flags: .barrier) {
+            SceneManager.managerQueue.sync {
                 SceneManager.managers.removeObject(forKey: frame)
             }
             _ = self.scenes.popLast()
             self.sceneHashMap.removeObject(forKey: frame)
+        }
+    }
+    
+    /**
+     SceneManagerで管理されているSceneを全て解放します
+     
+     */
+    internal func dispose() {
+        sceneQueue.sync(flags: .barrier) {
+            self.scenes.removeAll()
+            self.sceneHashMap.removeAllObjects()
+            
+            // SceneManagerはstaticであり違うスレッドからリクエストされる可能性があるため2重ロックにしてます
+            SceneManager.managerQueue.sync {
+                self.scenes.forEach{ (scene) in
+                    SceneManager.managers.removeObject(forKey: scene)
+                }
+            }
         }
     }
     
@@ -63,10 +87,10 @@ public class SceneManager {
      
      */
     internal func set(frame: SceneBase, stuff: AnyObject) {
-        sceneQueue.async(flags: .barrier) {
+        sceneQueue.sync(flags: .barrier) {
             self.sceneHashMap.setObject(stuff, forKey: frame)
             self.scenes.append(frame)
-            SceneManager.managerQueue.async(flags: .barrier) {
+            SceneManager.managerQueue.sync(flags: .barrier) {
                 SceneManager.managers.setObject(self, forKey: frame)
             }
         }
@@ -80,11 +104,9 @@ public class SceneManager {
      
      */
     internal func getStuff(frame: SceneBase) -> AnyObject? {
-        var object: AnyObject?
-        sceneQueue.sync {
-            object = sceneHashMap.object(forKey: frame)
+        return sceneQueue.sync {
+            return sceneHashMap.object(forKey: frame)
         }
-        return object
     }
     
     /**
@@ -95,12 +117,29 @@ public class SceneManager {
      
      */
     static internal func managerByScene<S: Scene>(scene: S) -> SceneManager? {
-        var manager: SceneManager?
-        managerQueue.sync {
-            manager = SceneManager.managers.object(forKey: scene)
+        return managerQueue.sync {
+            return SceneManager.managers.object(forKey: scene)
         }
+    }
+    
+    /**
+     全てのSceneManagerからSceneを解放します
+     
+     */
+    static internal func removeAll() {
+        SceneManager.managerQueue.sync(flags: .barrier) {
+            let enumerator = SceneManager.managers.keyEnumerator()
+            while let key = enumerator.nextObject() {
+                let manager = SceneManager.managers.object(forKey: key as AnyObject?)
+                manager?.dispose()
+            }
+            SceneManager.managers.removeAllObjects()
+        }
+    }
+    
+    public static func == (lhs: SceneManager, rhs: SceneManager) -> Bool {
         
-        return manager
+        return lhs.hashValue == rhs.hashValue
     }
     
     /**
@@ -110,5 +149,6 @@ public class SceneManager {
     internal init (){
         self.scenes = [SceneBase]()
         self.sceneQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
+        self.hashValue = UUID().uuidString.hashValue
     }
 }
