@@ -30,13 +30,13 @@ public protocol Scene : SceneBase {
 
 extension SceneBase where Self: Scene {
    
-    public func setup<S, C>(guard: SceneBaseGuard, sequence:AnyObject, stage: S, argument: C, container: SceneManager, scenario: Scenario?) {
+    public func setup<S, C>(guard: SceneBaseGuard, sequence:AnyObject, stage: S, argument: C, manager: SceneManager, scenario: Scenario?) {
         guard let stageType = stage as? TransitionType.StageType else {
             assert(false, "cannot setup scene")
         }
 
-        let director = DefaultSceneDirector<TransitionType>(sequence, stageType, self, container, scenario)
-        container.set(frame: self, stuff: (director, argument) as AnyObject)
+        let director = DefaultSceneDirector<TransitionType>(sequence, stageType, self, manager, scenario)
+        manager.set(frame: self, stuff: (director, argument) as AnyObject)
     }
     
     public func clear<S>(guard: SceneBaseGuard, stage: S) -> Bool {

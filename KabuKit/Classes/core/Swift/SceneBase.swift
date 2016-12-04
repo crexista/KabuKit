@@ -22,7 +22,7 @@ public protocol SceneBase : class {
      このメソッドは呼び出さないでください
      
      */
-    func setup<S, C>(guard: SceneBaseGuard, sequence:AnyObject, stage: S, argument: C, container: SceneManager, scenario: Scenario?)
+    func setup<S, C>(guard: SceneBaseGuard, sequence:AnyObject, stage: S, argument: C, manager: SceneManager, scenario: Scenario?)
     
     /**
      画面表示周りを破棄します

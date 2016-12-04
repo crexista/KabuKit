@@ -15,9 +15,9 @@ import UIKit
  */
 public class SceneSequence<T: AnyObject> {
     
-    internal var frames: SceneManager
+    internal var manager: SceneManager
     
-    internal unowned var container: T // Scene.stageType
+    internal unowned var stage: T // Scene.stageType
     
     internal weak var scenario: Scenario?
 
@@ -36,18 +36,18 @@ public class SceneSequence<T: AnyObject> {
         
         let sceneClass = sceneType as! G.implType.Type
         let scene = generator.generater(impl: sceneClass, argument: generator.argument) as! S
-        scene.setup(guard: SceneBaseGuard.sharedInstance, sequence: self, stage: container, argument: argument, container: frames, scenario: scenario)
-        setup(container, scene)
+        scene.setup(guard: SceneBaseGuard.sharedInstance, sequence: self, stage: stage, argument: argument, manager: manager, scenario: scenario)
+        setup(stage, scene)
     }
 
     public init(_ container: T) {
-        self.container = container
-        frames = SceneManager()
+        self.stage = container
+        manager = SceneManager()
     }
 
     public init(_ container: T, _ scenario: Scenario?) {
         self.scenario = scenario
-        self.container = container
-        frames = SceneManager()
+        self.stage = container
+        manager = SceneManager()
     }
 }

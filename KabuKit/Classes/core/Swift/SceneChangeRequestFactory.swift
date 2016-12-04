@@ -10,7 +10,7 @@ import Foundation
 
 public class SceneContext<StageType: AnyObject> {
     
-    internal unowned let frames: SceneManager
+    internal unowned let manager: SceneManager
     internal unowned let stage: StageType
     internal unowned let sequence: AnyObject
     internal unowned let scene: SceneBase
@@ -26,7 +26,7 @@ public class SceneContext<StageType: AnyObject> {
                                       sequence: sequence,
                                       stage: stage,
                                       sceneType: sceneType,
-                                      frames: frames,
+                                      manager: manager,
                                       scenario: scenario,
                                       argument: argument,
                                       f: setup)
@@ -43,7 +43,7 @@ public class SceneContext<StageType: AnyObject> {
     
     init(_ sequence: AnyObject, _ scene: SceneBase, _ stage: StageType, _ container: SceneManager, _ scenario: Scenario?) {
         self.stage = stage
-        self.frames = container
+        self.manager = container
         self.scenario = scenario
         self.sequence = sequence
         self.scene = scene
