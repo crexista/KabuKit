@@ -36,7 +36,7 @@ extension Sample1AViewController: Scene {
     typealias TransitionType = Sample1Link
     typealias ArgumentType = Bool
     
-    public var isRemoval: Bool {
+    public var isRemovable: Bool {
         return argument!
     }
 

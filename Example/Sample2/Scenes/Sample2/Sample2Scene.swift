@@ -32,7 +32,7 @@ extension Sample2ViewController: ActionScene {
         observer.activate(action: action, director: director, argument: argument)
     }
     
-    public var isRemoval: Bool {
+    public var isRemovable: Bool {
         return false
     }
 

@@ -18,7 +18,7 @@ public protocol Scene : SceneBase {
     
     weak var director: SceneDirector<TransitionType>? { get }
     
-    var isRemoval: Bool { get }
+    var isRemovable: Bool { get }
     
     /**
      前の画面への遷移リクエストが飛んできたときに呼ばれるメソッドです
@@ -45,7 +45,7 @@ extension SceneBase where Self: Scene {
         guard let stageType = stage as? TransitionType.StageType else {
             assert(false, "cannot clear scene")
         }
-        if (isRemoval) {
+        if (isRemovable) {
             onRemove(stage: stageType)
             manager.release(scene: self)
         }

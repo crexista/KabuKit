@@ -37,7 +37,7 @@ extension Sample2AViewController: ActionScene {
         }
     }
     
-    public var isRemoval: Bool {
+    public var isRemovable: Bool {
         return false
     }
     

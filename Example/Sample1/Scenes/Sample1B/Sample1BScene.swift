@@ -35,7 +35,7 @@ extension Sample1BViewController : ActionScene {
         }
     }
     
-    var isRemoval: Bool {
+    var isRemovable: Bool {
         return true
     }
     
