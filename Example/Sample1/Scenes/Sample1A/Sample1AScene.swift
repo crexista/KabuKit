@@ -9,7 +9,7 @@
 import Foundation
 import KabuKit
 
-extension Sample1AViewController: ActionScene {
+extension Sample1AViewController: Scene {
     
     // MARK: - SceneTransition Protocol
     enum Sample1Link : SceneTransition {
@@ -43,15 +43,26 @@ extension Sample1AViewController: ActionScene {
     func onRemove(stage: UIViewController) {
         _ = stage.navigationController?.popViewController(animated: true)
     }
+    
+    func onPressAButton(sender: UIButton) {
+        director?.changeScene(transition: Sample1Link.A)
+    }
+    
+    func onPressBButton(sender: UIButton) {
+        director?.changeScene(transition: Sample1Link.B)
+    }
+
+    func onPressPrevButton(sender: UIButton) {
+        director?.exitScene()
+    }
 
     // MARK: - Override
     override func viewDidLoad() {
-        self.navigationItem.hidesBackButton = true
         prevButton.isEnabled = argument!
-        let action = Sample1AAction(label: label, buttonA: nextButtonA, buttonB: nextButtonB, prevButton: prevButton)
-        observer.activate(action: action, director: self.director, argument: self.argument)
+        nextButtonA.addTarget(self, action: #selector(onPressAButton(sender:)), for: .touchUpInside)
+        nextButtonB.addTarget(self, action: #selector(onPressBButton(sender:)), for: .touchUpInside)
+        prevButton.addTarget(self, action: #selector(onPressPrevButton(sender:)), for: .touchUpInside)
     }
-    
     
     override func viewDidDisappear(_ animated: Bool) {
         if (self.navigationController == nil && !isReleased) {

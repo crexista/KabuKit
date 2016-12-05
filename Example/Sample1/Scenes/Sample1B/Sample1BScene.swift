@@ -36,7 +36,7 @@ extension Sample1BViewController : ActionScene {
     }
     
     var isRemoval: Bool {
-        return false
+        return true
     }
     
     func onRemove(stage: UIViewController) {
