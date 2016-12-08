@@ -20,6 +20,7 @@ extension ActionScene {
         }
         guard let sceneContents = manager.getStuff(scene: self) as? (SceneDirector<TransitionType>, ArgumentType?, SceneObserver) else {
             assert(false, "Illegal Operation Error")
+            return nil
         }
         return sceneContents.0
     }
@@ -30,6 +31,7 @@ extension ActionScene {
         }
         guard let sceneContents = manager.getStuff(scene: self) as? (SceneDirector<TransitionType>, ArgumentType?, SceneObserver) else {
             assert(false, "Illegal Operation Error")
+            return nil
         }
         return sceneContents.1
     }
@@ -37,6 +39,7 @@ extension ActionScene {
     public unowned var observer: SceneObserver {
         guard let sceneContents = SceneManager.managerByScene(scene: self)?.getStuff(scene: self) as? (SceneDirector<TransitionType>, ArgumentType?, SceneObserver) else {
             assert(false, "Illegal Operation Error")
+            fatalError()
         }
         return sceneContents.2
     }
