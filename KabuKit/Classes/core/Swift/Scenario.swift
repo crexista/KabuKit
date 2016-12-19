@@ -1,9 +1,5 @@
 //
-//  Scenario.swift
-//  KabuKit
-//
-//  Created by crexista on 2016/11/11.
-//  Copyright © crexista. All rights reserved.
+//  Copyright © 2016 crexista.
 //
 
 import Foundation

@@ -1,9 +1,5 @@
 //
-//  SceneManager.swift
-//  KabuKit
-//
-//  Created by crexista on 2016/12/04.
-//  Copyright © 2016年 crexista. All rights reserved.
+//  Copyright © 2016 crexista.
 //
 
 import Foundation
