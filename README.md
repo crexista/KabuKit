@@ -14,7 +14,7 @@ KabuKit is Simple & Tiny Application Framework
 ## Requirements
 - Xcode 8.1+
 - Swift 3.0+
-- CocoaPods 1.1.0+
+- CocoaPods 1.1.0+ or Carthage 0.18.1+
 
 ## Installation
 ### CocoaPods
@@ -51,6 +51,26 @@ KabuKit is Simple & Tiny Application Framework
     $ pod install
     ```
 
+### Carthage
+- デフォルト
+  - Cartfile
+    ```
+    github "crexista/KabuKit"
+    ```
+  - Shellコマンド
+    ```Shell
+    carthage update --platform iOS
+    ```
+  - Run Script Build Phase
+    ```Shell
+    /usr/local/bin/carthage copy-frameworks
+    ```
+  - Input files
+    ```
+    $(SRCROOT)/carthage/Build/iOS/KabuKit.framework
+    $(SRCROOT)/carthage/Build/iOS/RxSwift.framework # if you've not added
+    ```
+
 ---
 
 ## Basic Usage
@@ -61,12 +81,12 @@ KabuKit is Simple & Tiny Application Framework
   import UIKit
 
   class Sample1AViewController: UIViewController {
-    
+
       @IBOutlet weak var label: UILabel!
       @IBOutlet weak var nextButtonA: UIButton!
       @IBOutlet weak var nextButtonB: UIButton!
       @IBOutlet weak var prevButton: UIButton!
-    
+
   }
   ```
 - SampleBViewcontroller
@@ -74,12 +94,12 @@ KabuKit is Simple & Tiny Application Framework
   import UIKit
 
   class Sample1BViewController: UIViewController {
-    
+
       @IBOutlet weak var label: UILabel!
       @IBOutlet weak var nextButtonA: UIButton!
       @IBOutlet weak var nextButtonB: UIButton!
       @IBOutlet weak var prevButton: UIButton!
-    
+
   }
   ```
 
@@ -92,12 +112,12 @@ import Foundation
 import KabuKit
 
 extension Sample1AViewController : Scene {
-    
+
     // MARK: - SceneTransition Protocol
     enum Sample1Link : SceneTransition {
         typealias StageType = UIViewController
         case A, B
-        
+
         func request(context: SceneContext<UIViewController>) -> SceneRequest? {
             switch self {
             case .A:
@@ -117,7 +137,7 @@ extension Sample1AViewController : Scene {
     // MARK: - ActionScene Protocol
     typealias TransitionType = Sample1Link
     typealias ArgumentType = Bool
-    
+
     var isRemoval: Bool {
         return self.argument!
     }
@@ -125,11 +145,11 @@ extension Sample1AViewController : Scene {
     func onRemove(stage: UIViewController) {
         _ = stage.navigationController?.popViewController(animated: true)
     }
-    
+
     func onPressAButton(sender: UIButton) {
         self.director?.changeScene(transition: Sample1Link.A)
     }
-    
+
     func onPressBButton(sender: UIButton) {
         self.director?.changeScene(transition: Sample1Link.B)
     }
@@ -145,7 +165,7 @@ extension Sample1AViewController : Scene {
         nextButtonB.addTarget(self, action: #selector(onPressBButton(sender:)), for: .touchUpInside)
         prevButton.addTarget(self, action: #selector(onPressPrevButton(sender:)), for: .touchUpInside)
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         if (self.navigationController == nil && !isReleased) {
             director?.exitScene()
@@ -156,13 +176,13 @@ extension Sample1AViewController : Scene {
   ```
 
 - Handle SceneTransition
-  
+
     ```Swift
     // MARK: - SceneTransition Protocol
     enum Sample1Link : SceneTransition {
         typealias StageType = UIViewController
         case A, B
-        
+
         func request(context: SceneContext<UIViewController>) -> SceneChangeRequest? {
             switch self {
             case .A:
@@ -187,12 +207,12 @@ extension Sample1AViewController : Scene {
     基本的なiOSアプリケーションにおいてが大体の場合、UIViewControllerになります
     1. request
     ユーザーからのなんらかのアクションによって画面遷移をする事になった際、どのような時にどのような遷移を行うかのハンドリングを行うメソッドです。  
-    
+
     このサンプルでは各クラス(Sample1AViewController, Sample1BViewController)内にenumでそれぞれ定義していますが  
     共通化させ別ファイルにしてそれぞれのクラスで同じTransitionを使用するというのも可能です。  
 
 - Implements Scene
-  
+
     ```Swift
         // MARK: - ActionScene Protocol
       typealias TransitionType = Sample1Link
@@ -231,7 +251,7 @@ extension Sample1AViewController : Scene {
     func onPressAButton(sender: UIButton) {
         self.director?.changeScene(transition: Sample1Link.A)
     }
-    
+
     func onPressBButton(sender: UIButton) {
         self.director?.changeScene(transition: Sample1Link.B)
     }
@@ -250,7 +270,7 @@ extension Sample1AViewController : Scene {
   ```
   上記のコードを見てわかるように、Sceneをimplementsすると `director` と `argument` というpropertyが提供されます。
   それぞれに責務は以下のとおりです。  
-  
+
     1. director  
     Sceneを変更させるメソッド `changeScene` と `exitScene` を提供します。  
       - `changeScene`  
@@ -261,16 +281,16 @@ extension Sample1AViewController : Scene {
       ```
       - `exitScene`
       現状の画面から離脱します、が、離脱できない場合何も起きません(後述)
-       
+
     1. argument  
       Sceneを初期化させるのに必要なプロパティです
-      
+
   サンプルの`viewDidLoad` ではActionの初期化がされ且つ、activateが行われてますが、  
   このフレームワーク的にはどこでActionの初期化を行うかは規定していません。  
   このサンプルでは `viewDidLoad` が最適だっただけで、アプリによっては `viewWillAppear` で毎回初期化するのがいい場合もあります。  
   また、このフレームワークにおいてはPresentationロジックはViewController側に書く事はあまり推奨されていません(とはいえ書けますが)。  
   PresentationロジックはActionに書く事進められています。  
-  Actionの実装の仕方については次項にて説明します。 
+  Actionの実装の仕方については次項にて説明します。
 
 #### 2. AppDelegateにて初期化
 SceneとなるViewControllerの準備ができたらAppDelegateにて呼び出しのコードを書きます
@@ -306,7 +326,7 @@ Sceneの初期化には `SceneSequence` を上記コードのように使って�
     self.navigationItem.hidesBackButton = true
     let actionA = Sample1AAction(label: label, buttonA: nextButtonA, buttonB: nextButtonB, prevButton: prevButton)
     let actionB = Sample1BAction(label: label, buttonA: nextButtonA, buttonB: nextButtonB, prevButton: prevButton)
-    
+
     self.observer.activate(action: actionA, director: self.director, argument: self.argument)
     self.observer.activate(action: actionB, director: self.director, argument: self.argument)
   }
@@ -321,14 +341,14 @@ import RxSwift
 import RxCocoa
 
 class Sample1AAction: Action {
-    
+
     unowned let label: UILabel
     unowned let nextButtonA: UIButton
     unowned let nextButtonB: UIButton
     unowned let prevButton: UIButton
-    
+
     typealias SceneType = Sample1AViewController
-    
+
     func start(director: SceneDirector<Sample1AViewController.Sample1Link>?, argument: Bool?) -> [Observable<()>] {
         return [
             self.nextButtonA.rx.tap.do(onNext: { () in director?.transitTo(link: Sample1AViewController.Sample1Link.A)}),
@@ -336,15 +356,15 @@ class Sample1AAction: Action {
             self.prevButton.rx.tap.do(onNext: { () in _ = director?.exit()})
         ]
     }
-    
+
     func onStop() {
         // TODO implement
     }
-    
+
     func onError(error: Error) {
        // TODO implement
     }
-    
+
     init(label: UILabel, buttonA: UIButton, buttonB: UIButton, prevButton: UIButton) {
         self.label = label
         self.nextButtonA = buttonA
@@ -357,7 +377,7 @@ class Sample1AAction: Action {
 - Actionクラスの実装について
   ```Swift
   typealias SceneType = Sample1AViewController
-    
+
   func start(director: SceneDirector<Sample1AViewController.Sample1Link>?, argument: Bool?) -> [Observable<()>] {
       return [
           self.nextButtonA.rx.tap.do(onNext: { () in director?.transitTo(link: Sample1AViewController.Sample1Link.A)}),
@@ -365,11 +385,11 @@ class Sample1AAction: Action {
           self.prevButton.rx.tap.do(onNext: { () in _ = director?.exit()})
       ]
   }
-    
+
   func onStop() {
     // TODO implement if you need
   }
-    
+
   func onError(error: Error) {
     // TODO implement if you need
   }
@@ -429,11 +449,11 @@ init時にstageとなるオブジェクトを渡す必要があり、start時に
   func onPressAButton(sender: UIButton) {
       self.director?.changeScene(transition: Sample1Link.A)
   }
-    
+
   func onPressBButton(sender: UIButton) {
       self.director?.changeScene(transition: Sample1Link.B)
   }
-  
+
   func onPressPrevButton(sender: UIButton) {
         self.director?.exitScene()
   }
@@ -451,7 +471,7 @@ Sceneに紐付いている `SceneDirector` と `Argument` はメモリ解放さ�
   enum Sample1Link : SceneTransition {
       typealias StageType = UIViewController
       case A, B
-      
+
       func request(context: SceneContext<UIViewController>) -> SceneChangeRequest? {
           switch self {
           case .A:
@@ -468,4 +488,3 @@ Sceneに紐付いている `SceneDirector` と `Argument` はメモリ解放さ�
       }
     }
 ```
-

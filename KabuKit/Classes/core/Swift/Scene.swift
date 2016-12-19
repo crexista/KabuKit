@@ -31,6 +31,7 @@ extension SceneBase where Self: Scene {
     public func setup<S, C>(sequence:AnyObject, stage: S, argument: C, manager: SceneManager, scenario: Scenario?) {
         guard let stageType = stage as? TransitionType.StageType else {
             assert(false, "cannot setup scene")
+            return
         }
 
         let director = SceneDirector<TransitionType>(sequence, stageType, self, manager, scenario)
@@ -40,6 +41,7 @@ extension SceneBase where Self: Scene {
     public func clear<S>(stage: S, manager: SceneManager) {
         guard let stageType = stage as? TransitionType.StageType else {
             assert(false, "cannot clear scene")
+            return
         }
         if (isRemovable) {
             onRemove(stage: stageType)
@@ -60,6 +62,7 @@ extension Scene {
         }
         guard let sceneContents = manager.getStuff(scene: self) as? (SceneDirector<TransitionType>, ArgumentType?) else {
             assert(false, "Illegal Operation Error")
+            return nil
         }
 
         return sceneContents.0
@@ -72,6 +75,7 @@ extension Scene {
         }
         guard let sceneContents = manager.getStuff(scene: self) as? (SceneDirector<TransitionType>, ArgumentType?) else {
             assert(false, "Illegal Operation Error")
+            return nil
         }
         
         return sceneContents.1

@@ -25,6 +25,22 @@
 		4EF5CD511DE30E3200683D1E /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD401DE30E3200683D1E /* Scene.swift */; };
 		4EF5CD521DE30E3200683D1E /* SceneGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD411DE30E3200683D1E /* SceneGenerator.swift */; };
 		6C289ACDBB3B93D4009CF8A9 /* Pods_KabuKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70BD19804116618B41BCA903 /* Pods_KabuKitTests.framework */; };
+		A6C4ABEE1DF9712500D2491A /* SceneBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD381DE30E3200683D1E /* SceneBase.swift */; };
+		A6C4ABEF1DF9712500D2491A /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD3C1DE30E3200683D1E /* Action.swift */; };
+		A6C4ABF01DF9712500D2491A /* SceneTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD391DE30E3200683D1E /* SceneTransition.swift */; };
+		A6C4ABF11DF9712500D2491A /* SceneContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD3A1DE30E3200683D1E /* SceneContext.swift */; };
+		A6C4ABF21DF9712500D2491A /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD401DE30E3200683D1E /* Scene.swift */; };
+		A6C4ABF31DF9712500D2491A /* ActionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7084171DE60FCD0072F7EE /* ActionScene.swift */; };
+		A6C4ABF41DF9712500D2491A /* SceneSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E70840E1DE60D890072F7EE /* SceneSequence.swift */; };
+		A6C4ABF51DF9712500D2491A /* SceneRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC24E1DEB7C8B0009649D /* SceneRequest.swift */; };
+		A6C4ABF61DF9712500D2491A /* SceneDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E70840F1DE60D890072F7EE /* SceneDirector.swift */; };
+		A6C4ABF71DF9712500D2491A /* SceneObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD3D1DE30E3200683D1E /* SceneObserver.swift */; };
+		A6C4ABF81DF9712500D2491A /* SceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E86AA931DF42C0B0039D8B7 /* SceneManager.swift */; };
+		A6C4ABF91DF9712500D2491A /* SceneGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD411DE30E3200683D1E /* SceneGenerator.swift */; };
+		A6C4ABFA1DF9712500D2491A /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CD3F1DE30E3200683D1E /* Scenario.swift */; };
+		A6C4ABFB1DF9712500D2491A /* ViewControllerXIBFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7084151DE60FBB0072F7EE /* ViewControllerXIBFile.swift */; };
+		A6C4ABFF1DF9712500D2491A /* KabuKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF5CCE91DE30A0C00683D1E /* KabuKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A6C4AC241DF97A9900D2491A /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C4AC231DF97A9900D2491A /* RxSwift.framework */; };
 		F85EB1CDB95A0CF25051D860 /* Pods_KabuKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1936A2064B1933440503B524 /* Pods_KabuKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +56,7 @@
 
 /* Begin PBXFileReference section */
 		1936A2064B1933440503B524 /* Pods_KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		36ECF06D3AB8A4EEC2C90D3B /* Pods-KabuKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit.release.xcconfig"; sourceTree = "<group>"; };
+		2951D074F80F73608CC677F9 /* Pods-KabuKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit.release.xcconfig"; sourceTree = "<group>"; };
 		4DC74D11E4722F083D18D976 /* Pods-KabuKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKitTests/Pods-KabuKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4E70840E1DE60D890072F7EE /* SceneSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneSequence.swift; sourceTree = "<group>"; };
 		4E70840F1DE60D890072F7EE /* SceneDirector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDirector.swift; sourceTree = "<group>"; };
@@ -65,6 +81,9 @@
 		4EF5CD411DE30E3200683D1E /* SceneGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneGenerator.swift; sourceTree = "<group>"; };
 		70BD19804116618B41BCA903 /* Pods_KabuKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KabuKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A26D6A4DD87C05D577497305 /* Pods-KabuKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit.debug.xcconfig"; sourceTree = "<group>"; };
+		A6C4AC051DF9712500D2491A /* KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6C4AC231DF97A9900D2491A /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		A6C4AC251DF97AD400D2491A /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/Mac/RxSwift.framework; sourceTree = "<group>"; };
 		B8CD26C938C33D82821D9964 /* Pods-KabuKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKitTests/Pods-KabuKitTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +105,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A6C4ABFC1DF9712500D2491A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6C4AC241DF97A9900D2491A /* RxSwift.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -93,9 +120,9 @@
 			isa = PBXGroup;
 			children = (
 				A26D6A4DD87C05D577497305 /* Pods-KabuKit.debug.xcconfig */,
-				36ECF06D3AB8A4EEC2C90D3B /* Pods-KabuKit.release.xcconfig */,
 				4DC74D11E4722F083D18D976 /* Pods-KabuKitTests.debug.xcconfig */,
 				B8CD26C938C33D82821D9964 /* Pods-KabuKitTests.release.xcconfig */,
+				2951D074F80F73608CC677F9 /* Pods-KabuKit.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -141,6 +168,7 @@
 			children = (
 				4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */,
 				4EF5CCEF1DE30A0C00683D1E /* KabuKitTests.xctest */,
+				A6C4AC051DF9712500D2491A /* KabuKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -260,6 +288,8 @@
 		DD923A86CAC47147C0714F07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A6C4AC251DF97AD400D2491A /* RxSwift.framework */,
+				A6C4AC231DF97A9900D2491A /* RxSwift.framework */,
 				1936A2064B1933440503B524 /* Pods_KabuKit.framework */,
 				70BD19804116618B41BCA903 /* Pods_KabuKitTests.framework */,
 			);
@@ -274,6 +304,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EF5CCF71DE30A0C00683D1E /* KabuKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6C4ABFE1DF9712500D2491A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6C4ABFF1DF9712500D2491A /* KabuKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +359,24 @@
 			productReference = 4EF5CCEF1DE30A0C00683D1E /* KabuKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		A6C4ABEB1DF9712500D2491A /* KabuKit-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6C4AC021DF9712500D2491A /* Build configuration list for PBXNativeTarget "KabuKit-iOS" */;
+			buildPhases = (
+				A6C4ABED1DF9712500D2491A /* Sources */,
+				A6C4ABFC1DF9712500D2491A /* Frameworks */,
+				A6C4ABFE1DF9712500D2491A /* Headers */,
+				A6C4AC001DF9712500D2491A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "KabuKit-iOS";
+			productName = KabuKit;
+			productReference = A6C4AC051DF9712500D2491A /* KabuKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -355,6 +411,7 @@
 			projectRoot = "";
 			targets = (
 				4EF5CCE51DE30A0C00683D1E /* KabuKit */,
+				A6C4ABEB1DF9712500D2491A /* KabuKit-iOS */,
 				4EF5CCEE1DE30A0C00683D1E /* KabuKitTests */,
 			);
 		};
@@ -369,6 +426,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4EF5CCED1DE30A0C00683D1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6C4AC001DF9712500D2491A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -482,6 +546,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E86AA991DF4359D0039D8B7 /* SceneManagerSpec.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6C4ABED1DF9712500D2491A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6C4ABEE1DF9712500D2491A /* SceneBase.swift in Sources */,
+				A6C4ABEF1DF9712500D2491A /* Action.swift in Sources */,
+				A6C4ABF01DF9712500D2491A /* SceneTransition.swift in Sources */,
+				A6C4ABF11DF9712500D2491A /* SceneContext.swift in Sources */,
+				A6C4ABF21DF9712500D2491A /* Scene.swift in Sources */,
+				A6C4ABF31DF9712500D2491A /* ActionScene.swift in Sources */,
+				A6C4ABF41DF9712500D2491A /* SceneSequence.swift in Sources */,
+				A6C4ABF51DF9712500D2491A /* SceneRequest.swift in Sources */,
+				A6C4ABF61DF9712500D2491A /* SceneDirector.swift in Sources */,
+				A6C4ABF71DF9712500D2491A /* SceneObserver.swift in Sources */,
+				A6C4ABF81DF9712500D2491A /* SceneManager.swift in Sources */,
+				A6C4ABF91DF9712500D2491A /* SceneGenerator.swift in Sources */,
+				A6C4ABFA1DF9712500D2491A /* Scenario.swift in Sources */,
+				A6C4ABFB1DF9712500D2491A /* ViewControllerXIBFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,7 +702,7 @@
 		};
 		4EF5CCFC1DE30A0C00683D1E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 36ECF06D3AB8A4EEC2C90D3B /* Pods-KabuKit.release.xcconfig */;
+			baseConfigurationReference = 2951D074F80F73608CC677F9 /* Pods-KabuKit.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
@@ -666,6 +751,52 @@
 			};
 			name = Release;
 		};
+		A6C4AC031DF9712500D2491A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/KabuKit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.KabuKit;
+				PRODUCT_NAME = KabuKit;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		A6C4AC041DF9712500D2491A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/KabuKit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.KabuKit;
+				PRODUCT_NAME = KabuKit;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -692,6 +823,15 @@
 			buildConfigurations = (
 				4EF5CCFE1DE30A0C00683D1E /* Debug */,
 				4EF5CCFF1DE30A0C00683D1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A6C4AC021DF9712500D2491A /* Build configuration list for PBXNativeTarget "KabuKit-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6C4AC031DF9712500D2491A /* Debug */,
+				A6C4AC041DF9712500D2491A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
