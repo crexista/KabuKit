@@ -26,6 +26,7 @@ Podfile.lock
 vendor/*
 # fastlane
 fastlane/*.xml
+fastlane/test_output/*.*
 # others
 *.swp
 *~

@@ -1,0 +1,22 @@
+fastlane_version "2.4.0"
+default_platform :ios
+
+before_all do
+  cocoapods
+end
+
+platform :ios do
+
+  desc "Runs tests as iOS"
+  lane :test do
+    scan(
+         scheme: "KabuKit",
+         devices: ["iPhone 6s"],
+         clean: true,
+         sdk: "iphonesimulator",
+         output_types: "html"
+         )
+  end
+
+end
+

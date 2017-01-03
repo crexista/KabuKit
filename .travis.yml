@@ -1,0 +1,8 @@
+language: objective-c
+
+matrix:
+  include:
+    - osx_image: xcode8.2
+      env: SCHEME="iOS"
+      script: "bundle exec fastlane ios test"
+
