@@ -9,6 +9,9 @@ public class SceneObserver {
     
     fileprivate var actions: NSMapTable<AnyObject, AnyObject>
     
+    /**
+     
+     */
     public func activate<T: Action>(action: T, director: SceneDirector<T.SceneType.TransitionType>?, argument: T.SceneType.ArgumentType?) {
 
         let disposables = action.start(director: director, argument: argument).map { (observable) -> Disposable in
