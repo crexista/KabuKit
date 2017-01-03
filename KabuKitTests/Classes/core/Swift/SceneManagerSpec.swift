@@ -23,7 +23,7 @@ class SceneManagerSpec: QuickSpec {
     }
     
     class MockScene : NSObject, Scene {
-        public var isRemoval: Bool {
+        public var isRemovable: Bool {
             return false
         }
 
