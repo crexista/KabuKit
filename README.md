@@ -1,5 +1,6 @@
 # KabuKit
 [![Build Status](https://travis-ci.org/crexista/KabuKit.svg?branch=master)](https://travis-ci.org/crexista/KabuKit)
+[![codecov](https://codecov.io/gh/crexista/KabuKit/branch/master/graph/badge.svg)](https://codecov.io/gh/crexista/KabuKit)
 
 KabuKit is Simple & Tiny Application Framework
 --
