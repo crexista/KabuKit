@@ -7,7 +7,7 @@ import Foundation
 public protocol Scene : SceneBase {
     
     associatedtype TransitionType: SceneTransition
-    
+        
     associatedtype ArgumentType
     
     var argument: ArgumentType? { get }

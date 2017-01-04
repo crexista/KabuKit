@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         sceneSequence = SceneSequence(root)
         let xibName = "Sample1AViewController"
         root.navigationController?.setNavigationBarHidden(true, animated: true)
+
         sceneSequence?.start(ViewControllerXIBFile(xibName, Bundle.main), Sample1AViewController.self, false, { (stage, scene) in
             stage.addChildViewController(scene)
             stage.view.addSubview(scene.view)

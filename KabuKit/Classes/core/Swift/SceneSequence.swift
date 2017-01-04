@@ -16,24 +16,22 @@ public class SceneSequence<T: AnyObject> {
     internal unowned var stage: T // Scene.stageType
     
     internal weak var scenario: Scenario?
-
+    
     /**
-     This Mehtod generate `Scene` by sceneType and generator, and start `SceneSequence`
+     SceneGeneratorからSceneを生成し、Sceneのsetupを行います
+     そしてその後にonSetupAfterに指定されたメソッドを呼び出します。
      
-     - Parameter generator: Generator is logic that is required to generate `Scene` instance.
-     - Parameter sceneType: SceneType is `Scene`'s Class
-     - Parameter argument: Context is parameter that is required to invoke `Scene`.
-     - Parameter setup: This is function. This function will be executed when `Scene` is generated
      */
-    public func start<S: Scene, G: SceneGenerator>(_ generator: G,
-                                                   _ sceneType: S.Type,
-                                                   _ argument: S.ArgumentType? = nil,
-                                                   _ setup: (T, S) -> Void) where T == S.TransitionType.StageType {
-        
-        let sceneClass = sceneType as! G.implType.Type
-        let scene = generator.generater(impl: sceneClass, argument: generator.argument) as! S
+    public func start<G: SceneGenerator>(_ generator: G,
+                                          _ argument: G.SceneType.ArgumentType? = nil,
+                                          _ onSetupAfter: (T, G.SceneType) -> Void) where T == G.SceneType.TransitionType.StageType {
+
+        guard let scene = generator.generate() else {
+            assert(false, "fail to make scene")
+        }
+
         scene.setup(sequence: self, stage: stage, argument: argument, manager: manager, scenario: scenario)
-        setup(stage, scene)
+        onSetupAfter(stage, scene)
     }
 
     public init(_ container: T) {

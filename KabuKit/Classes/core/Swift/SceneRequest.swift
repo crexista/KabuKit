@@ -9,44 +9,49 @@ public protocol SceneRequest {
     func execute()    
 }
 
-struct SceneRequestImpl<SceneType: Scene, GeneratorType: SceneGenerator> : SceneRequest {
+public struct SceneRequest2<SceneType: Scene> {
     
-    private let method: (_ stage: SceneType.TransitionType.StageType, _ scene: SceneType) -> Void
-    private let stage: SceneType.TransitionType.StageType
-    private let sceneType: SceneType.Type
-    private let argument: SceneType.ArgumentType?
+    private let method: (_ stage: SceneType.TransitionType.StageType, _ newScene: SceneType, _ prevScene: SceneBase) -> Void
+    
+    internal func execute(stage: SceneType.TransitionType.StageType) {
+        
+    }
+}
+
+struct SceneRequestImpl<GeneratorType: SceneGenerator> : SceneRequest {
+    
+    private let method: (_ stage: GeneratorType.SceneType.TransitionType.StageType, _ newScene: GeneratorType.SceneType, _ prevScene: SceneBase) -> Void
+    private let stage: GeneratorType.SceneType.TransitionType.StageType
+    private let argument: GeneratorType.SceneType.ArgumentType?
     private let generator: GeneratorType
+    
     private let manager: SceneManager
     private let sequence: AnyObject
     private let scenario: Scenario?
     
     func execute() {
-        let sceneClass = sceneType as! GeneratorType.implType.Type
-        let newScene = generator.generater(impl: sceneClass, argument: generator.argument) as? SceneType
-        newScene?.setup(sequence: sequence, stage: stage, argument: argument, manager: manager, scenario: scenario)
-        if let scene = newScene {
-            method(stage, scene)
+        guard let scene = generator.generate() else {
+            assert(false,  "SceneRequest fail to make scene")
         }
-
+        scene.setup(sequence: sequence, stage: stage, argument: argument, manager: manager, scenario: scenario)
+        method(stage, scene, scene)
     }
     
     init(generator: GeneratorType,
          sequence: AnyObject,
-         stage: SceneType.TransitionType.StageType,
-         sceneType: SceneType.Type,
+         stage: GeneratorType.SceneType.TransitionType.StageType,
          manager: SceneManager,
          scenario: Scenario?,
-         argument: SceneType.ArgumentType?,
-         f: @escaping (_ stage: SceneType.TransitionType.StageType, _ scene: SceneType) -> Void) {
+         argument: GeneratorType.SceneType.ArgumentType?,
+         f: @escaping (_ stage: GeneratorType.SceneType.TransitionType.StageType,  _ newScene: GeneratorType.SceneType, _ prevScene: SceneBase) -> Void) {
         
         self.method = f
         self.stage = stage
-        self.sceneType = sceneType
         self.generator = generator
-        self.argument = argument
         self.manager = manager
         self.scenario = scenario
         self.sequence = sequence
+        self.argument = argument
     }
     
 }
