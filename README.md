@@ -1,5 +1,6 @@
-[![Build Status](https://travis-ci.org/crexista/KabuKit.svg?branch=master)](https://travis-ci.org/crexista/KabuKit)
 # KabuKit
+[![Build Status](https://travis-ci.org/crexista/KabuKit.svg?branch=master)](https://travis-ci.org/crexista/KabuKit)
+
 KabuKit is Simple & Tiny Application Framework
 --
 このFrameworkはつい膨れ上がってしまうViewControllerの肥大化を防ぎ、  
