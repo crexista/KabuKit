@@ -63,7 +63,7 @@ class DirectorSpec: QuickSpec {
         describe("Directorの次のSceneへの遷移について") {
             it("遷移requestが投げられると遷移する") {
                 let scene = DirectorSpecScene1()
-                let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
+                let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
                 let director = Director(scene: scene, sequence: sequence)
                 sequence.start(producer: nil)
                 expect(sequence.manager.count) == 1
@@ -75,7 +75,7 @@ class DirectorSpec: QuickSpec {
             
             it("backへのrequestが投げれらると戻る") {
                 let scene = DirectorSpecScene1()
-                let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
+                let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
                 let director = Director(scene: scene, sequence: sequence)
                 sequence.start(producer: nil)
                 

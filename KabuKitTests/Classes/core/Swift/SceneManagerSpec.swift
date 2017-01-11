@@ -1,5 +1,5 @@
 //
-//  SceneManager2Test.swift
+//  SceneManagerTest.swift
 //  KabuKit
 //
 //  Created by crexista on 2016/12/04.
@@ -39,12 +39,12 @@ class SceneManagerSpec: QuickSpec {
     override func spec() {
 
         describe("managerByScene") {
-            SceneManager2.removeAll()
+            SceneManager.removeAll()
             let mockScene1 = MockScene()
             let mockScene = MockScene()
             let obj1 = NSObject()
             let obj2 = NSObject()
-            let manager = SceneManager2()
+            let manager = SceneManager()
             
             context("Scene1は登録し、Sceneは未登録の場合") {
                 
@@ -52,12 +52,12 @@ class SceneManagerSpec: QuickSpec {
                     manager.set(scene: mockScene1, stuff: obj1)
                 }
                 it("Scene1は取得できる") {
-                    let result = SceneManager2.managerByScene(scene: mockScene1)
+                    let result = SceneManager.managerByScene(scene: mockScene1)
                     expect(result).toNot(beNil())
                 }
                 
                 it("Sceneは取得できない") {
-                    let result = SceneManager2.managerByScene(scene: mockScene)
+                    let result = SceneManager.managerByScene(scene: mockScene)
                     expect(result).to(beNil())
                 }
 
@@ -69,30 +69,30 @@ class SceneManagerSpec: QuickSpec {
                     manager.set(scene: mockScene, stuff: obj2)
                 }
                 it("Scene1は取得できる") {
-                    let result = SceneManager2.managerByScene(scene: mockScene1)
+                    let result = SceneManager.managerByScene(scene: mockScene1)
                     expect(result).toNot(beNil())
                 }
                 
                 it("Sceneは取得できる") {
-                    let result = SceneManager2.managerByScene(scene: mockScene)
+                    let result = SceneManager.managerByScene(scene: mockScene)
                     expect(result).toNot(beNil())
                 }
                 it("Scene1から取得できるMangerとSceneから取得できるMangerは同じ") {
-                    let result1 = SceneManager2.managerByScene(scene: mockScene1)
-                    let result2 = SceneManager2.managerByScene(scene: mockScene)
+                    let result1 = SceneManager.managerByScene(scene: mockScene1)
+                    let result2 = SceneManager.managerByScene(scene: mockScene)
                     expect(result1 == result2).to(beTrue())
                 }
             }
             
             context("Scene1, Sceneそれぞれ違うManagerに登録されている場合") {
-                let manager2 = SceneManager2()
+                let manager2 = SceneManager()
                 beforeEach {
                     manager.set(scene: mockScene1, stuff: obj1)
                     manager2.set(scene: mockScene, stuff: obj2)
                 }
                 it("Scene1から取得できるMangerとSceneから取得できるMangerは違う") {
-                    let result1 = SceneManager2.managerByScene(scene: mockScene1)
-                    let result2 = SceneManager2.managerByScene(scene: mockScene)
+                    let result1 = SceneManager.managerByScene(scene: mockScene1)
+                    let result2 = SceneManager.managerByScene(scene: mockScene)
                     expect(result1 == result2).to(beFalse())
                 }
 
@@ -103,11 +103,11 @@ class SceneManagerSpec: QuickSpec {
         describe("dispose") {
             let mockScene1 = MockScene()
             let mockScene = MockScene()
-            let manager = SceneManager2()
+            let manager = SceneManager()
             let obj1 = NSObject()
             let obj2 = NSObject()
 
-            context("SceneManager2にすでにSceneが登録されていた場合") {
+            context("SceneManagerにすでにSceneが登録されていた場合") {
                 manager.set(scene: mockScene1, stuff: obj1)
                 manager.set(scene: mockScene, stuff: obj2)
                 let result = manager.getStuff(scene: mockScene1)
@@ -127,9 +127,9 @@ class SceneManagerSpec: QuickSpec {
         describe("set/getStuff") {
             let mockScene = MockScene()
             let obj = NSObject()
-            SceneManager2.removeAll()
-            context("SceneManager2に特定のSceneをセットした場合") {
-                let manager = SceneManager2()
+            SceneManager.removeAll()
+            context("SceneManagerに特定のSceneをセットした場合") {
+                let manager = SceneManager()
                 beforeEach {
                     manager.set(scene: mockScene, stuff: obj as AnyObject)
                 }
@@ -146,12 +146,12 @@ class SceneManagerSpec: QuickSpec {
         }
 
         describe("remove") {
-            SceneManager2.removeAll()
+            SceneManager.removeAll()
             let mockScene1 = MockScene()
             let mockScene = MockScene()
             let obj1 = NSObject()
             let obj2 = NSObject()
-            let manager = SceneManager2()
+            let manager = SceneManager()
             
             context("2つ登録されたうち一つだけremoveする") {
 

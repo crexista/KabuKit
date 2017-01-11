@@ -6,16 +6,16 @@ import Foundation
 
 public class Producer {
     
-    internal let scenario: Scenario2?
+    internal let scenario: Scenario?
     
     private let sequence: AnyObject?
     
-    private init<S: AnyObject>(sequence: SceneSequence2<S>) {
+    private init<S: AnyObject>(sequence: SceneSequence<S>) {
         self.scenario = nil
         self.sequence = sequence
     }
     
-    private init(scenario: Scenario2) {
+    private init(scenario: Scenario) {
         self.scenario = scenario
         self.sequence = nil
     }
@@ -24,7 +24,7 @@ public class Producer {
      指定のSequenceをスタートさせます
      
      */
-    public func startSequence<S>(sequence: SceneSequence2<S>) {
+    public func startSequence<S>(sequence: SceneSequence<S>) {
         sequence.start(producer: self)
     }
     
@@ -33,14 +33,14 @@ public class Producer {
      Factoryメソッドです
      
      */
-    public static func run<S: AnyObject>(sequence: SceneSequence2<S>) -> Producer {
+    public static func run<S: AnyObject>(sequence: SceneSequence<S>) -> Producer {
         let producer = Producer(sequence: sequence)
         producer.startSequence(sequence: sequence)
 
         return producer
     }
 
-    public static func run(scenario: Scenario2) -> Producer {
+    public static func run(scenario: Scenario) -> Producer {
         let producer = Producer(scenario: scenario)
         scenario.start(producer: producer)
         
