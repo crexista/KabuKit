@@ -1,5 +1,5 @@
 //
-//  Copyright © 2017年 crexista
+//  Copyright © 2017 crexista
 //
 
 import Foundation

@@ -1,5 +1,5 @@
 //
-//  Copyright © 2017年 crexista
+//  Copyright © 2017 crexista
 //
 
 import Foundation
@@ -11,7 +11,7 @@ import Nimble
 
 class ActionSceneSpec: QuickSpec {
     
-    final class ActionSceneSpecScene : NSObject, ActionScene2 {
+    final class ActionSceneSpecScene : NSObject, ActionScene {
         
         typealias RouterType = MockRouter
         typealias ArgumentType = Void
@@ -42,11 +42,11 @@ class ActionSceneSpec: QuickSpec {
             
             context("setupを呼んだ後") {
                 let firstScene = ActionSceneSpecScene()
-                let sequence = SceneSequence2(stage: NSObject(), scene: firstScene, argument: nil) { (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), firstScene, nil) { (stage, scene) in }
                 let scene = ActionSceneSpecScene()
                 
                 beforeEach {
-                    scene.setup(sequence: sequence, arguments: nil)
+                    scene.setup(sequenceObject: sequence, argumentObject: nil)
                 }
                 
                 it("Observerは初期化されて取得できる") {

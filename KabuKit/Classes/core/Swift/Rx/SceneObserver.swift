@@ -1,73 +1,179 @@
 //
-//  Copyright © 2016 crexista.
+//  Copyright © 2017 crexista
 //
 
 import Foundation
 import RxSwift
 
-public class SceneObserver {
+/**
+ SceneのActionを監視するクラスです.
+ 
+ */
+public class SceneObserver<DestinationType: Destination> {
     
-    fileprivate var actions: NSMapTable<AnyObject, AnyObject>
+    var actionTypeHashMap = [String : ActionTerminate]()
     
-    /**
-     
-     */
-    public func activate<T: Action>(action: T, director: SceneDirector<T.SceneType.TransitionType>?, argument: T.SceneType.ArgumentType?) {
-
-        let disposables = action.start(director: director, argument: argument).map { (observable) -> Disposable in
-            return observable.subscribe(onError: action.onError)
-        }
-        
-        actions.setObject(disposables as AnyObject, forKey: action as AnyObject)
-
-    }
+    var disposableMap = [String : [ObserverTarget]]()
     
-    public func deactivate<T: Action>(action: T) {
-        
-        let disposables = actions.object(forKey: action as AnyObject) as? [Disposable]
-
-        disposables?.forEach({ (disposable) in
-            disposable.dispose()
-        })
-        action.onStop()
-        actions.removeObject(forKey: action)
-    }
+    let director: Director<DestinationType>
     
     /**
-     指定のActionが現在有効(動いている)かどうかを返します
+     指定のActionを有効化させます.
      
+     - attention: activateできるActionのインスタンスには条件があります
+     
+       * activateできるActionは1クラスにつき1インスタンスまでです.
+     
+       * すでにactivateされているactionを再度activateしても何も起きません
+     
+       * ただし、deactivate済みのactionであれば再度activateをします
+     
+     - parameters:
+       - action: activateされるActionプロトコルを実装したクラスインスタンス
+       - onStart: actionが開始される直前に呼ばれるコールバック
+     
+     - returns: activateが実行され、actionが有効化されたらtrueを返します.
+                すでにactivate済みのインスタンスがactionに指定された場合は何もされないため
+                falseを返します
      */
-    public func isActive<T: Action>(action: T) -> Bool {
-        if (actions.object(forKey: action) == nil) {
+    public func activate<A: Action>(action: A, onStart: () -> Void = {}) -> Bool where A.DestinationType == DestinationType{
+        let typeName = String(describing: type(of: action))
+        
+        guard disposableMap[typeName] == nil else {
             return false
         }
+
+        actionTypeHashMap[typeName] = actionTypeHashMap[typeName] ?? action
+
+        disposableMap[typeName] = action.invoke(director: director).map{ (target) in
+            return self.subscribe(target: target, action: action)
+        }
+        
+        onStart()
         return true
     }
-
+    
     /**
-     保持しているActionを全て解放します
-     internalにしているのはテストのためです
+     指定のActionをサスペンド状態にします.
+     
+     これで指定されたActionのSignalは全て破棄され、
+     再度activateされるまでイベントを飛ばすことはありません
      
      */
-    internal func release() {
-        let enumerator = actions.keyEnumerator()
-        while let key = enumerator.nextObject() {
-            let disposables = actions.object(forKey: key as AnyObject) as? [Disposable]
-            disposables?.forEach({ (disposable) in
-                disposable.dispose()
-            })
-            (key as! OnStop).onStop()
+    public func deactivate<A: Action>(actionType: A.Type) -> Bool where A.DestinationType == DestinationType{
+        // 指定のクラス名に紐づくDisposableを取得し
+        // 全て破棄し、DisposableMapも空にする
+        let typeName = String(describing: actionType)
+        return deactivateByTypeName(typeName: typeName)
+
+    }
+    
+    /**
+     このObserverで管理されている全ての Actionをサスペンド状態にします
+     
+     */
+    public func deactivateAll() {
+        actionTypeHashMap.keys.forEach { (typeName) in
+            _ = self.deactivateByTypeName(typeName: typeName)
         }
-        actions.removeAllObjects()
+    }
+    
+    /**
+     指定のActionが現在動いているか(activateされている状態か)どうかを返します
+     
+     - parameters:
+       - actionType: Actionの型
+     - returns: 指定のActionが現在動いている場合は `true` そうでない場合は `false` を返します
+     */
+    public func isActive(actionType: ActionTerminate.Type) -> Bool {
+        let typeName = String(describing: actionType)
+        return disposableMap[typeName] != nil
+    }
+    
+    /**
+     Actionの型情報をキーとしてactivate済みのActionのインスタンスを取得します
+     
+     - parameters: 
+       - actionType: Actionの型
+     */
+    public func resolve<A: Action>(actionType: A.Type) -> A? where A.DestinationType == DestinationType{
+        let typeName = String(describing: actionType)
+
+        return actionTypeHashMap[typeName] as? A
+    }
+    
+    /**
+     クラス名指定によってActionをサスペンド状態にします.
+
+     - parameters:
+       - typeName: クラス名
+     
+     - returns: サスペンドに成功したらtrue, サスペンドが行われなかったらfalseを返します
+     */
+    private func deactivateByTypeName(typeName: String) -> Bool {
+        guard let disposables = disposableMap[typeName] else {
+            return false
+        }
+        
+        disposables.forEach { (disposable) in
+            disposable.dispose()
+        }
+        actionTypeHashMap[typeName]?.onStop()
+        disposableMap.removeValue(forKey: typeName)
+        return true
+    }
+    
+    /**
+     キャッチしたエラーをハンドルして
+     リカバリ処理を行います
+     
+     */
+    private func recoverError(error: Error) {
+        guard let actionError = error as? ActionError else {
+            return
+        }
+        
+        guard let Action = actionTypeHashMap[actionError.actionName] else {
+            return
+        }
+
+        let target = actionError.target
+        
+        switch actionError.recoverPattern {
+
+        case .reloadAction(let onStart):
+            deactivateAll()
+            onStart()
+            
+        case .reloadErrorStream(let onStart):
+            _ = self.subscribe(target: target, action: Action)
+            onStart()
+
+        default:
+            break
+        }
+    }
+    
+    private func subscribe(target: ObserverTarget, action: ActionTerminate) -> ObserverTarget {
+        let disposable = target.observable.catchError({ (error) -> Observable<()> in
+            
+            throw ActionError(recoverPattern: action.onError(error: error, label: target.label),
+                              target: target,
+                              onError: action.onError,
+                              actionName: String(describing: type(of: action)))
+
+        }).subscribe(onError: self.recoverError)
+        target.disposable?.dispose()
+        target.disposable = disposable
+        return target
     }
     
     deinit {
-        print("actor deinit")
-        release()
+        deactivateAll()
+        actionTypeHashMap.removeAll()
     }
-
     
-    init() {
-        actions = NSMapTable.strongToStrongObjects()
+    internal init(director: Director<DestinationType>) {
+        self.director = director
     }
 }

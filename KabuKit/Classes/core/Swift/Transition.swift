@@ -1,31 +1,26 @@
 //
-//  Copyright © 2017年 crexista
+//  Copyright © 2017 crexista
 //
 
 import Foundation
 
 public struct Transition<StageType: AnyObject> {
+
+    internal let execution: (_ stage: StageType, _ scene: SceneBase) -> Void
     
-    internal let setupFunc: (SceneSequence2<StageType>) -> Void
+    internal let scene: SceneBase
     
-    internal let callBack: (StageType) -> Void
+    internal let args: Any?
     
-    internal func setupScene(sequence: SceneSequence2<StageType>) {
-        setupFunc(sequence)
-    }
-    
-    internal func onTransition(stage: StageType) {
-        callBack(stage)
-    }
-    
-    init<S: Scene2>(newScene: S,
-         onTransition: @escaping (StageType, S) -> Void) where StageType == S.RouterType.DestinationType.StageType {
+    init<S: Scene>(_ newScene: S,
+                    _ argument: S.ArgumentType?,
+                    _ onTransition: @escaping (StageType, S) -> Void) where StageType == S.RouterType.DestinationType.StageType {
         
-        self.setupFunc = { (sequence: SceneSequence2<StageType>) in
-            newScene.setup(sequence: sequence, arguments: nil)
+        self.scene = newScene        
+        self.execution = { (_ stage: StageType, _ scene: SceneBase) -> Void in
+            guard let neoScene = scene as? S else { return }
+            onTransition(stage, neoScene)
         }
-        self.callBack = { (stage: StageType) in
-            onTransition(stage, newScene)
-        }
+        self.args = argument
     }
 }

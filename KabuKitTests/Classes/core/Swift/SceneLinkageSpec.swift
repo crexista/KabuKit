@@ -12,7 +12,7 @@ import Nimble
 class SceneLinkageSpec: QuickSpec {
 
     
-    final class LinkageSpecScene1 : NSObject, Scene2, SceneLinkage {
+    final class LinkageSpecScene1 : NSObject, Scene, SceneLinkage {
         
         typealias DestinationType = MockDestination
         

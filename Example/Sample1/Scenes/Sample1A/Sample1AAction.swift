@@ -11,6 +11,7 @@ import KabuKit
 import RxSwift
 import RxCocoa
 
+/*
 class Sample1AAction: Action {
     
     unowned let label: UILabel
@@ -50,3 +51,4 @@ class Sample1AAction: Action {
         self.prevButton = prevButton
     }
 }
+ */

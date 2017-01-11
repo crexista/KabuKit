@@ -1,5 +1,5 @@
 //
-//  Copyright © 2017年 crexista
+//  Copyright © 2017 crexista
 //
 
 import Foundation
@@ -11,7 +11,7 @@ import Nimble
 
 class SceneRequestSpec: QuickSpec {
     
-    final class SceneRequestScene : NSObject, Scene2 {
+    final class SceneRequestScene : NSObject, Scene {
         
         typealias RouterType = MockRouter
         typealias ArgumentType = Void
@@ -33,18 +33,19 @@ class SceneRequestSpec: QuickSpec {
         
         
         
-        describe("RequestのTransition生成について") {
+        describe("Transition生成について") {
 
             it("makeTransitionを呼ぶとTransitionを生成することができる") {
                 var isCalled = false
                 let request = MockDestination()
                 let scene = SceneRequestScene()
 
-                let transition = request.makeTransition(newScene: scene, onTransition: { (obj, scene) in
+                let transition = request.makeTransition(scene, nil, { (stage, scene) in
                     isCalled = true
                 })
                 expect(isCalled).to(beFalse())
-                transition?.onTransition(stage: NSObject())
+                transition?.execution(NSObject(), scene)
+
                 expect(isCalled).to(beTrue())
             }
         }

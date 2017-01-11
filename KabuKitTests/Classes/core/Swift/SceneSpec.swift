@@ -1,5 +1,5 @@
 //
-//  Copyright © 2017年 crexista
+//  Copyright © 2017 crexista
 //
 
 import Foundation
@@ -11,7 +11,7 @@ import Nimble
 
 class SceneSpec: QuickSpec {
 
-    final class SceneSpecScene : NSObject, Scene2 {
+    final class SceneSpecScene : NSObject, Scene {
 
         typealias RouterType = MockRouter
         typealias ArgumentType = Void
@@ -30,9 +30,8 @@ class SceneSpec: QuickSpec {
     }
 
     override func spec() {
-        
-        describe("var get director") {
 
+        describe("var get director") {
             context("setupを呼ぶ前は") {
                 let scene = SceneSpecScene()
                 it("scene#directorはnil") {
@@ -42,15 +41,14 @@ class SceneSpec: QuickSpec {
 
             context("setupを呼んだ後") {
                 let firstScene = SceneSpecScene()
-                let sequence = SceneSequence2(stage: NSObject(), scene: firstScene, argument: nil) { (stage, scene) in }
+
+                let sequence = SceneSequence(NSObject(), firstScene, nil) { (stage, scene) in }
 
                 let scene = SceneSpecScene()
-                beforeEach {
-                    scene.setup(sequence: sequence, arguments: nil)
-                }
-               
-                it("scene#directorはdirectorが入っている") {
 
+
+                it("scene#directorはdirectorが入っている") {
+                    scene.setup(sequenceObject: sequence, argumentObject: nil)
                     expect(scene.director).notTo(beNil())
                 }
                 
@@ -60,8 +58,8 @@ class SceneSpec: QuickSpec {
                     let director2 = scene.director
 
                     expect(director1 === director2).to(beTrue())
+                    expect(director1).notTo(beNil())
                 }
-
             }
         }
     }

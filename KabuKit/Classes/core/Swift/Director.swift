@@ -1,12 +1,10 @@
 //
-//  Copyright © 2017年 crexista
+//  Copyright © 2017 crexista
 //
 
 import Foundation
 
-public class Director<RouterType: SceneRouter> {
-    
-    typealias DestinationType = RouterType.DestinationType
+public class Director<DestinationType: Destination> {
     
     typealias StageType = DestinationType.StageType
     
@@ -16,26 +14,26 @@ public class Director<RouterType: SceneRouter> {
     
     private var remove: (SceneSequence2<StageType>?) -> Void
     
-    func transitTo(request: DestinationType) {
+    public func transitTo(_ request: DestinationType) {
         let transition = routing(request)
         sequence?.push(transition: transition!)
     }
     
-    func back() {
+    public func back() {
         self.remove(sequence)
     }
     
-    func raiseEvent<E>(event: E) {
+    public func raiseEvent<E>(event: E) {
         sequence?.raiseEvent(event: event)
     }
     
-    init<SceneType: Scene2>(scene: SceneType, sequence: SceneSequence2<StageType>) where SceneType.RouterType == RouterType {
-        self.routing = { [weak scene] (request: DestinationType) -> Transition<DestinationType.StageType>? in
+    internal init<S: Scene>(scene: S, sequence: SceneSequence2<StageType>) where S.RouterType.DestinationType == DestinationType {
+        self.routing = { (request: DestinationType) -> Transition<DestinationType.StageType>? in
             
-            return scene?.router.handle(scene: scene!, request: request)
+            return scene.router.handle(scene: scene, request: request)
         }
-        self.remove = { [weak scene] (seq: SceneSequence2?) in
-            _ = seq?.release(scene: scene!)
+        self.remove = { (seq: SceneSequence2?) in
+            _ = seq?.release(scene: scene)
         }
         self.sequence = sequence
     }

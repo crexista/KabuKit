@@ -9,53 +9,63 @@
 import Foundation
 import KabuKit
 
-extension Sample1AViewController: Scene {
+extension Sample1AViewController: Scene, SceneLinkage {
     
-    // MARK: - SceneTransition Protocol
-    enum Sample1Link : SceneTransition {
+    enum Sample1Destination: Destination {
         typealias StageType = UIViewController
-        case A, B
-        
-        func request(context: SceneContext<UIViewController>) -> SceneRequest? {
-            switch self {
-            case .A:
-                let xib = ViewControllerXIBFile("Sample1AViewController", Bundle.main)
-                return context.sceneRequest(xib, Sample1AViewController.self, true) { (stage, scene) in
-                    stage.navigationController?.pushViewController(scene, animated: true)
-                }
-            case .B:
-                let xib = ViewControllerXIBFile("Sample1BViewController", Bundle.main)
-                return context.sceneRequest(xib, Sample1BViewController.self, nil) { (stage, scene) in
-                    stage.navigationController?.pushViewController(scene, animated: true)
-                }
-            }
-        }
+        case a
+        case b
     }
-
-    // MARK: - ActionScene Protocol
-    typealias TransitionType = Sample1Link
+    
+    typealias DestinationType = Sample1Destination
+    
     typealias ArgumentType = Bool
     
     public var isRemovable: Bool {
-        return argument!
-    }
-
-    func onRemove(stage: UIViewController) {
-        _ = stage.navigationController?.popViewController(animated: true)
+        return true
     }
     
+
+    func onMove(destination: Sample1Destination) -> Transition<UIViewController>? {
+
+        switch destination {
+        case .a:
+            let scene = Sample1AViewController(nibName: "Sample1AViewController", bundle: Bundle.main)
+            return destination.makeTransition(scene, false, { (stage, scene) in
+                stage.navigationController?.pushViewController(scene, animated: true)
+            })
+            
+        case .b:
+            let scene = Sample1BViewController(nibName: "Sample1BViewController", bundle: Bundle.main)
+            return destination.makeTransition(scene, nil, { (stage, scene) in
+                stage.navigationController?.pushViewController(scene, animated: true)
+            })
+            
+        }
+    }
+    
+    /**
+     Sceneが削除されるときに呼ばれます.
+     画面上から消すための処理をここに記述してください
+     
+     */
+    public func onRemove(stage: UIViewController) {
+        _ = stage.navigationController?.popViewController(animated: true)
+    }
+
+    
     func onPressAButton(sender: UIButton) {
-        director?.changeScene(transition: Sample1Link.A)
+        director?.transitTo(Sample1Destination.a)
     }
     
     func onPressBButton(sender: UIButton) {
-        director?.changeScene(transition: Sample1Link.B)
+        director?.transitTo(Sample1Destination.b)
     }
-
+    
     func onPressPrevButton(sender: UIButton) {
-        director?.exitScene()
+        director?.back()
     }
-
+    
     // MARK: - Override
     override func viewDidLoad() {
         prevButton.isEnabled = argument!
@@ -65,9 +75,8 @@ extension Sample1AViewController: Scene {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        if (self.navigationController == nil && !isReleased) {
-            director?.exitScene()
+        if (self.navigationController == nil && !isRemovable) {
+            director?.back()
         }
     }
-
 }

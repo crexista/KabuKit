@@ -1,5 +1,5 @@
 //
-//  Copyright © 2017年 crexista
+//  Copyright © 2017 crexista
 //
 
 import Foundation
@@ -11,7 +11,7 @@ import Nimble
 
 class DirectorSpec: QuickSpec {
     
-    final class DirectorSpecScene1 : NSObject, Scene2, SceneLinkage {
+    final class DirectorSpecScene1 : NSObject, Scene, SceneLinkage {
         
         typealias DestinationType = MockDestination
         
@@ -24,7 +24,7 @@ class DirectorSpec: QuickSpec {
         }
         
         func onMove(destination: MockDestination) -> Transition<NSObject>? {
-            return destination.makeTransition(newScene: DirectorSpecScene2()) { (stage, scene) in
+            return destination.makeTransition(DirectorSpecScene(), nil) { (stage, scene) in
                 self.isTransit = true
             }
         }
@@ -33,7 +33,7 @@ class DirectorSpec: QuickSpec {
         }
     }
     
-    final class DirectorSpecScene2 : NSObject, Scene2, SceneLinkage {
+    final class DirectorSpecScene : NSObject, Scene, SceneLinkage {
         
         typealias DestinationType = MockDestination
         
@@ -48,7 +48,7 @@ class DirectorSpec: QuickSpec {
         }
         
         func onMove(destination: MockDestination) -> Transition<NSObject>? {
-            return destination.makeTransition(newScene: DirectorSpecScene2()) { (stage, scene) in
+            return destination.makeTransition(DirectorSpecScene(), nil) { (stage, scene) in
                 self.isTransit = true
             }
         }
@@ -63,29 +63,29 @@ class DirectorSpec: QuickSpec {
         describe("Directorの次のSceneへの遷移について") {
             it("遷移requestが投げられると遷移する") {
                 let scene = DirectorSpecScene1()
-                let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                 let director = Director(scene: scene, sequence: sequence)
                 sequence.start(producer: nil)
                 expect(sequence.manager.count) == 1
                 expect(scene.isTransit).to(beFalse())
-                director.transitTo(request: MockDestination())
+                director.transitTo(MockDestination())
                 expect(scene.isTransit).to(beTrue())
                 expect(sequence.manager.count) == 2
             }
             
             it("backへのrequestが投げれらると戻る") {
                 let scene = DirectorSpecScene1()
-                let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                 let director = Director(scene: scene, sequence: sequence)
                 sequence.start(producer: nil)
                 
                 expect(sequence.manager.count) == 1
                 expect(scene.isTransit).to(beFalse())
-                director.transitTo(request: MockDestination())
+                director.transitTo(MockDestination())
                 expect(scene.isTransit).to(beTrue())
                 expect(sequence.manager.count) == 2
 
-                let currentScene: DirectorSpecScene2? = sequence.manager.currentScene()
+                let currentScene: DirectorSpecScene? = sequence.manager.currentScene()
                 currentScene?.director?.back()
                 expect(sequence.manager.count) == 1
                 expect(scene.isTransit).to(beTrue())

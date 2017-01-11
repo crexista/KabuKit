@@ -1,5 +1,5 @@
 //
-//  Copyright © 2017年 crexista
+//  Copyright © 2017 crexista
 //
 
 import Foundation
@@ -12,11 +12,11 @@ import Nimble
 
 class SceneObserverSpec: QuickSpec {
     
-    class MockAction: Action2 {
+    class MockAction: Action {
         
-        typealias RouterType = MockRouter
+        typealias DestinationType = MockDestination
 
-        public func invoke(director: Director<MockRouter>) -> [ObserverTarget] {
+        public func invoke(director: Director<MockDestination>) -> [ObserverTarget] {
             return []
         }
 
@@ -30,7 +30,7 @@ class SceneObserverSpec: QuickSpec {
         }
     }
     
-    class SceneObserverSpeceScene: ActionScene2 {
+    class SceneObserverSpeceScene: ActionScene {
         typealias RouterType = MockRouter
         typealias ArgumentType = Void
         
@@ -54,10 +54,10 @@ class SceneObserverSpec: QuickSpec {
             context("指定のActionがすでにActivate済みの場合") {
                 it("observerのresolveによって取得することができる") {
                     let scene = SceneObserverSpeceScene()
-                    let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                    let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                     let director = Director(scene: scene, sequence: sequence)
 
-                    let observer = SceneObserver2(director: director)
+                    let observer = SceneObserver(director: director)
                     let action = MockAction()
 
                     _ = observer.activate(action: action)
@@ -70,10 +70,10 @@ class SceneObserverSpec: QuickSpec {
                 
                 it("observerのresolveを使っても取得できない") {
                     let scene = SceneObserverSpeceScene()
-                    let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                    let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                     let director = Director(scene: scene, sequence: sequence)
                     
-                    let observer = SceneObserver2(director: director)
+                    let observer = SceneObserver(director: director)
 
                     let resolvedAction = observer.resolve(actionType: MockAction.self)
                     expect(resolvedAction).to(beNil())
@@ -88,10 +88,10 @@ class SceneObserverSpec: QuickSpec {
                
                 it("activateが成功する") {
                     let scene = SceneObserverSpeceScene()
-                    let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                    let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                     let director = Director(scene: scene, sequence: sequence)
                     
-                    let observer = SceneObserver2(director: director)
+                    let observer = SceneObserver(director: director)
 
                     let result = observer.activate(action: action)
                     let resolvedAction = observer.resolve(actionType: MockAction.self)
@@ -103,10 +103,10 @@ class SceneObserverSpec: QuickSpec {
 
             context("activateされるactionがすでに登録済みの場合") {
                 let scene = SceneObserverSpeceScene()
-                let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                 let director = Director(scene: scene, sequence: sequence)
                 
-                let observer = SceneObserver2(director: director)
+                let observer = SceneObserver(director: director)
 
                 _ = observer.activate(action: action)
                 it("activateは再度実行されることはない") {
@@ -118,15 +118,15 @@ class SceneObserverSpec: QuickSpec {
             }
             context("activateされるactionと同じクラスの別インスタンスがすでに登録済みの場合") {
                 let scene = SceneObserverSpeceScene()
-                let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                 let director = Director(scene: scene, sequence: sequence)
                 
-                let observer = SceneObserver2(director: director)
+                let observer = SceneObserver(director: director)
 
                 _ = observer.activate(action: action)
                 it("activateはエラーを返す") {
-                    let action2 = MockAction()
-                    _ = observer.activate(action: action2)
+                    let Action = MockAction()
+                    _ = observer.activate(action: Action)
                 }
             }
 
@@ -139,10 +139,10 @@ class SceneObserverSpec: QuickSpec {
                 it("何も起こらない") {
 
                     let scene = SceneObserverSpeceScene()
-                    let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                    let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                     let director = Director(scene: scene, sequence: sequence)
                     
-                    let observer = SceneObserver2(director: director)
+                    let observer = SceneObserver(director: director)
 
                     let result = observer.deactivate(actionType: type(of: action))
                     let resolvedAction = observer.resolve(actionType: MockAction.self)
@@ -153,10 +153,10 @@ class SceneObserverSpec: QuickSpec {
             context("deactivateされるactionが登録済みである場合"){
                 it("actionがサスペンドされ、actionに紐づくSignalは削除される") {
                     let scene = SceneObserverSpeceScene()
-                    let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                    let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                     let director = Director(scene: scene, sequence: sequence)
                     
-                    let observer = SceneObserver2(director: director)
+                    let observer = SceneObserver(director: director)
                     
                     _ = observer.activate(action: action)
                     expect(observer.isActive(actionType: MockAction.self)) === true
