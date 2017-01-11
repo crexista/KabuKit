@@ -26,7 +26,7 @@ public class SceneDirector<TransitionType: SceneTransition> {
      */
     public func changeScene(transition: TransitionType) {
         let factory = SceneContext(sequence, currentScene!, stage, manager, scenario)
-        transition.request(context: factory)?.execute()
+//        transition.request(context: factory)?.execute()
     }
     
     /**
@@ -49,6 +49,7 @@ public class SceneDirector<TransitionType: SceneTransition> {
         self.scenario = scenario
         self.currentScene = scene
         self.sequence = sequence
+        
     }
     
 }

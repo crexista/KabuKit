@@ -13,19 +13,17 @@ public class SceneContext<StageType: AnyObject> {
     
     internal weak var scenario: Scenario?
     
-    public func sceneRequest<T: SceneGenerator, S: Scene>(_ generator: T,
-                                                          _ sceneType: S.Type,
-                                                          _ argument: S.ArgumentType?,
-                                                          _ setup: @escaping (_ stage: StageType, _ scene: S) -> Void) -> SceneRequest where T.implType == S.TransitionType.StageType, StageType == S.TransitionType.StageType {
+    public func sceneRequest<T: SceneGenerator>(_ generator: T,
+                                                _ argument: T.SceneType.ArgumentType?,
+                                                _ setup: @escaping (_ stage: T.SceneType.TransitionType.StageType, _ newScene: T.SceneType, _ prevScene: SceneBase) -> Void) -> SceneRequest where StageType == T.SceneType.TransitionType.StageType {
 
         return SceneRequestImpl(generator: generator,
-                                      sequence: sequence,
-                                      stage: stage,
-                                      sceneType: sceneType,
-                                      manager: manager,
-                                      scenario: scenario,
-                                      argument: argument,
-                                      f: setup)
+                                sequence: sequence,
+                                stage: stage,
+                                manager: manager,
+                                scenario: scenario,
+                                argument: argument,
+                                f: setup)
     }
     
 
