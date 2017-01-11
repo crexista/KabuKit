@@ -13,9 +13,6 @@ import KabuKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    var sceneSequence: SceneSequence<UIViewController>?
-    
     var producer: Producer?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -27,13 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.rootViewController?.view.backgroundColor = UIColor.brown
         self.window!.backgroundColor = UIColor.white
         self.window!.makeKeyAndVisible()
-        sceneSequence = SceneSequence(root)
 
         root.navigationController?.setNavigationBarHidden(true, animated: true)
 
         let scene = Sample1AViewController(nibName: "Sample1AViewController", bundle: Bundle.main)
-        producer = Producer.run(sequence: SceneSequence2(root, scene, false) { (stage, scene) in
-
+        producer = Producer.run(sequence: SceneSequence(root, scene, false) { (stage, scene) in
             stage.addChildViewController(scene)
             stage.view.addSubview(scene.view)
         })

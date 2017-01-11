@@ -1,21 +1,18 @@
 //
-//  Copyright © 2016 crexista.
+//  Copyright © 2017 crexista
 //
 
 import Foundation
-import RxSwift
 
-public protocol Action : class, OnStop, OnError {
+public protocol Action : ActionTerminate {
     
-    associatedtype SceneType: Scene
+    associatedtype DestinationType: Destination
     
-    func start(director: SceneDirector<SceneType.TransitionType>?, argument: SceneType.ArgumentType?)->[Observable<()>]
+    func invoke(director: Director<DestinationType>) -> [ObserverTarget]
+    
 }
 
-public protocol OnStop {
+public protocol ActionTerminate {
+    func onError(error: Error, label: String?) -> ActionRecoverPattern
     func onStop()
-}
-
-public protocol OnError {
-    func onError(error: Error)
 }

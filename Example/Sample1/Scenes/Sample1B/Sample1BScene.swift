@@ -9,7 +9,8 @@
 import Foundation
 import KabuKit
 
-extension Sample1BViewController : ActionScene2, SceneLinkage {
+
+extension Sample1BViewController : ActionScene, SceneLinkage {
     
     enum Sample2Destination: Destination {
         typealias StageType = UIViewController

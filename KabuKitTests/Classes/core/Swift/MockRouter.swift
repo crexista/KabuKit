@@ -8,7 +8,7 @@ import KabuKit
 class MockRouter: SceneRouter {
     typealias DestinationType = MockDestination
     
-    func handle<S : Scene2>(scene: S, request: MockDestination) -> Transition<NSObject>? {
+    func handle<S : Scene>(scene: S, request: MockDestination) -> Transition<NSObject>? {
         return nil
     }
 }

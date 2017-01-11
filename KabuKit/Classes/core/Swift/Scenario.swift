@@ -1,13 +1,12 @@
 //
-//  Copyright © 2016 crexista.
+//  Copyright © 2017 crexista
 //
 
 import Foundation
 
-public protocol Scenario : class {
+public protocol  Scenario : class {
     
-    func onEvent<StageType: AnyObject, EventType>(currentStage: StageType,
-                                                  currentSequence: SceneSequence<StageType>,
-                                                  currentScene: SceneBase,
-                                                  event: EventType)
+    func start(producer: Producer)
+    
+    func handleEvent<S, E>(sequence: SceneSequence<S>, event: E, producer: Producer?)
 }
