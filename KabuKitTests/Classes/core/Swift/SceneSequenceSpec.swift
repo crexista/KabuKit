@@ -60,7 +60,9 @@ class SceneSequenceSpec: QuickSpec {
             let firstScene = SequenceSpecScene1()
 
             context("sceneをpushしていない場合") {
+
                 let sequence = SceneSequence(NSObject(), firstScene, nil){ (stage, scene) in }
+                
                 sequence.start(producer: nil)
                 it("scene#directorはnilを返す") {
                     let scene = SequenceSpecScene1()
@@ -75,6 +77,7 @@ class SceneSequenceSpec: QuickSpec {
             context("sceneをpushした後") {
 
                 let sequence = SceneSequence(NSObject(), firstScene, nil){ (stage, scene) in }
+
                 sequence.start(producer: nil)
                 let secondScene = SequenceSpecScene1()
                 var isCalled = false
@@ -100,6 +103,7 @@ class SceneSequenceSpec: QuickSpec {
             context("Sceneが1つしかない場合は") {
                 let firstScene = SequenceSpecScene1()
                 let sequence = SceneSequence(NSObject(), firstScene, nil){ (stage, scene) in }
+
                 sequence.start(producer: nil)
                 it("何も起きない") {
                     let previous: SequenceSpecScene1? = sequence.currentScene()
@@ -116,6 +120,7 @@ class SceneSequenceSpec: QuickSpec {
                 let secondScene = SequenceSpecScene1()
                 
                 let sequence = SceneSequence(NSObject(), firstScene, nil){ (stage, scene) in }
+
                 let transition = Transition(secondScene, nil) { (stage, scene) in }
                 sequence.start(producer: nil)
                 sequence.push(transition: transition)

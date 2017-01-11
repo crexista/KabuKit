@@ -13,7 +13,6 @@ import KabuKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-  
     var producer: Producer?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -30,7 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let scene = Sample1AViewController(nibName: "Sample1AViewController", bundle: Bundle.main)
         producer = Producer.run(sequence: SceneSequence(root, scene, false) { (stage, scene) in
-
             stage.addChildViewController(scene)
             stage.view.addSubview(scene.view)
         })

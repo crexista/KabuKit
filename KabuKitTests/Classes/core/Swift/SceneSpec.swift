@@ -41,11 +41,10 @@ class SceneSpec: QuickSpec {
 
             context("setupを呼んだ後") {
                 let firstScene = SceneSpecScene()
-
+                
                 let sequence = SceneSequence(NSObject(), firstScene, nil) { (stage, scene) in }
 
                 let scene = SceneSpecScene()
-
 
                 it("scene#directorはdirectorが入っている") {
                     scene.setup(sequenceObject: sequence, argumentObject: nil)

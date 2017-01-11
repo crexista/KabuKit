@@ -71,6 +71,7 @@ class SceneObserverSpec: QuickSpec {
                 it("observerのresolveを使っても取得できない") {
                     let scene = SceneObserverSpeceScene()
                     let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
+
                     let director = Director(scene: scene, sequence: sequence)
                     
                     let observer = SceneObserver(director: director)
@@ -119,6 +120,7 @@ class SceneObserverSpec: QuickSpec {
             context("activateされるactionと同じクラスの別インスタンスがすでに登録済みの場合") {
                 let scene = SceneObserverSpeceScene()
                 let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
+
                 let director = Director(scene: scene, sequence: sequence)
                 
                 let observer = SceneObserver(director: director)
@@ -140,6 +142,7 @@ class SceneObserverSpec: QuickSpec {
 
                     let scene = SceneObserverSpeceScene()
                     let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
+
                     let director = Director(scene: scene, sequence: sequence)
                     
                     let observer = SceneObserver(director: director)
