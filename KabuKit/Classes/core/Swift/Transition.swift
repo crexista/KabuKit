@@ -18,11 +18,12 @@ public struct Transition<StageType: AnyObject> {
         callBack(stage)
     }
     
-    init<S: Scene2>(newScene: S,
-         onTransition: @escaping (StageType, S) -> Void) where StageType == S.RouterType.DestinationType.StageType {
+    init<S: Scene2>(_ newScene: S,
+                    _ argument: S.ArgumentType?,
+                    _ onTransition: @escaping (StageType, S) -> Void) where StageType == S.RouterType.DestinationType.StageType {
         
         self.setupFunc = { (sequence: SceneSequence2<StageType>) in
-            newScene.setup(sequence: sequence, arguments: nil)
+            newScene.setup(sequence: sequence, arguments: argument)
         }
         self.callBack = { (stage: StageType) in
             onTransition(stage, newScene)

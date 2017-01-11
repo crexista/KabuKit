@@ -40,7 +40,7 @@ class SceneRequestSpec: QuickSpec {
                 let request = MockDestination()
                 let scene = SceneRequestScene()
 
-                let transition = request.makeTransition(newScene: scene, onTransition: { (obj, scene) in
+                let transition = request.makeTransition(scene, nil, { (stage, scene) in
                     isCalled = true
                 })
                 expect(isCalled).to(beFalse())

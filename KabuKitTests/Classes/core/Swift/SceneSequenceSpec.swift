@@ -60,7 +60,7 @@ class SceneSequenceSpec: QuickSpec {
             let firstScene = SequenceSpecScene1()
 
             context("sceneをpushしていない場合") {
-                let sequence = SceneSequence2(stage: NSObject(), scene: firstScene, argument: nil){ (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), firstScene, nil){ (stage, scene) in }
                 sequence.start(producer: nil)
                 it("scene#directorはnilを返す") {
                     let scene = SequenceSpecScene1()
@@ -74,13 +74,13 @@ class SceneSequenceSpec: QuickSpec {
             
             context("sceneをpushした後") {
 
-                let sequence = SceneSequence2(stage: NSObject(), scene: firstScene, argument: nil){ (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), firstScene, nil){ (stage, scene) in }
                 sequence.start(producer: nil)
                 let secondScene = SequenceSpecScene1()
                 var isCalled = false
-                let transition = Transition(newScene: secondScene, onTransition: { (stage, scene) in
+                let transition = Transition(secondScene, nil) { (stage, scene) in
                     isCalled = true
-                })
+                }
 
                 sequence.push(transition: transition)
 
@@ -99,7 +99,7 @@ class SceneSequenceSpec: QuickSpec {
         describe("シーンの削除について") {
             context("Sceneが1つしかない場合は") {
                 let firstScene = SequenceSpecScene1()
-                let sequence = SceneSequence2(stage: NSObject(), scene: firstScene, argument: nil){ (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), firstScene, nil){ (stage, scene) in }
                 sequence.start(producer: nil)
                 it("何も起きない") {
                     let previous: SequenceSpecScene1? = sequence.currentScene()
@@ -115,8 +115,8 @@ class SceneSequenceSpec: QuickSpec {
                 let firstScene = SequenceSpecScene1()
                 let secondScene = SequenceSpecScene1()
                 
-                let sequence = SceneSequence2(stage: NSObject(), scene: firstScene, argument: nil){ (stage, scene) in }
-                let transition = Transition(newScene: secondScene, onTransition: { (stage, scene) in })
+                let sequence = SceneSequence2(NSObject(), firstScene, nil){ (stage, scene) in }
+                let transition = Transition(secondScene, nil) { (stage, scene) in }
                 sequence.start(producer: nil)
                 sequence.push(transition: transition)
                 
@@ -136,8 +136,8 @@ class SceneSequenceSpec: QuickSpec {
                 let firstScene = SequenceSpecScene1()
                 let secondScene = SequenceSpecScene1()
                 
-                let sequence = SceneSequence2(stage: NSObject(), scene: firstScene, argument: nil){ (stage, scene) in }
-                let transition = Transition(newScene: secondScene, onTransition: { (stage, scene) in })
+                let sequence = SceneSequence2(NSObject(), firstScene, nil){ (stage, scene) in }
+                let transition = Transition(secondScene, nil) { (stage, scene) in }
                 sequence.start(producer: nil)
                 sequence.push(transition: transition)
                 expect(firstScene.isRemoved).to(beFalse())
@@ -167,9 +167,10 @@ class SceneSequenceSpec: QuickSpec {
             context("シーン側の理由で削除できない場合は") {
 
                 let firstScene = SequenceSpecScene1()
-                let sequence = SceneSequence2(stage: NSObject(), scene: firstScene, argument: nil){ (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), firstScene, nil){ (stage, scene) in }
                 let secondScene = SequenceSpecScene2()
-                let transition = Transition(newScene: secondScene, onTransition: { (stage, scene) in })
+                let transition = Transition(secondScene, nil){ (stage, scene) in }
+
                 sequence.start(producer: nil)
                 sequence.push(transition: transition)
 

@@ -14,9 +14,9 @@ class SceneObserverSpec: QuickSpec {
     
     class MockAction: Action2 {
         
-        typealias RouterType = MockRouter
+        typealias DestinationType = MockDestination
 
-        public func invoke(director: Director<MockRouter>) -> [ObserverTarget] {
+        public func invoke(director: Director<MockDestination>) -> [ObserverTarget] {
             return []
         }
 
@@ -54,7 +54,7 @@ class SceneObserverSpec: QuickSpec {
             context("指定のActionがすでにActivate済みの場合") {
                 it("observerのresolveによって取得することができる") {
                     let scene = SceneObserverSpeceScene()
-                    let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                    let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                     let director = Director(scene: scene, sequence: sequence)
 
                     let observer = SceneObserver2(director: director)
@@ -70,7 +70,7 @@ class SceneObserverSpec: QuickSpec {
                 
                 it("observerのresolveを使っても取得できない") {
                     let scene = SceneObserverSpeceScene()
-                    let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                    let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                     let director = Director(scene: scene, sequence: sequence)
                     
                     let observer = SceneObserver2(director: director)
@@ -88,7 +88,7 @@ class SceneObserverSpec: QuickSpec {
                
                 it("activateが成功する") {
                     let scene = SceneObserverSpeceScene()
-                    let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                    let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                     let director = Director(scene: scene, sequence: sequence)
                     
                     let observer = SceneObserver2(director: director)
@@ -103,7 +103,7 @@ class SceneObserverSpec: QuickSpec {
 
             context("activateされるactionがすでに登録済みの場合") {
                 let scene = SceneObserverSpeceScene()
-                let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                 let director = Director(scene: scene, sequence: sequence)
                 
                 let observer = SceneObserver2(director: director)
@@ -118,7 +118,7 @@ class SceneObserverSpec: QuickSpec {
             }
             context("activateされるactionと同じクラスの別インスタンスがすでに登録済みの場合") {
                 let scene = SceneObserverSpeceScene()
-                let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                 let director = Director(scene: scene, sequence: sequence)
                 
                 let observer = SceneObserver2(director: director)
@@ -139,7 +139,7 @@ class SceneObserverSpec: QuickSpec {
                 it("何も起こらない") {
 
                     let scene = SceneObserverSpeceScene()
-                    let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                    let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                     let director = Director(scene: scene, sequence: sequence)
                     
                     let observer = SceneObserver2(director: director)
@@ -153,7 +153,7 @@ class SceneObserverSpec: QuickSpec {
             context("deactivateされるactionが登録済みである場合"){
                 it("actionがサスペンドされ、actionに紐づくSignalは削除される") {
                     let scene = SceneObserverSpeceScene()
-                    let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                    let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                     let director = Director(scene: scene, sequence: sequence)
                     
                     let observer = SceneObserver2(director: director)

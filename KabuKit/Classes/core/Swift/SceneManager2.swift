@@ -13,7 +13,7 @@ import Foundation
 final public class SceneManager2 : Hashable, Equatable {
     
     // key: Scene
-    private static let managers: NSMapTable<AnyObject, SceneManager2> = NSMapTable.weakToWeakObjects()
+    private static let managers: NSMapTable<AnyObject, SceneManager2> = NSMapTable.strongToStrongObjects()
     
     private static let managerQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
     
@@ -21,7 +21,7 @@ final public class SceneManager2 : Hashable, Equatable {
     private var sceneHashMap: NSMapTable<AnyObject, AnyObject> = NSMapTable.strongToStrongObjects()
     
     // Sceneをスタックし、現在有効なSceneを取り出せるようにします
-    internal var scenes: [AnyObject]
+    private var scenes: [AnyObject]
     
     // frameHashMap, scens その両方を操作する際に必要となるdispatch queue
     private let sceneQueue: DispatchQueue
@@ -69,17 +69,6 @@ final public class SceneManager2 : Hashable, Equatable {
         }
     }
     
-    internal func pop() {
-        sceneQueue.sync {
-            let scene = self.scenes.popLast()
-            SceneManager2.managerQueue.sync {
-                SceneManager2.managers.removeObject(forKey: scene)
-            }
-
-            self.sceneHashMap.removeObject(forKey: scene)
-        }
-    }
-    
     /**
      SceneManagerで管理されているSceneを全て解放します
      
@@ -111,6 +100,7 @@ final public class SceneManager2 : Hashable, Equatable {
             self.scenes.append(scene)
             SceneManager2.managerQueue.sync(flags: .barrier) {
                 SceneManager2.managers.setObject(self, forKey: scene)
+                print(SceneManager2.managers)
             }
         }
     }

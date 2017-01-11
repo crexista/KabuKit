@@ -42,7 +42,7 @@ class ActionSceneSpec: QuickSpec {
             
             context("setupを呼んだ後") {
                 let firstScene = ActionSceneSpecScene()
-                let sequence = SceneSequence2(stage: NSObject(), scene: firstScene, argument: nil) { (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), firstScene, nil) { (stage, scene) in }
                 let scene = ActionSceneSpecScene()
                 
                 beforeEach {

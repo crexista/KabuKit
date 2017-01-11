@@ -12,7 +12,7 @@ public protocol Scene2: class {
     
     var router: RouterType { get }
     
-    var director: Director<RouterType>? { get }
+    var director: Director<RouterType.DestinationType>? { get }
     
     var argument: ArgumentType? { get }
     
@@ -41,19 +41,19 @@ public protocol Scene2: class {
  */
 extension Scene2 {
     
-    var director: Director<RouterType>? {
+    public var director: Director<RouterType.DestinationType>? {
         let manager = SceneManager2.managerByScene(scene: self)
         let data = manager?.getStuff(scene: self)
-        return (data as? (Director<RouterType>, ArgumentType?))?.0
+        return (data as? (Director<RouterType.DestinationType>, ArgumentType?))?.0
     }
     
-    var argument: ArgumentType? {
+    public var argument: ArgumentType? {
         let manager = SceneManager2.managerByScene(scene: self)
         let data = manager?.getStuff(scene: self)
-        return (data as? (Director<RouterType>, ArgumentType?))?.1
+        return (data as? (Director<RouterType.DestinationType>, ArgumentType?))?.1
     }
     
-    internal func setup(sequence: SceneSequence2<Self.RouterType.DestinationType.StageType>, arguments: ArgumentType?) {
+    func setup(sequence: SceneSequence2<Self.RouterType.DestinationType.StageType>, arguments: ArgumentType?) {
         let director = Director(scene: self, sequence: sequence)        
         sequence.manager.set(scene: self, stuff: (director, arguments) as AnyObject)
     }
@@ -88,15 +88,18 @@ public extension SceneLinkage where Self: Scene2, Self == Self.RouterType {
 public protocol Destination {
     associatedtype StageType: AnyObject
     
-    func makeTransition<S: Scene2>(newScene: S,
-                        onTransition: @escaping (StageType, S) -> Void) -> Transition<StageType>? where StageType == S.RouterType.DestinationType.StageType
+    func makeTransition<S: Scene2>(_ newScene: S,
+                                   _ argument: S.ArgumentType?,
+                                   _ onTransition: @escaping (StageType, S) -> Void) -> Transition<StageType>? where StageType == S.RouterType.DestinationType.StageType
     
 }
 
 public extension Destination {
     
-    final public func makeTransition<S: Scene2>(newScene: S,
-                                     onTransition: @escaping (StageType, S) -> Void) -> Transition<StageType>? where StageType == S.RouterType.DestinationType.StageType {
-        return Transition(newScene: newScene, onTransition: onTransition)
+    
+    final func makeTransition<S: Scene2>(_ newScene: S,
+                                         _ argument: S.ArgumentType?,
+                                         _ onTransition: @escaping (StageType, S) -> Void) -> Transition<StageType>? where StageType == S.RouterType.DestinationType.StageType {
+        return Transition(newScene, argument, onTransition)
     }
 }

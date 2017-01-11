@@ -9,13 +9,13 @@ import RxSwift
  SceneのActionを監視するクラスです.
  
  */
-public class SceneObserver2<RouterType: SceneRouter> {
+public class SceneObserver2<DestinationType: Destination> {
     
     var actionTypeHashMap = [String : ActionTerminate]()
     
     var disposableMap = [String : [ObserverTarget]]()
     
-    let director: Director<RouterType>
+    let director: Director<DestinationType>
     
     /**
      指定のActionを有効化させます.
@@ -36,7 +36,7 @@ public class SceneObserver2<RouterType: SceneRouter> {
                 すでにactivate済みのインスタンスがactionに指定された場合は何もされないため
                 falseを返します
      */
-    public func activate<A: Action2>(action: A, onStart: () -> Void = {}) -> Bool where A.RouterType == RouterType{
+    public func activate<A: Action2>(action: A, onStart: () -> Void = {}) -> Bool where A.DestinationType == DestinationType{
         let typeName = String(describing: type(of: action))
         
         guard disposableMap[typeName] == nil else {
@@ -60,7 +60,7 @@ public class SceneObserver2<RouterType: SceneRouter> {
      再度activateされるまでイベントを飛ばすことはありません
      
      */
-    public func deactivate<A: Action2>(actionType: A.Type) -> Bool where A.RouterType == RouterType{
+    public func deactivate<A: Action2>(actionType: A.Type) -> Bool where A.DestinationType == DestinationType{
         // 指定のクラス名に紐づくDisposableを取得し
         // 全て破棄し、DisposableMapも空にする
         let typeName = String(describing: actionType)
@@ -96,7 +96,7 @@ public class SceneObserver2<RouterType: SceneRouter> {
      - parameters: 
        - actionType: Actionの型
      */
-    public func resolve<A: Action2>(actionType: A.Type) -> A? where A.RouterType == RouterType{
+    public func resolve<A: Action2>(actionType: A.Type) -> A? where A.DestinationType == DestinationType{
         let typeName = String(describing: actionType)
 
         return actionTypeHashMap[typeName] as? A
@@ -173,7 +173,7 @@ public class SceneObserver2<RouterType: SceneRouter> {
         actionTypeHashMap.removeAll()
     }
     
-    internal init(director: Director<RouterType>) {
+    internal init(director: Director<DestinationType>) {
         self.director = director
     }
 }

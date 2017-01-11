@@ -4,27 +4,27 @@
 
 import Foundation
 
-protocol ActionScene2 : Scene2 {
-    var observer: SceneObserver2<RouterType>? { get }
+public protocol ActionScene2 : Scene2 {
+    var observer: SceneObserver2<RouterType.DestinationType>? { get }
 }
 
 extension ActionScene2 {
-    var director: Director<RouterType>? {
+    public var director: Director<RouterType.DestinationType>? {
         let manager = SceneManager2.managerByScene(scene: self)
         let data = manager?.getStuff(scene: self)
-        return (data as? (Director<RouterType>, ArgumentType?, SceneObserver2<RouterType>))?.0
+        return (data as? (Director<RouterType.DestinationType>, ArgumentType?, SceneObserver2<RouterType.DestinationType>))?.0
     }
     
-    var argument: ArgumentType? {
+    public var argument: ArgumentType? {
         let manager = SceneManager2.managerByScene(scene: self)
         let data = manager?.getStuff(scene: self)
-        return (data as? (Director<RouterType>, ArgumentType?, SceneObserver2<RouterType>))?.1
+        return (data as? (Director<RouterType.DestinationType>, ArgumentType?, SceneObserver2<RouterType.DestinationType>))?.1
     }
     
-    var observer: SceneObserver2<RouterType>? {
+    public var observer: SceneObserver2<RouterType.DestinationType>? {
         let manager = SceneManager2.managerByScene(scene: self)
         let data = manager?.getStuff(scene: self)
-        return (data as? (Director<RouterType>, ArgumentType?, SceneObserver2<RouterType>))?.2
+        return (data as? (Director<RouterType.DestinationType>, ArgumentType?, SceneObserver2<RouterType.DestinationType>))?.2
     }
 
     
