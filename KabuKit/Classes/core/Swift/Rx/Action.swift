@@ -4,15 +4,15 @@
 
 import Foundation
 
-public protocol Action : ActionTerminate {
+public protocol Action : SignalClosable {
     
     associatedtype DestinationType: Destination
     
-    func invoke(director: Director<DestinationType>) -> [ObserverTarget]
+    func invoke(director: Director<DestinationType>) -> [SubscribeTarget]
     
 }
 
-public protocol ActionTerminate {
-    func onError(error: Error, label: String?) -> ActionRecoverPattern
+public protocol SignalClosable {
+    func onError(error: Error, label: String?) -> RecoverPattern
     func onStop()
 }

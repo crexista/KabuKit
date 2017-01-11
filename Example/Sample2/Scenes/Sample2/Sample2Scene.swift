@@ -24,12 +24,12 @@ extension Sample2ViewController: ActionScene {
         
     }
     
-    typealias ArgumentType = Void
+    typealias ContextType = Void
     typealias TransitionType = Sample2Link
 
     override func viewDidLoad() {
         let action = Sample2Action(startButton: startButton)
-        observer.activate(action: action, director: director, argument: argument)
+        activator.activate(action: action, director: director, context: context)
     }
     
     public var isRemovable: Bool {
@@ -44,6 +44,6 @@ extension Sample2ViewController: ActionScene {
      - Parameter factory: 前の画面への遷移リクエストを生成するインスタンスです
      - Returns: SceneBackRequest 前の画面への遷移リクエストが成功したらSceneBackRequestはtrueを返します
      */
-    public func onRemove(stage: UIViewController) {
+    public func willRemove(from stage: UIViewController) {
     }
 }

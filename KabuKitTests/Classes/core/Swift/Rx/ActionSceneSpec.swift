@@ -14,7 +14,7 @@ class ActionSceneSpec: QuickSpec {
     final class ActionSceneSpecScene : NSObject, ActionScene {
         
         typealias RouterType = MockRouter
-        typealias ArgumentType = Void
+        typealias ContextType = Void
         
         public var router: MockRouter {
             return MockRouter()
@@ -24,19 +24,19 @@ class ActionSceneSpec: QuickSpec {
             return false
         }
         
-        public func onRemove(stage: NSObject) {
+        public func willRemove(from stage: NSObject) {
             
         }
     }
     
     override func spec() {
         
-        describe("observerへのリクエストについて") {
+        describe("activatorへのリクエストについて") {
             
             context("setupを呼ぶ前は") {
                 let scene = ActionSceneSpecScene()
-                it("observerをリクエストしても中身は空") {
-                    expect(scene.observer).to(beNil())
+                it("activatorをリクエストしても中身は空") {
+                    expect(scene.activator).to(beNil())
                 }
             }
             
@@ -47,20 +47,20 @@ class ActionSceneSpec: QuickSpec {
                 let scene = ActionSceneSpecScene()
                 
                 beforeEach {
-                    scene.setup(sequenceObject: sequence, argumentObject: nil)
+                    scene.setup(sequenceObject: sequence, contextObject: nil)
                 }
                 
-                it("Observerは初期化されて取得できる") {
+                it("activatorは初期化されて取得できる") {
                     
-                    expect(scene.observer).notTo(beNil())
+                    expect(scene.activator).notTo(beNil())
                 }
                 
-                it("Observerを複数回呼び出しても同じインスタンスを返す") {
+                it("activatorを複数回呼び出しても同じインスタンスを返す") {
                     
-                    let observer1 = scene.observer
-                    let observer2 = scene.observer
+                    let activator1 = scene.activator
+                    let activator2 = scene.activator
                     
-                    expect(observer1) === observer2
+                    expect(activator1) === activator2
                 }
                 
             }

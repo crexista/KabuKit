@@ -22,8 +22,8 @@ class Sample2AAction : Action {
     
     unowned let prevButton: UIButton
   
-    func start(director: SceneDirector<Sample2AViewController.Sample2Link>?, argument: Bool?) -> [Observable<()>] {
-        prevButton.isEnabled = argument!
+    func start(director: SceneDirector<Sample2AViewController.Sample2Link>?, context: Bool?) -> [Observable<()>] {
+        prevButton.isEnabled = context!
         return [
             nextButtonA.rx.tap.do(onNext: { () in director?.changeScene(transition: Sample2AViewController.Sample2Link.A)}),
             nextButtonB.rx.tap.do(onNext: { () in director?.changeScene(transition: Sample2AViewController.Sample2Link.B)}),

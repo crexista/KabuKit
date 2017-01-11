@@ -6,23 +6,23 @@ import Foundation
 import RxSwift
 
 /**
- RxSwiftのObservable<E>をこのフレームワークのObserverTargetに変換するための
+ RxSwiftのObservable<E>をこのフレームワークのSubscribeTargetに変換するための
  カテゴリ拡張です
  
  */
 extension Observable {
     
     /**
-     ObservableなオブジェクトをObserverTargetに変換します
+     ObservableなオブジェクトをSubscribeTargetに変換します
      
      
      ```Swift
-     let target: ObserverTarget = Observable<Int>.just(1).toTarget
+     let target: SubscribeTarget = Observable<Int>.just(1).toTarget
      
      ```
      */
-    public var toTarget: ObserverTarget {
-        return ObserverTarget(observable: self)
+    public var toTarget: SubscribeTarget {
+        return SubscribeTarget(observable: self)
     }
     
     /**
@@ -33,12 +33,12 @@ extension Observable {
      - example:
      
      ```Swift
-     let target: ObserverTarget = Observable<Int>.just(1)["SampleStream"]
+     let target: SubscribeTarget = Observable<Int>.just(1)["SampleStream"]
      
      ```
      
      */
-    public subscript(label: String) -> ObserverTarget {
-        return ObserverTarget(observable: self, label: label)
+    public subscript(label: String) -> SubscribeTarget {
+        return SubscribeTarget(observable: self, label: label)
     }
 }

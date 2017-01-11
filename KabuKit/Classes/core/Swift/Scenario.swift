@@ -8,5 +8,5 @@ public protocol  Scenario : class {
     
     func start(producer: Producer)
     
-    func handleEvent<S, E>(sequence: SceneSequence<S>, event: E, producer: Producer?)
+    func describe<E, S>(_ event: E, from sequence: SceneSequence<S>, through producer: Producer?)
 }

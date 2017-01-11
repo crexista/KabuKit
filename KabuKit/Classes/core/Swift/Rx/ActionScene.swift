@@ -5,26 +5,26 @@
 import Foundation
 
 public protocol ActionScene : Scene {
-    var observer: SceneObserver<RouterType.DestinationType>? { get }
+    var activator: ActionActivator<RouterType.DestinationType>? { get }
 }
 
 extension ActionScene where Self: Scene {
     public var director: Director<RouterType.DestinationType>? {
         let manager = SceneManager.managerByScene(scene: self)
         let data = manager?.getStuff(scene: self)
-        return (data as? (Director<RouterType.DestinationType>, ArgumentType?, SceneObserver<RouterType.DestinationType>))?.0
+        return (data as? (Director<RouterType.DestinationType>, ContextType?, ActionActivator<RouterType.DestinationType>))?.0
     }
     
-    public var argument: ArgumentType? {
+    public var context: ContextType? {
         let manager = SceneManager.managerByScene(scene: self)
         let data = manager?.getStuff(scene: self)
-        return (data as? (Director<RouterType.DestinationType>, ArgumentType?, SceneObserver<RouterType.DestinationType>))?.1
+        return (data as? (Director<RouterType.DestinationType>, ContextType?, ActionActivator<RouterType.DestinationType>))?.1
     }
     
-    public var observer: SceneObserver<RouterType.DestinationType>? {
+    public var activator: ActionActivator<RouterType.DestinationType>? {
         let manager = SceneManager.managerByScene(scene: self)
         let data = manager?.getStuff(scene: self)
-        return (data as? (Director<RouterType.DestinationType>, ArgumentType?, SceneObserver<RouterType.DestinationType>))?.2
+        return (data as? (Director<RouterType.DestinationType>, ContextType?, ActionActivator<RouterType.DestinationType>))?.2
     }
 
 }
@@ -32,12 +32,12 @@ extension ActionScene where Self: Scene {
 
 public extension SceneBase where Self: ActionScene {
     
-    public func setup(sequenceObject: Any, argumentObject: Any?) {
+    public func setup(sequenceObject: Any, contextObject: Any?) {
         let sequence = sequenceObject as! SceneSequence<StageType>
         let director = Director(scene: self, sequence: sequence)
-        let argument = argumentObject as! ArgumentType?
-        let observer = SceneObserver(director: director)
-        sequence.manager.set(scene: self, stuff: (director, argument, observer) as AnyObject)
+        let context = contextObject as! ContextType?
+        let activator = ActionActivator(director: director)
+        sequence.manager.set(scene: self, stuff: (director, context, activator) as AnyObject)
     }
     
 }

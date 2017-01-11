@@ -23,16 +23,16 @@ class Sample1BAction: Action {
     
     unowned let prevButton: UIButton
 
-    public func invoke(director: Director<Sample1BViewController.Sample2Destination>) -> [ObserverTarget] {
+    public func invoke(director: Director<Sample1BViewController.Sample2Destination>) -> [SubscribeTarget] {
         return [
-            self.nextButtonA.rx.tap.do(onNext: { () in director.transitTo(Sample1BViewController.Sample2Destination.a)}).toTarget,
-            self.nextButtonB.rx.tap.do(onNext: { () in director.transitTo(Sample1BViewController.Sample2Destination.b)}).toTarget,
+            self.nextButtonA.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.a)}).toTarget,
+            self.nextButtonB.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.b)}).toTarget,
             self.prevButton.rx.tap.do(onNext: { () in director.back()}).toTarget
         ]
     }
     
-    public func onError(error: Error, label: String?) -> ActionRecoverPattern {
-        return ActionRecoverPattern.doNothing
+    public func onError(error: Error, label: String?) -> RecoverPattern {
+        return RecoverPattern.doNothing
     }
     
     public func onStop() {

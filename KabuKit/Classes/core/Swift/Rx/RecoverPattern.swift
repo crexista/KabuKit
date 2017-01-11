@@ -9,7 +9,7 @@ import Foundation
  Recover処理の種類です
  
  */
-public enum ActionRecoverPattern {
+public enum RecoverPattern {
     // 何もしません.
     // subscribeも切れるのでなにも反応が無くなります
     case doNothing
@@ -18,5 +18,5 @@ public enum ActionRecoverPattern {
     case reloadAction(onStart: () -> Void)
     
     // エラーが起きたSignalのみをリロードしますa
-    case reloadErrorStream(onStart: () -> Void)
+    case reloadErrorSignal(onStart: () -> Void)
 }
