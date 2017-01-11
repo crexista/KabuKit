@@ -42,12 +42,13 @@ class SceneSpec: QuickSpec {
 
             context("setupを呼んだ後") {
                 let firstScene = SceneSpecScene()
-                let sequence = SceneSequence2(stage: NSObject(), scene: firstScene, argument: nil) { (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), firstScene, nil) { (stage, scene) in }
 
                 let scene = SceneSpecScene()
-                beforeEach {
-                    scene.setup(sequence: sequence, arguments: nil)
-                }
+
+
+                scene.setup(sequence: sequence, arguments: nil)
+
                
                 it("scene#directorはdirectorが入っている") {
 
@@ -60,6 +61,7 @@ class SceneSpec: QuickSpec {
                     let director2 = scene.director
 
                     expect(director1 === director2).to(beTrue())
+                    expect(director1).notTo(beNil())
                 }
 
             }

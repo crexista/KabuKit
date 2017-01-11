@@ -24,7 +24,7 @@ class DirectorSpec: QuickSpec {
         }
         
         func onMove(destination: MockDestination) -> Transition<NSObject>? {
-            return destination.makeTransition(newScene: DirectorSpecScene2()) { (stage, scene) in
+            return destination.makeTransition(DirectorSpecScene2(), nil) { (stage, scene) in
                 self.isTransit = true
             }
         }
@@ -48,7 +48,7 @@ class DirectorSpec: QuickSpec {
         }
         
         func onMove(destination: MockDestination) -> Transition<NSObject>? {
-            return destination.makeTransition(newScene: DirectorSpecScene2()) { (stage, scene) in
+            return destination.makeTransition(DirectorSpecScene2(), nil) { (stage, scene) in
                 self.isTransit = true
             }
         }
@@ -63,25 +63,25 @@ class DirectorSpec: QuickSpec {
         describe("Directorの次のSceneへの遷移について") {
             it("遷移requestが投げられると遷移する") {
                 let scene = DirectorSpecScene1()
-                let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                 let director = Director(scene: scene, sequence: sequence)
                 sequence.start(producer: nil)
                 expect(sequence.manager.count) == 1
                 expect(scene.isTransit).to(beFalse())
-                director.transitTo(request: MockDestination())
+                director.transitTo(MockDestination())
                 expect(scene.isTransit).to(beTrue())
                 expect(sequence.manager.count) == 2
             }
             
             it("backへのrequestが投げれらると戻る") {
                 let scene = DirectorSpecScene1()
-                let sequence = SceneSequence2(stage: NSObject(), scene: scene, argument: nil){ (stage, scene) in }
+                let sequence = SceneSequence2(NSObject(), scene, nil){ (stage, scene) in }
                 let director = Director(scene: scene, sequence: sequence)
                 sequence.start(producer: nil)
                 
                 expect(sequence.manager.count) == 1
                 expect(scene.isTransit).to(beFalse())
-                director.transitTo(request: MockDestination())
+                director.transitTo(MockDestination())
                 expect(scene.isTransit).to(beTrue())
                 expect(sequence.manager.count) == 2
 

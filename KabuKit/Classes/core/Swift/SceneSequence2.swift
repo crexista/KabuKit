@@ -85,7 +85,7 @@ public class SceneSequence2<StageType: AnyObject> {
         end()
     }
     
-    init<S: Scene2>(stage: StageType, scene: S, argument:S.ArgumentType?, _ onAdd: @escaping (StageType, S) -> Void) where StageType == S.RouterType.DestinationType.StageType {
+    public init<S: Scene2>(_ stage: StageType, _ scene: S, _ argument:S.ArgumentType?, _ onAdd: @escaping (StageType, S) -> Void) where StageType == S.RouterType.DestinationType.StageType {
         self.manager = SceneManager2()
         self.stage = stage
         self.startFunc = { () -> Void in

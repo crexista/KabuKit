@@ -15,6 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     var sceneSequence: SceneSequence<UIViewController>?
+    
+    var producer: Producer?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -26,10 +28,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.backgroundColor = UIColor.white
         self.window!.makeKeyAndVisible()
         sceneSequence = SceneSequence(root)
-        let xibName = "Sample1AViewController"
+
         root.navigationController?.setNavigationBarHidden(true, animated: true)
 
-        sceneSequence?.start(ViewControllerXIBFile(xibName, Bundle.main), Sample1AViewController.self, false, { (stage, scene) in
+        let scene = Sample1AViewController(nibName: "Sample1AViewController", bundle: Bundle.main)
+        producer = Producer.run(sequence: SceneSequence2(root, scene, false) { (stage, scene) in
+
             stage.addChildViewController(scene)
             stage.view.addSubview(scene.view)
         })

@@ -21,7 +21,7 @@ extension Observable {
      
      ```
      */
-    var toTarget: ObserverTarget {
+    public var toTarget: ObserverTarget {
         return ObserverTarget(observable: self)
     }
     
@@ -38,7 +38,7 @@ extension Observable {
      ```
      
      */
-    subscript(label: String) -> ObserverTarget {
+    public subscript(label: String) -> ObserverTarget {
         return ObserverTarget(observable: self, label: label)
     }
 }
