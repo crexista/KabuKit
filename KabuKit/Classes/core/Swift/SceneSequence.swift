@@ -54,7 +54,7 @@ public class SceneSequence<StageType: AnyObject> {
      このメソッドを呼ぶ前にSceneを呼ぶとdirectorはnil
      
      */
-    public func push(transition: Transition<StageType>) {
+    public func push(transition: SceneTransition<StageType>) {
         activateScene(stage, transition.scene, transition.args, transition.execution)
     }
     

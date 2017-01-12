@@ -10,7 +10,7 @@ public class Director<DestinationType: Destination> {
     
     private weak var sequence: SceneSequence<StageType>?
     
-    private var routing: (DestinationType) -> Transition<DestinationType.StageType>?
+    private var routing: (DestinationType) -> SceneTransition<DestinationType.StageType>?
     
     private var remove: (SceneSequence<StageType>?) -> Void
     
@@ -28,7 +28,7 @@ public class Director<DestinationType: Destination> {
     }
     
     internal init<S: Scene>(scene: S, sequence: SceneSequence<StageType>) where S.RouterType.DestinationType == DestinationType {
-        self.routing = { (destination: DestinationType) -> Transition<DestinationType.StageType>? in
+        self.routing = { (destination: DestinationType) -> SceneTransition<DestinationType.StageType>? in
             
             return scene.router.connect(from: scene, to: destination)
         }

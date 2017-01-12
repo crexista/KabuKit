@@ -30,7 +30,7 @@
 		4ED7E5A11E2578DF0072CEE9 /* Producer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A01E2578DF0072CEE9 /* Producer.swift */; };
 		4ED7E5A31E2579EB0072CEE9 /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A21E2579EB0072CEE9 /* Scenario.swift */; };
 		4ED7E5A51E259A530072CEE9 /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A41E259A530072CEE9 /* Director.swift */; };
-		4ED7E5A91E25A1AB0072CEE9 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A81E25A1AB0072CEE9 /* Transition.swift */; };
+		4ED7E5A91E25A1AB0072CEE9 /* SceneTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A81E25A1AB0072CEE9 /* SceneTransition.swift */; };
 		4ED7E5AC1E2761120072CEE9 /* ActionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941FA1E24E84600FBAF21 /* ActionScene.swift */; };
 		4ED7E5AD1E2761120072CEE9 /* ActionActivator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941FC1E24EF3000FBAF21 /* ActionActivator.swift */; };
 		4ED7E5AE1E2761120072CEE9 /* Observable+KabuKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5941E25559C0072CEE9 /* Observable+KabuKit.swift */; };
@@ -39,7 +39,7 @@
 		4ED7E5B11E2761120072CEE9 /* RecoverPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59A1E2562840072CEE9 /* RecoverPattern.swift */; };
 		4ED7E5B21E2761120072CEE9 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59C1E25631F0072CEE9 /* Action.swift */; };
 		4ED7E5B31E2762650072CEE9 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941DC1E24187100FBAF21 /* Scene.swift */; };
-		4ED7E5B41E2762650072CEE9 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A81E25A1AB0072CEE9 /* Transition.swift */; };
+		4ED7E5B41E2762650072CEE9 /* SceneTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A81E25A1AB0072CEE9 /* SceneTransition.swift */; };
 		4ED7E5B51E2762650072CEE9 /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A41E259A530072CEE9 /* Director.swift */; };
 		4ED7E5B61E2762650072CEE9 /* SceneSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941E41E241BB100FBAF21 /* SceneSequence.swift */; };
 		4ED7E5B71E2762650072CEE9 /* Producer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A01E2578DF0072CEE9 /* Producer.swift */; };
@@ -91,7 +91,7 @@
 		4ED7E5A01E2578DF0072CEE9 /* Producer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Producer.swift; sourceTree = "<group>"; };
 		4ED7E5A21E2579EB0072CEE9 /* Scenario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scenario.swift; sourceTree = "<group>"; };
 		4ED7E5A41E259A530072CEE9 /* Director.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
-		4ED7E5A81E25A1AB0072CEE9 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		4ED7E5A81E25A1AB0072CEE9 /* SceneTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTransition.swift; sourceTree = "<group>"; };
 		4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EF5CCE91DE30A0C00683D1E /* KabuKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KabuKit.h; sourceTree = "<group>"; };
 		4EF5CCEA1DE30A0C00683D1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -274,7 +274,7 @@
 			children = (
 				4EF5CD3B1DE30E3200683D1E /* Rx */,
 				4E0941DC1E24187100FBAF21 /* Scene.swift */,
-				4ED7E5A81E25A1AB0072CEE9 /* Transition.swift */,
+				4ED7E5A81E25A1AB0072CEE9 /* SceneTransition.swift */,
 				4ED7E5A41E259A530072CEE9 /* Director.swift */,
 				4E0941E41E241BB100FBAF21 /* SceneSequence.swift */,
 				4ED7E5A01E2578DF0072CEE9 /* Producer.swift */,
@@ -581,7 +581,7 @@
 				4E0941FD1E24EF3000FBAF21 /* ActionActivator.swift in Sources */,
 				4ED7E5971E2556870072CEE9 /* SubscribeTarget.swift in Sources */,
 				4ED7E5951E25559C0072CEE9 /* Observable+KabuKit.swift in Sources */,
-				4ED7E5A91E25A1AB0072CEE9 /* Transition.swift in Sources */,
+				4ED7E5A91E25A1AB0072CEE9 /* SceneTransition.swift in Sources */,
 				4E0941E11E241AED00FBAF21 /* SceneManager.swift in Sources */,
 				4ED7E5A51E259A530072CEE9 /* Director.swift in Sources */,
 				4ED7E59B1E2562840072CEE9 /* RecoverPattern.swift in Sources */,
@@ -613,7 +613,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4ED7E5B41E2762650072CEE9 /* Transition.swift in Sources */,
+				4ED7E5B41E2762650072CEE9 /* SceneTransition.swift in Sources */,
 				4ED7E5AC1E2761120072CEE9 /* ActionScene.swift in Sources */,
 				4ED7E5B81E2762650072CEE9 /* Scenario.swift in Sources */,
 				4ED7E5AF1E2761120072CEE9 /* SubscribeTarget.swift in Sources */,
