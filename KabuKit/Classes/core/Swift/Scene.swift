@@ -1,84 +1,116 @@
 //
-//  Copyright © 2016 crexista.
+//  Copyright © 2017 crexista
 //
 
 import Foundation
 
-public protocol Scene : SceneBase {
+public protocol SceneBase {
     
-    associatedtype TransitionType: SceneTransition
+    func setup(sequenceObject: Any, contextObject: Any?)    
+}
+
+public protocol Scene: class, SceneBase {
     
-    associatedtype ArgumentType
+    associatedtype RouterType: SceneRouter
     
-    var argument: ArgumentType? { get }
+    associatedtype ContextType
     
-    weak var director: SceneDirector<TransitionType>? { get }
+    var router: RouterType { get }
     
-    var isRemovable: Bool { get }
+    var director: Director<RouterType.DestinationType>? { get }
+    
+    var context: ContextType? { get }
     
     /**
-     前の画面への遷移リクエストが飛んできたときに呼ばれるメソッドです
-     このメソッドが返すSceneBackRequestのexecuteが呼ばれた際にtrueを返すとこの画面のに紐づくメモリが解放されます
+     このSceneを管理しているSequenceから外される際に呼ばれるメソッドです.
      
-     - Parameter factory: 前の画面への遷移リクエストを生成するインスタンスです
-     - Returns: SceneBackRequest 前の画面への遷移リクエストが成功したらSceneBackRequestはtrueを返します
+     - attention: 
+     管理をはずしメモリを解放するだけなので、このメソッドが呼ばれからと言って表示されなくなるわけではありません.
+     このメソッド内でSceneを表示しているStageから外れるための処理を書いてください
+
+     
      */
-    func onRemove(stage: TransitionType.StageType)
+    func willRemove(from stage: RouterType.DestinationType.StageType)
+    
+}
+
+
+
+/**
+ Sceneの内部exetension
+ 単純にSceneをnewしてinitしただけではdirectorやcontextはnilなので
+ 生成されたSceneをセットアップするためのカテゴリ拡張です
+ 
+ */
+extension Scene {
+    
+    public var director: Director<RouterType.DestinationType>? {
+        let manager = SceneManager.managerByScene(scene: self)
+        let data = manager?.getStuff(scene: self)
+        return (data as? (Director<RouterType.DestinationType>, ContextType?))?.0
+    }
+    
+    public var context: ContextType? {
+        let manager = SceneManager.managerByScene(scene: self)
+        let data = manager?.getStuff(scene: self)
+        return (data as? (Director<RouterType.DestinationType>, ContextType?))?.1
+    }
+    
 }
 
 extension SceneBase where Self: Scene {
-   
-    public func setup<S, C>(sequence:AnyObject, stage: S, argument: C, manager: SceneManager, scenario: Scenario?) {
-        guard let stageType = stage as? TransitionType.StageType else {
-            assert(false, "cannot setup scene")
-            return
-        }
-
-        let director = SceneDirector<TransitionType>(sequence, stageType, self, manager, scenario)
-        manager.set(scene: self, stuff: (director, argument) as AnyObject)
-    }
     
-    public func clear<S>(stage: S, manager: SceneManager) {
-        guard let stageType = stage as? TransitionType.StageType else {
-            assert(false, "cannot clear scene")
-            return
-        }
-        if (isRemovable) {
-            onRemove(stage: stageType)
-            manager.release(scene: self)
-        }
+    typealias DestType = RouterType.DestinationType
+    typealias StageType = DestType.StageType
+    
+    public func setup(sequenceObject: Any, contextObject: Any?) {
+        let sequence = sequenceObject as! SceneSequence<StageType>
+        let director = Director(scene: self, sequence: sequence)
+        let context = contextObject as! ContextType?
+        sequence.manager.set(scene: self, stuff: (director, context) as AnyObject)
     }
+
 }
 
-extension Scene {
+public protocol SceneRouter {
     
-    public var isReleased: Bool {
-        return SceneManager.managerByScene(scene: self) == nil
+    associatedtype DestinationType: Destination
+    
+    func connect<S: Scene>(from scene: S, to destination: DestinationType) -> Transition<DestinationType.StageType>?
+}
+
+public protocol SceneLinkage : SceneRouter {
+    
+    func guide(to destination: DestinationType) -> Transition<DestinationType.StageType>?
+}
+
+public extension SceneLinkage where Self: Scene, Self == Self.RouterType {
+    
+    var router: RouterType {
+        return self
     }
     
-    public weak var director: SceneDirector<TransitionType>? {
-        guard let manager = SceneManager.managerByScene(scene: self) else {
-            return nil
-        }
-        guard let sceneContents = manager.getStuff(scene: self) as? (SceneDirector<TransitionType>, ArgumentType?) else {
-            assert(false, "Illegal Operation Error")
-            return nil
-        }
-
-        return sceneContents.0
+    final func connect<S: Scene>(from scene: S, to destination: DestinationType) -> Transition<DestinationType.StageType>? {
+        return guide(to: destination)
     }
     
+}
 
-    public var argument: ArgumentType? {
-        guard let manager = SceneManager.managerByScene(scene: self) else {
-            return nil
-        }
-        guard let sceneContents = manager.getStuff(scene: self) as? (SceneDirector<TransitionType>, ArgumentType?) else {
-            assert(false, "Illegal Operation Error")
-            return nil
-        }
-        
-        return sceneContents.1
+
+public protocol Destination {
+    associatedtype StageType: AnyObject
+    
+    func specify<S: Scene>(_ newScene: S,
+                           _ context: S.ContextType?,
+                           _ atLast: @escaping (StageType, S) -> Void) -> Transition<StageType>? where StageType == S.RouterType.DestinationType.StageType
+    
+}
+
+public extension Destination {
+    
+    final func specify<S: Scene>(_ newScene: S,
+                                 _ context: S.ContextType?,
+                                 _ atLast: @escaping (StageType, S) -> Void) -> Transition<StageType>? where StageType == S.RouterType.DestinationType.StageType {
+        return Transition(newScene, context, atLast)
     }
-
 }

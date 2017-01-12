@@ -1,21 +1,24 @@
 //
-//  Copyright © 2016 crexista.
+//  Copyright © 2017 crexista
 //
 
 import Foundation
-import RxSwift
 
-public protocol Action : class, OnStop, OnError {
+public protocol Action : SignalClosable {
     
     associatedtype SceneType: Scene
     
-    func start(director: SceneDirector<SceneType.TransitionType>?, argument: SceneType.ArgumentType?)->[Observable<()>]
+    associatedtype DestinationType: Destination
+    
+    func invoke(director: Director<DestinationType>) -> [SubscribeTarget]
+    
 }
 
-public protocol OnStop {
+public extension Action where Self.DestinationType == SceneType.RouterType.DestinationType {
+    
+}
+
+public protocol SignalClosable {
+    func onError(error: Error, label: String?) -> RecoverPattern
     func onStop()
-}
-
-public protocol OnError {
-    func onError(error: Error)
 }

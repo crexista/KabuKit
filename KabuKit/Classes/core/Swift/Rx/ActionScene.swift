@@ -1,51 +1,43 @@
 //
-//  Copyright © 2016 crexista.
+//  Copyright © 2017 crexista
 //
 
 import Foundation
 
 public protocol ActionScene : Scene {
-    unowned var observer: SceneObserver { get }
+    var activator: ActionActivator<RouterType.DestinationType>? { get }
 }
 
-extension ActionScene {
-    
-    public weak var director: SceneDirector<TransitionType>? {
-        guard let manager = SceneManager.managerByScene(scene: self) else {
-            return nil
-        }
-        guard let sceneContents = manager.getStuff(scene: self) as? (SceneDirector<TransitionType>, ArgumentType?, SceneObserver) else {
-            assert(false, "Illegal Operation Error")
-            return nil
-        }
-        return sceneContents.0
+extension ActionScene where Self: Scene {
+    public var director: Director<RouterType.DestinationType>? {
+        let manager = SceneManager.managerByScene(scene: self)
+        let data = manager?.getStuff(scene: self)
+        return (data as? (Director<RouterType.DestinationType>, ContextType?, ActionActivator<RouterType.DestinationType>))?.0
     }
     
-    public var argument: ArgumentType? {
-        guard let manager = SceneManager.managerByScene(scene: self) else {
-            return nil
-        }
-        guard let sceneContents = manager.getStuff(scene: self) as? (SceneDirector<TransitionType>, ArgumentType?, SceneObserver) else {
-            assert(false, "Illegal Operation Error")
-            return nil
-        }
-        return sceneContents.1
+    public var context: ContextType? {
+        let manager = SceneManager.managerByScene(scene: self)
+        let data = manager?.getStuff(scene: self)
+        return (data as? (Director<RouterType.DestinationType>, ContextType?, ActionActivator<RouterType.DestinationType>))?.1
     }
     
-    public unowned var observer: SceneObserver {
-        guard let sceneContents = SceneManager.managerByScene(scene: self)?.getStuff(scene: self) as? (SceneDirector<TransitionType>, ArgumentType?, SceneObserver) else {
-            assert(false, "Illegal Operation Error")
-            fatalError()
-        }
-        return sceneContents.2
+    public var activator: ActionActivator<RouterType.DestinationType>? {
+        let manager = SceneManager.managerByScene(scene: self)
+        let data = manager?.getStuff(scene: self)
+        return (data as? (Director<RouterType.DestinationType>, ContextType?, ActionActivator<RouterType.DestinationType>))?.2
     }
+
 }
 
-extension SceneBase where Self: ActionScene {
-    
-    public func setup<S, C>(sequence:AnyObject, stage: S, argument: C, manager: SceneManager, scenario: Scenario?) {
-        let director = SceneDirector<TransitionType>(sequence, stage as! TransitionType.StageType, self, manager, scenario)
-        manager.set(scene: self, stuff: (director, argument, SceneObserver()) as AnyObject)
-    }
 
+public extension SceneBase where Self: ActionScene {
+    
+    public func setup(sequenceObject: Any, contextObject: Any?) {
+        let sequence = sequenceObject as! SceneSequence<StageType>
+        let director = Director(scene: self, sequence: sequence)
+        let context = contextObject as! ContextType?
+        let activator = ActionActivator(director: director)
+        sequence.manager.set(scene: self, stuff: (director, context, activator) as AnyObject)
+    }
+    
 }

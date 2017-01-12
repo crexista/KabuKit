@@ -12,8 +12,9 @@ import RxSwift
 import RxCocoa
 
 class Sample1BAction: Action {
-    
-    typealias SceneType = Sample1BViewController
+
+    typealias SceneType = Sample1AViewController
+//    typealias DestinationType = Sample1BViewController.Sample2Destination
     
     unowned let label: UILabel
     
@@ -22,26 +23,22 @@ class Sample1BAction: Action {
     unowned let nextButtonB: UIButton
     
     unowned let prevButton: UIButton
-    
-    func start(director: SceneDirector<Sample1BViewController.Sample1BLink>?, argument: ()?) -> [Observable<()>] {
+
+    public func invoke(director: Director<Sample1BViewController.Sample2Destination>) -> [SubscribeTarget] {
         return [
-            self.nextButtonA.rx.tap.do(onNext: { () in director?.changeScene(transition: Sample1BViewController.Sample1BLink.A)}),
-            self.nextButtonB.rx.tap.do(onNext: { () in director?.changeScene(transition: Sample1BViewController.Sample1BLink.B)}),
-            self.prevButton.rx.tap.do(onNext: { () in _ = director?.exitScene()})
+            self.nextButtonA.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.a)}).toTarget,
+            self.nextButtonB.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.b)}).toTarget,
+            self.prevButton.rx.tap.do(onNext: { () in director.back()}).toTarget
         ]
     }
     
-    func onStop() {
-        print("onStop")
+    public func onError(error: Error, label: String?) -> RecoverPattern {
+        return RecoverPattern.doNothing
     }
     
-    func onError(error: Error) {
+    public func onStop() {
+
     }
-    
-    deinit {
-        print("action deinit")
-    }
-    
     
     init(label: UILabel, buttonA: UIButton, buttonB: UIButton, prevButton: UIButton) {
         self.label = label
@@ -50,3 +47,4 @@ class Sample1BAction: Action {
         self.prevButton = prevButton
     }
 }
+

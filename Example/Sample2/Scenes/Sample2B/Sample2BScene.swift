@@ -11,7 +11,7 @@ import KabuKit
 
 extension Sample2BViewController: ActionScene {
     
-    typealias ArgumentType = Bool
+    typealias ContextType = Bool
     typealias TransitionType = Sample2Link
 
     enum Sample2Link: SceneTransition {
@@ -47,13 +47,13 @@ extension Sample2BViewController: ActionScene {
      - Parameter factory: 前の画面への遷移リクエストを生成するインスタンスです
      - Returns: SceneBackRequest 前の画面への遷移リクエストが成功したらSceneBackRequestはtrueを返します
      */
-    public func onRemove(stage: UIViewController) {
+    public func willRemove(from stage: UIViewController) {
         _ = stage.navigationController?.popViewController(animated: true)
     }
     
     override func viewDidLoad() {
         let action = Sample2BAction(nextButtonA: nextButtonA, nextButtonB: nextButtonB, prevButton: prevButton)
-        observer.activate(action: action, director: director, argument: argument)
+        activator.activate(action: action, director: director, context: context)
     }
 
     

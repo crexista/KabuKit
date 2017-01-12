@@ -11,6 +11,7 @@ import KabuKit
 import RxSwift
 import RxCocoa
 
+/*
 class Sample1AAction: Action {
     
     unowned let label: UILabel
@@ -23,7 +24,7 @@ class Sample1AAction: Action {
     
     typealias SceneType = Sample1AViewController
     
-    func start(director: SceneDirector<Sample1AViewController.Sample1Link>?, argument: Bool?) -> [Observable<()>] {
+    func start(director: SceneDirector<Sample1AViewController.Sample1Link>?, context: Bool?) -> [Observable<()>] {
         return [
             self.nextButtonA.rx.tap.do(onNext: { () in director?.changeScene(transition: Sample1AViewController.Sample1Link.A)}),
             self.nextButtonB.rx.tap.do(onNext: { () in director?.changeScene(transition: Sample1AViewController.Sample1Link.B)}),
@@ -50,3 +51,4 @@ class Sample1AAction: Action {
         self.prevButton = prevButton
     }
 }
+ */

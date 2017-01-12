@@ -9,29 +9,36 @@
 import Foundation
 import KabuKit
 
-extension Sample1BViewController : ActionScene {
+
+extension Sample1BViewController : ActionScene, SceneLinkage {
     
-    typealias TransitionType = Sample1BLink
-    typealias ArgumentType = Void
+    enum Sample2Destination: Destination {
+        typealias StageType = UIViewController
+        case a
+        case b
+    }
     
-    enum Sample1BLink : SceneTransition {
-        typealias StageType = UIViewController        
-        case A
-        case B
+    typealias DestinationType = Sample2Destination
+    
+    typealias ContextType = Void
+    
+    func guide(to destination: Sample2Destination) -> Transition<UIViewController>? {
         
-        func request(context: SceneContext<UIViewController>) -> SceneRequest? {
-            switch self {
-            case .A:
-                let xib = ViewControllerXIBFile("Sample1AViewController", Bundle.main)
-                return context.sceneRequest(xib, Sample1AViewController.self, true) { (stage, scene) in
-                    stage.navigationController?.pushViewController(scene, animated: true)
-                }
-            case .B:
-                let xib = ViewControllerXIBFile("Sample1BViewController", Bundle.main)
-                return context.sceneRequest(xib, Sample1BViewController.self, nil) { (stage, scene) in
-                    stage.navigationController?.pushViewController(scene, animated: true)
-                }
+        switch destination {
+        case .a:
+            let newScene = Sample1AViewController(nibName: "Sample1AViewController", bundle: Bundle.main)
+
+            return destination.specify(newScene, false) { (stage, scene) in
+                stage.navigationController?.pushViewController(scene, animated: true)
             }
+            
+        case .b:
+            let newScene = Sample1BViewController(nibName: "Sample1BViewController", bundle: Bundle.main)
+
+            return destination.specify(newScene, nil) { (stage, scene) in
+                stage.navigationController?.pushViewController(scene, animated: true)
+            }
+            
         }
     }
     
@@ -39,7 +46,7 @@ extension Sample1BViewController : ActionScene {
         return true
     }
     
-    func onRemove(stage: UIViewController) {
+    func willRemove(from stage: UIViewController) {
         _ = stage.navigationController?.popViewController(animated: true)
     }
 
@@ -47,14 +54,15 @@ extension Sample1BViewController : ActionScene {
     override func viewDidLoad() {
         self.navigationItem.hidesBackButton = true
         let action = Sample1BAction(label: label, buttonA: nextButtonA, buttonB: nextButtonB, prevButton: prevButton)
-        observer.activate(action: action, director: self.director, argument: self.argument)
+        _ = activator?.activate(action: action)
     }
     
     
     override func viewDidDisappear(_ animated: Bool) {
-        if (self.navigationController == nil && !isReleased) {
-            _ = director?.exitScene()
+        if (self.navigationController == nil && !isRemovable) {
+            _ = director?.back()
         }
     }
     
 }
+
