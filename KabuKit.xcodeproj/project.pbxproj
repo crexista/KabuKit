@@ -22,7 +22,7 @@
 		4E0942021E25074A00FBAF21 /* ActionActivatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0942011E25074A00FBAF21 /* ActionActivatorSpec.swift */; };
 		4E86AA991DF4359D0039D8B7 /* SceneManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E86AA981DF4359D0039D8B7 /* SceneManagerSpec.swift */; };
 		4ED7E5951E25559C0072CEE9 /* Observable+KabuKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5941E25559C0072CEE9 /* Observable+KabuKit.swift */; };
-		4ED7E5971E2556870072CEE9 /* SubscribeTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5961E2556870072CEE9 /* SubscribeTarget.swift */; };
+		4ED7E5971E2556870072CEE9 /* ActionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5961E2556870072CEE9 /* ActionEvent.swift */; };
 		4ED7E5991E25621A0072CEE9 /* ActionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5981E25621A0072CEE9 /* ActionError.swift */; };
 		4ED7E59B1E2562840072CEE9 /* RecoverPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59A1E2562840072CEE9 /* RecoverPattern.swift */; };
 		4ED7E59D1E25631F0072CEE9 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59C1E25631F0072CEE9 /* Action.swift */; };
@@ -34,7 +34,7 @@
 		4ED7E5AC1E2761120072CEE9 /* ActionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941FA1E24E84600FBAF21 /* ActionScene.swift */; };
 		4ED7E5AD1E2761120072CEE9 /* ActionActivator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941FC1E24EF3000FBAF21 /* ActionActivator.swift */; };
 		4ED7E5AE1E2761120072CEE9 /* Observable+KabuKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5941E25559C0072CEE9 /* Observable+KabuKit.swift */; };
-		4ED7E5AF1E2761120072CEE9 /* SubscribeTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5961E2556870072CEE9 /* SubscribeTarget.swift */; };
+		4ED7E5AF1E2761120072CEE9 /* ActionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5961E2556870072CEE9 /* ActionEvent.swift */; };
 		4ED7E5B01E2761120072CEE9 /* ActionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5981E25621A0072CEE9 /* ActionError.swift */; };
 		4ED7E5B11E2761120072CEE9 /* RecoverPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59A1E2562840072CEE9 /* RecoverPattern.swift */; };
 		4ED7E5B21E2761120072CEE9 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59C1E25631F0072CEE9 /* Action.swift */; };
@@ -83,7 +83,7 @@
 		4E86AA971DF4359D0039D8B7 /* KabuKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KabuKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		4E86AA981DF4359D0039D8B7 /* SceneManagerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SceneManagerSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4ED7E5941E25559C0072CEE9 /* Observable+KabuKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+KabuKit.swift"; sourceTree = "<group>"; };
-		4ED7E5961E2556870072CEE9 /* SubscribeTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeTarget.swift; sourceTree = "<group>"; };
+		4ED7E5961E2556870072CEE9 /* ActionEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionEvent.swift; sourceTree = "<group>"; };
 		4ED7E5981E25621A0072CEE9 /* ActionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionError.swift; sourceTree = "<group>"; };
 		4ED7E59A1E2562840072CEE9 /* RecoverPattern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoverPattern.swift; sourceTree = "<group>"; };
 		4ED7E59C1E25631F0072CEE9 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
@@ -290,7 +290,7 @@
 				4E0941FA1E24E84600FBAF21 /* ActionScene.swift */,
 				4E0941FC1E24EF3000FBAF21 /* ActionActivator.swift */,
 				4ED7E5941E25559C0072CEE9 /* Observable+KabuKit.swift */,
-				4ED7E5961E2556870072CEE9 /* SubscribeTarget.swift */,
+				4ED7E5961E2556870072CEE9 /* ActionEvent.swift */,
 				4ED7E5981E25621A0072CEE9 /* ActionError.swift */,
 				4ED7E59A1E2562840072CEE9 /* RecoverPattern.swift */,
 				4ED7E59C1E25631F0072CEE9 /* Action.swift */,
@@ -579,7 +579,7 @@
 				4E0941DD1E24187100FBAF21 /* Scene.swift in Sources */,
 				4E0941FB1E24E84600FBAF21 /* ActionScene.swift in Sources */,
 				4E0941FD1E24EF3000FBAF21 /* ActionActivator.swift in Sources */,
-				4ED7E5971E2556870072CEE9 /* SubscribeTarget.swift in Sources */,
+				4ED7E5971E2556870072CEE9 /* ActionEvent.swift in Sources */,
 				4ED7E5951E25559C0072CEE9 /* Observable+KabuKit.swift in Sources */,
 				4ED7E5A91E25A1AB0072CEE9 /* SceneTransition.swift in Sources */,
 				4E0941E11E241AED00FBAF21 /* SceneManager.swift in Sources */,
@@ -616,7 +616,7 @@
 				4ED7E5B41E2762650072CEE9 /* SceneTransition.swift in Sources */,
 				4ED7E5AC1E2761120072CEE9 /* ActionScene.swift in Sources */,
 				4ED7E5B81E2762650072CEE9 /* Scenario.swift in Sources */,
-				4ED7E5AF1E2761120072CEE9 /* SubscribeTarget.swift in Sources */,
+				4ED7E5AF1E2761120072CEE9 /* ActionEvent.swift in Sources */,
 				4ED7E5AD1E2761120072CEE9 /* ActionActivator.swift in Sources */,
 				4ED7E5B11E2761120072CEE9 /* RecoverPattern.swift in Sources */,
 				4ED7E5B31E2762650072CEE9 /* Scene.swift in Sources */,
