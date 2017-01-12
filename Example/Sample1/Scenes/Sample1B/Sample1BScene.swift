@@ -22,7 +22,7 @@ extension Sample1BViewController : ActionScene, SceneLinkage {
     
     typealias ContextType = Void
     
-    func guide(to destination: Sample2Destination) -> Transition<UIViewController>? {
+    func guide(to destination: Sample2Destination) -> SceneTransition<UIViewController>? {
         
         switch destination {
         case .a:

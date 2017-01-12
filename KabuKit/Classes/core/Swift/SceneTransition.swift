@@ -4,7 +4,7 @@
 
 import Foundation
 
-public struct Transition<StageType: AnyObject> {
+public struct SceneTransition<StageType: AnyObject> {
 
     internal let execution: (_ stage: StageType, _ scene: SceneBase) -> Void
     
