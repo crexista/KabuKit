@@ -22,14 +22,6 @@ public protocol Scene: class, SceneBase {
     var context: ContextType? { get }
     
     /**
-     画面上で行なわれている処理がひと段落し、
-     画面自体をremoveしても良いかどうかを返します.
-     
-     このプロパティがfalseを返した場合、下記のonRemoveは呼ばれません.
-     */
-    var isRemovable: Bool { get }
-    
-    /**
      このSceneを管理しているSequenceから外される際に呼ばれるメソッドです.
      
      - attention: 

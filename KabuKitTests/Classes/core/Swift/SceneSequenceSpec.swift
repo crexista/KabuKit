@@ -168,28 +168,6 @@ class SceneSequenceSpec: QuickSpec {
                     expect(secondScene.isRemoved).to(beTrue())
                 }
             }
-            
-            context("シーン側の理由で削除できない場合は") {
-
-                let firstScene = SequenceSpecScene1()
-                let sequence = SceneSequence(NSObject(), firstScene, nil){ (stage, scene) in }
-                let secondScene = SequenceSpecScene()
-                let transition = Transition(secondScene, nil){ (stage, scene) in }
-
-                sequence.start(producer: nil)
-                sequence.push(transition: transition)
-
-                it("SequnceのcurrentSceneは変わらず、Sceneのremovedも呼ばれない") {
-                    let previous: SequenceSpecScene? = sequence.currentScene()
-                    let isRemoved: Bool = sequence.release(scene: secondScene)
-                    let current: SequenceSpecScene? = sequence.currentScene()
-                    expect(current).notTo(beNil())
-                    expect(previous) === current
-                    expect(secondScene.isRemoved) === false
-                    expect(isRemoved) === false
-                }
-
-            }
         }
     }
 }

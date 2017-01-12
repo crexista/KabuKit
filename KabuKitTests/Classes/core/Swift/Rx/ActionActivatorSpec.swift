@@ -14,7 +14,7 @@ class ActionActivatorSpec: QuickSpec {
     
     class MockAction: Action {
         
-        typealias DestinationType = MockDestination
+        typealias SceneType = ActionActivatorSpeceScene
 
         public func invoke(director: Director<MockDestination>) -> [SubscribeTarget] {
             return []
