@@ -66,7 +66,6 @@ public class SceneSequence<StageType: AnyObject> {
        - 指定したSceneがこのsequenceのcurrentSceneではない場合
        - このSequeceに乗っているSceneが1つだけの場合
        - 指定したSceneがそもそもこのSequeceに乗っかっていない場合
-       - 外そうとはしたがScene側の方の理由で削除できない場合
 
      - parameters:
        - scene: Sequenceから外される予定のScene
@@ -81,9 +80,6 @@ public class SceneSequence<StageType: AnyObject> {
             return false
         }
         
-        guard scene.isRemovable else {
-            return false
-        }
         scene.willRemove(from: stage)
         manager.release(scene: scene)
         return true

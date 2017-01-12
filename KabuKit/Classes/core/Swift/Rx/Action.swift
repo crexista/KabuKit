@@ -6,9 +6,15 @@ import Foundation
 
 public protocol Action : SignalClosable {
     
+    associatedtype SceneType: Scene
+    
     associatedtype DestinationType: Destination
     
     func invoke(director: Director<DestinationType>) -> [SubscribeTarget]
+    
+}
+
+public extension Action where Self.DestinationType == SceneType.RouterType.DestinationType {
     
 }
 

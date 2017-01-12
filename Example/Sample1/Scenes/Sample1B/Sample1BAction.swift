@@ -13,7 +13,8 @@ import RxCocoa
 
 class Sample1BAction: Action {
 
-    typealias DestinationType = Sample1BViewController.Sample2Destination
+    typealias SceneType = Sample1AViewController
+//    typealias DestinationType = Sample1BViewController.Sample2Destination
     
     unowned let label: UILabel
     
