@@ -15,7 +15,7 @@ class SceneSequenceSpec: QuickSpec {
         
         typealias RouterType = MockRouter
         
-        typealias ArgumentType = Void
+        typealias ContextType = Void
         
         public var isRemoved = false
         
@@ -27,7 +27,7 @@ class SceneSequenceSpec: QuickSpec {
             return true
         }
         
-        public func onRemove(stage: NSObject) {
+        public func willRemove(from stage: NSObject) {
             isRemoved = true
         }
     }
@@ -36,7 +36,7 @@ class SceneSequenceSpec: QuickSpec {
         
         typealias RouterType = MockRouter
         
-        typealias ArgumentType = Void
+        typealias ContextType = Void
         
         public var isRemoved = false
         
@@ -48,7 +48,7 @@ class SceneSequenceSpec: QuickSpec {
             return false
         }
         
-        public func onRemove(stage: NSObject) {
+        public func willRemove(from stage: NSObject) {
             isRemoved = true
         }
     }

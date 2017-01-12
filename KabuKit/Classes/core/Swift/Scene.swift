@@ -6,20 +6,20 @@ import Foundation
 
 public protocol SceneBase {
     
-    func setup(sequenceObject: Any, argumentObject: Any?)    
+    func setup(sequenceObject: Any, contextObject: Any?)    
 }
 
 public protocol Scene: class, SceneBase {
     
     associatedtype RouterType: SceneRouter
     
-    associatedtype ArgumentType
+    associatedtype ContextType
     
     var router: RouterType { get }
     
     var director: Director<RouterType.DestinationType>? { get }
     
-    var argument: ArgumentType? { get }
+    var context: ContextType? { get }
     
     /**
      画面上で行なわれている処理がひと段落し、
@@ -30,11 +30,15 @@ public protocol Scene: class, SceneBase {
     var isRemovable: Bool { get }
     
     /**
-     Sceneが削除されるときに呼ばれます.
-     画面上から消すための処理をここに記述してください
+     このSceneを管理しているSequenceから外される際に呼ばれるメソッドです.
+     
+     - attention: 
+     管理をはずしメモリを解放するだけなので、このメソッドが呼ばれからと言って表示されなくなるわけではありません.
+     このメソッド内でSceneを表示しているStageから外れるための処理を書いてください
+
      
      */
-    func onRemove(stage: RouterType.DestinationType.StageType)
+    func willRemove(from stage: RouterType.DestinationType.StageType)
     
 }
 
@@ -42,7 +46,7 @@ public protocol Scene: class, SceneBase {
 
 /**
  Sceneの内部exetension
- 単純にSceneをnewしてinitしただけではdirectorやargumentはnilなので
+ 単純にSceneをnewしてinitしただけではdirectorやcontextはnilなので
  生成されたSceneをセットアップするためのカテゴリ拡張です
  
  */
@@ -51,13 +55,13 @@ extension Scene {
     public var director: Director<RouterType.DestinationType>? {
         let manager = SceneManager.managerByScene(scene: self)
         let data = manager?.getStuff(scene: self)
-        return (data as? (Director<RouterType.DestinationType>, ArgumentType?))?.0
+        return (data as? (Director<RouterType.DestinationType>, ContextType?))?.0
     }
     
-    public var argument: ArgumentType? {
+    public var context: ContextType? {
         let manager = SceneManager.managerByScene(scene: self)
         let data = manager?.getStuff(scene: self)
-        return (data as? (Director<RouterType.DestinationType>, ArgumentType?))?.1
+        return (data as? (Director<RouterType.DestinationType>, ContextType?))?.1
     }
     
 }
@@ -67,11 +71,11 @@ extension SceneBase where Self: Scene {
     typealias DestType = RouterType.DestinationType
     typealias StageType = DestType.StageType
     
-    public func setup(sequenceObject: Any, argumentObject: Any?) {
+    public func setup(sequenceObject: Any, contextObject: Any?) {
         let sequence = sequenceObject as! SceneSequence<StageType>
         let director = Director(scene: self, sequence: sequence)
-        let argument = argumentObject as! ArgumentType?
-        sequence.manager.set(scene: self, stuff: (director, argument) as AnyObject)
+        let context = contextObject as! ContextType?
+        sequence.manager.set(scene: self, stuff: (director, context) as AnyObject)
     }
 
 }
@@ -80,12 +84,12 @@ public protocol SceneRouter {
     
     associatedtype DestinationType: Destination
     
-    func handle<S: Scene>(scene: S, request: DestinationType) -> Transition<DestinationType.StageType>?
+    func connect<S: Scene>(from scene: S, to destination: DestinationType) -> Transition<DestinationType.StageType>?
 }
 
 public protocol SceneLinkage : SceneRouter {
     
-    func onMove(destination: DestinationType) -> Transition<DestinationType.StageType>?
+    func guide(to destination: DestinationType) -> Transition<DestinationType.StageType>?
 }
 
 public extension SceneLinkage where Self: Scene, Self == Self.RouterType {
@@ -94,8 +98,8 @@ public extension SceneLinkage where Self: Scene, Self == Self.RouterType {
         return self
     }
     
-    final func handle<S: Scene>(scene: S, request: DestinationType) -> Transition<DestinationType.StageType>? {
-        return onMove(destination: request)
+    final func connect<S: Scene>(from scene: S, to destination: DestinationType) -> Transition<DestinationType.StageType>? {
+        return guide(to: destination)
     }
     
 }
@@ -104,18 +108,17 @@ public extension SceneLinkage where Self: Scene, Self == Self.RouterType {
 public protocol Destination {
     associatedtype StageType: AnyObject
     
-    func makeTransition<S: Scene>(_ newScene: S,
-                                   _ argument: S.ArgumentType?,
-                                   _ onTransition: @escaping (StageType, S) -> Void) -> Transition<StageType>? where StageType == S.RouterType.DestinationType.StageType
+    func specify<S: Scene>(_ newScene: S,
+                           _ context: S.ContextType?,
+                           _ atLast: @escaping (StageType, S) -> Void) -> Transition<StageType>? where StageType == S.RouterType.DestinationType.StageType
     
 }
 
 public extension Destination {
     
-    
-    final func makeTransition<S: Scene>(_ newScene: S,
-                                         _ argument: S.ArgumentType?,
-                                         _ onTransition: @escaping (StageType, S) -> Void) -> Transition<StageType>? where StageType == S.RouterType.DestinationType.StageType {
-        return Transition(newScene, argument, onTransition)
+    final func specify<S: Scene>(_ newScene: S,
+                                 _ context: S.ContextType?,
+                                 _ atLast: @escaping (StageType, S) -> Void) -> Transition<StageType>? where StageType == S.RouterType.DestinationType.StageType {
+        return Transition(newScene, context, atLast)
     }
 }

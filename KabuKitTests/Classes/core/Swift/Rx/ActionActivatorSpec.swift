@@ -10,13 +10,13 @@ import Nimble
 
 @testable import KabuKit
 
-class SceneObserverSpec: QuickSpec {
+class ActionActivatorSpec: QuickSpec {
     
     class MockAction: Action {
         
         typealias DestinationType = MockDestination
 
-        public func invoke(director: Director<MockDestination>) -> [ObserverTarget] {
+        public func invoke(director: Director<MockDestination>) -> [SubscribeTarget] {
             return []
         }
 
@@ -25,14 +25,14 @@ class SceneObserverSpec: QuickSpec {
         }
         
 
-        func onError(error: Error, label: String?) -> ActionRecoverPattern {
-            return ActionRecoverPattern.doNothing
+        func onError(error: Error, label: String?) -> RecoverPattern {
+            return RecoverPattern.doNothing
         }
     }
     
-    class SceneObserverSpeceScene: ActionScene {
+    class ActionActivatorSpeceScene: ActionScene {
         typealias RouterType = MockRouter
-        typealias ArgumentType = Void
+        typealias ContextType = Void
         
         public var router: MockRouter {
             return MockRouter()
@@ -42,7 +42,7 @@ class SceneObserverSpec: QuickSpec {
             return true
         }
         
-        func onRemove(stage: NSObject) {
+        func willRemove(from stage: NSObject) {
 
         }
         
@@ -52,31 +52,31 @@ class SceneObserverSpec: QuickSpec {
         
         describe("Actionを取得の仕方") {
             context("指定のActionがすでにActivate済みの場合") {
-                it("observerのresolveによって取得することができる") {
-                    let scene = SceneObserverSpeceScene()
+                it("activatorのresolveによって取得することができる") {
+                    let scene = ActionActivatorSpeceScene()
                     let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
                     let director = Director(scene: scene, sequence: sequence)
 
-                    let observer = SceneObserver(director: director)
+                    let activator = ActionActivator(director: director)
                     let action = MockAction()
 
-                    _ = observer.activate(action: action)
-                    let resolvedAction = observer.resolve(actionType: MockAction.self)
+                    _ = activator.activate(action: action)
+                    let resolvedAction = activator.resolve(actionType: MockAction.self)
                     expect(resolvedAction) === action
                 }
             }
             
             context("指定のActionがまだActivateされていない場合") {
                 
-                it("observerのresolveを使っても取得できない") {
-                    let scene = SceneObserverSpeceScene()
+                it("activatorのresolveを使っても取得できない") {
+                    let scene = ActionActivatorSpeceScene()
                     let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
 
                     let director = Director(scene: scene, sequence: sequence)
                     
-                    let observer = SceneObserver(director: director)
+                    let activator = ActionActivator(director: director)
 
-                    let resolvedAction = observer.resolve(actionType: MockAction.self)
+                    let resolvedAction = activator.resolve(actionType: MockAction.self)
                     expect(resolvedAction).to(beNil())
                 }
             }
@@ -88,14 +88,14 @@ class SceneObserverSpec: QuickSpec {
             context("activateされるactionがまだ未登録の場合") {
                
                 it("activateが成功する") {
-                    let scene = SceneObserverSpeceScene()
+                    let scene = ActionActivatorSpeceScene()
                     let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
                     let director = Director(scene: scene, sequence: sequence)
                     
-                    let observer = SceneObserver(director: director)
+                    let activator = ActionActivator(director: director)
 
-                    let result = observer.activate(action: action)
-                    let resolvedAction = observer.resolve(actionType: MockAction.self)
+                    let result = activator.activate(action: action)
+                    let resolvedAction = activator.resolve(actionType: MockAction.self)
                     expect(result).to(beTrue())
                     expect(resolvedAction) === action
                 }
@@ -103,32 +103,32 @@ class SceneObserverSpec: QuickSpec {
             
 
             context("activateされるactionがすでに登録済みの場合") {
-                let scene = SceneObserverSpeceScene()
+                let scene = ActionActivatorSpeceScene()
                 let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
                 let director = Director(scene: scene, sequence: sequence)
                 
-                let observer = SceneObserver(director: director)
+                let activator = ActionActivator(director: director)
 
-                _ = observer.activate(action: action)
+                _ = activator.activate(action: action)
                 it("activateは再度実行されることはない") {
-                    let result = observer.activate(action: action)
-                    let resolvedAction = observer.resolve(actionType: MockAction.self)
+                    let result = activator.activate(action: action)
+                    let resolvedAction = activator.resolve(actionType: MockAction.self)
                     expect(result) === false
                     expect(resolvedAction) === action
                 }
             }
             context("activateされるactionと同じクラスの別インスタンスがすでに登録済みの場合") {
-                let scene = SceneObserverSpeceScene()
+                let scene = ActionActivatorSpeceScene()
                 let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
 
                 let director = Director(scene: scene, sequence: sequence)
                 
-                let observer = SceneObserver(director: director)
+                let activator = ActionActivator(director: director)
 
-                _ = observer.activate(action: action)
+                _ = activator.activate(action: action)
                 it("activateはエラーを返す") {
                     let Action = MockAction()
-                    _ = observer.activate(action: Action)
+                    _ = activator.activate(action: Action)
                 }
             }
 
@@ -140,32 +140,32 @@ class SceneObserverSpec: QuickSpec {
             context("deactivateされるactionがまだ未登録の場合") {
                 it("何も起こらない") {
 
-                    let scene = SceneObserverSpeceScene()
+                    let scene = ActionActivatorSpeceScene()
                     let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
 
                     let director = Director(scene: scene, sequence: sequence)
                     
-                    let observer = SceneObserver(director: director)
+                    let activator = ActionActivator(director: director)
 
-                    let result = observer.deactivate(actionType: type(of: action))
-                    let resolvedAction = observer.resolve(actionType: MockAction.self)
+                    let result = activator.deactivate(actionType: type(of: action))
+                    let resolvedAction = activator.resolve(actionType: MockAction.self)
                     expect(result) === false
                     expect(resolvedAction).to(beNil())
                 }
             }
             context("deactivateされるactionが登録済みである場合"){
                 it("actionがサスペンドされ、actionに紐づくSignalは削除される") {
-                    let scene = SceneObserverSpeceScene()
+                    let scene = ActionActivatorSpeceScene()
                     let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
                     let director = Director(scene: scene, sequence: sequence)
                     
-                    let observer = SceneObserver(director: director)
+                    let activator = ActionActivator(director: director)
                     
-                    _ = observer.activate(action: action)
-                    expect(observer.isActive(actionType: MockAction.self)) === true
-                    let result = observer.deactivate(actionType: MockAction.self)
+                    _ = activator.activate(action: action)
+                    expect(activator.isActive(actionType: MockAction.self)) === true
+                    let result = activator.deactivate(actionType: MockAction.self)
                     expect(result) === true
-                    expect(observer.isActive(actionType: MockAction.self)) === false
+                    expect(activator.isActive(actionType: MockAction.self)) === false
                 }
             }
 

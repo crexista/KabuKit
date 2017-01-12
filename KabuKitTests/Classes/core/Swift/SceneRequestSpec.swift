@@ -14,7 +14,7 @@ class SceneRequestSpec: QuickSpec {
     final class SceneRequestScene : NSObject, Scene {
         
         typealias RouterType = MockRouter
-        typealias ArgumentType = Void
+        typealias ContextType = Void
         
         public var router: MockRouter {
             return MockRouter()
@@ -24,7 +24,7 @@ class SceneRequestSpec: QuickSpec {
             return false
         }
         
-        public func onRemove(stage: NSObject) {
+        public func willRemove(from stage: NSObject) {
             
         }
     }
@@ -35,12 +35,12 @@ class SceneRequestSpec: QuickSpec {
         
         describe("Transition生成について") {
 
-            it("makeTransitionを呼ぶとTransitionを生成することができる") {
+            it("specifyを呼ぶとTransitionを生成することができる") {
                 var isCalled = false
                 let request = MockDestination()
                 let scene = SceneRequestScene()
 
-                let transition = request.makeTransition(scene, nil, { (stage, scene) in
+                let transition = request.specify(scene, nil, { (stage, scene) in
                     isCalled = true
                 })
                 expect(isCalled).to(beFalse())

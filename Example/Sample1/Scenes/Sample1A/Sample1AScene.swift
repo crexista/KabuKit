@@ -20,25 +20,25 @@ extension Sample1AViewController: Scene, SceneLinkage {
     
     typealias DestinationType = Sample1Destination
     
-    typealias ArgumentType = Bool
+    typealias ContextType = Bool
     
     public var isRemovable: Bool {
         return true
     }
     
 
-    func onMove(destination: Sample1Destination) -> Transition<UIViewController>? {
+    func guide(to destination: Sample1Destination) -> Transition<UIViewController>? {
 
         switch destination {
         case .a:
             let scene = Sample1AViewController(nibName: "Sample1AViewController", bundle: Bundle.main)
-            return destination.makeTransition(scene, false, { (stage, scene) in
+            return destination.specify(scene, false, { (stage, scene) in
                 stage.navigationController?.pushViewController(scene, animated: true)
             })
             
         case .b:
             let scene = Sample1BViewController(nibName: "Sample1BViewController", bundle: Bundle.main)
-            return destination.makeTransition(scene, nil, { (stage, scene) in
+            return destination.specify(scene, nil, { (stage, scene) in
                 stage.navigationController?.pushViewController(scene, animated: true)
             })
             
@@ -50,17 +50,17 @@ extension Sample1AViewController: Scene, SceneLinkage {
      画面上から消すための処理をここに記述してください
      
      */
-    public func onRemove(stage: UIViewController) {
+    public func willRemove(from stage: UIViewController) {
         _ = stage.navigationController?.popViewController(animated: true)
     }
 
     
     func onPressAButton(sender: UIButton) {
-        director?.transitTo(Sample1Destination.a)
+        director?.forwardTo(Sample1Destination.a)
     }
     
     func onPressBButton(sender: UIButton) {
-        director?.transitTo(Sample1Destination.b)
+        director?.forwardTo(Sample1Destination.b)
     }
     
     func onPressPrevButton(sender: UIButton) {
@@ -69,7 +69,7 @@ extension Sample1AViewController: Scene, SceneLinkage {
     
     // MARK: - Override
     override func viewDidLoad() {
-        prevButton.isEnabled = argument!
+        prevButton.isEnabled = context!
         nextButtonA.addTarget(self, action: #selector(onPressAButton(sender:)), for: .touchUpInside)
         nextButtonB.addTarget(self, action: #selector(onPressBButton(sender:)), for: .touchUpInside)
         prevButton.addTarget(self, action: #selector(onPressPrevButton(sender:)), for: .touchUpInside)

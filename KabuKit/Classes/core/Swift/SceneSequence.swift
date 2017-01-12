@@ -31,7 +31,7 @@ public class SceneSequence<StageType: AnyObject> {
      
      */
     private func activateScene(_ stage: StageType, _ scene: SceneBase, _ args: Any?, _ onActivate: InvokeMethodType) {
-        scene.setup(sequenceObject: self, argumentObject: args)
+        scene.setup(sequenceObject: self, contextObject: args)
         onActivate(stage, scene)
     }
     
@@ -43,7 +43,7 @@ public class SceneSequence<StageType: AnyObject> {
     
     
     internal func raiseEvent<E>(event: E) {
-        producer?.scenario?.handleEvent(sequence: self, event: event, producer: producer)
+        producer?.scenario?.describe(event, from: self, through: producer)
     }
 
     
@@ -84,7 +84,7 @@ public class SceneSequence<StageType: AnyObject> {
         guard scene.isRemovable else {
             return false
         }
-        scene.onRemove(stage: stage)
+        scene.willRemove(from: stage)
         manager.release(scene: scene)
         return true
     }
@@ -94,11 +94,11 @@ public class SceneSequence<StageType: AnyObject> {
         isStarted = false
     }
     
-    public init<S: Scene>(_ stage: StageType, _ scene: S, _ argument:S.ArgumentType?, _ onAdd: @escaping (StageType, S) -> Void) where StageType == S.RouterType.DestinationType.StageType {
+    public init<S: Scene>(_ stage: StageType, _ scene: S, _ context:S.ContextType?, _ onAdd: @escaping (StageType, S) -> Void) where StageType == S.RouterType.DestinationType.StageType {
         self.manager = SceneManager()
         self.stage = stage
         self.baseScene = scene
-        self.baseSceneArgs = argument
+        self.baseSceneArgs = context
         
         self.invokeMethod = { (_ stage: StageType, _ target: SceneBase) in
             guard let newScene = target as? S else { return }

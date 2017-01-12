@@ -18,13 +18,13 @@
 		4E0941F71E242E1800FBAF21 /* MockRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941F61E242E1800FBAF21 /* MockRequest.swift */; };
 		4E0941F91E242E3300FBAF21 /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941F81E242E3300FBAF21 /* MockRouter.swift */; };
 		4E0941FB1E24E84600FBAF21 /* ActionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941FA1E24E84600FBAF21 /* ActionScene.swift */; };
-		4E0941FD1E24EF3000FBAF21 /* SceneObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941FC1E24EF3000FBAF21 /* SceneObserver.swift */; };
-		4E0942021E25074A00FBAF21 /* SceneObserverSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0942011E25074A00FBAF21 /* SceneObserverSpec.swift */; };
+		4E0941FD1E24EF3000FBAF21 /* ActionActivator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941FC1E24EF3000FBAF21 /* ActionActivator.swift */; };
+		4E0942021E25074A00FBAF21 /* ActionActivatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0942011E25074A00FBAF21 /* ActionActivatorSpec.swift */; };
 		4E86AA991DF4359D0039D8B7 /* SceneManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E86AA981DF4359D0039D8B7 /* SceneManagerSpec.swift */; };
 		4ED7E5951E25559C0072CEE9 /* Observable+KabuKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5941E25559C0072CEE9 /* Observable+KabuKit.swift */; };
-		4ED7E5971E2556870072CEE9 /* ObserverTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5961E2556870072CEE9 /* ObserverTarget.swift */; };
+		4ED7E5971E2556870072CEE9 /* SubscribeTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5961E2556870072CEE9 /* SubscribeTarget.swift */; };
 		4ED7E5991E25621A0072CEE9 /* ActionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5981E25621A0072CEE9 /* ActionError.swift */; };
-		4ED7E59B1E2562840072CEE9 /* ActionRecoverPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59A1E2562840072CEE9 /* ActionRecoverPattern.swift */; };
+		4ED7E59B1E2562840072CEE9 /* RecoverPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59A1E2562840072CEE9 /* RecoverPattern.swift */; };
 		4ED7E59D1E25631F0072CEE9 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59C1E25631F0072CEE9 /* Action.swift */; };
 		4ED7E59F1E256BC70072CEE9 /* ActionSceneSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59E1E256BC70072CEE9 /* ActionSceneSpec.swift */; };
 		4ED7E5A11E2578DF0072CEE9 /* Producer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A01E2578DF0072CEE9 /* Producer.swift */; };
@@ -64,14 +64,14 @@
 		4E0941F61E242E1800FBAF21 /* MockRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequest.swift; sourceTree = "<group>"; };
 		4E0941F81E242E3300FBAF21 /* MockRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MockRouter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4E0941FA1E24E84600FBAF21 /* ActionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionScene.swift; sourceTree = "<group>"; };
-		4E0941FC1E24EF3000FBAF21 /* SceneObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneObserver.swift; sourceTree = "<group>"; };
-		4E0942011E25074A00FBAF21 /* SceneObserverSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneObserverSpec.swift; sourceTree = "<group>"; };
+		4E0941FC1E24EF3000FBAF21 /* ActionActivator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionActivator.swift; sourceTree = "<group>"; };
+		4E0942011E25074A00FBAF21 /* ActionActivatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionActivatorSpec.swift; sourceTree = "<group>"; };
 		4E86AA971DF4359D0039D8B7 /* KabuKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KabuKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		4E86AA981DF4359D0039D8B7 /* SceneManagerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SceneManagerSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4ED7E5941E25559C0072CEE9 /* Observable+KabuKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+KabuKit.swift"; sourceTree = "<group>"; };
-		4ED7E5961E2556870072CEE9 /* ObserverTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverTarget.swift; sourceTree = "<group>"; };
+		4ED7E5961E2556870072CEE9 /* SubscribeTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeTarget.swift; sourceTree = "<group>"; };
 		4ED7E5981E25621A0072CEE9 /* ActionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionError.swift; sourceTree = "<group>"; };
-		4ED7E59A1E2562840072CEE9 /* ActionRecoverPattern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionRecoverPattern.swift; sourceTree = "<group>"; };
+		4ED7E59A1E2562840072CEE9 /* RecoverPattern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoverPattern.swift; sourceTree = "<group>"; };
 		4ED7E59C1E25631F0072CEE9 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		4ED7E59E1E256BC70072CEE9 /* ActionSceneSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ActionSceneSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4ED7E5A01E2578DF0072CEE9 /* Producer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Producer.swift; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 		4E0942001E25073900FBAF21 /* Rx */ = {
 			isa = PBXGroup;
 			children = (
-				4E0942011E25074A00FBAF21 /* SceneObserverSpec.swift */,
+				4E0942011E25074A00FBAF21 /* ActionActivatorSpec.swift */,
 				4ED7E59E1E256BC70072CEE9 /* ActionSceneSpec.swift */,
 			);
 			path = Rx;
@@ -274,11 +274,11 @@
 			isa = PBXGroup;
 			children = (
 				4E0941FA1E24E84600FBAF21 /* ActionScene.swift */,
-				4E0941FC1E24EF3000FBAF21 /* SceneObserver.swift */,
+				4E0941FC1E24EF3000FBAF21 /* ActionActivator.swift */,
 				4ED7E5941E25559C0072CEE9 /* Observable+KabuKit.swift */,
-				4ED7E5961E2556870072CEE9 /* ObserverTarget.swift */,
+				4ED7E5961E2556870072CEE9 /* SubscribeTarget.swift */,
 				4ED7E5981E25621A0072CEE9 /* ActionError.swift */,
-				4ED7E59A1E2562840072CEE9 /* ActionRecoverPattern.swift */,
+				4ED7E59A1E2562840072CEE9 /* RecoverPattern.swift */,
 				4ED7E59C1E25631F0072CEE9 /* Action.swift */,
 			);
 			path = Rx;
@@ -564,13 +564,13 @@
 				4ED7E59D1E25631F0072CEE9 /* Action.swift in Sources */,
 				4E0941DD1E24187100FBAF21 /* Scene.swift in Sources */,
 				4E0941FB1E24E84600FBAF21 /* ActionScene.swift in Sources */,
-				4E0941FD1E24EF3000FBAF21 /* SceneObserver.swift in Sources */,
-				4ED7E5971E2556870072CEE9 /* ObserverTarget.swift in Sources */,
+				4E0941FD1E24EF3000FBAF21 /* ActionActivator.swift in Sources */,
+				4ED7E5971E2556870072CEE9 /* SubscribeTarget.swift in Sources */,
 				4ED7E5951E25559C0072CEE9 /* Observable+KabuKit.swift in Sources */,
 				4ED7E5A91E25A1AB0072CEE9 /* Transition.swift in Sources */,
 				4E0941E11E241AED00FBAF21 /* SceneManager.swift in Sources */,
 				4ED7E5A51E259A530072CEE9 /* Director.swift in Sources */,
-				4ED7E59B1E2562840072CEE9 /* ActionRecoverPattern.swift in Sources */,
+				4ED7E59B1E2562840072CEE9 /* RecoverPattern.swift in Sources */,
 				4ED7E5A11E2578DF0072CEE9 /* Producer.swift in Sources */,
 				4E0941E51E241BB100FBAF21 /* SceneSequence.swift in Sources */,
 				4ED7E5A31E2579EB0072CEE9 /* Scenario.swift in Sources */,
@@ -583,7 +583,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E0941CF1E23FF4900FBAF21 /* DirectorSpec.swift in Sources */,
-				4E0942021E25074A00FBAF21 /* SceneObserverSpec.swift in Sources */,
+				4E0942021E25074A00FBAF21 /* ActionActivatorSpec.swift in Sources */,
 				4E0941CB1E23F47000FBAF21 /* SceneLinkageSpec.swift in Sources */,
 				4ED7E59F1E256BC70072CEE9 /* ActionSceneSpec.swift in Sources */,
 				4E0941F71E242E1800FBAF21 /* MockRequest.swift in Sources */,

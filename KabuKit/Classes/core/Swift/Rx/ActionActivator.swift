@@ -9,11 +9,11 @@ import RxSwift
  SceneのActionを監視するクラスです.
  
  */
-public class SceneObserver<DestinationType: Destination> {
+public class ActionActivator<DestinationType: Destination> {
     
-    var actionTypeHashMap = [String : ActionTerminate]()
+    var actionTypeHashMap = [String : SignalClosable]()
     
-    var disposableMap = [String : [ObserverTarget]]()
+    var disposableMap = [String : [SubscribeTarget]]()
     
     let director: Director<DestinationType>
     
@@ -69,7 +69,7 @@ public class SceneObserver<DestinationType: Destination> {
     }
     
     /**
-     このObserverで管理されている全ての Actionをサスペンド状態にします
+     このactivatorで管理されている全ての Actionをサスペンド状態にします
      
      */
     public func deactivateAll() {
@@ -85,7 +85,7 @@ public class SceneObserver<DestinationType: Destination> {
        - actionType: Actionの型
      - returns: 指定のActionが現在動いている場合は `true` そうでない場合は `false` を返します
      */
-    public func isActive(actionType: ActionTerminate.Type) -> Bool {
+    public func isActive(actionType: SignalClosable.Type) -> Bool {
         let typeName = String(describing: actionType)
         return disposableMap[typeName] != nil
     }
@@ -145,7 +145,7 @@ public class SceneObserver<DestinationType: Destination> {
             deactivateAll()
             onStart()
             
-        case .reloadErrorStream(let onStart):
+        case .reloadErrorSignal(let onStart):
             _ = self.subscribe(target: target, action: Action)
             onStart()
 
@@ -154,7 +154,7 @@ public class SceneObserver<DestinationType: Destination> {
         }
     }
     
-    private func subscribe(target: ObserverTarget, action: ActionTerminate) -> ObserverTarget {
+    private func subscribe(target: SubscribeTarget, action: SignalClosable) -> SubscribeTarget {
         let disposable = target.observable.catchError({ (error) -> Observable<()> in
             
             throw ActionError(recoverPattern: action.onError(error: error, label: target.label),

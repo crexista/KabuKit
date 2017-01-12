@@ -16,7 +16,7 @@ class SceneLinkageSpec: QuickSpec {
         
         typealias DestinationType = MockDestination
         
-        typealias ArgumentType = Void
+        typealias ContextType = Void
         
         public var isTransit = false
         
@@ -24,11 +24,11 @@ class SceneLinkageSpec: QuickSpec {
             return false
         }
         
-        func onMove(destination: MockDestination) -> Transition<NSObject>? {
+        func guide(to: MockDestination) -> Transition<NSObject>? {
             return nil
         }
         
-        public func onRemove(stage: NSObject) {
+        public func willRemove(from stage: NSObject) {
         }
     }
 

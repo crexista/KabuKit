@@ -5,7 +5,7 @@
 import Foundation
 import RxSwift
 
-public class ObserverTarget {
+public class SubscribeTarget {
     
     internal let observable: Observable<Void>
     internal var label: String?

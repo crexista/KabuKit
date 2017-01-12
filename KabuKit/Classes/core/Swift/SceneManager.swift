@@ -17,7 +17,7 @@ final public class SceneManager : Hashable, Equatable {
     
     private static let managerQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
     
-    // key: Scene, value: (director, argument) のタプルか (director, argument, actor) のタプル
+    // key: Scene, value: (director, context) のタプルか (director, context, actor) のタプル
     private var sceneHashMap: NSMapTable<AnyObject, AnyObject> = NSMapTable.strongToStrongObjects()
     
     // Sceneをスタックし、現在有効なSceneを取り出せるようにします
@@ -88,7 +88,7 @@ final public class SceneManager : Hashable, Equatable {
     }
     
     /**
-     Sceneをキーとして、それに紐づくDirectorとArgumentオブジェクトを紐付けます
+     Sceneをキーとして、それに紐づくDirectorとcontextオブジェクトを紐付けます
      
      ## 注意 ##
      内部的には非同期のbarrier queue で行われています
@@ -105,7 +105,7 @@ final public class SceneManager : Hashable, Equatable {
     }
     
     /**
-     Sceneに紐づくDirectorとArgumentオブジェクト等を取得します
+     Sceneに紐づくDirectorとcontextオブジェクト等を取得します
      
      ## 注意 ##
      同期Queuedで実行されているため呼びだす側でsyncをかける必要はありません

@@ -15,7 +15,7 @@ class DirectorSpec: QuickSpec {
         
         typealias DestinationType = MockDestination
         
-        typealias ArgumentType = Void
+        typealias ContextType = Void
         
         public var isTransit = false
         
@@ -23,13 +23,13 @@ class DirectorSpec: QuickSpec {
             return true
         }
         
-        func onMove(destination: MockDestination) -> Transition<NSObject>? {
-            return destination.makeTransition(DirectorSpecScene(), nil) { (stage, scene) in
+        func guide(to destination: DestinationType) -> Transition<DestinationType.StageType>? {
+            return destination.specify(DirectorSpecScene(), nil) { (stage, scene) in
                 self.isTransit = true
             }
         }
         
-        public func onRemove(stage: NSObject) {
+        public func willRemove(from stage: NSObject) {
         }
     }
     
@@ -37,7 +37,7 @@ class DirectorSpec: QuickSpec {
         
         typealias DestinationType = MockDestination
         
-        typealias ArgumentType = Void
+        typealias ContextType = Void
         
         public var isTransit = false
         
@@ -47,13 +47,13 @@ class DirectorSpec: QuickSpec {
             return true
         }
         
-        func onMove(destination: MockDestination) -> Transition<NSObject>? {
-            return destination.makeTransition(DirectorSpecScene(), nil) { (stage, scene) in
+        func guide(to destination: DestinationType) -> Transition<DestinationType.StageType>? {
+            return destination.specify(DirectorSpecScene(), nil) { (stage, scene) in
                 self.isTransit = true
             }
         }
         
-        public func onRemove(stage: NSObject) {
+        public func willRemove(from stage: NSObject) {
             isRemoved = true
         }
     }
@@ -68,7 +68,7 @@ class DirectorSpec: QuickSpec {
                 sequence.start(producer: nil)
                 expect(sequence.manager.count) == 1
                 expect(scene.isTransit).to(beFalse())
-                director.transitTo(MockDestination())
+                director.forwardTo(MockDestination())
                 expect(scene.isTransit).to(beTrue())
                 expect(sequence.manager.count) == 2
             }
@@ -81,7 +81,7 @@ class DirectorSpec: QuickSpec {
                 
                 expect(sequence.manager.count) == 1
                 expect(scene.isTransit).to(beFalse())
-                director.transitTo(MockDestination())
+                director.forwardTo(MockDestination())
                 expect(scene.isTransit).to(beTrue())
                 expect(sequence.manager.count) == 2
 

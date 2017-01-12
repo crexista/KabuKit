@@ -14,7 +14,7 @@ class SceneSpec: QuickSpec {
     final class SceneSpecScene : NSObject, Scene {
 
         typealias RouterType = MockRouter
-        typealias ArgumentType = Void
+        typealias ContextType = Void
         
         public var router: MockRouter {
             return MockRouter()
@@ -24,7 +24,7 @@ class SceneSpec: QuickSpec {
             return false
         }
         
-        public func onRemove(stage: NSObject) {
+        public func willRemove(from stage: NSObject) {
 
         }
     }
@@ -47,7 +47,7 @@ class SceneSpec: QuickSpec {
                 let scene = SceneSpecScene()
 
                 it("scene#directorはdirectorが入っている") {
-                    scene.setup(sequenceObject: sequence, argumentObject: nil)
+                    scene.setup(sequenceObject: sequence, contextObject: nil)
                     expect(scene.director).notTo(beNil())
                 }
                 

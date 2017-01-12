@@ -18,7 +18,7 @@ class SceneManagerSpec: QuickSpec {
         
         typealias DestinationType = MockDestination
         
-        typealias ArgumentType = Void
+        typealias ContextType = Void
         
         public var isTransit = false
         
@@ -26,13 +26,13 @@ class SceneManagerSpec: QuickSpec {
             return true
         }
         
-        func onMove(destination: MockDestination) -> Transition<NSObject>? {
-            return destination.makeTransition(MockScene(), nil) { (stage, scene) in
+        func guide(to destination: DestinationType) -> Transition<DestinationType.StageType>? {
+            return destination.specify(MockScene(), nil) { (stage, scene) in
                 self.isTransit = true
             }
         }
         
-        public func onRemove(stage: NSObject) {
+        public func willRemove(from stage: NSObject) {
         }
     }
     
