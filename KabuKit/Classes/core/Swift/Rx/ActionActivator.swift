@@ -13,7 +13,7 @@ public class ActionActivator<DestinationType: Destination> {
     
     var actionTypeHashMap = [String : SignalClosable]()
     
-    var disposableMap = [String : [SubscribeTarget]]()
+    var disposableMap = [String : [ActionEvent]]()
     
     let director: Director<DestinationType>
     
@@ -154,7 +154,7 @@ public class ActionActivator<DestinationType: Destination> {
         }
     }
     
-    private func subscribe(target: SubscribeTarget, action: SignalClosable) -> SubscribeTarget {
+    private func subscribe(target: ActionEvent, action: SignalClosable) -> ActionEvent {
         let disposable = target.observable.catchError({ (error) -> Observable<()> in
             
             throw ActionError(recoverPattern: action.onError(error: error, label: target.label),

@@ -10,7 +10,7 @@ public protocol Action : SignalClosable {
     
     associatedtype DestinationType: Destination
     
-    func invoke(director: Director<DestinationType>) -> [SubscribeTarget]
+    func invoke(director: Director<DestinationType>) -> [ActionEvent]
     
 }
 

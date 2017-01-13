@@ -24,7 +24,7 @@ class Sample1BAction: Action {
     
     unowned let prevButton: UIButton
 
-    public func invoke(director: Director<Sample1BViewController.Sample2Destination>) -> [SubscribeTarget] {
+    public func invoke(director: Director<Sample1BViewController.Sample2Destination>) -> [ActionEvent] {
         return [
             self.nextButtonA.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.a)}).toTarget,
             self.nextButtonB.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.b)}).toTarget,
