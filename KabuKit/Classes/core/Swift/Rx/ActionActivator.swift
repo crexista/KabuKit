@@ -36,7 +36,7 @@ public class ActionActivator<DestinationType: Destination> {
                 すでにactivate済みのインスタンスがactionに指定された場合は何もされないため
                 falseを返します
      */
-    public func activate<A: Action>(action: A, onStart: () -> Void = {}) -> Bool where A.DestinationType == DestinationType{
+    public func activate<A: Action>(action: A, onStart: () -> Void = {}) -> Bool where A.SceneType.RouterType.DestinationType == DestinationType{
         let typeName = String(describing: type(of: action))
         
         guard disposableMap[typeName] == nil else {
@@ -46,7 +46,8 @@ public class ActionActivator<DestinationType: Destination> {
         actionTypeHashMap[typeName] = actionTypeHashMap[typeName] ?? action
 
         disposableMap[typeName] = action.invoke(director: director).map{ (target) in
-            return self.subscribe(target: target, action: action)
+            target.start(action: action, recoverHandler: recover)
+            return target
         }
         
         onStart()
@@ -60,7 +61,7 @@ public class ActionActivator<DestinationType: Destination> {
      再度activateされるまでイベントを飛ばすことはありません
      
      */
-    public func deactivate<A: Action>(actionType: A.Type) -> Bool where A.DestinationType == DestinationType{
+    public func deactivate<A: Action>(actionType: A.Type) -> Bool where A.SceneType.RouterType.DestinationType == DestinationType{
         // 指定のクラス名に紐づくDisposableを取得し
         // 全て破棄し、DisposableMapも空にする
         let typeName = String(describing: actionType)
@@ -96,7 +97,7 @@ public class ActionActivator<DestinationType: Destination> {
      - parameters: 
        - actionType: Actionの型
      */
-    public func resolve<A: Action>(actionType: A.Type) -> A? where A.DestinationType == DestinationType{
+    public func resolve<A: Action>(actionType: A.Type) -> A? where A.SceneType.RouterType.DestinationType == DestinationType{
         let typeName = String(describing: actionType)
 
         return actionTypeHashMap[typeName] as? A
@@ -124,48 +125,19 @@ public class ActionActivator<DestinationType: Destination> {
     }
     
     /**
-     キャッチしたエラーをハンドルして
-     リカバリ処理を行います
+     キャッチ損ねエラー発生時のリカバー処理を行います
      
      */
-    private func recoverError(error: Error) {
-        guard let actionError = error as? ActionError else {
-            return
-        }
-        
-        guard let Action = actionTypeHashMap[actionError.actionName] else {
-            return
-        }
-
-        let target = actionError.target
-        
-        switch actionError.recoverPattern {
-
-        case .reloadAction(let onStart):
-            deactivateAll()
-            onStart()
-            
+    internal func recover<A: Action>(error: ActionError<A>, pattern: RecoverPattern) {
+        switch pattern {
         case .reloadErrorSignal(let onStart):
-            _ = self.subscribe(target: target, action: Action)
+            let action = error.from
+            error.event.dispose()
+            error.event.start(action: action, recoverHandler: recover)
             onStart()
-
-        default:
+        case .doNothing:
             break
         }
-    }
-    
-    private func subscribe(target: ActionEvent, action: SignalClosable) -> ActionEvent {
-        let disposable = target.observable.catchError({ (error) -> Observable<()> in
-            
-            throw ActionError(recoverPattern: action.onError(error: error, label: target.label),
-                              target: target,
-                              onError: action.onError,
-                              actionName: String(describing: type(of: action)))
-
-        }).subscribe(onError: self.recoverError)
-        target.disposable?.dispose()
-        target.disposable = disposable
-        return target
     }
     
     deinit {

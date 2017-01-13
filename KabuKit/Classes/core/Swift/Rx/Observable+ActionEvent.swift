@@ -22,7 +22,7 @@ extension Observable {
      ```
      */
     public var toTarget: ActionEvent {
-        return ActionEvent(observable: self)
+        return ActionEvent(RxSwiftEvent(observable: self))
     }
     
     /**
@@ -39,6 +39,6 @@ extension Observable {
      
      */
     public subscript(label: String) -> ActionEvent {
-        return ActionEvent(observable: self, label: label)
+        return ActionEvent(RxSwiftEvent(observable: self, label: label))
     }
 }

@@ -31,12 +31,14 @@ class ActionSceneSpec: QuickSpec {
     
     override func spec() {
         
-        describe("activatorへのリクエストについて") {
+        describe("ActionSceneのプロパティへのリクエストについて") {
             
             context("setupを呼ぶ前は") {
                 let scene = ActionSceneSpecScene()
-                it("activatorをリクエストしても中身は空") {
+                it("リクエストしても中身は空") {
                     expect(scene.activator).to(beNil())
+                    expect(scene.context).to(beNil())
+                    expect(scene.director).to(beNil())
                 }
             }
             
@@ -51,8 +53,8 @@ class ActionSceneSpec: QuickSpec {
                 }
                 
                 it("activatorは初期化されて取得できる") {
-                    
                     expect(scene.activator).notTo(beNil())
+                    expect(scene.director).notTo(beNil())
                 }
                 
                 it("activatorを複数回呼び出しても同じインスタンスを返す") {
