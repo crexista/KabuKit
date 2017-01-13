@@ -12,7 +12,7 @@ import Nimble
 
 class ActionActivatorSpec: QuickSpec {
     
-    class MockAction: Action {
+    final class MockAction: Action {
         
         typealias SceneType = ActionActivatorSpeceScene
 
@@ -24,8 +24,8 @@ class ActionActivatorSpec: QuickSpec {
 
         }
         
+        func onError(error: ActionError<ActionActivatorSpec.MockAction>) -> RecoverPattern {
 
-        func onError(error: Error, label: String?) -> RecoverPattern {
             return RecoverPattern.doNothing
         }
     }

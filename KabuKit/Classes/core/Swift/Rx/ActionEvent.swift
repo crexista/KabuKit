@@ -3,21 +3,40 @@
 //
 
 import Foundation
-import RxSwift
+
+protocol ActionSignal {
+    
+    var label: String? { get }
+    
+    var isRunning: Bool { get }
+    
+    func dispose()
+    
+    func start<A: Action>(action: A, event: ActionEvent, recoverHandler: @escaping (ActionError<A>, RecoverPattern) -> Void)
+}
+
 
 public class ActionEvent {
     
-    internal let observable: Observable<Void>
-    internal var label: String?
-    internal var disposable: Disposable?
+    private let signal: ActionSignal
     
-    internal func dispose() {
-        disposable?.dispose()
-        disposable = nil
+    public var label: String? {
+        return signal.label
     }
     
-    internal init<E>(observable: Observable<E>, label: String? = nil) {
-        self.observable = observable.map { (element) -> Void in }
-        self.label = label
+    internal var isRunning: Bool {
+        return signal.isRunning
+    }
+    
+    internal func dispose() {
+        signal.dispose()
+    }
+    
+    internal func start<A: Action>(action: A, recoverHandler: @escaping (ActionError<A>, RecoverPattern) -> Void) {
+        signal.start(action: action, event: self, recoverHandler: recoverHandler)
+    }
+    
+    init(_ signal: ActionSignal) {
+        self.signal = signal
     }
 }

@@ -20,10 +20,6 @@ class SceneSpec: QuickSpec {
             return MockRouter()
         }
         
-        public var isRemovable: Bool {
-            return false
-        }
-        
         public func willRemove(from stage: NSObject) {
 
         }
