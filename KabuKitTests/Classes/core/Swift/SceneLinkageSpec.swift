@@ -24,7 +24,7 @@ class SceneLinkageSpec: QuickSpec {
             return false
         }
         
-        func guide(to: MockDestination) -> Transition<NSObject>? {
+        func guide(to: MockDestination) -> SceneTransition<NSObject>? {
             return nil
         }
         

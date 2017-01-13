@@ -26,7 +26,7 @@ class SceneManagerSpec: QuickSpec {
             return true
         }
         
-        func guide(to destination: DestinationType) -> Transition<DestinationType.StageType>? {
+        func guide(to destination: DestinationType) -> SceneTransition<DestinationType.StageType>? {
             return destination.specify(MockScene(), nil) { (stage, scene) in
                 self.isTransit = true
             }

@@ -81,7 +81,7 @@ class SceneSequenceSpec: QuickSpec {
                 sequence.start(producer: nil)
                 let secondScene = SequenceSpecScene1()
                 var isCalled = false
-                let transition = Transition(secondScene, nil) { (stage, scene) in
+                let transition = SceneTransition(secondScene, nil) { (stage, scene) in
                     isCalled = true
                 }
 
@@ -121,7 +121,7 @@ class SceneSequenceSpec: QuickSpec {
                 
                 let sequence = SceneSequence(NSObject(), firstScene, nil){ (stage, scene) in }
 
-                let transition = Transition(secondScene, nil) { (stage, scene) in }
+                let transition = SceneTransition(secondScene, nil) { (stage, scene) in }
                 sequence.start(producer: nil)
                 sequence.push(transition: transition)
                 
@@ -142,7 +142,7 @@ class SceneSequenceSpec: QuickSpec {
                 let secondScene = SequenceSpecScene1()
                 
                 let sequence = SceneSequence(NSObject(), firstScene, nil){ (stage, scene) in }
-                let transition = Transition(secondScene, nil) { (stage, scene) in }
+                let transition = SceneTransition(secondScene, nil) { (stage, scene) in }
                 sequence.start(producer: nil)
                 sequence.push(transition: transition)
                 expect(firstScene.isRemoved).to(beFalse())

@@ -8,6 +8,8 @@ public class SceneSequence<StageType: AnyObject> {
     
     typealias InvokeMethodType = (_ stage: StageType, _ scene: SceneBase) -> Void
     
+    private let startQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
+    
     internal let manager: SceneManager
     
     private let stage: StageType
@@ -35,10 +37,20 @@ public class SceneSequence<StageType: AnyObject> {
         onActivate(stage, scene)
     }
     
-    internal func start(producer: Producer?) {
-        self.producer = producer
-        activateScene(stage, baseScene, baseSceneArgs, invokeMethod)
-        isStarted = true
+    /**
+     すでに起動済みの場合はt何もせずfalseを返すのみ
+     
+     */
+    internal func start(producer: Producer?) -> Bool {
+        return startQueue.sync {
+            if (isStarted) {
+                return false
+            }
+            self.producer = producer
+            activateScene(stage, baseScene, baseSceneArgs, invokeMethod)
+            isStarted = true
+            return true
+        }
     }
     
     
@@ -54,7 +66,7 @@ public class SceneSequence<StageType: AnyObject> {
      このメソッドを呼ぶ前にSceneを呼ぶとdirectorはnil
      
      */
-    public func push(transition: Transition<StageType>) {
+    public func push(transition: SceneTransition<StageType>) {
         activateScene(stage, transition.scene, transition.args, transition.execution)
     }
     

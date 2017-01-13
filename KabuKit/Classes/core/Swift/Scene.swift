@@ -76,12 +76,12 @@ public protocol SceneRouter {
     
     associatedtype DestinationType: Destination
     
-    func connect<S: Scene>(from scene: S, to destination: DestinationType) -> Transition<DestinationType.StageType>?
+    func connect<S: Scene>(from scene: S, to destination: DestinationType) -> SceneTransition<DestinationType.StageType>?
 }
 
 public protocol SceneLinkage : SceneRouter {
     
-    func guide(to destination: DestinationType) -> Transition<DestinationType.StageType>?
+    func guide(to destination: DestinationType) -> SceneTransition<DestinationType.StageType>?
 }
 
 public extension SceneLinkage where Self: Scene, Self == Self.RouterType {
@@ -90,7 +90,7 @@ public extension SceneLinkage where Self: Scene, Self == Self.RouterType {
         return self
     }
     
-    final func connect<S: Scene>(from scene: S, to destination: DestinationType) -> Transition<DestinationType.StageType>? {
+    final func connect<S: Scene>(from scene: S, to destination: DestinationType) -> SceneTransition<DestinationType.StageType>? {
         return guide(to: destination)
     }
     
@@ -102,7 +102,7 @@ public protocol Destination {
     
     func specify<S: Scene>(_ newScene: S,
                            _ context: S.ContextType?,
-                           _ atLast: @escaping (StageType, S) -> Void) -> Transition<StageType>? where StageType == S.RouterType.DestinationType.StageType
+                           _ atLast: @escaping (StageType, S) -> Void) -> SceneTransition<StageType>? where StageType == S.RouterType.DestinationType.StageType
     
 }
 
@@ -110,7 +110,7 @@ public extension Destination {
     
     final func specify<S: Scene>(_ newScene: S,
                                  _ context: S.ContextType?,
-                                 _ atLast: @escaping (StageType, S) -> Void) -> Transition<StageType>? where StageType == S.RouterType.DestinationType.StageType {
-        return Transition(newScene, context, atLast)
+                                 _ atLast: @escaping (StageType, S) -> Void) -> SceneTransition<StageType>? where StageType == S.RouterType.DestinationType.StageType {
+        return SceneTransition(newScene, context, atLast)
     }
 }

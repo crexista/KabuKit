@@ -20,26 +20,29 @@
 		4E0941FB1E24E84600FBAF21 /* ActionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941FA1E24E84600FBAF21 /* ActionScene.swift */; };
 		4E0941FD1E24EF3000FBAF21 /* ActionActivator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941FC1E24EF3000FBAF21 /* ActionActivator.swift */; };
 		4E0942021E25074A00FBAF21 /* ActionActivatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0942011E25074A00FBAF21 /* ActionActivatorSpec.swift */; };
+		4E6093721E281A2400C7A234 /* ProducerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6093711E281A2400C7A234 /* ProducerSpec.swift */; };
+		4E6093741E281B4200C7A234 /* SimpleMockScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6093731E281B4200C7A234 /* SimpleMockScene.swift */; };
+		4E6093761E28274A00C7A234 /* RxSwiftEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6093751E28274A00C7A234 /* RxSwiftEvent.swift */; };
+		4E6093771E28274A00C7A234 /* RxSwiftEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6093751E28274A00C7A234 /* RxSwiftEvent.swift */; };
+		4E6093791E283CAB00C7A234 /* RxSwiftEventSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6093781E283CAB00C7A234 /* RxSwiftEventSpec.swift */; };
 		4E86AA991DF4359D0039D8B7 /* SceneManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E86AA981DF4359D0039D8B7 /* SceneManagerSpec.swift */; };
-		4ED7E5951E25559C0072CEE9 /* Observable+KabuKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5941E25559C0072CEE9 /* Observable+KabuKit.swift */; };
-		4ED7E5971E2556870072CEE9 /* SubscribeTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5961E2556870072CEE9 /* SubscribeTarget.swift */; };
-		4ED7E5991E25621A0072CEE9 /* ActionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5981E25621A0072CEE9 /* ActionError.swift */; };
+		4ED7E5951E25559C0072CEE9 /* Observable+ActionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5941E25559C0072CEE9 /* Observable+ActionEvent.swift */; };
+		4ED7E5971E2556870072CEE9 /* ActionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5961E2556870072CEE9 /* ActionEvent.swift */; };
 		4ED7E59B1E2562840072CEE9 /* RecoverPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59A1E2562840072CEE9 /* RecoverPattern.swift */; };
 		4ED7E59D1E25631F0072CEE9 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59C1E25631F0072CEE9 /* Action.swift */; };
 		4ED7E59F1E256BC70072CEE9 /* ActionSceneSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59E1E256BC70072CEE9 /* ActionSceneSpec.swift */; };
 		4ED7E5A11E2578DF0072CEE9 /* Producer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A01E2578DF0072CEE9 /* Producer.swift */; };
 		4ED7E5A31E2579EB0072CEE9 /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A21E2579EB0072CEE9 /* Scenario.swift */; };
 		4ED7E5A51E259A530072CEE9 /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A41E259A530072CEE9 /* Director.swift */; };
-		4ED7E5A91E25A1AB0072CEE9 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A81E25A1AB0072CEE9 /* Transition.swift */; };
+		4ED7E5A91E25A1AB0072CEE9 /* SceneTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A81E25A1AB0072CEE9 /* SceneTransition.swift */; };
 		4ED7E5AC1E2761120072CEE9 /* ActionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941FA1E24E84600FBAF21 /* ActionScene.swift */; };
 		4ED7E5AD1E2761120072CEE9 /* ActionActivator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941FC1E24EF3000FBAF21 /* ActionActivator.swift */; };
-		4ED7E5AE1E2761120072CEE9 /* Observable+KabuKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5941E25559C0072CEE9 /* Observable+KabuKit.swift */; };
-		4ED7E5AF1E2761120072CEE9 /* SubscribeTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5961E2556870072CEE9 /* SubscribeTarget.swift */; };
-		4ED7E5B01E2761120072CEE9 /* ActionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5981E25621A0072CEE9 /* ActionError.swift */; };
+		4ED7E5AE1E2761120072CEE9 /* Observable+ActionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5941E25559C0072CEE9 /* Observable+ActionEvent.swift */; };
+		4ED7E5AF1E2761120072CEE9 /* ActionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5961E2556870072CEE9 /* ActionEvent.swift */; };
 		4ED7E5B11E2761120072CEE9 /* RecoverPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59A1E2562840072CEE9 /* RecoverPattern.swift */; };
 		4ED7E5B21E2761120072CEE9 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59C1E25631F0072CEE9 /* Action.swift */; };
 		4ED7E5B31E2762650072CEE9 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941DC1E24187100FBAF21 /* Scene.swift */; };
-		4ED7E5B41E2762650072CEE9 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A81E25A1AB0072CEE9 /* Transition.swift */; };
+		4ED7E5B41E2762650072CEE9 /* SceneTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A81E25A1AB0072CEE9 /* SceneTransition.swift */; };
 		4ED7E5B51E2762650072CEE9 /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A41E259A530072CEE9 /* Director.swift */; };
 		4ED7E5B61E2762650072CEE9 /* SceneSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941E41E241BB100FBAF21 /* SceneSequence.swift */; };
 		4ED7E5B71E2762650072CEE9 /* Producer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E5A01E2578DF0072CEE9 /* Producer.swift */; };
@@ -80,18 +83,21 @@
 		4E0941FA1E24E84600FBAF21 /* ActionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionScene.swift; sourceTree = "<group>"; };
 		4E0941FC1E24EF3000FBAF21 /* ActionActivator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionActivator.swift; sourceTree = "<group>"; };
 		4E0942011E25074A00FBAF21 /* ActionActivatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionActivatorSpec.swift; sourceTree = "<group>"; };
+		4E6093711E281A2400C7A234 /* ProducerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProducerSpec.swift; sourceTree = "<group>"; };
+		4E6093731E281B4200C7A234 /* SimpleMockScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleMockScene.swift; sourceTree = "<group>"; };
+		4E6093751E28274A00C7A234 /* RxSwiftEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSwiftEvent.swift; sourceTree = "<group>"; };
+		4E6093781E283CAB00C7A234 /* RxSwiftEventSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSwiftEventSpec.swift; sourceTree = "<group>"; };
 		4E86AA971DF4359D0039D8B7 /* KabuKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KabuKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		4E86AA981DF4359D0039D8B7 /* SceneManagerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SceneManagerSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		4ED7E5941E25559C0072CEE9 /* Observable+KabuKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+KabuKit.swift"; sourceTree = "<group>"; };
-		4ED7E5961E2556870072CEE9 /* SubscribeTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeTarget.swift; sourceTree = "<group>"; };
-		4ED7E5981E25621A0072CEE9 /* ActionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionError.swift; sourceTree = "<group>"; };
+		4ED7E5941E25559C0072CEE9 /* Observable+ActionEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+ActionEvent.swift"; sourceTree = "<group>"; };
+		4ED7E5961E2556870072CEE9 /* ActionEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionEvent.swift; sourceTree = "<group>"; };
 		4ED7E59A1E2562840072CEE9 /* RecoverPattern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecoverPattern.swift; sourceTree = "<group>"; };
 		4ED7E59C1E25631F0072CEE9 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		4ED7E59E1E256BC70072CEE9 /* ActionSceneSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ActionSceneSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4ED7E5A01E2578DF0072CEE9 /* Producer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Producer.swift; sourceTree = "<group>"; };
 		4ED7E5A21E2579EB0072CEE9 /* Scenario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scenario.swift; sourceTree = "<group>"; };
 		4ED7E5A41E259A530072CEE9 /* Director.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
-		4ED7E5A81E25A1AB0072CEE9 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		4ED7E5A81E25A1AB0072CEE9 /* SceneTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTransition.swift; sourceTree = "<group>"; };
 		4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EF5CCE91DE30A0C00683D1E /* KabuKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KabuKit.h; sourceTree = "<group>"; };
 		4EF5CCEA1DE30A0C00683D1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -165,6 +171,7 @@
 			children = (
 				4E0942011E25074A00FBAF21 /* ActionActivatorSpec.swift */,
 				4ED7E59E1E256BC70072CEE9 /* ActionSceneSpec.swift */,
+				4E6093781E283CAB00C7A234 /* RxSwiftEventSpec.swift */,
 			);
 			path = Rx;
 			sourceTree = "<group>";
@@ -199,6 +206,8 @@
 				4E0941CA1E23F47000FBAF21 /* SceneLinkageSpec.swift */,
 				4E0941CC1E23FA9D00FBAF21 /* SceneSequenceSpec.swift */,
 				4E0941D01E24035A00FBAF21 /* SceneRequestSpec.swift */,
+				4E6093711E281A2400C7A234 /* ProducerSpec.swift */,
+				4E6093731E281B4200C7A234 /* SimpleMockScene.swift */,
 			);
 			path = Swift;
 			sourceTree = "<group>";
@@ -274,7 +283,7 @@
 			children = (
 				4EF5CD3B1DE30E3200683D1E /* Rx */,
 				4E0941DC1E24187100FBAF21 /* Scene.swift */,
-				4ED7E5A81E25A1AB0072CEE9 /* Transition.swift */,
+				4ED7E5A81E25A1AB0072CEE9 /* SceneTransition.swift */,
 				4ED7E5A41E259A530072CEE9 /* Director.swift */,
 				4E0941E41E241BB100FBAF21 /* SceneSequence.swift */,
 				4ED7E5A01E2578DF0072CEE9 /* Producer.swift */,
@@ -289,11 +298,11 @@
 			children = (
 				4E0941FA1E24E84600FBAF21 /* ActionScene.swift */,
 				4E0941FC1E24EF3000FBAF21 /* ActionActivator.swift */,
-				4ED7E5941E25559C0072CEE9 /* Observable+KabuKit.swift */,
-				4ED7E5961E2556870072CEE9 /* SubscribeTarget.swift */,
-				4ED7E5981E25621A0072CEE9 /* ActionError.swift */,
+				4ED7E5941E25559C0072CEE9 /* Observable+ActionEvent.swift */,
+				4ED7E5961E2556870072CEE9 /* ActionEvent.swift */,
 				4ED7E59A1E2562840072CEE9 /* RecoverPattern.swift */,
 				4ED7E59C1E25631F0072CEE9 /* Action.swift */,
+				4E6093751E28274A00C7A234 /* RxSwiftEvent.swift */,
 			);
 			path = Rx;
 			sourceTree = "<group>";
@@ -579,16 +588,16 @@
 				4E0941DD1E24187100FBAF21 /* Scene.swift in Sources */,
 				4E0941FB1E24E84600FBAF21 /* ActionScene.swift in Sources */,
 				4E0941FD1E24EF3000FBAF21 /* ActionActivator.swift in Sources */,
-				4ED7E5971E2556870072CEE9 /* SubscribeTarget.swift in Sources */,
-				4ED7E5951E25559C0072CEE9 /* Observable+KabuKit.swift in Sources */,
-				4ED7E5A91E25A1AB0072CEE9 /* Transition.swift in Sources */,
+				4ED7E5971E2556870072CEE9 /* ActionEvent.swift in Sources */,
+				4ED7E5951E25559C0072CEE9 /* Observable+ActionEvent.swift in Sources */,
+				4ED7E5A91E25A1AB0072CEE9 /* SceneTransition.swift in Sources */,
 				4E0941E11E241AED00FBAF21 /* SceneManager.swift in Sources */,
 				4ED7E5A51E259A530072CEE9 /* Director.swift in Sources */,
 				4ED7E59B1E2562840072CEE9 /* RecoverPattern.swift in Sources */,
 				4ED7E5A11E2578DF0072CEE9 /* Producer.swift in Sources */,
 				4E0941E51E241BB100FBAF21 /* SceneSequence.swift in Sources */,
+				4E6093761E28274A00C7A234 /* RxSwiftEvent.swift in Sources */,
 				4ED7E5A31E2579EB0072CEE9 /* Scenario.swift in Sources */,
-				4ED7E5991E25621A0072CEE9 /* ActionError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,14 +606,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E0941CF1E23FF4900FBAF21 /* DirectorSpec.swift in Sources */,
+				4E6093791E283CAB00C7A234 /* RxSwiftEventSpec.swift in Sources */,
 				4E0942021E25074A00FBAF21 /* ActionActivatorSpec.swift in Sources */,
 				4E0941CB1E23F47000FBAF21 /* SceneLinkageSpec.swift in Sources */,
 				4ED7E59F1E256BC70072CEE9 /* ActionSceneSpec.swift in Sources */,
 				4E0941F71E242E1800FBAF21 /* MockRequest.swift in Sources */,
 				4E0941D11E24035A00FBAF21 /* SceneRequestSpec.swift in Sources */,
 				4E0941CD1E23FA9D00FBAF21 /* SceneSequenceSpec.swift in Sources */,
+				4E6093721E281A2400C7A234 /* ProducerSpec.swift in Sources */,
 				4E0941F91E242E3300FBAF21 /* MockRouter.swift in Sources */,
 				4E86AA991DF4359D0039D8B7 /* SceneManagerSpec.swift in Sources */,
+				4E6093741E281B4200C7A234 /* SimpleMockScene.swift in Sources */,
 				4E0941C91E23EE8000FBAF21 /* SceneSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -613,19 +625,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4ED7E5B41E2762650072CEE9 /* Transition.swift in Sources */,
+				4ED7E5B41E2762650072CEE9 /* SceneTransition.swift in Sources */,
 				4ED7E5AC1E2761120072CEE9 /* ActionScene.swift in Sources */,
 				4ED7E5B81E2762650072CEE9 /* Scenario.swift in Sources */,
-				4ED7E5AF1E2761120072CEE9 /* SubscribeTarget.swift in Sources */,
+				4ED7E5AF1E2761120072CEE9 /* ActionEvent.swift in Sources */,
 				4ED7E5AD1E2761120072CEE9 /* ActionActivator.swift in Sources */,
 				4ED7E5B11E2761120072CEE9 /* RecoverPattern.swift in Sources */,
 				4ED7E5B31E2762650072CEE9 /* Scene.swift in Sources */,
 				4ED7E5B21E2761120072CEE9 /* Action.swift in Sources */,
 				4ED7E5B51E2762650072CEE9 /* Director.swift in Sources */,
-				4ED7E5B01E2761120072CEE9 /* ActionError.swift in Sources */,
 				4ED7E5B91E2762650072CEE9 /* SceneManager.swift in Sources */,
 				4ED7E5B71E2762650072CEE9 /* Producer.swift in Sources */,
-				4ED7E5AE1E2761120072CEE9 /* Observable+KabuKit.swift in Sources */,
+				4E6093771E28274A00C7A234 /* RxSwiftEvent.swift in Sources */,
+				4ED7E5AE1E2761120072CEE9 /* Observable+ActionEvent.swift in Sources */,
 				4ED7E5B61E2762650072CEE9 /* SceneSequence.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -4,21 +4,27 @@
 
 import Foundation
 
+// NOTE ここら辺を同じファイルにまとめておかないとSegment fault が起きる
+
+
 public protocol Action : SignalClosable {
     
     associatedtype SceneType: Scene
     
-    associatedtype DestinationType: Destination
+    func invoke(director: Director<SceneType.RouterType.DestinationType>) -> [ActionEvent]
     
-    func invoke(director: Director<DestinationType>) -> [SubscribeTarget]
-    
-}
-
-public extension Action where Self.DestinationType == SceneType.RouterType.DestinationType {
-    
+    func onError(error: ActionError<Self>) -> RecoverPattern
 }
 
 public protocol SignalClosable {
-    func onError(error: Error, label: String?) -> RecoverPattern
+    
     func onStop()
 }
+
+
+public struct ActionError<A: Action>: Error {
+    public let from: A
+    public let event: ActionEvent
+    public let cause: Error
+}
+

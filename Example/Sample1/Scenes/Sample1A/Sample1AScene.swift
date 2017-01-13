@@ -27,7 +27,7 @@ extension Sample1AViewController: Scene, SceneLinkage {
     }
     
 
-    func guide(to destination: Sample1Destination) -> Transition<UIViewController>? {
+    func guide(to destination: Sample1Destination) -> SceneTransition<UIViewController>? {
 
         switch destination {
         case .a:

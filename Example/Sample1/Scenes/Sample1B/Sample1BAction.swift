@@ -11,9 +11,10 @@ import KabuKit
 import RxSwift
 import RxCocoa
 
-class Sample1BAction: Action {
+final class Sample1BAction: Action {
 
-    typealias SceneType = Sample1AViewController
+
+    typealias SceneType = Sample1BViewController
 //    typealias DestinationType = Sample1BViewController.Sample2Destination
     
     unowned let label: UILabel
@@ -24,7 +25,8 @@ class Sample1BAction: Action {
     
     unowned let prevButton: UIButton
 
-    public func invoke(director: Director<Sample1BViewController.Sample2Destination>) -> [SubscribeTarget] {
+    
+    public func invoke(director: Director<Sample1BViewController.Sample2Destination>) -> [ActionEvent] {
         return [
             self.nextButtonA.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.a)}).toTarget,
             self.nextButtonB.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.b)}).toTarget,
@@ -32,7 +34,7 @@ class Sample1BAction: Action {
         ]
     }
     
-    public func onError(error: Error, label: String?) -> RecoverPattern {
+    public func onError(error: ActionError<Sample1BAction>) -> RecoverPattern {
         return RecoverPattern.doNothing
     }
     

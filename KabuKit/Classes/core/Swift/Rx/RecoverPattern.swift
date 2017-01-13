@@ -13,10 +13,7 @@ public enum RecoverPattern {
     // 何もしません.
     // subscribeも切れるのでなにも反応が無くなります
     case doNothing
-    
-    // エラーが起きたAction自体をリロードします
-    case reloadAction(onStart: () -> Void)
-    
+        
     // エラーが起きたSignalのみをリロードしますa
     case reloadErrorSignal(onStart: () -> Void)
 }

@@ -33,9 +33,9 @@ class SceneRequestSpec: QuickSpec {
         
         
         
-        describe("Transition生成について") {
+        describe("SceneTransition生成について") {
 
-            it("specifyを呼ぶとTransitionを生成することができる") {
+            it("specifyを呼ぶとSceneTransitionを生成することができる") {
                 var isCalled = false
                 let request = MockDestination()
                 let scene = SceneRequestScene()

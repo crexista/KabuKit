@@ -6,10 +6,12 @@ import Foundation
 
 public class Producer {
     
+    private let startQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
+    
     internal let scenario: Scenario?
     
-    private let sequence: AnyObject?
-    
+    internal let sequence: AnyObject?
+        
     private init<S: AnyObject>(sequence: SceneSequence<S>) {
         self.scenario = nil
         self.sequence = sequence
@@ -23,9 +25,10 @@ public class Producer {
     /**
      指定のSequenceをスタートさせます
      
+     すでにスタート済みだった場合はfalseを返します
      */
-    public func startSequence<S>(sequence: SceneSequence<S>) {
-        sequence.start(producer: self)
+    public func startSequence<S>(sequence: SceneSequence<S>) -> Bool {
+        return sequence.start(producer: self)
     }
     
     /**
@@ -35,7 +38,7 @@ public class Producer {
      */
     public static func run<S: AnyObject>(sequence: SceneSequence<S>) -> Producer {
         let producer = Producer(sequence: sequence)
-        producer.startSequence(sequence: sequence)
+        _ = producer.startSequence(sequence: sequence)
 
         return producer
     }

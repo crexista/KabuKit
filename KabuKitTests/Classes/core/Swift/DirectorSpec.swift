@@ -23,7 +23,7 @@ class DirectorSpec: QuickSpec {
             return true
         }
         
-        func guide(to destination: DestinationType) -> Transition<DestinationType.StageType>? {
+        func guide(to destination: DestinationType) -> SceneTransition<DestinationType.StageType>? {
             return destination.specify(DirectorSpecScene(), nil) { (stage, scene) in
                 self.isTransit = true
             }
@@ -47,7 +47,7 @@ class DirectorSpec: QuickSpec {
             return true
         }
         
-        func guide(to destination: DestinationType) -> Transition<DestinationType.StageType>? {
+        func guide(to destination: DestinationType) -> SceneTransition<DestinationType.StageType>? {
             return destination.specify(DirectorSpecScene(), nil) { (stage, scene) in
                 self.isTransit = true
             }
