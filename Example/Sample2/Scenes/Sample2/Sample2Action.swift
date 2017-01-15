@@ -17,18 +17,17 @@ class Sample2Action: Action {
     
     unowned let startButton: UIButton
 
-    func start(director: SceneDirector<Sample2ViewController.Sample2Link>?, context: ()?) -> [Observable<()>] {
-
-        return [
-            startButton.rx.tap.do(onNext: { () in director?.changeScene(transition: Sample2ViewController.Sample2Link.A)})
-        ]
+    func invoke(director: Director<Sample2ViewController.Sample2Destination>) -> [ActionEvent] {
+        return [startButton.rx.tap.do(onNext: {() in director.report(event: "start")}).toEvent]
     }
-    
+
+
     func onStop() {
         print("onStop")
     }
     
-    func onError(error: Error) {
+    func onError(error: Error, label: String?) -> RecoverPattern {
+        return RecoverPattern.doNothing
     }
     
     deinit {

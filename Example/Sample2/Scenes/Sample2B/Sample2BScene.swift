@@ -9,36 +9,33 @@
 import Foundation
 import KabuKit
 
-extension Sample2BViewController: ActionScene {
+extension Sample2BViewController: ActionScene, SceneLinkage {
+    
+    enum SampleBDestination: Destination {
+        typealias StageType = UIViewController
+        case a
+        case b
+    }
+    
+    typealias DestinationType = SampleBDestination
     
     typealias ContextType = Bool
-    typealias TransitionType = Sample2Link
-
-    enum Sample2Link: SceneTransition {
-        typealias StageType = UIViewController
-        case A, B
-        
-        public func request(context: SceneContext<UIViewController>) -> SceneRequest? {
-
-            switch self {
-            case .A:
-                let File2A = ViewControllerXIBFile("Sample2AViewController", Bundle.main)
-                return context.sceneRequest(File2A, Sample2AViewController.self, true) { (stage, scene) in
-                    stage.navigationController?.pushViewController(scene, animated: true)
-                }
-            case .B:
-                let File2B = ViewControllerXIBFile("Sample2BViewController", Bundle.main)
-                return context.sceneRequest(File2B, Sample2BViewController.self, true) { (stage, scene) in
-                    stage.navigationController?.pushViewController(scene, animated: true)
-                }
+    
+    func guide(to destination: SampleBDestination) -> SceneTransition<UIViewController>? {
+        switch destination {
+        case .a:
+            let vc = Sample2AViewController(nibName: "Sample2AViewController", bundle: Bundle.main)
+            return destination.specify(vc, true){ (stage, scene) in
+                stage.navigationController?.pushViewController(scene, animated: true)
             }
+            
+        case .b:
+            let vc = Sample2BViewController(nibName: "Sample2BViewController", bundle: Bundle.main)
+            return destination.specify(vc, true, { (stage, scene) in
+                stage.navigationController?.pushViewController(scene, animated: true)
+            })
         }
     }
-    
-    public var isRemovable: Bool {
-        return false
-    }
-
     
     /**
      前の画面への遷移リクエストが飛んできたときに呼ばれるメソッドです
@@ -53,7 +50,14 @@ extension Sample2BViewController: ActionScene {
     
     override func viewDidLoad() {
         let action = Sample2BAction(nextButtonA: nextButtonA, nextButtonB: nextButtonB, prevButton: prevButton)
-        activator.activate(action: action, director: director, context: context)
+        if let isEnabled = context {
+            self.prevButton.isEnabled = isEnabled
+            self.prevButton.alpha = 1.0
+        } else {
+            self.prevButton.isEnabled = false
+            self.prevButton.alpha = 0.5
+        }
+        _ = activator?.activate(action: action)
     }
 
     

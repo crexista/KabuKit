@@ -6,7 +6,9 @@ import Foundation
 
 public protocol SceneBase {
     
-    func setup(sequenceObject: Any, contextObject: Any?)    
+    func setup(sequenceObject: Any, contextObject: Any?)
+    
+    func dispose()
 }
 
 public protocol Scene: class, SceneBase {
@@ -68,6 +70,11 @@ extension SceneBase where Self: Scene {
         let director = Director(scene: self, sequence: sequence)
         let context = contextObject as! ContextType?
         sequence.manager.set(scene: self, stuff: (director, context) as AnyObject)
+    }
+    
+    public func dispose() {
+        let manager = SceneManager.managerByScene(scene: self)
+        manager?.release(scene: self)
     }
 
 }

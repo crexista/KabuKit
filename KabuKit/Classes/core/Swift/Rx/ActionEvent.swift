@@ -35,7 +35,7 @@ public class ActionEvent {
     internal func start<A: Action>(action: A, recoverHandler: @escaping (ActionError<A>, RecoverPattern) -> Void) {
         signal.start(action: action, event: self, recoverHandler: recoverHandler)
     }
-    
+        
     init(_ signal: ActionSignal) {
         self.signal = signal
     }
