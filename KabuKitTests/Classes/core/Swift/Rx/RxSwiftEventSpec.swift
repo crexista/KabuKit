@@ -43,7 +43,9 @@ class RxSwiftSpec: QuickSpec {
         func onStop() {
             
         }
-        func onError(error: ActionError<RxSwiftSpec.NotRecoverAction>) -> RecoverPattern {
+        
+        func onError(error: Error, label: String?) -> RecoverPattern {
+
             return RecoverPattern.doNothing
         }
     }
@@ -59,7 +61,8 @@ class RxSwiftSpec: QuickSpec {
         func onStop() {
             
         }
-        func onError(error: ActionError<RxSwiftSpec.RecoverAction>) -> RecoverPattern {
+        
+        func onError(error: Error, label: String?) -> RecoverPattern {
             return RecoverPattern.reloadErrorSignal(onStart: { })
         }
     }
@@ -74,7 +77,7 @@ class RxSwiftSpec: QuickSpec {
                 it("EventがDisposeされてハンドリングされる") {
                     let event = Observable.just(120).map({ (num) in
                         throw SampleError()
-                    }).toTarget
+                    }).toEvent
                     let action = NotRecoverAction()
                     var isCalled = false;
                     event.start(action: action, recoverHandler: { (error, pattern) in
@@ -134,7 +137,7 @@ class RxSwiftSpec: QuickSpec {
             
             context("Event中にエラーがなければ") {
                 it("SignalはDisposeされない") {
-                    let event = Observable.just(120).toTarget
+                    let event = Observable.just(120).toEvent
                     let action = NotRecoverAction()
                     var isCalled = false;
 

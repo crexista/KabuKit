@@ -1,9 +1,5 @@
 //
-//  Sample1AScene.swift
-//  Example
-//
-//  Created by crexista on 2016/11/24.
-//  Copyright © crexista. All rights reserved.
+//  Copyright © 2017 crexista
 //
 
 import Foundation
@@ -14,29 +10,26 @@ extension Sample1AViewController: Scene, SceneLinkage {
     
     enum Sample1Destination: Destination {
         typealias StageType = UIViewController
-        case a
-        case b
+        // A Sceneに遷移
+        case aScene
+        // B Sceneに遷移
+        case bScene
     }
     
     typealias DestinationType = Sample1Destination
     
     typealias ContextType = Bool
-    
-    public var isRemovable: Bool {
-        return true
-    }
-    
 
     func guide(to destination: Sample1Destination) -> SceneTransition<UIViewController>? {
 
         switch destination {
-        case .a:
+        case .aScene:
             let scene = Sample1AViewController(nibName: "Sample1AViewController", bundle: Bundle.main)
-            return destination.specify(scene, false, { (stage, scene) in
+            return destination.specify(scene, true, { (stage, scene) in
                 stage.navigationController?.pushViewController(scene, animated: true)
             })
             
-        case .b:
+        case .bScene:
             let scene = Sample1BViewController(nibName: "Sample1BViewController", bundle: Bundle.main)
             return destination.specify(scene, nil, { (stage, scene) in
                 stage.navigationController?.pushViewController(scene, animated: true)
@@ -56,11 +49,11 @@ extension Sample1AViewController: Scene, SceneLinkage {
 
     
     func onPressAButton(sender: UIButton) {
-        director?.forwardTo(Sample1Destination.a)
+        director?.forwardTo(Sample1Destination.aScene)
     }
     
     func onPressBButton(sender: UIButton) {
-        director?.forwardTo(Sample1Destination.b)
+        director?.forwardTo(Sample1Destination.bScene)
     }
     
     func onPressPrevButton(sender: UIButton) {
@@ -69,14 +62,20 @@ extension Sample1AViewController: Scene, SceneLinkage {
     
     // MARK: - Override
     override func viewDidLoad() {
-        prevButton.isEnabled = context!
+        if (context == true) {
+            prevButton.isEnabled = true
+            prevButton.alpha = 1.0
+        } else {
+            prevButton.isEnabled = false
+            prevButton.alpha = 0.5
+        }
         nextButtonA.addTarget(self, action: #selector(onPressAButton(sender:)), for: .touchUpInside)
         nextButtonB.addTarget(self, action: #selector(onPressBButton(sender:)), for: .touchUpInside)
         prevButton.addTarget(self, action: #selector(onPressPrevButton(sender:)), for: .touchUpInside)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        if (self.navigationController == nil && !isRemovable) {
+        if (self.navigationController == nil) {
             director?.back()
         }
     }

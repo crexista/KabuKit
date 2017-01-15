@@ -149,7 +149,7 @@ final public class SceneManager : Hashable, Equatable {
         
         return lhs.hashValue == rhs.hashValue
     }
-    
+        
     /**
      このライブラリ外からinstance化させないため、コンストラクタをinternal化
      

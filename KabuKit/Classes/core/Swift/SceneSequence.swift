@@ -93,7 +93,7 @@ public class SceneSequence<StageType: AnyObject> {
         }
         
         scene.willRemove(from: stage)
-        manager.release(scene: scene)
+        (scene as SceneBase).dispose()
         return true
     }
     

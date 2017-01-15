@@ -11,9 +11,9 @@ import RxSwift
  */
 public class ActionActivator<DestinationType: Destination> {
     
-    var actionTypeHashMap = [String : SignalClosable]()
+    var actionTypeHashMap: [String : SignalClosable]? = [String : SignalClosable]()
     
-    var disposableMap = [String : [ActionEvent]]()
+    var disposableMap: [String : [ActionEvent]]? = [String : [ActionEvent]]()
     
     let director: Director<DestinationType>
     
@@ -36,16 +36,16 @@ public class ActionActivator<DestinationType: Destination> {
                 すでにactivate済みのインスタンスがactionに指定された場合は何もされないため
                 falseを返します
      */
-    public func activate<A: Action>(action: A, onStart: () -> Void = {}) -> Bool where A.SceneType.RouterType.DestinationType == DestinationType{
+    public func activate<A: Action>(action: A, onStart: () -> Void = {}) -> Bool where A.DestinationType == DestinationType {
         let typeName = String(describing: type(of: action))
         
-        guard disposableMap[typeName] == nil else {
+        guard disposableMap?[typeName] == nil else {
             return false
         }
 
-        actionTypeHashMap[typeName] = actionTypeHashMap[typeName] ?? action
+        actionTypeHashMap?[typeName] = actionTypeHashMap?[typeName] ?? action
 
-        disposableMap[typeName] = action.invoke(director: director).map{ (target) in
+        disposableMap?[typeName] = action.invoke(director: director).map{ (target) in
             target.start(action: action, recoverHandler: recover)
             return target
         }
@@ -61,7 +61,7 @@ public class ActionActivator<DestinationType: Destination> {
      再度activateされるまでイベントを飛ばすことはありません
      
      */
-    public func deactivate<A: Action>(actionType: A.Type) -> Bool where A.SceneType.RouterType.DestinationType == DestinationType{
+    public func deactivate<A: Action>(actionType: A.Type) -> Bool where A.DestinationType == DestinationType{
         // 指定のクラス名に紐づくDisposableを取得し
         // 全て破棄し、DisposableMapも空にする
         let typeName = String(describing: actionType)
@@ -74,7 +74,7 @@ public class ActionActivator<DestinationType: Destination> {
      
      */
     public func deactivateAll() {
-        actionTypeHashMap.keys.forEach { (typeName) in
+        actionTypeHashMap?.keys.forEach { (typeName) in
             _ = self.deactivateByTypeName(typeName: typeName)
         }
     }
@@ -88,7 +88,7 @@ public class ActionActivator<DestinationType: Destination> {
      */
     public func isActive(actionType: SignalClosable.Type) -> Bool {
         let typeName = String(describing: actionType)
-        return disposableMap[typeName] != nil
+        return disposableMap?[typeName] != nil
     }
     
     /**
@@ -100,7 +100,7 @@ public class ActionActivator<DestinationType: Destination> {
     public func resolve<A: Action>(actionType: A.Type) -> A? where A.SceneType.RouterType.DestinationType == DestinationType{
         let typeName = String(describing: actionType)
 
-        return actionTypeHashMap[typeName] as? A
+        return actionTypeHashMap?[typeName] as? A
     }
     
     /**
@@ -112,15 +112,17 @@ public class ActionActivator<DestinationType: Destination> {
      - returns: サスペンドに成功したらtrue, サスペンドが行われなかったらfalseを返します
      */
     private func deactivateByTypeName(typeName: String) -> Bool {
-        guard let disposables = disposableMap[typeName] else {
+        guard let disposables = disposableMap?[typeName] else {
             return false
         }
-        
+
         disposables.forEach { (disposable) in
             disposable.dispose()
         }
-        actionTypeHashMap[typeName]?.onStop()
-        disposableMap.removeValue(forKey: typeName)
+
+        actionTypeHashMap?[typeName]?.onStop()
+        _ = disposableMap?.removeValue(forKey: typeName)
+
         return true
     }
     
@@ -142,7 +144,9 @@ public class ActionActivator<DestinationType: Destination> {
     
     deinit {
         deactivateAll()
-        actionTypeHashMap.removeAll()
+        actionTypeHashMap?.removeAll()
+        disposableMap = nil
+        actionTypeHashMap = nil
     }
     
     internal init(director: Director<DestinationType>) {

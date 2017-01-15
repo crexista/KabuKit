@@ -65,7 +65,7 @@ class DirectorSpec: QuickSpec {
                 let scene = DirectorSpecScene1()
                 let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
                 let director = Director(scene: scene, sequence: sequence)
-                sequence.start(producer: nil)
+                _ = sequence.start(producer: nil)
                 expect(sequence.manager.count) == 1
                 expect(scene.isTransit).to(beFalse())
                 director.forwardTo(MockDestination())
@@ -77,7 +77,7 @@ class DirectorSpec: QuickSpec {
                 let scene = DirectorSpecScene1()
                 let sequence = SceneSequence(NSObject(), scene, nil){ (stage, scene) in }
                 let director = Director(scene: scene, sequence: sequence)
-                sequence.start(producer: nil)
+                _ = sequence.start(producer: nil)
                 
                 expect(sequence.manager.count) == 1
                 expect(scene.isTransit).to(beFalse())

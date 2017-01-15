@@ -13,9 +13,7 @@ import RxCocoa
 
 final class Sample1BAction: Action {
 
-
     typealias SceneType = Sample1BViewController
-//    typealias DestinationType = Sample1BViewController.Sample2Destination
     
     unowned let label: UILabel
     
@@ -28,18 +26,30 @@ final class Sample1BAction: Action {
     
     public func invoke(director: Director<Sample1BViewController.Sample2Destination>) -> [ActionEvent] {
         return [
-            self.nextButtonA.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.a)}).toTarget,
-            self.nextButtonB.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.b)}).toTarget,
-            self.prevButton.rx.tap.do(onNext: { () in director.back()}).toTarget
+            self.nextButtonA.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.a)}).toEvent,
+            self.nextButtonB.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.b)}).toEvent,
+            self.prevButton.rx.tap.do(onNext: { () in director.back()}).toEvent
         ]
     }
     
-    public func onError(error: ActionError<Sample1BAction>) -> RecoverPattern {
+    /**
+     このActionのInvoke内で起動させたSignalの中で一つでもキャッチし損ねたエラーが発生したらこのメソッドが呼ばれます.
+     
+     - parameters:
+       - error: キャッチし損ねたエラーのクラスです.
+       - label: エラーを起こしたシグナルの名前です.
+                設定している場合のみ取得できます. 設定していない場合は取得できません.
+     */
+    public func onError(error: Error, label: String?) -> RecoverPattern {
         return RecoverPattern.doNothing
     }
     
     public func onStop() {
 
+    }
+    
+    deinit {
+        print("Sample 1B Action Deinit")
     }
     
     init(label: UILabel, buttonA: UIButton, buttonB: UIButton, prevButton: UIButton) {

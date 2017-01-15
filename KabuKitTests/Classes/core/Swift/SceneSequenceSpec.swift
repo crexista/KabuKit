@@ -63,7 +63,7 @@ class SceneSequenceSpec: QuickSpec {
 
                 let sequence = SceneSequence(NSObject(), firstScene, nil){ (stage, scene) in }
                 
-                sequence.start(producer: nil)
+                _ = sequence.start(producer: nil)
                 it("scene#directorはnilを返す") {
                     let scene = SequenceSpecScene1()
                     expect(scene.director).to(beNil())
@@ -78,7 +78,7 @@ class SceneSequenceSpec: QuickSpec {
 
                 let sequence = SceneSequence(NSObject(), firstScene, nil){ (stage, scene) in }
 
-                sequence.start(producer: nil)
+                _ = sequence.start(producer: nil)
                 let secondScene = SequenceSpecScene1()
                 var isCalled = false
                 let transition = SceneTransition(secondScene, nil) { (stage, scene) in
@@ -104,7 +104,7 @@ class SceneSequenceSpec: QuickSpec {
                 let firstScene = SequenceSpecScene1()
                 let sequence = SceneSequence(NSObject(), firstScene, nil){ (stage, scene) in }
 
-                sequence.start(producer: nil)
+                _ = sequence.start(producer: nil)
                 it("何も起きない") {
                     let previous: SequenceSpecScene1? = sequence.currentScene()
                     let isRemoved = sequence.release(scene: firstScene)
@@ -122,7 +122,7 @@ class SceneSequenceSpec: QuickSpec {
                 let sequence = SceneSequence(NSObject(), firstScene, nil){ (stage, scene) in }
 
                 let transition = SceneTransition(secondScene, nil) { (stage, scene) in }
-                sequence.start(producer: nil)
+                _ = sequence.start(producer: nil)
                 sequence.push(transition: transition)
                 
                 let previous: SequenceSpecScene1? = sequence.currentScene()
@@ -143,7 +143,7 @@ class SceneSequenceSpec: QuickSpec {
                 
                 let sequence = SceneSequence(NSObject(), firstScene, nil){ (stage, scene) in }
                 let transition = SceneTransition(secondScene, nil) { (stage, scene) in }
-                sequence.start(producer: nil)
+                _ = sequence.start(producer: nil)
                 sequence.push(transition: transition)
                 expect(firstScene.isRemoved).to(beFalse())
                 expect(secondScene.isRemoved).to(beFalse())

@@ -27,25 +27,19 @@ extension Sample1BViewController : ActionScene, SceneLinkage {
         switch destination {
         case .a:
             let newScene = Sample1AViewController(nibName: "Sample1AViewController", bundle: Bundle.main)
-
-            return destination.specify(newScene, false) { (stage, scene) in
+            return destination.specify(newScene, true) { (stage, scene) in
                 stage.navigationController?.pushViewController(scene, animated: true)
             }
             
         case .b:
             let newScene = Sample1BViewController(nibName: "Sample1BViewController", bundle: Bundle.main)
-
             return destination.specify(newScene, nil) { (stage, scene) in
                 stage.navigationController?.pushViewController(scene, animated: true)
             }
             
         }
     }
-    
-    var isRemovable: Bool {
-        return true
-    }
-    
+        
     func willRemove(from stage: UIViewController) {
         _ = stage.navigationController?.popViewController(animated: true)
     }
@@ -59,8 +53,8 @@ extension Sample1BViewController : ActionScene, SceneLinkage {
     
     
     override func viewDidDisappear(_ animated: Bool) {
-        if (self.navigationController == nil && !isRemovable) {
-            _ = director?.back()
+        if (self.navigationController == nil) {
+            //_ = director?.back()
         }
     }
     

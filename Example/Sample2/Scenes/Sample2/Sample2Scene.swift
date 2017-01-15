@@ -9,32 +9,29 @@
 import Foundation
 import KabuKit
 
-extension Sample2ViewController: ActionScene {
+//extension Sample2ViewController: ActionScene, SceneLinkage {
+extension Sample2ViewController : ActionScene, SceneLinkage {
     
-    enum Sample2Link: SceneTransition {
-
+    enum Sample2Destination: Destination {
         typealias StageType = UIViewController
-        case A
-        
-        public func request(context: SceneContext<UIViewController>) -> SceneRequest? {
-            return context.sequenceRequest({ () -> AnyObject in
-                return "Main" as AnyObject
-            })
-        }
-        
+        case a
+        case b
     }
+    
+    typealias DestinationType = Sample2Destination
     
     typealias ContextType = Void
-    typealias TransitionType = Sample2Link
-
-    override func viewDidLoad() {
-        let action = Sample2Action(startButton: startButton)
-        activator.activate(action: action, director: director, context: context)
+    
+    func guide(to destination: Sample2ViewController.Sample2Destination) -> SceneTransition<UIViewController>? {
+        return nil
     }
     
-    public var isRemovable: Bool {
-        return false
+    
+    override func viewDidLoad() {
+        let action = Sample2Action(startButton: startButton)
+        _ = activator?.activate(action: action)
     }
+    
 
     
     /**

@@ -14,23 +14,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var producer: Producer?
+    var root: UIViewController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        root = UIViewController()
+        
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        //rootViewControllerにviewControllerを指定
-        let root = UIViewController()
-        self.window!.rootViewController = UINavigationController(rootViewController: root)
+        self.window!.rootViewController = UINavigationController(rootViewController: root!)
         self.window!.rootViewController?.view.backgroundColor = UIColor.brown
         self.window!.backgroundColor = UIColor.white
         self.window!.makeKeyAndVisible()
 
-        root.navigationController?.setNavigationBarHidden(true, animated: true)
-
+        root?.navigationController?.setNavigationBarHidden(true, animated: true)
+//        root?.view.autoresizeMask = super.autoresizeMask
+//        root?.view.autoresizingMask
         let scene = Sample1AViewController(nibName: "Sample1AViewController", bundle: Bundle.main)
-        producer = Producer.run(sequence: SceneSequence(root, scene, false) { (stage, scene) in
+        producer = Producer.run(sequence: SceneSequence(root!, scene, false) { (stage, scene) in
+            stage.view.autoresizingMask = (self.root?.view.autoresizingMask)!
+
             stage.addChildViewController(scene)
             stage.view.addSubview(scene.view)
+            scene.view.frame = (self.root?.view.frame)!
         })
 
         return true
