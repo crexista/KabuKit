@@ -36,7 +36,7 @@ public class ActionActivator<DestinationType: Destination> {
                 すでにactivate済みのインスタンスがactionに指定された場合は何もされないため
                 falseを返します
      */
-    public func activate<A: Action>(action: A, onStart: () -> Void = {}) -> Bool where A.SceneType.RouterType.DestinationType == DestinationType{
+    public func activate<A: Action>(action: A, onStart: () -> Void = {}) -> Bool where A.DestinationType == DestinationType {
         let typeName = String(describing: type(of: action))
         
         guard disposableMap[typeName] == nil else {
@@ -61,7 +61,7 @@ public class ActionActivator<DestinationType: Destination> {
      再度activateされるまでイベントを飛ばすことはありません
      
      */
-    public func deactivate<A: Action>(actionType: A.Type) -> Bool where A.SceneType.RouterType.DestinationType == DestinationType{
+    public func deactivate<A: Action>(actionType: A.Type) -> Bool where A.DestinationType == DestinationType{
         // 指定のクラス名に紐づくDisposableを取得し
         // 全て破棄し、DisposableMapも空にする
         let typeName = String(describing: actionType)
