@@ -26,7 +26,7 @@ public class Director<DestinationType: Destination> {
     public func report<E>(event: E) {
         sequence?.raiseEvent(event: event)
     }
-    
+        
     internal init<S: Scene>(scene: S, sequence: SceneSequence<StageType>) where S.RouterType.DestinationType == DestinationType {
         self.routing = { (destination: DestinationType) -> SceneTransition<DestinationType.StageType>? in
             

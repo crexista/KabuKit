@@ -40,4 +40,10 @@ public extension SceneBase where Self: ActionScene {
         sequence.manager.set(scene: self, stuff: (director, context, activator) as AnyObject)
     }
     
+    public func dispose() {
+        let manager = SceneManager.managerByScene(scene: self)
+        self.activator?.deactivateAll()
+        manager?.release(scene: self)
+    }
+    
 }

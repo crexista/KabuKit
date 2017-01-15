@@ -77,7 +77,7 @@ class RxSwiftSpec: QuickSpec {
                 it("EventがDisposeされてハンドリングされる") {
                     let event = Observable.just(120).map({ (num) in
                         throw SampleError()
-                    }).toTarget
+                    }).toEvent
                     let action = NotRecoverAction()
                     var isCalled = false;
                     event.start(action: action, recoverHandler: { (error, pattern) in
@@ -137,7 +137,7 @@ class RxSwiftSpec: QuickSpec {
             
             context("Event中にエラーがなければ") {
                 it("SignalはDisposeされない") {
-                    let event = Observable.just(120).toTarget
+                    let event = Observable.just(120).toEvent
                     let action = NotRecoverAction()
                     var isCalled = false;
 

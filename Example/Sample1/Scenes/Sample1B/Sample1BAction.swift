@@ -26,9 +26,9 @@ final class Sample1BAction: Action {
     
     public func invoke(director: Director<Sample1BViewController.Sample2Destination>) -> [ActionEvent] {
         return [
-            self.nextButtonA.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.a)}).toTarget,
-            self.nextButtonB.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.b)}).toTarget,
-            self.prevButton.rx.tap.do(onNext: { () in director.back()}).toTarget
+            self.nextButtonA.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.a)}).toEvent,
+            self.nextButtonB.rx.tap.do(onNext: { () in director.forwardTo(Sample1BViewController.Sample2Destination.b)}).toEvent,
+            self.prevButton.rx.tap.do(onNext: { () in director.back()}).toEvent
         ]
     }
     
@@ -46,6 +46,10 @@ final class Sample1BAction: Action {
     
     public func onStop() {
 
+    }
+    
+    deinit {
+        print("Sample 1B Action Deinit")
     }
     
     init(label: UILabel, buttonA: UIButton, buttonB: UIButton, prevButton: UIButton) {

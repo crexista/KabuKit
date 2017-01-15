@@ -17,11 +17,11 @@ extension Observable {
      
      
      ```Swift
-     let target: ActionEvent = Observable<Int>.just(1).toTarget
+     let target: ActionEvent = Observable<Int>.just(1).toEvent
      
      ```
      */
-    public var toTarget: ActionEvent {
+    public var toEvent: ActionEvent {
         return ActionEvent(RxSwiftEvent(observable: self))
     }
     

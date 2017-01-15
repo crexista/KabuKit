@@ -15,7 +15,6 @@
 		4E7084341DE6E3290072F7EE /* Sample1BViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E7084321DE6E3290072F7EE /* Sample1BViewController.xib */; };
 		4E7084391DE6E3A60072F7EE /* Sample1AScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7084361DE6E3A60072F7EE /* Sample1AScene.swift */; };
 		4E70843A1DE6E3A60072F7EE /* Sample1BScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7084381DE6E3A60072F7EE /* Sample1BScene.swift */; };
-		4E70843C1DE6E3B80072F7EE /* Sample1AAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E70843B1DE6E3B80072F7EE /* Sample1AAction.swift */; };
 		4E9FC2151DE730CD0009649D /* Sample1BAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC2141DE730CD0009649D /* Sample1BAction.swift */; };
 		4E9FC21D1DE733F20009649D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9FC21C1DE733F20009649D /* AppDelegate.swift */; };
 		4E9FC2241DE733F20009649D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E9FC2231DE733F20009649D /* Assets.xcassets */; };
@@ -49,7 +48,6 @@
 		4E7084321DE6E3290072F7EE /* Sample1BViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Sample1BViewController.xib; sourceTree = "<group>"; };
 		4E7084361DE6E3A60072F7EE /* Sample1AScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sample1AScene.swift; sourceTree = "<group>"; };
 		4E7084381DE6E3A60072F7EE /* Sample1BScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sample1BScene.swift; sourceTree = "<group>"; };
-		4E70843B1DE6E3B80072F7EE /* Sample1AAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sample1AAction.swift; sourceTree = "<group>"; };
 		4E9FC2141DE730CD0009649D /* Sample1BAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sample1BAction.swift; sourceTree = "<group>"; };
 		4E9FC21A1DE733F20009649D /* Sample2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E9FC21C1DE733F20009649D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				4E7084361DE6E3A60072F7EE /* Sample1AScene.swift */,
-				4E70843B1DE6E3B80072F7EE /* Sample1AAction.swift */,
 			);
 			path = Sample1A;
 			sourceTree = "<group>";
@@ -487,7 +484,6 @@
 				4E70841F1DE6CB1B0072F7EE /* Sample1BViewController.swift in Sources */,
 				4EF5CD251DE30BFC00683D1E /* AppDelegate.swift in Sources */,
 				4E70843A1DE6E3A60072F7EE /* Sample1BScene.swift in Sources */,
-				4E70843C1DE6E3B80072F7EE /* Sample1AAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,7 +516,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Sample2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.Sample2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -535,7 +531,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Sample2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.Sample2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -643,7 +639,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Sample1/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.Sample1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -658,7 +654,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Sample1/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.Sample1;
 				PRODUCT_NAME = "$(TARGET_NAME)";

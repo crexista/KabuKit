@@ -22,12 +22,13 @@ class Sample2AAction : Action {
     
     unowned let prevButton: UIButton
   
-    func start(director: SceneDirector<Sample2AViewController.Sample2Link>?, context: Bool?) -> [Observable<()>] {
-        prevButton.isEnabled = context!
+    func invoke(director: Director<Sample2AViewController.Sample2Destination>) -> [ActionEvent] {
+
+
         return [
-            nextButtonA.rx.tap.do(onNext: { () in director?.changeScene(transition: Sample2AViewController.Sample2Link.A)}),
-            nextButtonB.rx.tap.do(onNext: { () in director?.changeScene(transition: Sample2AViewController.Sample2Link.B)}),
-            prevButton.rx.tap.do(onNext: { () in _ = director?.exitScene()})
+            nextButtonA.rx.tap.do(onNext: { () in director.forwardTo(Sample2AViewController.Sample2Destination.aScene) }).toEvent,
+            nextButtonB.rx.tap.do(onNext: { () in director.forwardTo(Sample2AViewController.Sample2Destination.bScene) }).toEvent,
+            prevButton.rx.tap.do(onNext: { () in _ = director.back()}).toEvent
         ]
     }
 
@@ -35,10 +36,11 @@ class Sample2AAction : Action {
 
     }
     
-    func onError(error: Error) {
-
+    func onError(error: Error, label: String?) -> RecoverPattern {
+        return RecoverPattern.doNothing
     }
     
+
     deinit {
         print("Sample2A action deinit")
     }

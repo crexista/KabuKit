@@ -37,7 +37,7 @@ internal class RxSwiftEvent: ActionSignal {
         })
         isRunning = true
     }
-    
+        
     internal init<E>(observable: Observable<E>, label: String? = nil) {
         self.observable = observable.map { (element) -> Void in }
         self.label = label
