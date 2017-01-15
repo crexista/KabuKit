@@ -43,7 +43,9 @@ class RxSwiftSpec: QuickSpec {
         func onStop() {
             
         }
-        func onError(error: ActionError<RxSwiftSpec.NotRecoverAction>) -> RecoverPattern {
+        
+        func onError(error: Error, label: String?) -> RecoverPattern {
+
             return RecoverPattern.doNothing
         }
     }
@@ -59,7 +61,8 @@ class RxSwiftSpec: QuickSpec {
         func onStop() {
             
         }
-        func onError(error: ActionError<RxSwiftSpec.RecoverAction>) -> RecoverPattern {
+        
+        func onError(error: Error, label: String?) -> RecoverPattern {
             return RecoverPattern.reloadErrorSignal(onStart: { })
         }
     }

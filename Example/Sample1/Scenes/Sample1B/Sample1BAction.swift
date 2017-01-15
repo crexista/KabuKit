@@ -13,9 +13,7 @@ import RxCocoa
 
 final class Sample1BAction: Action {
 
-
     typealias SceneType = Sample1BViewController
-//    typealias DestinationType = Sample1BViewController.Sample2Destination
     
     unowned let label: UILabel
     
@@ -34,7 +32,15 @@ final class Sample1BAction: Action {
         ]
     }
     
-    public func onError(error: ActionError<Sample1BAction>) -> RecoverPattern {
+    /**
+     このActionのInvoke内で起動させたSignalの中で一つでもキャッチし損ねたエラーが発生したらこのメソッドが呼ばれます.
+     
+     - parameters:
+       - error: キャッチし損ねたエラーのクラスです.
+       - label: エラーを起こしたシグナルの名前です.
+                設定している場合のみ取得できます. 設定していない場合は取得できません.
+     */
+    public func onError(error: Error, label: String?) -> RecoverPattern {
         return RecoverPattern.doNothing
     }
     

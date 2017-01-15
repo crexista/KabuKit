@@ -30,8 +30,8 @@ internal class RxSwiftEvent: ActionSignal {
         disposable?.dispose()
 
         disposable = observable.subscribe (onError: { (error) in
-            let error = ActionError(from: action, event: event, cause: error)
-            recoverHandler(error, action.onError(error: error))
+            let actionError = ActionError(from: action, event: event, cause: error)
+            recoverHandler(actionError, action.onError(error: error, label: event.label))
         }, onDisposed: {() in
             self.isRunning = false
         })
