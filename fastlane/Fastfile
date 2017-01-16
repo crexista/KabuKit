@@ -10,7 +10,7 @@ platform :ios do
   desc "Runs tests as iOS"
   lane :test do
     scan(
-         scheme: "KabuKit",
+         scheme: "KabuKitTests",
          devices: ["iPhone 6s"],
          clean: true,
          sdk: "iphonesimulator",
