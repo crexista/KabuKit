@@ -27,6 +27,7 @@ public class Producer {
      
      すでにスタート済みだった場合はfalseを返します
      */
+    @discardableResult
     public func startSequence<S>(sequence: SceneSequence<S>) -> Bool {
         return sequence.start(producer: self)
     }
@@ -38,7 +39,7 @@ public class Producer {
      */
     public static func run<S: AnyObject>(sequence: SceneSequence<S>) -> Producer {
         let producer = Producer(sequence: sequence)
-        _ = producer.startSequence(sequence: sequence)
+        producer.startSequence(sequence: sequence)
 
         return producer
     }

@@ -57,7 +57,7 @@ extension Sample2BViewController: ActionScene, SceneLinkage {
             self.prevButton.isEnabled = false
             self.prevButton.alpha = 0.5
         }
-        _ = activator?.activate(action: action)
+        activator?.activate(action: action)
     }
 
     

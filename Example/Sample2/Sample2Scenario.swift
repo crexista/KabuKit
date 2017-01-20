@@ -66,7 +66,7 @@ import UIKit
             scene.view.frame = stage.view.frame
         }
         
-        _ = producer.startSequence(sequence: loginSequence!)
+        producer.startSequence(sequence: loginSequence!)
     }
     
     func describe<E, S>(_ event: E, from sequence: SceneSequence<S>, through producer: Producer?) {
@@ -75,8 +75,8 @@ import UIKit
             if (eve == "start") {
                 root.addChildViewController(tabBarController)
                 root.view.addSubview(tabBarController.view)
-                _ = producer?.startSequence(sequence: aSequence!)
-                _ = producer?.startSequence(sequence: bSequence!)
+                producer?.startSequence(sequence: aSequence!)
+                producer?.startSequence(sequence: bSequence!)
             }
         }
     }

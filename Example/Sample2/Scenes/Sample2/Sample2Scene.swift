@@ -29,7 +29,7 @@ extension Sample2ViewController : ActionScene, SceneLinkage {
     
     override func viewDidLoad() {
         let action = Sample2Action(startButton: startButton)
-        _ = activator?.activate(action: action)
+        activator?.activate(action: action)
     }
     
 

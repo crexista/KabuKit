@@ -61,7 +61,7 @@ extension Sample2AViewController: ActionScene, SceneLinkage {
         }
 
         let action = Sample2AAction(nextButtonA: nextButtonA, nextButtonB: nextButtonB, prevButton: prevButton)
-        _ = activator?.activate(action: action)
+        activator?.activate(action: action)
     }
 
 }
