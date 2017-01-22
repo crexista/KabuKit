@@ -48,7 +48,7 @@ extension Sample1BViewController : ActionScene, SceneLinkage {
     override func viewDidLoad() {
         self.navigationItem.hidesBackButton = true
         let action = Sample1BAction(label: label, buttonA: nextButtonA, buttonB: nextButtonB, prevButton: prevButton)
-        _ = activator?.activate(action: action)
+        activator?.activate(action: action)
     }
     
     
