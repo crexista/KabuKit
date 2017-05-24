@@ -19,17 +19,25 @@
 		4E6093741E281B4200C7A234 /* SimpleMockScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6093731E281B4200C7A234 /* SimpleMockScene.swift */; };
 		4E6093791E283CAB00C7A234 /* RxSwiftEventSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6093781E283CAB00C7A234 /* RxSwiftEventSpec.swift */; };
 		4E86AA991DF4359D0039D8B7 /* SceneManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E86AA981DF4359D0039D8B7 /* SceneManagerSpec.swift */; };
+		4ED3FE8C1ED57669004BC048 /* HashWrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B01ED544B100E96BCE /* HashWrap.swift */; };
+		4ED3FE8D1ED5766C004BC048 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B11ED544B100E96BCE /* Link.swift */; };
+		4ED3FE8E1ED5766E004BC048 /* LinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B21ED544B100E96BCE /* LinkHandler.swift */; };
+		4ED3FE8F1ED57671004BC048 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B31ED544B100E96BCE /* Router.swift */; };
+		4ED3FE901ED57674004BC048 /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B41ED544B100E96BCE /* Scenario.swift */; };
+		4ED3FE911ED57677004BC048 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B51ED544B100E96BCE /* Scene.swift */; };
+		4ED3FE921ED5767A004BC048 /* SceneSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B61ED544B100E96BCE /* SceneSequence.swift */; };
+		4ED3FE931ED5767D004BC048 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B71ED544B100E96BCE /* Page.swift */; };
 		4ED7E59F1E256BC70072CEE9 /* ActionSceneSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59E1E256BC70072CEE9 /* ActionSceneSpec.swift */; };
 		4EF5CCF01DE30A0C00683D1E /* KabuKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */; };
 		4EF5CCF71DE30A0C00683D1E /* KabuKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF5CCE91DE30A0C00683D1E /* KabuKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EFE66B81ED544B100E96BCE /* HashWrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B01ED544B100E96BCE /* HashWrap.swift */; };
 		4EFE66B91ED544B100E96BCE /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B11ED544B100E96BCE /* Link.swift */; };
-		4EFE66BA1ED544B100E96BCE /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B21ED544B100E96BCE /* Receiver.swift */; };
+		4EFE66BA1ED544B100E96BCE /* LinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B21ED544B100E96BCE /* LinkHandler.swift */; };
 		4EFE66BB1ED544B100E96BCE /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B31ED544B100E96BCE /* Router.swift */; };
 		4EFE66BC1ED544B100E96BCE /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B41ED544B100E96BCE /* Scenario.swift */; };
 		4EFE66BD1ED544B100E96BCE /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B51ED544B100E96BCE /* Scene.swift */; };
 		4EFE66BE1ED544B100E96BCE /* SceneSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B61ED544B100E96BCE /* SceneSequence.swift */; };
-		4EFE66BF1ED544B100E96BCE /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B71ED544B100E96BCE /* Screen.swift */; };
+		4EFE66BF1ED544B100E96BCE /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B71ED544B100E96BCE /* Page.swift */; };
 		6C289ACDBB3B93D4009CF8A9 /* Pods_KabuKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70BD19804116618B41BCA903 /* Pods_KabuKitTests.framework */; };
 		A6C4ABFF1DF9712500D2491A /* KabuKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF5CCE91DE30A0C00683D1E /* KabuKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6C4AC241DF97A9900D2491A /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C4AC231DF97A9900D2491A /* RxSwift.framework */; };
@@ -71,12 +79,12 @@
 		4EF5CCF61DE30A0C00683D1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4EFE66B01ED544B100E96BCE /* HashWrap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashWrap.swift; sourceTree = "<group>"; };
 		4EFE66B11ED544B100E96BCE /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
-		4EFE66B21ED544B100E96BCE /* Receiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Receiver.swift; sourceTree = "<group>"; };
+		4EFE66B21ED544B100E96BCE /* LinkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkHandler.swift; sourceTree = "<group>"; };
 		4EFE66B31ED544B100E96BCE /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		4EFE66B41ED544B100E96BCE /* Scenario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scenario.swift; sourceTree = "<group>"; };
 		4EFE66B51ED544B100E96BCE /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		4EFE66B61ED544B100E96BCE /* SceneSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneSequence.swift; sourceTree = "<group>"; };
-		4EFE66B71ED544B100E96BCE /* Screen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
+		4EFE66B71ED544B100E96BCE /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		70BD19804116618B41BCA903 /* Pods_KabuKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KabuKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A26D6A4DD87C05D577497305 /* Pods-KabuKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit.debug.xcconfig"; sourceTree = "<group>"; };
 		A6C4AC051DF9712500D2491A /* KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -257,12 +265,12 @@
 			children = (
 				4EFE66B01ED544B100E96BCE /* HashWrap.swift */,
 				4EFE66B11ED544B100E96BCE /* Link.swift */,
-				4EFE66B21ED544B100E96BCE /* Receiver.swift */,
+				4EFE66B21ED544B100E96BCE /* LinkHandler.swift */,
 				4EFE66B31ED544B100E96BCE /* Router.swift */,
 				4EFE66B41ED544B100E96BCE /* Scenario.swift */,
 				4EFE66B51ED544B100E96BCE /* Scene.swift */,
 				4EFE66B61ED544B100E96BCE /* SceneSequence.swift */,
-				4EFE66B71ED544B100E96BCE /* Screen.swift */,
+				4EFE66B71ED544B100E96BCE /* Page.swift */,
 			);
 			path = Swift;
 			sourceTree = "<group>";
@@ -538,13 +546,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EFE66BB1ED544B100E96BCE /* Router.swift in Sources */,
-				4EFE66BA1ED544B100E96BCE /* Receiver.swift in Sources */,
+				4EFE66BA1ED544B100E96BCE /* LinkHandler.swift in Sources */,
 				4EFE66BE1ED544B100E96BCE /* SceneSequence.swift in Sources */,
 				4EFE66BD1ED544B100E96BCE /* Scene.swift in Sources */,
 				4EFE66B81ED544B100E96BCE /* HashWrap.swift in Sources */,
 				4EFE66BC1ED544B100E96BCE /* Scenario.swift in Sources */,
 				4EFE66B91ED544B100E96BCE /* Link.swift in Sources */,
-				4EFE66BF1ED544B100E96BCE /* Screen.swift in Sources */,
+				4EFE66BF1ED544B100E96BCE /* Page.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,6 +580,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4ED3FE8F1ED57671004BC048 /* Router.swift in Sources */,
+				4ED3FE8C1ED57669004BC048 /* HashWrap.swift in Sources */,
+				4ED3FE931ED5767D004BC048 /* Page.swift in Sources */,
+				4ED3FE921ED5767A004BC048 /* SceneSequence.swift in Sources */,
+				4ED3FE911ED57677004BC048 /* Scene.swift in Sources */,
+				4ED3FE8E1ED5766E004BC048 /* LinkHandler.swift in Sources */,
+				4ED3FE901ED57674004BC048 /* Scenario.swift in Sources */,
+				4ED3FE8D1ED5766C004BC048 /* Link.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

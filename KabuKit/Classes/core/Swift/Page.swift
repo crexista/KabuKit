@@ -3,6 +3,21 @@ import Foundation
 
 public protocol Page : class {
     
+    /**
+     リンク先に遷移する
+     
+     - Attention:
+     指定リンク先がなにであるかはScenario側で指定しておく必要がある
+     
+     それを忘れるとこのメソッドを呼んでもなにも起きない  
+
+     
+     - Parameters:
+       - link: 遷移先へのリンク
+     
+     - Returns: リンク先が存在し、遷移できたかどうかを返す
+     
+     */
     @discardableResult
     func jumpTo<T>(_ link: Link<T>) -> Bool
     
@@ -12,7 +27,7 @@ public protocol Page : class {
      - Attention :
      ただし、前のシーンがない場合は戻らず、何も起きない
      
-     - Returns: 戻れるかどうかの成否。
+     - Returns: 戻れるかどうかの成否
      前のシーンがなかったりして戻れなかった場合はfalseを返す
      
      */
@@ -25,7 +40,6 @@ extension Page {
     internal var handler: LinkHandler? {
         return containerByScean[HashWrap(self)]
     }
-
     
     internal func requestNextPage<S: Scenario, T>(scenario: S, link: Link<T>) -> SceneRequest<S.StageType> {
         let router = Router<S.StageType>()
@@ -35,13 +49,14 @@ extension Page {
     
     @discardableResult
     public func prev() -> Bool {
-        return true
+        guard let handler = self.handler else { return false }
+        return handler.back(self)
     }
     
     @discardableResult
     public func jumpTo<T>(_ link: Link<T>) -> Bool {
-        self.handler?.handle(self, link)
-        return true
+        guard let handler = self.handler else { return false }
+        return handler.handle(self, link)
     }
 
 }
