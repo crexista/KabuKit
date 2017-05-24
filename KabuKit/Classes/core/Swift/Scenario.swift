@@ -1,12 +1,27 @@
-//
-//  Copyright © 2017 crexista
-//
-
 import Foundation
 
-public protocol  Scenario : class {
+public protocol Scenario : class {
     
-    func start(producer: Producer)
+    associatedtype StageType: AnyObject
     
-    func describe<E, S>(_ event: E, from sequence: SceneSequence<S>, through producer: Producer?)
+    func routing(router: Router<StageType>)
+    
+    func onEnd<S: Scene>(scene: S, stage: StageType)
+}
+
+extension Page where Self: Scenario {
+    
+    internal func requestNextPage<S: Scenario, T>(scenario: S, link: Link<T>) -> SceneRequest<S.StageType> where StageType == S.StageType{
+        let router = Router<Self.StageType>()
+        self.routing(router: router)
+        return router.resolve(link: link, current: self)
+    }
+    
+    @discardableResult
+    public func jumpTo<T>(_ link: Link<T>) -> Bool {
+        self.handler?.handle(self, link)
+        return true
+    }
+
+    
 }
