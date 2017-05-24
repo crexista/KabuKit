@@ -28,4 +28,3 @@ internal protocol LinkHandler {
     func back<P: Page>(_ current: P) -> Bool
 
 }
-

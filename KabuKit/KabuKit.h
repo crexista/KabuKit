@@ -2,8 +2,8 @@
 //  KabuKit.h
 //  KabuKit
 //
-//  Created by crexista on 2016/11/21.
-//  Copyright © crexista. All rights reserved.
+//  Created by crexista on 2017/05/24.
+//  Copyright © 2017年 crexi. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

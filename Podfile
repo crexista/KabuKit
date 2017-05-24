@@ -2,13 +2,13 @@
 use_frameworks!
 
 target 'KabuKit' do
-    pod 'RxSwift', '3.0'
-    pod 'RxCocoa', '3.0'
+#    pod 'RxSwift', '3.0'
+#    pod 'RxCocoa', '3.0'
 end
 
 target 'KabuKitTests' do
-    pod 'Quick', '0.10.0'
-    pod 'Nimble', '5.0.0'
+#    pod 'Quick', '0.10.0'
+#    pod 'Nimble', '5.0.0'
 end
 
 # post_install do |installer|

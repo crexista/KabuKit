@@ -7,347 +7,265 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4E0941C91E23EE8000FBAF21 /* SceneSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941C81E23EE8000FBAF21 /* SceneSpec.swift */; };
-		4E0941CB1E23F47000FBAF21 /* SceneLinkageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941CA1E23F47000FBAF21 /* SceneLinkageSpec.swift */; };
-		4E0941CD1E23FA9D00FBAF21 /* SceneSequenceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941CC1E23FA9D00FBAF21 /* SceneSequenceSpec.swift */; };
-		4E0941CF1E23FF4900FBAF21 /* DirectorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941CE1E23FF4900FBAF21 /* DirectorSpec.swift */; };
-		4E0941D11E24035A00FBAF21 /* SceneRequestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941D01E24035A00FBAF21 /* SceneRequestSpec.swift */; };
-		4E0941F71E242E1800FBAF21 /* MockRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941F61E242E1800FBAF21 /* MockRequest.swift */; };
-		4E0941F91E242E3300FBAF21 /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0941F81E242E3300FBAF21 /* MockRouter.swift */; };
-		4E0942021E25074A00FBAF21 /* ActionActivatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0942011E25074A00FBAF21 /* ActionActivatorSpec.swift */; };
-		4E6093721E281A2400C7A234 /* ProducerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6093711E281A2400C7A234 /* ProducerSpec.swift */; };
-		4E6093741E281B4200C7A234 /* SimpleMockScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6093731E281B4200C7A234 /* SimpleMockScene.swift */; };
-		4E6093791E283CAB00C7A234 /* RxSwiftEventSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6093781E283CAB00C7A234 /* RxSwiftEventSpec.swift */; };
-		4E86AA991DF4359D0039D8B7 /* SceneManagerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E86AA981DF4359D0039D8B7 /* SceneManagerSpec.swift */; };
-		4ED3FE8C1ED57669004BC048 /* HashWrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B01ED544B100E96BCE /* HashWrap.swift */; };
-		4ED3FE8D1ED5766C004BC048 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B11ED544B100E96BCE /* Link.swift */; };
-		4ED3FE8E1ED5766E004BC048 /* LinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B21ED544B100E96BCE /* LinkHandler.swift */; };
-		4ED3FE8F1ED57671004BC048 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B31ED544B100E96BCE /* Router.swift */; };
-		4ED3FE901ED57674004BC048 /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B41ED544B100E96BCE /* Scenario.swift */; };
-		4ED3FE911ED57677004BC048 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B51ED544B100E96BCE /* Scene.swift */; };
-		4ED3FE921ED5767A004BC048 /* SceneSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B61ED544B100E96BCE /* SceneSequence.swift */; };
-		4ED3FE931ED5767D004BC048 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B71ED544B100E96BCE /* Page.swift */; };
-		4ED7E59F1E256BC70072CEE9 /* ActionSceneSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED7E59E1E256BC70072CEE9 /* ActionSceneSpec.swift */; };
-		4EF5CCF01DE30A0C00683D1E /* KabuKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */; };
-		4EF5CCF71DE30A0C00683D1E /* KabuKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF5CCE91DE30A0C00683D1E /* KabuKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4EFE66B81ED544B100E96BCE /* HashWrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B01ED544B100E96BCE /* HashWrap.swift */; };
-		4EFE66B91ED544B100E96BCE /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B11ED544B100E96BCE /* Link.swift */; };
-		4EFE66BA1ED544B100E96BCE /* LinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B21ED544B100E96BCE /* LinkHandler.swift */; };
-		4EFE66BB1ED544B100E96BCE /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B31ED544B100E96BCE /* Router.swift */; };
-		4EFE66BC1ED544B100E96BCE /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B41ED544B100E96BCE /* Scenario.swift */; };
-		4EFE66BD1ED544B100E96BCE /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B51ED544B100E96BCE /* Scene.swift */; };
-		4EFE66BE1ED544B100E96BCE /* SceneSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B61ED544B100E96BCE /* SceneSequence.swift */; };
-		4EFE66BF1ED544B100E96BCE /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFE66B71ED544B100E96BCE /* Page.swift */; };
-		6C289ACDBB3B93D4009CF8A9 /* Pods_KabuKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70BD19804116618B41BCA903 /* Pods_KabuKitTests.framework */; };
-		A6C4ABFF1DF9712500D2491A /* KabuKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EF5CCE91DE30A0C00683D1E /* KabuKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A6C4AC241DF97A9900D2491A /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C4AC231DF97A9900D2491A /* RxSwift.framework */; };
-		F85EB1CDB95A0CF25051D860 /* Pods_KabuKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1936A2064B1933440503B524 /* Pods_KabuKit.framework */; };
+		10A8047D09E2381B826854E7 /* Pods_KabuKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 330222B15BFC537DE8892BAC /* Pods_KabuKitTests.framework */; };
+		18BFD92ECED3D3E277952C05 /* Pods_KabuKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5740434980B01D42277BAE55 /* Pods_KabuKit.framework */; };
+		4ED3FEA81ED597FC004BC048 /* KabuKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED3FE9E1ED597FC004BC048 /* KabuKit.framework */; };
+		4ED3FEAD1ED597FC004BC048 /* KabuKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEAC1ED597FC004BC048 /* KabuKitTests.swift */; };
+		4ED3FEAF1ED597FC004BC048 /* KabuKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4ED3FEA11ED597FC004BC048 /* KabuKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4ED3FECF1ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBB1ED5989E004BC048 /* .gitkeep */; };
+		4ED3FED01ED5989E004BC048 /* HashWrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBD1ED5989E004BC048 /* HashWrap.swift */; };
+		4ED3FED11ED5989E004BC048 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBE1ED5989E004BC048 /* Link.swift */; };
+		4ED3FED21ED5989E004BC048 /* LinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBF1ED5989E004BC048 /* LinkHandler.swift */; };
+		4ED3FED31ED5989E004BC048 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC01ED5989E004BC048 /* Page.swift */; };
+		4ED3FED41ED5989E004BC048 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC11ED5989E004BC048 /* Router.swift */; };
+		4ED3FED51ED5989E004BC048 /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC21ED5989E004BC048 /* Scenario.swift */; };
+		4ED3FED61ED5989E004BC048 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC31ED5989E004BC048 /* Scene.swift */; };
+		4ED3FED71ED5989E004BC048 /* SceneSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC41ED5989E004BC048 /* SceneSequence.swift */; };
+		4ED3FED81ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC71ED5989E004BC048 /* .gitkeep */; };
+		4ED3FED91ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FECC1ED5989E004BC048 /* .gitkeep */; };
+		4ED3FEDA1ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FECE1ED5989E004BC048 /* .gitkeep */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4EF5CCF11DE30A0C00683D1E /* PBXContainerItemProxy */ = {
+		4ED3FEA91ED597FC004BC048 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 4EF5CCDD1DE30A0C00683D1E /* Project object */;
+			containerPortal = 4ED3FE951ED597FC004BC048 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 4EF5CCE51DE30A0C00683D1E;
+			remoteGlobalIDString = 4ED3FE9D1ED597FC004BC048;
 			remoteInfo = KabuKit;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1936A2064B1933440503B524 /* Pods_KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2951D074F80F73608CC677F9 /* Pods-KabuKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit.release.xcconfig"; sourceTree = "<group>"; };
-		4DC74D11E4722F083D18D976 /* Pods-KabuKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKitTests/Pods-KabuKitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		4E0941C81E23EE8000FBAF21 /* SceneSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SceneSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		4E0941CA1E23F47000FBAF21 /* SceneLinkageSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SceneLinkageSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		4E0941CC1E23FA9D00FBAF21 /* SceneSequenceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneSequenceSpec.swift; sourceTree = "<group>"; };
-		4E0941CE1E23FF4900FBAF21 /* DirectorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DirectorSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		4E0941D01E24035A00FBAF21 /* SceneRequestSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneRequestSpec.swift; sourceTree = "<group>"; };
-		4E0941F61E242E1800FBAF21 /* MockRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequest.swift; sourceTree = "<group>"; };
-		4E0941F81E242E3300FBAF21 /* MockRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MockRouter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		4E0942011E25074A00FBAF21 /* ActionActivatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionActivatorSpec.swift; sourceTree = "<group>"; };
-		4E6093711E281A2400C7A234 /* ProducerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProducerSpec.swift; sourceTree = "<group>"; };
-		4E6093731E281B4200C7A234 /* SimpleMockScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleMockScene.swift; sourceTree = "<group>"; };
-		4E6093781E283CAB00C7A234 /* RxSwiftEventSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSwiftEventSpec.swift; sourceTree = "<group>"; };
-		4E86AA971DF4359D0039D8B7 /* KabuKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KabuKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
-		4E86AA981DF4359D0039D8B7 /* SceneManagerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SceneManagerSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		4ED7E59E1E256BC70072CEE9 /* ActionSceneSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ActionSceneSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4EF5CCE91DE30A0C00683D1E /* KabuKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KabuKit.h; sourceTree = "<group>"; };
-		4EF5CCEA1DE30A0C00683D1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4EF5CCEF1DE30A0C00683D1E /* KabuKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KabuKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4EF5CCF61DE30A0C00683D1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4EFE66B01ED544B100E96BCE /* HashWrap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashWrap.swift; sourceTree = "<group>"; };
-		4EFE66B11ED544B100E96BCE /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
-		4EFE66B21ED544B100E96BCE /* LinkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkHandler.swift; sourceTree = "<group>"; };
-		4EFE66B31ED544B100E96BCE /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
-		4EFE66B41ED544B100E96BCE /* Scenario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scenario.swift; sourceTree = "<group>"; };
-		4EFE66B51ED544B100E96BCE /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
-		4EFE66B61ED544B100E96BCE /* SceneSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneSequence.swift; sourceTree = "<group>"; };
-		4EFE66B71ED544B100E96BCE /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
-		70BD19804116618B41BCA903 /* Pods_KabuKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KabuKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A26D6A4DD87C05D577497305 /* Pods-KabuKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit.debug.xcconfig"; sourceTree = "<group>"; };
-		A6C4AC051DF9712500D2491A /* KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A6C4AC231DF97A9900D2491A /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
-		A6C4AC251DF97AD400D2491A /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/Mac/RxSwift.framework; sourceTree = "<group>"; };
-		B8CD26C938C33D82821D9964 /* Pods-KabuKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKitTests/Pods-KabuKitTests.release.xcconfig"; sourceTree = "<group>"; };
+		0F9DE3366982BF7BAD942196 /* Pods-KabuKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit.release.xcconfig"; sourceTree = "<group>"; };
+		330222B15BFC537DE8892BAC /* Pods_KabuKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KabuKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4ED3FE9E1ED597FC004BC048 /* KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4ED3FEA11ED597FC004BC048 /* KabuKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KabuKit.h; sourceTree = "<group>"; };
+		4ED3FEA21ED597FC004BC048 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4ED3FEA71ED597FC004BC048 /* KabuKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KabuKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4ED3FEAC1ED597FC004BC048 /* KabuKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KabuKitTests.swift; sourceTree = "<group>"; };
+		4ED3FEAE1ED597FC004BC048 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4ED3FEBB1ED5989E004BC048 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		4ED3FEBD1ED5989E004BC048 /* HashWrap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashWrap.swift; sourceTree = "<group>"; };
+		4ED3FEBE1ED5989E004BC048 /* Link.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
+		4ED3FEBF1ED5989E004BC048 /* LinkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkHandler.swift; sourceTree = "<group>"; };
+		4ED3FEC01ED5989E004BC048 /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
+		4ED3FEC11ED5989E004BC048 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		4ED3FEC21ED5989E004BC048 /* Scenario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scenario.swift; sourceTree = "<group>"; };
+		4ED3FEC31ED5989E004BC048 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		4ED3FEC41ED5989E004BC048 /* SceneSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneSequence.swift; sourceTree = "<group>"; };
+		4ED3FEC71ED5989E004BC048 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		4ED3FECC1ED5989E004BC048 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		4ED3FECE1ED5989E004BC048 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		5740434980B01D42277BAE55 /* Pods_KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9C685B81034350715F5187A /* Pods-KabuKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit.debug.xcconfig"; sourceTree = "<group>"; };
+		D3C569CB8753E2E79542FC4F /* Pods-KabuKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKitTests/Pods-KabuKitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E1969C1F61AF9E190EDCBE12 /* Pods-KabuKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KabuKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-KabuKitTests/Pods-KabuKitTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		4EF5CCE21DE30A0C00683D1E /* Frameworks */ = {
+		4ED3FE9A1ED597FC004BC048 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F85EB1CDB95A0CF25051D860 /* Pods_KabuKit.framework in Frameworks */,
+				18BFD92ECED3D3E277952C05 /* Pods_KabuKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4EF5CCEC1DE30A0C00683D1E /* Frameworks */ = {
+		4ED3FEA41ED597FC004BC048 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EF5CCF01DE30A0C00683D1E /* KabuKit.framework in Frameworks */,
-				6C289ACDBB3B93D4009CF8A9 /* Pods_KabuKitTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A6C4ABFC1DF9712500D2491A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A6C4AC241DF97A9900D2491A /* RxSwift.framework in Frameworks */,
+				4ED3FEA81ED597FC004BC048 /* KabuKit.framework in Frameworks */,
+				10A8047D09E2381B826854E7 /* Pods_KabuKitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		39AA932D9064789D245CD832 /* Pods */ = {
+		4ED3FE941ED597FC004BC048 = {
 			isa = PBXGroup;
 			children = (
-				A26D6A4DD87C05D577497305 /* Pods-KabuKit.debug.xcconfig */,
-				4DC74D11E4722F083D18D976 /* Pods-KabuKitTests.debug.xcconfig */,
-				B8CD26C938C33D82821D9964 /* Pods-KabuKitTests.release.xcconfig */,
-				2951D074F80F73608CC677F9 /* Pods-KabuKit.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		4E0941B31E1D048600FBAF21 /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				4E0941B41E1D048600FBAF21 /* Swift */,
-			);
-			path = ios;
-			sourceTree = "<group>";
-		};
-		4E0941B41E1D048600FBAF21 /* Swift */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Swift;
-			sourceTree = "<group>";
-		};
-		4E0942001E25073900FBAF21 /* Rx */ = {
-			isa = PBXGroup;
-			children = (
-				4E0942011E25074A00FBAF21 /* ActionActivatorSpec.swift */,
-				4ED7E59E1E256BC70072CEE9 /* ActionSceneSpec.swift */,
-				4E6093781E283CAB00C7A234 /* RxSwiftEventSpec.swift */,
-			);
-			path = Rx;
-			sourceTree = "<group>";
-		};
-		4E7084121DE60EA60072F7EE /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				4E0941B31E1D048600FBAF21 /* ios */,
-				4E7084131DE60EA60072F7EE /* core */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		4E7084131DE60EA60072F7EE /* core */ = {
-			isa = PBXGroup;
-			children = (
-				4E7084141DE60EA60072F7EE /* Swift */,
-			);
-			path = core;
-			sourceTree = "<group>";
-		};
-		4E7084141DE60EA60072F7EE /* Swift */ = {
-			isa = PBXGroup;
-			children = (
-				4E0942001E25073900FBAF21 /* Rx */,
-				4E0941F61E242E1800FBAF21 /* MockRequest.swift */,
-				4E0941F81E242E3300FBAF21 /* MockRouter.swift */,
-				4E86AA971DF4359D0039D8B7 /* KabuKitTests-Bridging-Header.h */,
-				4E86AA981DF4359D0039D8B7 /* SceneManagerSpec.swift */,
-				4E0941C81E23EE8000FBAF21 /* SceneSpec.swift */,
-				4E0941CE1E23FF4900FBAF21 /* DirectorSpec.swift */,
-				4E0941CA1E23F47000FBAF21 /* SceneLinkageSpec.swift */,
-				4E0941CC1E23FA9D00FBAF21 /* SceneSequenceSpec.swift */,
-				4E0941D01E24035A00FBAF21 /* SceneRequestSpec.swift */,
-				4E6093711E281A2400C7A234 /* ProducerSpec.swift */,
-				4E6093731E281B4200C7A234 /* SimpleMockScene.swift */,
-			);
-			path = Swift;
-			sourceTree = "<group>";
-		};
-		4EF5CCDC1DE30A0C00683D1E = {
-			isa = PBXGroup;
-			children = (
-				4EF5CCE81DE30A0C00683D1E /* KabuKit */,
-				4EF5CCF31DE30A0C00683D1E /* KabuKitTests */,
-				4EF5CCE71DE30A0C00683D1E /* Products */,
-				39AA932D9064789D245CD832 /* Pods */,
-				DD923A86CAC47147C0714F07 /* Frameworks */,
+				4ED3FEA01ED597FC004BC048 /* KabuKit */,
+				4ED3FEAB1ED597FC004BC048 /* KabuKitTests */,
+				4ED3FE9F1ED597FC004BC048 /* Products */,
+				E61FAF265AEA5328006B988A /* Pods */,
+				D04D4141F06ACFC7F0985119 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		4EF5CCE71DE30A0C00683D1E /* Products */ = {
+		4ED3FE9F1ED597FC004BC048 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */,
-				4EF5CCEF1DE30A0C00683D1E /* KabuKitTests.xctest */,
-				A6C4AC051DF9712500D2491A /* KabuKit.framework */,
+				4ED3FE9E1ED597FC004BC048 /* KabuKit.framework */,
+				4ED3FEA71ED597FC004BC048 /* KabuKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4EF5CCE81DE30A0C00683D1E /* KabuKit */ = {
+		4ED3FEA01ED597FC004BC048 /* KabuKit */ = {
 			isa = PBXGroup;
 			children = (
-				4EF5CD341DE30E3200683D1E /* Classes */,
-				4EF5CCE91DE30A0C00683D1E /* KabuKit.h */,
-				4EF5CCEA1DE30A0C00683D1E /* Info.plist */,
+				4ED3FEB81ED5989E004BC048 /* Classes */,
+				4ED3FEA11ED597FC004BC048 /* KabuKit.h */,
+				4ED3FEA21ED597FC004BC048 /* Info.plist */,
 			);
 			path = KabuKit;
 			sourceTree = "<group>";
 		};
-		4EF5CCF31DE30A0C00683D1E /* KabuKitTests */ = {
+		4ED3FEAB1ED597FC004BC048 /* KabuKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				4E7084121DE60EA60072F7EE /* Classes */,
-				4EF5CCF61DE30A0C00683D1E /* Info.plist */,
+				4ED3FEAC1ED597FC004BC048 /* KabuKitTests.swift */,
+				4ED3FEAE1ED597FC004BC048 /* Info.plist */,
 			);
 			path = KabuKitTests;
 			sourceTree = "<group>";
 		};
-		4EF5CD341DE30E3200683D1E /* Classes */ = {
+		4ED3FEB81ED5989E004BC048 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4EF5CD351DE30E3200683D1E /* core */,
-				4EF5CD441DE30E3200683D1E /* ios */,
-				4EF5CD491DE30E3200683D1E /* osx */,
+				4ED3FEB91ED5989E004BC048 /* core */,
+				4ED3FEC51ED5989E004BC048 /* ios */,
+				4ED3FECA1ED5989E004BC048 /* osx */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		4EF5CD351DE30E3200683D1E /* core */ = {
+		4ED3FEB91ED5989E004BC048 /* core */ = {
 			isa = PBXGroup;
 			children = (
-				4EF5CD361DE30E3200683D1E /* Objective-C */,
-				4EF5CD371DE30E3200683D1E /* Swift */,
+				4ED3FEBA1ED5989E004BC048 /* Objective-C */,
+				4ED3FEBC1ED5989E004BC048 /* Swift */,
 			);
 			path = core;
 			sourceTree = "<group>";
 		};
-		4EF5CD361DE30E3200683D1E /* Objective-C */ = {
+		4ED3FEBA1ED5989E004BC048 /* Objective-C */ = {
 			isa = PBXGroup;
 			children = (
+				4ED3FEBB1ED5989E004BC048 /* .gitkeep */,
 			);
 			path = "Objective-C";
 			sourceTree = "<group>";
 		};
-		4EF5CD371DE30E3200683D1E /* Swift */ = {
+		4ED3FEBC1ED5989E004BC048 /* Swift */ = {
 			isa = PBXGroup;
 			children = (
-				4EFE66B01ED544B100E96BCE /* HashWrap.swift */,
-				4EFE66B11ED544B100E96BCE /* Link.swift */,
-				4EFE66B21ED544B100E96BCE /* LinkHandler.swift */,
-				4EFE66B31ED544B100E96BCE /* Router.swift */,
-				4EFE66B41ED544B100E96BCE /* Scenario.swift */,
-				4EFE66B51ED544B100E96BCE /* Scene.swift */,
-				4EFE66B61ED544B100E96BCE /* SceneSequence.swift */,
-				4EFE66B71ED544B100E96BCE /* Page.swift */,
+				4ED3FEBD1ED5989E004BC048 /* HashWrap.swift */,
+				4ED3FEBE1ED5989E004BC048 /* Link.swift */,
+				4ED3FEBF1ED5989E004BC048 /* LinkHandler.swift */,
+				4ED3FEC01ED5989E004BC048 /* Page.swift */,
+				4ED3FEC11ED5989E004BC048 /* Router.swift */,
+				4ED3FEC21ED5989E004BC048 /* Scenario.swift */,
+				4ED3FEC31ED5989E004BC048 /* Scene.swift */,
+				4ED3FEC41ED5989E004BC048 /* SceneSequence.swift */,
 			);
 			path = Swift;
 			sourceTree = "<group>";
 		};
-		4EF5CD441DE30E3200683D1E /* ios */ = {
+		4ED3FEC51ED5989E004BC048 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				4EF5CD451DE30E3200683D1E /* Objective-C */,
-				4EF5CD461DE30E3200683D1E /* Swift */,
+				4ED3FEC61ED5989E004BC048 /* Objective-C */,
+				4ED3FEC81ED5989E004BC048 /* Swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
 		};
-		4EF5CD451DE30E3200683D1E /* Objective-C */ = {
+		4ED3FEC61ED5989E004BC048 /* Objective-C */ = {
 			isa = PBXGroup;
 			children = (
+				4ED3FEC71ED5989E004BC048 /* .gitkeep */,
 			);
 			path = "Objective-C";
 			sourceTree = "<group>";
 		};
-		4EF5CD461DE30E3200683D1E /* Swift */ = {
+		4ED3FEC81ED5989E004BC048 /* Swift */ = {
 			isa = PBXGroup;
 			children = (
+				4ED3FEC91ED5989E004BC048 /* Rx */,
 			);
 			path = Swift;
 			sourceTree = "<group>";
 		};
-		4EF5CD491DE30E3200683D1E /* osx */ = {
+		4ED3FEC91ED5989E004BC048 /* Rx */ = {
 			isa = PBXGroup;
 			children = (
+			);
+			path = Rx;
+			sourceTree = "<group>";
+		};
+		4ED3FECA1ED5989E004BC048 /* osx */ = {
+			isa = PBXGroup;
+			children = (
+				4ED3FECB1ED5989E004BC048 /* Objective-C */,
+				4ED3FECD1ED5989E004BC048 /* Swift */,
 			);
 			path = osx;
 			sourceTree = "<group>";
 		};
-		DD923A86CAC47147C0714F07 /* Frameworks */ = {
+		4ED3FECB1ED5989E004BC048 /* Objective-C */ = {
 			isa = PBXGroup;
 			children = (
-				A6C4AC251DF97AD400D2491A /* RxSwift.framework */,
-				A6C4AC231DF97A9900D2491A /* RxSwift.framework */,
-				1936A2064B1933440503B524 /* Pods_KabuKit.framework */,
-				70BD19804116618B41BCA903 /* Pods_KabuKitTests.framework */,
+				4ED3FECC1ED5989E004BC048 /* .gitkeep */,
+			);
+			path = "Objective-C";
+			sourceTree = "<group>";
+		};
+		4ED3FECD1ED5989E004BC048 /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				4ED3FECE1ED5989E004BC048 /* .gitkeep */,
+			);
+			path = Swift;
+			sourceTree = "<group>";
+		};
+		D04D4141F06ACFC7F0985119 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5740434980B01D42277BAE55 /* Pods_KabuKit.framework */,
+				330222B15BFC537DE8892BAC /* Pods_KabuKitTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E61FAF265AEA5328006B988A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C9C685B81034350715F5187A /* Pods-KabuKit.debug.xcconfig */,
+				0F9DE3366982BF7BAD942196 /* Pods-KabuKit.release.xcconfig */,
+				D3C569CB8753E2E79542FC4F /* Pods-KabuKitTests.debug.xcconfig */,
+				E1969C1F61AF9E190EDCBE12 /* Pods-KabuKitTests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		4EF5CCE31DE30A0C00683D1E /* Headers */ = {
+		4ED3FE9B1ED597FC004BC048 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EF5CCF71DE30A0C00683D1E /* KabuKit.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A6C4ABFE1DF9712500D2491A /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A6C4ABFF1DF9712500D2491A /* KabuKit.h in Headers */,
+				4ED3FEAF1ED597FC004BC048 /* KabuKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		4EF5CCE51DE30A0C00683D1E /* KabuKit */ = {
+		4ED3FE9D1ED597FC004BC048 /* KabuKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4EF5CCFA1DE30A0C00683D1E /* Build configuration list for PBXNativeTarget "KabuKit" */;
+			buildConfigurationList = 4ED3FEB21ED597FC004BC048 /* Build configuration list for PBXNativeTarget "KabuKit" */;
 			buildPhases = (
-				4D286322F4FD3E46231E45CD /* [CP] Check Pods Manifest.lock */,
-				4EF5CCE11DE30A0C00683D1E /* Sources */,
-				4EF5CCE21DE30A0C00683D1E /* Frameworks */,
-				4EF5CCE31DE30A0C00683D1E /* Headers */,
-				4EF5CCE41DE30A0C00683D1E /* Resources */,
-				7750FBC78671C17959E4E850 /* [CP] Copy Pods Resources */,
+				22B5DB6BCED323C80181CDBA /* [CP] Check Pods Manifest.lock */,
+				4ED3FE991ED597FC004BC048 /* Sources */,
+				4ED3FE9A1ED597FC004BC048 /* Frameworks */,
+				4ED3FE9B1ED597FC004BC048 /* Headers */,
+				4ED3FE9C1ED597FC004BC048 /* Resources */,
+				BF20362793E2C2B00132A3C1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -355,105 +273,83 @@
 			);
 			name = KabuKit;
 			productName = KabuKit;
-			productReference = 4EF5CCE61DE30A0C00683D1E /* KabuKit.framework */;
+			productReference = 4ED3FE9E1ED597FC004BC048 /* KabuKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		4EF5CCEE1DE30A0C00683D1E /* KabuKitTests */ = {
+		4ED3FEA61ED597FC004BC048 /* KabuKitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4EF5CCFD1DE30A0C00683D1E /* Build configuration list for PBXNativeTarget "KabuKitTests" */;
+			buildConfigurationList = 4ED3FEB51ED597FC004BC048 /* Build configuration list for PBXNativeTarget "KabuKitTests" */;
 			buildPhases = (
-				5DE2680468FAA45A4BE07D36 /* [CP] Check Pods Manifest.lock */,
-				4EF5CCEB1DE30A0C00683D1E /* Sources */,
-				4EF5CCEC1DE30A0C00683D1E /* Frameworks */,
-				4EF5CCED1DE30A0C00683D1E /* Resources */,
-				DD3C60FC780153DDEFC52A5E /* [CP] Embed Pods Frameworks */,
-				E07EA2C3D7E5E6B3D4631A04 /* [CP] Copy Pods Resources */,
+				68EEEEF01B55E5FEA3EB2C0D /* [CP] Check Pods Manifest.lock */,
+				4ED3FEA31ED597FC004BC048 /* Sources */,
+				4ED3FEA41ED597FC004BC048 /* Frameworks */,
+				4ED3FEA51ED597FC004BC048 /* Resources */,
+				730B04DBFD9A37B20698EFA9 /* [CP] Embed Pods Frameworks */,
+				B4D9BABF3E707E7C7B80C75A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4EF5CCF21DE30A0C00683D1E /* PBXTargetDependency */,
+				4ED3FEAA1ED597FC004BC048 /* PBXTargetDependency */,
 			);
 			name = KabuKitTests;
 			productName = KabuKitTests;
-			productReference = 4EF5CCEF1DE30A0C00683D1E /* KabuKitTests.xctest */;
+			productReference = 4ED3FEA71ED597FC004BC048 /* KabuKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		A6C4ABEB1DF9712500D2491A /* KabuKit-iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = A6C4AC021DF9712500D2491A /* Build configuration list for PBXNativeTarget "KabuKit-iOS" */;
-			buildPhases = (
-				A6C4ABED1DF9712500D2491A /* Sources */,
-				A6C4ABFC1DF9712500D2491A /* Frameworks */,
-				A6C4ABFE1DF9712500D2491A /* Headers */,
-				A6C4AC001DF9712500D2491A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "KabuKit-iOS";
-			productName = KabuKit;
-			productReference = A6C4AC051DF9712500D2491A /* KabuKit.framework */;
-			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		4EF5CCDD1DE30A0C00683D1E /* Project object */ = {
+		4ED3FE951ED597FC004BC048 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
-				ORGANIZATIONNAME = crexista;
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = crexi;
 				TargetAttributes = {
-					4EF5CCE51DE30A0C00683D1E = {
-						CreatedOnToolsVersion = 8.0;
-						LastSwiftMigration = 0830;
-						ProvisioningStyle = Manual;
+					4ED3FE9D1ED597FC004BC048 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = WTEM5BVC5B;
+						ProvisioningStyle = Automatic;
 					};
-					4EF5CCEE1DE30A0C00683D1E = {
-						CreatedOnToolsVersion = 8.0;
-						LastSwiftMigration = 0800;
+					4ED3FEA61ED597FC004BC048 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = WTEM5BVC5B;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 4EF5CCE01DE30A0C00683D1E /* Build configuration list for PBXProject "KabuKit" */;
+			buildConfigurationList = 4ED3FE981ED597FC004BC048 /* Build configuration list for PBXProject "KabuKit" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 4EF5CCDC1DE30A0C00683D1E;
-			productRefGroup = 4EF5CCE71DE30A0C00683D1E /* Products */;
+			mainGroup = 4ED3FE941ED597FC004BC048;
+			productRefGroup = 4ED3FE9F1ED597FC004BC048 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4EF5CCE51DE30A0C00683D1E /* KabuKit */,
-				A6C4ABEB1DF9712500D2491A /* KabuKit-iOS */,
-				4EF5CCEE1DE30A0C00683D1E /* KabuKitTests */,
+				4ED3FE9D1ED597FC004BC048 /* KabuKit */,
+				4ED3FEA61ED597FC004BC048 /* KabuKitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		4EF5CCE41DE30A0C00683D1E /* Resources */ = {
+		4ED3FE9C1ED597FC004BC048 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4ED3FED91ED5989E004BC048 /* .gitkeep in Resources */,
+				4ED3FECF1ED5989E004BC048 /* .gitkeep in Resources */,
+				4ED3FED81ED5989E004BC048 /* .gitkeep in Resources */,
+				4ED3FEDA1ED5989E004BC048 /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4EF5CCED1DE30A0C00683D1E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A6C4AC001DF9712500D2491A /* Resources */ = {
+		4ED3FEA51ED597FC004BC048 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -463,7 +359,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4D286322F4FD3E46231E45CD /* [CP] Check Pods Manifest.lock */ = {
+		22B5DB6BCED323C80181CDBA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -478,7 +374,7 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		5DE2680468FAA45A4BE07D36 /* [CP] Check Pods Manifest.lock */ = {
+		68EEEEF01B55E5FEA3EB2C0D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -493,22 +389,7 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		7750FBC78671C17959E4E850 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DD3C60FC780153DDEFC52A5E /* [CP] Embed Pods Frameworks */ = {
+		730B04DBFD9A37B20698EFA9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -523,7 +404,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KabuKitTests/Pods-KabuKitTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E07EA2C3D7E5E6B3D4631A04 /* [CP] Copy Pods Resources */ = {
+		B4D9BABF3E707E7C7B80C75A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -538,75 +419,64 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KabuKitTests/Pods-KabuKitTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		BF20362793E2C2B00132A3C1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KabuKit/Pods-KabuKit-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		4EF5CCE11DE30A0C00683D1E /* Sources */ = {
+		4ED3FE991ED597FC004BC048 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EFE66BB1ED544B100E96BCE /* Router.swift in Sources */,
-				4EFE66BA1ED544B100E96BCE /* LinkHandler.swift in Sources */,
-				4EFE66BE1ED544B100E96BCE /* SceneSequence.swift in Sources */,
-				4EFE66BD1ED544B100E96BCE /* Scene.swift in Sources */,
-				4EFE66B81ED544B100E96BCE /* HashWrap.swift in Sources */,
-				4EFE66BC1ED544B100E96BCE /* Scenario.swift in Sources */,
-				4EFE66B91ED544B100E96BCE /* Link.swift in Sources */,
-				4EFE66BF1ED544B100E96BCE /* Page.swift in Sources */,
+				4ED3FED01ED5989E004BC048 /* HashWrap.swift in Sources */,
+				4ED3FED21ED5989E004BC048 /* LinkHandler.swift in Sources */,
+				4ED3FED41ED5989E004BC048 /* Router.swift in Sources */,
+				4ED3FED51ED5989E004BC048 /* Scenario.swift in Sources */,
+				4ED3FED61ED5989E004BC048 /* Scene.swift in Sources */,
+				4ED3FED71ED5989E004BC048 /* SceneSequence.swift in Sources */,
+				4ED3FED31ED5989E004BC048 /* Page.swift in Sources */,
+				4ED3FED11ED5989E004BC048 /* Link.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4EF5CCEB1DE30A0C00683D1E /* Sources */ = {
+		4ED3FEA31ED597FC004BC048 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4E0941CF1E23FF4900FBAF21 /* DirectorSpec.swift in Sources */,
-				4E6093791E283CAB00C7A234 /* RxSwiftEventSpec.swift in Sources */,
-				4E0942021E25074A00FBAF21 /* ActionActivatorSpec.swift in Sources */,
-				4E0941CB1E23F47000FBAF21 /* SceneLinkageSpec.swift in Sources */,
-				4ED7E59F1E256BC70072CEE9 /* ActionSceneSpec.swift in Sources */,
-				4E0941F71E242E1800FBAF21 /* MockRequest.swift in Sources */,
-				4E0941D11E24035A00FBAF21 /* SceneRequestSpec.swift in Sources */,
-				4E0941CD1E23FA9D00FBAF21 /* SceneSequenceSpec.swift in Sources */,
-				4E6093721E281A2400C7A234 /* ProducerSpec.swift in Sources */,
-				4E0941F91E242E3300FBAF21 /* MockRouter.swift in Sources */,
-				4E86AA991DF4359D0039D8B7 /* SceneManagerSpec.swift in Sources */,
-				4E6093741E281B4200C7A234 /* SimpleMockScene.swift in Sources */,
-				4E0941C91E23EE8000FBAF21 /* SceneSpec.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A6C4ABED1DF9712500D2491A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4ED3FE8F1ED57671004BC048 /* Router.swift in Sources */,
-				4ED3FE8C1ED57669004BC048 /* HashWrap.swift in Sources */,
-				4ED3FE931ED5767D004BC048 /* Page.swift in Sources */,
-				4ED3FE921ED5767A004BC048 /* SceneSequence.swift in Sources */,
-				4ED3FE911ED57677004BC048 /* Scene.swift in Sources */,
-				4ED3FE8E1ED5766E004BC048 /* LinkHandler.swift in Sources */,
-				4ED3FE901ED57674004BC048 /* Scenario.swift in Sources */,
-				4ED3FE8D1ED5766C004BC048 /* Link.swift in Sources */,
+				4ED3FEAD1ED597FC004BC048 /* KabuKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4EF5CCF21DE30A0C00683D1E /* PBXTargetDependency */ = {
+		4ED3FEAA1ED597FC004BC048 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4EF5CCE51DE30A0C00683D1E /* KabuKit */;
-			targetProxy = 4EF5CCF11DE30A0C00683D1E /* PBXContainerItemProxy */;
+			target = 4ED3FE9D1ED597FC004BC048 /* KabuKit */;
+			targetProxy = 4ED3FEA91ED597FC004BC048 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		4EF5CCF81DE30A0C00683D1E /* Debug */ = {
+		4ED3FEB01ED597FC004BC048 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -620,7 +490,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -643,7 +513,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -655,11 +525,12 @@
 			};
 			name = Debug;
 		};
-		4EF5CCF91DE30A0C00683D1E /* Release */ = {
+		4ED3FEB11ED597FC004BC048 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -673,7 +544,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -690,7 +561,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -701,14 +572,13 @@
 			};
 			name = Release;
 		};
-		4EF5CCFB1DE30A0C00683D1E /* Debug */ = {
+		4ED3FEB31ED597FC004BC048 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A26D6A4DD87C05D577497305 /* Pods-KabuKit.debug.xcconfig */;
+			baseConfigurationReference = C9C685B81034350715F5187A /* Pods-KabuKit.debug.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = WTEM5BVC5B;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -718,19 +588,17 @@
 				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.KabuKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
-		4EF5CCFC1DE30A0C00683D1E /* Release */ = {
+		4ED3FEB41ED597FC004BC048 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2951D074F80F73608CC677F9 /* Pods-KabuKit.release.xcconfig */;
+			baseConfigurationReference = 0F9DE3366982BF7BAD942196 /* Pods-KabuKit.release.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = WTEM5BVC5B;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -744,79 +612,30 @@
 			};
 			name = Release;
 		};
-		4EF5CCFE1DE30A0C00683D1E /* Debug */ = {
+		4ED3FEB61ED597FC004BC048 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4DC74D11E4722F083D18D976 /* Pods-KabuKitTests.debug.xcconfig */;
+			baseConfigurationReference = D3C569CB8753E2E79542FC4F /* Pods-KabuKitTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = WTEM5BVC5B;
 				INFOPLIST_FILE = KabuKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.KabuKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "KabuKitTests/Classes/core/Swift/KabuKitTests-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
-		4EF5CCFF1DE30A0C00683D1E /* Release */ = {
+		4ED3FEB71ED597FC004BC048 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8CD26C938C33D82821D9964 /* Pods-KabuKitTests.release.xcconfig */;
+			baseConfigurationReference = E1969C1F61AF9E190EDCBE12 /* Pods-KabuKitTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = WTEM5BVC5B;
 				INFOPLIST_FILE = KabuKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.KabuKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "KabuKitTests/Classes/core/Swift/KabuKitTests-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		A6C4AC031DF9712500D2491A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/KabuKit/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.KabuKit;
-				PRODUCT_NAME = KabuKit;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		A6C4AC041DF9712500D2491A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/KabuKit/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = st.crexi.KabuKit;
-				PRODUCT_NAME = KabuKit;
-				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -824,43 +643,34 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4EF5CCE01DE30A0C00683D1E /* Build configuration list for PBXProject "KabuKit" */ = {
+		4ED3FE981ED597FC004BC048 /* Build configuration list for PBXProject "KabuKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4EF5CCF81DE30A0C00683D1E /* Debug */,
-				4EF5CCF91DE30A0C00683D1E /* Release */,
+				4ED3FEB01ED597FC004BC048 /* Debug */,
+				4ED3FEB11ED597FC004BC048 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4EF5CCFA1DE30A0C00683D1E /* Build configuration list for PBXNativeTarget "KabuKit" */ = {
+		4ED3FEB21ED597FC004BC048 /* Build configuration list for PBXNativeTarget "KabuKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4EF5CCFB1DE30A0C00683D1E /* Debug */,
-				4EF5CCFC1DE30A0C00683D1E /* Release */,
+				4ED3FEB31ED597FC004BC048 /* Debug */,
+				4ED3FEB41ED597FC004BC048 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4EF5CCFD1DE30A0C00683D1E /* Build configuration list for PBXNativeTarget "KabuKitTests" */ = {
+		4ED3FEB51ED597FC004BC048 /* Build configuration list for PBXNativeTarget "KabuKitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4EF5CCFE1DE30A0C00683D1E /* Debug */,
-				4EF5CCFF1DE30A0C00683D1E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A6C4AC021DF9712500D2491A /* Build configuration list for PBXNativeTarget "KabuKit-iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A6C4AC031DF9712500D2491A /* Debug */,
-				A6C4AC041DF9712500D2491A /* Release */,
+				4ED3FEB61ED597FC004BC048 /* Debug */,
+				4ED3FEB71ED597FC004BC048 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 4EF5CCDD1DE30A0C00683D1E /* Project object */;
+	rootObject = 4ED3FE951ED597FC004BC048 /* Project object */;
 }
