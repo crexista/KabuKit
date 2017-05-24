@@ -6,7 +6,7 @@ public protocol Scenario : class {
     
     func routing(router: Router<StageType>)
     
-    func onEnd<S: Scene>(scene: S, stage: StageType)
+    func onEnd<S: Page>(page: S, stage: StageType)
 }
 
 extension Page where Self: Scenario {
@@ -16,12 +16,5 @@ extension Page where Self: Scenario {
         self.routing(router: router)
         return router.resolve(link: link, current: self)
     }
-    
-    @discardableResult
-    public func jumpTo<T>(_ link: Link<T>) -> Bool {
-        self.handler?.handle(self, link)
-        return true
-    }
-
     
 }
