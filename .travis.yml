@@ -2,7 +2,7 @@ language: objective-c
 
 matrix:
   include:
-    - osx_image: xcode8.2
+    - osx_image: xcode8.3
       env: SCHEME="iOS"
       script: "bundle exec fastlane ios test"
 

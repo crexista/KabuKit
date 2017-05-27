@@ -41,7 +41,6 @@
 		201706C5FED9D83C6BAB85C3 /* Pods-Sample2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sample2/Pods-Sample2.debug.xcconfig"; sourceTree = "<group>"; };
 		21C615BF782FA815F1751852 /* Pods_Sample2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A6B9E290930010B7FCA4155 /* Pods-Sample1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample1.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sample1/Pods-Sample1.debug.xcconfig"; sourceTree = "<group>"; };
-		4E0941C11E23B19E00FBAF21 /* Sample2.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Sample2.playground; sourceTree = "<group>"; };
 		4E7084191DE6CAF40072F7EE /* Sample1AViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sample1AViewController.swift; sourceTree = "<group>"; };
 		4E70841D1DE6CB1B0072F7EE /* Sample1BViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sample1BViewController.swift; sourceTree = "<group>"; };
 		4E7084311DE6E3290072F7EE /* Sample1AViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Sample1AViewController.xib; sourceTree = "<group>"; };
@@ -240,7 +239,6 @@
 				4EF5CD2D1DE30BFC00683D1E /* LaunchScreen.storyboard */,
 				4EF5CD301DE30BFC00683D1E /* Info.plist */,
 				4EFFC33D1DE4C5B7006B1587 /* Sample.playground */,
-				4E0941C11E23B19E00FBAF21 /* Sample2.playground */,
 			);
 			path = Sample1;
 			sourceTree = "<group>";
