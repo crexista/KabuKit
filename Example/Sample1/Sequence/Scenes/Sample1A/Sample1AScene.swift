@@ -11,14 +11,15 @@ extension Sample1AViewController: Scene {
     typealias ContextType = Bool
     
     func onPressAButton(sender: UIButton) {
-        jumpTo(Link<String>(""))
+        jumpTo(SampleALink(true))
     }
     
     func onPressBButton(sender: UIButton) {
+        jumpTo(SampleBLink())
     }
     
     func onPressPrevButton(sender: UIButton) {
-
+        prev()
     }
     
     // MARK: - Override
@@ -33,8 +34,5 @@ extension Sample1AViewController: Scene {
         nextButtonA.addTarget(self, action: #selector(onPressAButton(sender:)), for: .touchUpInside)
         nextButtonB.addTarget(self, action: #selector(onPressBButton(sender:)), for: .touchUpInside)
         prevButton.addTarget(self, action: #selector(onPressPrevButton(sender:)), for: .touchUpInside)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
     }
 }

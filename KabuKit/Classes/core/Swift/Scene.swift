@@ -12,14 +12,8 @@ public protocol Scene : class, Page {
 
 extension Page where Self: Scene {
     
-    public internal(set) var context: ContextType? {
-        get {
-            return contextByPage[HashWrap(self)] as? Self.ContextType
-        }
-        
-        set(value) {
-            contextByPage[HashWrap(self)] = value
-        }
+    public var context: ContextType? {
+        return contextByPage[HashWrap(self)] as? Self.ContextType
     }
 
 }

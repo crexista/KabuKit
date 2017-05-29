@@ -13,8 +13,10 @@ import KabuKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var producer: Producer?
+
     var root: UIViewController?
+    
+    var sequence: SceneSequence<Void, SampleSequenceRule>?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -22,23 +24,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window!.rootViewController = UINavigationController(rootViewController: root!)
-        self.window!.rootViewController?.view.backgroundColor = UIColor.brown
-        self.window!.backgroundColor = UIColor.white
+        let nav = UINavigationController(rootViewController: root!)
+        self.window!.rootViewController = nav
         self.window!.makeKeyAndVisible()
 
         root?.navigationController?.setNavigationBarHidden(true, animated: true)
-//        root?.view.autoresizeMask = super.autoresizeMask
-//        root?.view.autoresizingMask
         let scene = Sample1AViewController(nibName: "Sample1AViewController", bundle: Bundle.main)
-        producer = Producer.run(sequence: SceneSequence(root!, scene, false) { (stage, scene) in
-            stage.view.autoresizingMask = (self.root?.view.autoresizingMask)!
-
-            stage.addChildViewController(scene)
-            stage.view.addSubview(scene.view)
-            scene.view.frame = (self.root?.view.frame)!
-        })
-
+        let rule = SampleSequenceRule()
+        sequence = SceneSequence<Void, SampleSequenceRule>(rule)
+        
+        sequence?.startWith(nav, scene, false) { (firstScene, stage) in
+            nav.pushViewController(firstScene, animated: true)
+        }
         return true
     }
 

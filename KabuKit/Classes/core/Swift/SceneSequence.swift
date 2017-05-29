@@ -9,31 +9,32 @@ internal var containerByScean = [HashWrap : LinkHandler]()
  このクラスの `start:` を明示的に呼ばないと内部でのSceneがリクエストしても画面遷移は行われない
 
  */
-public class SceneSequence<C, S: Scenario> : Scene, LinkHandler {
+public class SceneSequence<C, R: SequenceRule> : Scene, LinkHandler {
 
     public typealias ContextType = C
     
-    public typealias StageType = S.StageType
+    public typealias StageType = R.StageType
     
     private var scenes: [HashWrap]
     
-    private var isRecordable: Bool = true
+    private let isRecordable: Bool
     
-    private var scenario: S?
+    private var rule: R?
     
-    private var stage: S.StageType?
+    private var stage: R.StageType?
     
     internal func handle<P: Page, T>(_ from: P, _ link: Link<T>) -> Bool {
-        // scenario及びstageがセットされていない場合は遷移ができないのでなにもしない
-        guard let scenario = self.scenario else { return false }
+        // SequenceRule及びstageがセットされていない場合は遷移ができないのでなにもしない
+        guard let rule = self.rule else { return false }
         guard let stage = self.stage else { return false }
-        
-        let nextPageRequest = from.requestNextPage(scenario: scenario, link: link)
 
-        nextPageRequest.execute(from: from, stage: stage) { (nextPage) in
+        let transition = rule.scenario.resolve(current: from, link: link)
+
+        transition?.execute(from: from, stage: stage) { (nextPage) in
             guard self.isRecordable else { return }            
             let hashwrap = HashWrap(nextPage)
             scenes.append(hashwrap)
+            contextByPage[hashwrap] = link.context
             containerByScean[hashwrap] = self
         }
         
@@ -41,8 +42,8 @@ public class SceneSequence<C, S: Scenario> : Scene, LinkHandler {
     }
     
     internal func back<P: Page>(_ current: P) -> Bool {
-        // scenario及びstageがセットされていない場合は遷移ができないのでなにもしない
-        guard self.scenario != nil else { return false }
+        // SequenceRule及びstageがセットされていない場合は遷移ができないのでなにもしない
+        guard self.rule != nil else { return false }
         guard let stage = self.stage else { return false }
         
         // どのようにSceneが積み重ねなれるかのフラグ.
@@ -53,7 +54,7 @@ public class SceneSequence<C, S: Scenario> : Scene, LinkHandler {
         _ = scenes.popLast()
         containerByScean.removeValue(forKey: hashwrap)
         
-        self.scenario?.onEnd(page: current, stage: stage)
+        self.rule?.onEnd(page: current, stage: stage)
         return true
     }
     
@@ -64,20 +65,32 @@ public class SceneSequence<C, S: Scenario> : Scene, LinkHandler {
        - stage: Sceneが乗っかるstageオブジェクト
        - scene: 起動させた際に一番最初に表示させる画面
        - context: sceneを表示させるさいに必要となるcontextオブジェクト
-       - setup: sceneを表示させるのに必要となる処理
+       - invoke: sceneを表示させるのに必要となる処理
      */
-    public func startWith<T: Scene>(_ stage: S.StageType,
-                                    _ scene: T,
-                                    _ context: T.ContextType,
-                                    _ setup: (_ scene: T, _ stage: S.StageType) -> Void) {
+    public func startWith<S: Scene>(_ stage: R.StageType,
+                                    _ scene: S,
+                                    _ context: S.ContextType,
+                                    _ invoke: (_ scene: S, _ stage: R.StageType) -> Void) {
         self.stage = stage
         self.scenes.append(HashWrap(scene))
-        scene.context = context
+        let hashwrap = HashWrap(scene)
+        contextByPage[hashwrap] = context
+        containerByScean[hashwrap] = self
+        invoke(scene, stage)
     }
     
-    public init(_ scenario: S?) {
+    /**
+     SceneSequenceを生成する
+     
+     - Parameters:
+       - transition:  MEMO ruleという名前の方が良いかも・・・
+       - isRecordable: trueがデフォルト。 Scene遷移の履歴を保存するのかのフラグ
+                       ここがfalseだと履歴が保存されず、Sceneを実装したクラスの方でprev()を呼んでも何も起きない
+     */
+    public init(_ rule: R?, _ isRecordable: Bool = true) {
         scenes = [HashWrap]()
-        self.scenario = scenario
+        self.rule = rule
+        self.isRecordable = isRecordable
     }
 }
 
