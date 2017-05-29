@@ -7,7 +7,7 @@ public protocol Page : class {
      リンク先に遷移する
      
      - Attention:
-     指定リンク先がなにであるかはScenario側で指定しておく必要がある
+     指定リンク先がなにであるかはSequenceRule側で指定しておく必要がある
      
      それを忘れるとこのメソッドを呼んでもなにも起きない  
 
@@ -38,13 +38,8 @@ public protocol Page : class {
 extension Page {
 
     internal var handler: LinkHandler? {
+
         return containerByScean[HashWrap(self)]
-    }
-    
-    internal func requestNextPage<S: Scenario, T>(scenario: S, link: Link<T>) -> SceneRequest<S.StageType> {
-        let router = Router<S.StageType>()
-        scenario.routing(router: router)
-        return router.resolve(link: link, current: self)
     }
     
     @discardableResult

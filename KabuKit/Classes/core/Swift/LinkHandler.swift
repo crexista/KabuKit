@@ -3,7 +3,7 @@ import Foundation
 internal protocol LinkHandler {
     
     /**
-     指定のPageからのリンクをハンドルしてScenarioに指定されている画面へと遷移させる
+     指定のPageからのリンクをハンドルしてSequenceRuleに指定されている画面へと遷移させる
 
      - Parameters:
        - from: リンク元の画面
