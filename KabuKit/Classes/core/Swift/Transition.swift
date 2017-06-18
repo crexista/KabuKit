@@ -1,38 +1,44 @@
+//
+//  Copyright © 2017 crexista
+//
+
 import Foundation
 
-internal class Transition<Stage> : Hashable {
-    
-    private let execFunc: (_ stage: Stage, _ from: Page, _ prepare: (Page) -> Void) -> Void
-    
-    internal let hashValue: Int
-    
-    internal let name: String
-    
-    static public func ==(lhs: Transition, rhs: Transition) -> Bool {
-        return (lhs.hashValue == rhs.hashValue)
-    }
-    
-    internal func execute(from: Page, stage: Stage, _ prepare:(Page) -> Void) {
-        execFunc(stage, from, prepare)
-    }
-    
-    init<Next: Scene>(link: Link<Next.ContextType>.Type, next: @escaping () -> Next, f: @escaping (Page, Stage, Next) -> Void) {
-        name = String(describing: link)
-        hashValue = name.hashValue
-        execFunc = { (stage: Stage, from: Page, prepare: (Page) -> Void) -> Void in
-            let nextPage = next()
-            prepare(nextPage)
-            f(from, stage, nextPage)
-        }
-    }
+/**
+ 画面遷移を示したプロトコル
 
+ */
+protocol Transition {
     
-    init<Next: Scene>(link: Link<Next.ContextType>.Type, next: Next, f: @escaping (Page, Stage, Next) -> Void) {
-        name = String(describing: link)
-        hashValue = name.hashValue
-        execFunc = { (stage: Stage, from: Page, prepare: (Page) -> Void) -> Void in
-            prepare(next)
-            f(from, stage, next)
-        }
-    }
+    typealias Rewind = () -> Void
+   
+    /**
+     Trnasitionを実行するために必要なパラメータをセットする
+     
+     - Parameters:
+       - at: どこの画面のTransitionか指定するため
+       - stage: Transionを行うベースとなるメソッド
+       - rewind: 前の画面に戻る為の処理
+     */
+    func setup<S>(at: Screen, on stage: S, with: SceneContainer, when rewind: Rewind?)
+    
+    func setup<S>(at: Screen, on stage: S, with: SceneContainer, when rewind: Rewind?, _ completion: @escaping () -> Void)
+    
+    /**
+     Transitionを実行する
+     
+     - Parameters: 
+       - request: aa
+       - completion: Transtionの実行が完了した際に実行したい処理
+       - setup: completionより前に呼ばれる
+     */
+    func start<T>(at request: Request<T>, _ completion: @escaping (Bool) -> Void) -> Void
+    
+    
+    /**
+     前の画面に戻る
+     そのさい、事前に規定されたロジックが呼ばれる
+     
+     */
+    func back(_ completion: @escaping (Bool) -> Void)
 }

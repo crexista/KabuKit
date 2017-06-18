@@ -33,4 +33,5 @@ fastlane/test_output/*.*
 !.gitkeep
 .DS_Store
 bundle
+.bundle/*
 *.playground

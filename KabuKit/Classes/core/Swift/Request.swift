@@ -1,6 +1,6 @@
 import Foundation
 
-open class Link<ContextType> {
+open class Request<ContextType> {
     
     public let context: ContextType?
     
