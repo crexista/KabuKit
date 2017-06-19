@@ -15,40 +15,52 @@ class MockGuide: Guide {
     
     let tmpSecondScene: MockSecondScene = MockSecondScene()
 
-    func start(with operation: KabuKit.Operation<MockStage>) {
+    func start(with operation: KabuKit.SceneOperation<MockStage>) {
 
         operation.at(MockFirstScene.self) { (scenario) in
-            scenario.given(link: MockScenarioRequest1.self,
-                           to: makeFirstScene,
-                           begin: firstToFirst) { (args) in
-                            
-                            self.reset()
+            
+            scenario.given(MockScenarioRequest1.self, makeFirstScene) { (args) in
+                self.firstToFirst(args: args)
+                return {
+                    self.reset()
+                }
             }
             
-            scenario.given(link: MockScenarioRequest2.self, to: makeSecondScene, begin: firstToSecond) { (args) in
-                self.reset()
+            scenario.given(MockScenarioRequest2.self, makeSecondScene) { (args) in
+                self.firstToSecond(args: args)
+                return {
+                    self.reset()
+                }
             }
             
-            scenario.given(link: MockScenarioRequest3.self, to: {
+            scenario.given(MockScenarioRequest3.self, { () -> MockSecondScene in
                 self.calledFirstToSecond = true
                 return self.tmpSecondScene
-            }, begin: firstToSecond) { (args) in
-                self.reset()
+            }) { (args) in
+                self.firstToSecond(args: args)
+                return {
+                    self.reset()
+                }
             }
+
         
         operation.at(MockSecondScene.self) { (scenario) in
             
-            scenario.given(link: MockScenarioRequest1.self,
-                           to: makeFirstScene,
-                           begin: secondToFirst) { (args) in
-                self.reset()
+            scenario.given(MockScenarioRequest1.self, makeFirstScene){ (args) in
+                self.secondToFirst(args: args)
+                return {
+                    self.reset()
+                }
             }
+            
+            scenario.given(MockScenarioRequest2.self, makeSecondScene){ (args) in
+                self.secondToSecond(args: args)
+                return {
+                    self.reset()
+                }
+            }
+            
 
-            scenario.given(link: MockScenarioRequest2.self,
-                           to: makeSecondScene,
-                           begin: secondToSecond) { (args) in
-                self.reset()
-            }
             }
         }
     }

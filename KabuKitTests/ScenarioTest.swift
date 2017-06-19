@@ -25,13 +25,13 @@ class ScenarioTest: XCTestCase {
         var isBeginCalled = false
         var isEndCalled = false
         var isSetupCalled = false
-        scenario.given(link: MockScenarioRequest1.self,
-                       to: { () in MockSecondScene() },
-                       begin: { (args) in
-                        isBeginCalled = true
-        }) { (args) in
-            isEndCalled = true
+        scenario.given(MockScenarioRequest1.self, { () in MockSecondScene() }) { (args) in
+            isBeginCalled = true
+            return {
+                isEndCalled = true
+            }
         }
+
         scenario.setup(at: firstScene, on: stage, with: DummyContainer(), when: nil)
         scenario.start(at: MockScenarioRequest1()) { (complete) in
             XCTAssertTrue(isBeginCalled)
@@ -48,15 +48,13 @@ class ScenarioTest: XCTestCase {
         let scenario = Scenario<MockFirstScene, MockStage>(MockFirstScene.self)
         var isBeginCalled = false
         var isEndCalled = false
-
-        scenario.given(link: MockScenarioRequest1.self,
-                       to: { () in MockSecondScene() },
-                       begin: { (args) in
-                        isBeginCalled = true
-        }) { (args) in
-            isEndCalled = true
+        scenario.given(MockScenarioRequest1.self, { () in MockSecondScene() }) { (args) in
+            isBeginCalled = true
+            return {
+                isEndCalled = true
+            }
         }
-        
+
         scenario.back { (completion) in
 
         }
@@ -73,12 +71,12 @@ class ScenarioTest: XCTestCase {
         var isBeginCalled = false
         var isEndCalled = false
         var isSetupCalled = false
-        scenario.given(link: MockScenarioRequest1.self,
-                       to: { () in MockSecondScene() },
-                       begin: { (args) in
-                        isBeginCalled = true
-        }) { (args) in
-            isEndCalled = true
+        
+        scenario.given(MockScenarioRequest1.self, { () in MockSecondScene() }) { (args) in
+            isBeginCalled = true
+            return {
+                isEndCalled = true
+            }
         }
         
         scenario.setup(at: firstScene, on: stage, with: container, when: nil)

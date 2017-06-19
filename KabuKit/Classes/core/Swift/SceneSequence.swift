@@ -25,7 +25,7 @@ public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
     
     private var guide: G?
     
-    private var operation: Operation<G.Stage>?
+    private var operation: SceneOperation<G.Stage>?
     
     private let queue: DispatchQueue
 
@@ -58,7 +58,7 @@ public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
                                     _ scene: S,
                                     _ context: S.ContextType,
                                     _ invoke: @escaping (_ scene: S, _ stage: StageType) -> Void) {
-        let operation = Operation<StageType>()
+        let operation = SceneOperation<StageType>()
         self.stage = stage
         self.guide?.start(with: operation)
         self.operation = operation

@@ -17,7 +17,7 @@ public class Scenario<Current: Screen, Stage> : Transition {
     
     private let queue: DispatchQueue = DispatchQueue.main
     
-    fileprivate var dic = [String : (transitioning: Transitioning, back: Rewind)]()
+    fileprivate var dic = [String : Transitioning]()
 
     fileprivate var destination: Screen?
     
@@ -47,6 +47,7 @@ public class Scenario<Current: Screen, Stage> : Transition {
             self.stage = stg
             self.rewind = rewind
             self.container = with
+
             completion()
         }
     }
@@ -60,7 +61,7 @@ public class Scenario<Current: Screen, Stage> : Transition {
                 return
             }
             
-            tuple.transitioning(frm, stage, request.context)
+            tuple(frm, stage, request.context)
             completion(true)
         }
     }
@@ -79,68 +80,20 @@ public extension Scenario where Current : Scene {
     
     public typealias Args<Next: Scene> = (from: Current, next: Next, stage: Stage)
     
-    public func given<ContextType, Next: Scene>(link: Request<ContextType>.Type,
-                      to: @escaping () -> Next,
-                      begin: @escaping (Args<Next>) -> Void,
-                      end: @escaping (Args<Next>) -> Void) -> Void where Next.ContextType == ContextType {
+    public func given<ContextType, Next: Scene>(_ request: Request<ContextType>.Type,
+                      _ to: @escaping () -> Next,
+                      _ begin: @escaping (Args<Next>) -> Rewind) -> Void where Next.ContextType == ContextType {
         
-        let linkName = String(reflecting: link)
+        let linkName = String(reflecting: request)
         
-        let exitFunc = {
-            guard let stage = self.stage else { return }
-            guard let current = self.current else { return }
-            guard let next = self.destination as? Next else { return }
-
-            let args = Args<Next>(from: current, next: next, stage: stage)
-            end(args)
-            self.destination = nil
-        }
-
-        let transitFunc = { (from: Current, stage: Stage, context: Any?) in
-            guard let exitFunc = self.exitFunc else { return }
-            
+        let transitFunc = { (from: Current, stage: Stage, context: Any?) -> Void in
             let next = to()
             let args = Args<Next>(from: from, next: next, stage: stage)
             self.destination = next
-            self.container?.add(screen: next, context: context, rewind: exitFunc)
-            begin(args)
+            let f = begin(args)
+            self.container?.add(screen: next, context: context, rewind: f)
         }
         
-        self.exitFunc = exitFunc
-        dic[linkName] = (transitFunc, exitFunc)
-    }
-}
-
-public extension Scenario where Current : AnyTransition {
-    
-    public typealias Args2<Next: Scene> = (next: Next, stage: Stage)
-
-    public func given<ContextType, Next: Scene>(link: Request<ContextType>.Type,
-                      to: @escaping () -> Next,
-                      begin: @escaping (Args2<Next>) -> Void,
-                      end: @escaping (Args2<Next>) -> Void) -> Void where Next.ContextType == ContextType {
-        
-        let linkName = String(reflecting: link)
-        
-        let exitFunc = {
-            guard let stage = self.stage else { return }
-            guard let next = self.destination as? Next else { return }
-            
-            let args = Args2<Next>(next: next, stage: stage)
-            end(args)
-        }
-        
-        let transitFunc = { (from: Current, stage: Stage, context: Any?) in
-            guard let exitFunc = self.exitFunc else { return }
-            
-            let next = to()
-            let args = Args2<Next>(next: next, stage: stage)
-            self.destination = next
-            self.container?.add(screen: next, context: context, rewind: exitFunc)
-            begin(args)
-        }
-
-        self.exitFunc = exitFunc
-        dic[linkName] = (transitFunc, exitFunc)
+        dic[linkName] = transitFunc
     }
 }
