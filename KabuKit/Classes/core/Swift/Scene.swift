@@ -1,8 +1,8 @@
 import Foundation
 
-internal var contextByPage = [HashWrap : Any]()
+internal var contextByScreen = [ScreenHashWrapper : Any]()
 
-public protocol Scene : class, Page {
+public protocol Scene : class, Screen {
     
     associatedtype ContextType
     
@@ -10,10 +10,10 @@ public protocol Scene : class, Page {
 
 }
 
-extension Page where Self: Scene {
+extension Screen where Self: Scene {
     
     public var context: ContextType? {
-        return contextByPage[HashWrap(self)] as? Self.ContextType
+        return contextByScreen[ScreenHashWrapper(self)] as? Self.ContextType
     }
 
 }

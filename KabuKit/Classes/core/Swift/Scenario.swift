@@ -1,117 +1,146 @@
 import Foundation
 
-public class Scenario<Stage> {
-    
-    private var anyWhereRouting: [String : Transition<Stage>]
-    
-    private var sceneRouting: [String : [String : Transition<Stage>]]
-    
-    public init(){
-        self.sceneRouting = [String : [String : Transition<Stage>]]()
-        self.anyWhereRouting = [String : Transition<Stage>]()
-    }
-    
-    internal func resolve<T>(current: Page, link: Link<T>) -> Transition<Stage>? {
-        let pageName = String(describing: type(of: current))
-        let linkName = String(describing: type(of: link))
-        var requestDic = sceneRouting[pageName]
-        return requestDic?[linkName]
-    }
-    
-    fileprivate func store(transition: Transition<Stage>, from: Page.Type? = nil) {
-        guard (from != nil) else {
-            anyWhereRouting[transition.name] = transition;
-            return
-        }
-        let name = String(describing: from!)
-        var requestDic = sceneRouting[name] ?? [String : Transition<Stage>]()
-        requestDic[transition.name] = transition
-        sceneRouting[name] = requestDic
-        print(sceneRouting)
-    }
-    
-    /**
-     指定のシーンからあるLinkへリクエストが飛んだ時挙動を指定することができる
-     
-     ```
-     at(ExampleScene.self) { (term) in
-       term.when(ExpLink.self, to: NextScene()) { (from, next, stage)
-     
-       }
-     }
-     ```
-     のようにかける
-     
-     - Attention: atよりもfromか?
-     */
-    public func at<From: Page>(_ scene: From.Type, _ connect: (Term<Stage>) -> Void) -> Self {
-        let term = Term<Stage>(scenario: self, page: scene)
-        connect(term)
-        return self;
-    }
-    
-    
-    /**
-     不特定多数のシーンからあるLinkへリクエストが飛んだ時挙動を指定することができる
-     
-     ```
-     atAnyWhere { (term) in
-       term.when(ExpLink.self, to: NextScene()) { (from, next, stage)
-     
-       }
-     }
-     ```
-     のようにかける
-     
-     - Attention: atよりもfromか?
-     
-     */
-    public func atAnyWhere(_ connect: (Term<Stage>) -> Void) -> Self {
-        let term = Term<Stage>(scenario: self)
-        connect(term)
-        return self;
-    }
-        
-}
-
-import Foundation
-
 /**
- 画面遷移の条件を示すクラス
+ 特定の`Scene`を表示している最中Requestがきたらどの画面にどのように遷移するか、
+ そしてどのように画面を戻るか、を規定したクラス
+ 
+ 一つのSceneごとにつくられる
  
  */
-public class Term<Stage> {
+public class Scenario<Current: Screen, Stage> : Transition {
     
-    private weak var scenario: Scenario<Stage>?
-    private var pageType: Page.Type?
+    internal typealias Transitioning = (Current, Stage, Any?) -> Void
     
-    /**
-     Linkの飛び先と跳ぶ際の挙動を決める
-     
-     - Attention: whenというのはよいのか・・
-     - Parameters:
-     - link: Link
-     - to: linkの飛び先
-     - and: Sceneに遷移した際に行われる処理
-     */
-    public func when<Next: Scene>(_ link: Link<Next.ContextType>.Type, to: Next, _ and: @escaping (Page, Stage, Next) -> Void) {
-        let transition = Transition<Stage>(link: link, next: to, f: and)
-        scenario?.store(transition: transition, from: pageType)
-    }
+    public typealias Rewind = () -> Void
     
+    private var rewind: (() -> Void)?
     
-    public func when<Next: Scene>(_ link: Link<Next.ContextType>.Type, to: @escaping () -> Next, _ and: @escaping (Page, Stage, Next) -> Void) {
-        let transition = Transition<Stage>(link: link, next: to, f: and)
-        scenario?.store(transition: transition, from: pageType)
-    }
+    private let queue: DispatchQueue = DispatchQueue.main
+    
+    fileprivate var dic = [String : (transitioning: Transitioning, back: Rewind)]()
 
-    deinit {
-        print("term deinit")
+    fileprivate var destination: Screen?
+    
+    fileprivate var current: Current?
+    
+    fileprivate var stage: Stage?
+    
+    fileprivate var exitFunc: Rewind?
+    
+    fileprivate weak var container: SceneContainer?
+    
+    internal let name: String
+    
+    public init(_ fromType: Current.Type){
+        name = String(reflecting: fromType)
     }
     
-    internal init(scenario: Scenario<Stage>, page: Page.Type? = nil) {
-        self.scenario = scenario
-        self.pageType = page
+    internal func setup<S>(at: Screen, on stage: S, with: SceneContainer, when rewind: Transition.Rewind?) {
+        self.setup(at: at, on: stage, with: with, when: rewind, {})
     }
     
+    internal func setup<S>(at: Screen, on stage: S, with: SceneContainer, when rewind: Rewind?, _ completion: @escaping () -> Void) {
+        queue.async {
+            guard let c = at as? Current else { return }
+            guard let stg = stage as? Stage else { return }
+            self.current = c
+            self.stage = stg
+            self.rewind = rewind
+            self.container = with
+            completion()
+        }
+    }
+    
+    internal func start<T>(at request: Request<T>, _ completion: @escaping (Bool) -> Void) -> Void {
+        queue.async {
+            guard let frm = self.current else { return }
+            guard let stage = self.stage else { return }
+            guard let tuple = self.dic[String(describing: request)] else {
+                completion(false)
+                return
+            }
+            
+            tuple.transitioning(frm, stage, request.context)
+            completion(true)
+        }
+    }
+    
+    
+    internal func back(_ completion: @escaping (Bool) -> Void) {
+        queue.async {
+            self.rewind?()
+            completion(true)
+        }
+    }
+}
+
+
+public extension Scenario where Current : Scene {
+    
+    public typealias Args<Next: Scene> = (from: Current, next: Next, stage: Stage)
+    
+    public func given<ContextType, Next: Scene>(link: Request<ContextType>.Type,
+                      to: @escaping () -> Next,
+                      begin: @escaping (Args<Next>) -> Void,
+                      end: @escaping (Args<Next>) -> Void) -> Void where Next.ContextType == ContextType {
+        
+        let linkName = String(reflecting: link)
+        
+        let exitFunc = {
+            guard let stage = self.stage else { return }
+            guard let current = self.current else { return }
+            guard let next = self.destination as? Next else { return }
+
+            let args = Args<Next>(from: current, next: next, stage: stage)
+            end(args)
+            self.destination = nil
+        }
+
+        let transitFunc = { (from: Current, stage: Stage, context: Any?) in
+            guard let exitFunc = self.exitFunc else { return }
+            
+            let next = to()
+            let args = Args<Next>(from: from, next: next, stage: stage)
+            self.destination = next
+            self.container?.add(screen: next, context: context, rewind: exitFunc)
+            begin(args)
+        }
+        
+        self.exitFunc = exitFunc
+        dic[linkName] = (transitFunc, exitFunc)
+    }
+}
+
+public extension Scenario where Current : AnyTransition {
+    
+    public typealias Args2<Next: Scene> = (next: Next, stage: Stage)
+
+    public func given<ContextType, Next: Scene>(link: Request<ContextType>.Type,
+                      to: @escaping () -> Next,
+                      begin: @escaping (Args2<Next>) -> Void,
+                      end: @escaping (Args2<Next>) -> Void) -> Void where Next.ContextType == ContextType {
+        
+        let linkName = String(reflecting: link)
+        
+        let exitFunc = {
+            guard let stage = self.stage else { return }
+            guard let next = self.destination as? Next else { return }
+            
+            let args = Args2<Next>(next: next, stage: stage)
+            end(args)
+        }
+        
+        let transitFunc = { (from: Current, stage: Stage, context: Any?) in
+            guard let exitFunc = self.exitFunc else { return }
+            
+            let next = to()
+            let args = Args2<Next>(next: next, stage: stage)
+            self.destination = next
+            self.container?.add(screen: next, context: context, rewind: exitFunc)
+            begin(args)
+        }
+
+        self.exitFunc = exitFunc
+        dic[linkName] = (transitFunc, exitFunc)
+    }
 }

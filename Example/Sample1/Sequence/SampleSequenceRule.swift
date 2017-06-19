@@ -1,37 +1,52 @@
 import Foundation
 import KabuKit
 
-class SampleALink : Link<Bool> {}
-class SampleBLink : Link<Void> {}
+class SampleARequest : Request<Bool> {}
+class SampleBRequest : Request<Void> {}
 
-class SampleSequenceRule : SequenceRule {
-    typealias StageType = UINavigationController
+class SampleSequenceRule : Guide {
+    typealias Stage = UINavigationController
     
-    let scenario = Scenario<UINavigationController>()
-        // このような感じでroutingを書く
-    .at(Sample1AViewController.self) { (term) in
-        term.when(SampleALink.self, to: { Sample1AViewController() }) { (from, stage, next) in
-            stage.pushViewController(next, animated: true)
+    func start(with operation: KabuKit.Operation<UINavigationController>) {
+        operation.at(Sample1AViewController.self) { (scenario) in
+            scenario.given(link: SampleARequest.self, to: { () in
+                return Sample1AViewController()
+            }, begin: { (args) in
+                let next = args.next
+                args.stage.pushViewController(next, animated: true)
+            }, end: { (args) in
+                args.stage.popViewController(animated: true)
+            })
+            
+            scenario.given(link: SampleBRequest.self, to: { () in
+                return Sample1BViewController()
+            }, begin: { (args) in
+                let next = args.next
+                args.stage.pushViewController(next, animated: true)
+            }, end: { (args) in
+                args.stage.popViewController(animated: true)
+            })
         }
         
-        term.when(SampleBLink.self, to: { Sample1BViewController() }) { (from, stage, next) in
-            stage.pushViewController(next, animated: true)
+        operation.at(Sample1BViewController.self) { (scenario) in
+            scenario.given(link: SampleARequest.self, to: { () in
+                return Sample1AViewController()
+            }, begin: { (args) in
+                let next = args.next
+                args.stage.pushViewController(next, animated: true)
+            }, end: { (args) in
+                args.stage.popViewController(animated: true)
+            })
+            
+            scenario.given(link: SampleBRequest.self, to: { () in
+                return Sample1BViewController()
+            }, begin: { (args) in
+                let next = args.next
+                args.stage.pushViewController(next, animated: true)
+            }, end: { (args) in
+                args.stage.popViewController(animated: true)
+            })
         }
-        
-    }.at(Sample1BViewController.self) { (term) in
-        
-        term.when(SampleALink.self, to: { Sample1AViewController() }) { (from, stage, next) in
-            stage.pushViewController(next, animated: true)
-        }
-        
-        term.when(SampleBLink.self, to: { Sample1BViewController() }) { (from, stage, next) in
-            stage.pushViewController(next, animated: true)
-        }
-    }
-    
-    
-    func onEnd<S>(page: S, stage: UINavigationController) where S : Page {
-        stage.popViewController(animated: true)
     }
 
 }
