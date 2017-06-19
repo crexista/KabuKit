@@ -13,7 +13,7 @@ public protocol Screen : class {
 
      
      - Parameters:
-       - link: 遷移先へのリンク
+       - request: 遷移先へのリンク
      */
     func send<T>(_ request: Request<T>, _ completion: @escaping (Bool) -> Void) -> Void
     

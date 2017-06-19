@@ -16,7 +16,7 @@
 		4E5CF28F1EF59DDB00F03C52 /* MockScenarioRequest2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CF28E1EF59DDB00F03C52 /* MockScenarioRequest2.swift */; };
 		4E5CF2911EF6EB4900F03C52 /* DummyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CF2901EF6EB4900F03C52 /* DummyContainer.swift */; };
 		4E5CF2931EF6F98C00F03C52 /* MockScenarioRequest3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CF2921EF6F98C00F03C52 /* MockScenarioRequest3.swift */; };
-		4EC432F61EED720C00FF4145 /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC432F51EED720C00FF4145 /* Operation.swift */; };
+		4EC432F61EED720C00FF4145 /* SceneOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC432F51EED720C00FF4145 /* SceneOperation.swift */; };
 		4EC4333E1EEF14AF00FF4145 /* ScenarioTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC4333D1EEF14AF00FF4145 /* ScenarioTest.swift */; };
 		4EC433421EEFFAA100FF4145 /* Guide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC433411EEFFAA000FF4145 /* Guide.swift */; };
 		4EC433441EF012C400FF4145 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC433431EF012C400FF4145 /* Transition.swift */; };
@@ -58,7 +58,7 @@
 		4E5CF28E1EF59DDB00F03C52 /* MockScenarioRequest2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockScenarioRequest2.swift; sourceTree = "<group>"; };
 		4E5CF2901EF6EB4900F03C52 /* DummyContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyContainer.swift; sourceTree = "<group>"; };
 		4E5CF2921EF6F98C00F03C52 /* MockScenarioRequest3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockScenarioRequest3.swift; sourceTree = "<group>"; };
-		4EC432F51EED720C00FF4145 /* Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
+		4EC432F51EED720C00FF4145 /* SceneOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneOperation.swift; sourceTree = "<group>"; };
 		4EC4333D1EEF14AF00FF4145 /* ScenarioTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScenarioTest.swift; sourceTree = "<group>"; };
 		4EC433411EEFFAA000FF4145 /* Guide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Guide.swift; sourceTree = "<group>"; };
 		4EC433431EF012C400FF4145 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
@@ -196,7 +196,7 @@
 				4ED3FEC11ED5989E004BC048 /* Scenario.swift */,
 				4ED3FEC31ED5989E004BC048 /* Scene.swift */,
 				4ED3FEC41ED5989E004BC048 /* SceneSequence.swift */,
-				4EC432F51EED720C00FF4145 /* Operation.swift */,
+				4EC432F51EED720C00FF4145 /* SceneOperation.swift */,
 				4EC433411EEFFAA000FF4145 /* Guide.swift */,
 				4EC433431EF012C400FF4145 /* Transition.swift */,
 			);
@@ -385,7 +385,7 @@
 			files = (
 				4ED3FED01ED5989E004BC048 /* ScreenHashWrapper.swift in Sources */,
 				4ED3FED21ED5989E004BC048 /* Director.swift in Sources */,
-				4EC432F61EED720C00FF4145 /* Operation.swift in Sources */,
+				4EC432F61EED720C00FF4145 /* SceneOperation.swift in Sources */,
 				4ED3FED41ED5989E004BC048 /* Scenario.swift in Sources */,
 				4EC433441EF012C400FF4145 /* Transition.swift in Sources */,
 				4ED3FED61ED5989E004BC048 /* Scene.swift in Sources */,

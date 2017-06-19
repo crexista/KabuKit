@@ -8,7 +8,7 @@ import Foundation
  どのSceneでどのようなScenarioを実行するかをまとめたクラス
  
  */
-public class Operation<Stage> {
+public class SceneOperation<Stage> {
     
     private var scenedTransition = [String : Transition]()
     
@@ -21,7 +21,7 @@ public class Operation<Stage> {
      
      ```Swift
      operation.at(SampleScene.self) { (scenario) in
-         scenario.given(link: SampleRequest.self, to: { () -> Scene in
+         scenario.given(request: SampleRequest.self, to: { () -> Scene in
      
          }, begin: { (args) in
      
@@ -47,7 +47,7 @@ public class Operation<Stage> {
      
      ```Swift
      operation.atAnyScene { (scenario) in
-         scenario.given(link: SampleRequest.self, to: { () -> Scene in
+         scenario.given(request: SampleRequest.self, to: { () -> Scene in
 
          }, begin: { (args) in
  

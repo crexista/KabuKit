@@ -8,5 +8,5 @@ public protocol Guide {
 
     associatedtype Stage
     
-    func start(with operation: Operation<Stage>) -> Void
+    func start(with operation: SceneOperation<Stage>) -> Void
 }

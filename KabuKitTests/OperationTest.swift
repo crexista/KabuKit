@@ -1,5 +1,5 @@
 //
-//  OperationTest.swift
+//  SceneOperationTest.swift
 //  KabuKit
 //
 //  Created by crexista on 2017/06/14.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import KabuKit
 
-class OperationTest: XCTestCase {
+class SceneOperationTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -22,21 +22,21 @@ class OperationTest: XCTestCase {
     }
     
     func test_atで定義したScenarioがある場合はresolveで取得できる() {
-        let operation = KabuKit.Operation<MockStage>()
+        let operation = KabuKit.SceneOperation<MockStage>()
         operation.at(MockFirstScene.self) { (s) in }
         let scenario = operation.resolve(from: MockFirstScene())
         XCTAssertNotNil(scenario)
     }
     
     func test_atで定義したScenarioがない場合はresolveで取得できない() {
-        let operation = KabuKit.Operation<MockStage>()
+        let operation = KabuKit.SceneOperation<MockStage>()
         operation.at(MockFirstScene.self) { (s) in }
         let scenario = operation.resolve(from: MockSecondScene())
         XCTAssertNil(scenario)
     }
     
     func test_atAnyWhereを一度でも定義するとatで定義していないSceneでもScenarioの取得ができる() {
-        let operation = KabuKit.Operation<MockStage>()
+        let operation = KabuKit.SceneOperation<MockStage>()
         let scenario0 = operation.resolve()
         XCTAssertNil(scenario0)
         operation.atAnyScene { (s) in }
