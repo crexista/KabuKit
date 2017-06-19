@@ -10,11 +10,11 @@ import Foundation
  */
 public class SceneOperation<Stage> {
     
-    private var scenedTransition = [String : Transition]()
+    private var scenedTransitionProcedure = [String : TransitionProcedure]()
     
-    private var anyTransition: Transition?
+    private var anyTransitionProcedure: TransitionProcedure?
     
-    private let anyTransitionName: String
+    private let anyTransitionProcedureName: String
 
     /**
      指定したSceneでのScenarioのフローを定義します
@@ -37,7 +37,7 @@ public class SceneOperation<Stage> {
      */
     public func at<From: Scene>(_ fromType: From.Type, _ run: (Scenario<From, Stage>) -> Void) {
         let scenario = Scenario<From, Stage>(fromType)
-        scenedTransition[scenario.name] = scenario
+        scenedTransitionProcedure[scenario.name] = scenario
         run(scenario)
     }
     
@@ -60,27 +60,27 @@ public class SceneOperation<Stage> {
      - Parameters:
        - run: Scenarioを使ったフロー
      */
-    public func atAnyScene(run: (Scenario<AnyTransition, Stage>) -> Void){
-        anyTransition = anyTransition ?? Scenario<AnyTransition, Stage>(AnyTransition.self)
-        guard let scenario = anyTransition as? Scenario<AnyTransition, Stage> else { return }
-        scenedTransition[anyTransitionName] = scenario
+    public func atAnyScene(run: (Scenario<AnyTransitionProcedure, Stage>) -> Void){
+        anyTransitionProcedure = anyTransitionProcedure ?? Scenario<AnyTransitionProcedure, Stage>(AnyTransitionProcedure.self)
+        guard let scenario = anyTransitionProcedure as? Scenario<AnyTransitionProcedure, Stage> else { return }
+        scenedTransitionProcedure[anyTransitionProcedureName] = scenario
         run(scenario)
     }
     
-    internal func resolve(from: Screen) -> Transition? {
+    internal func resolve(from: Screen) -> TransitionProcedure? {
         let name = String(reflecting: type(of: from))
-        return scenedTransition[name]
+        return scenedTransitionProcedure[name]
     }
     
-    internal func resolve() -> Transition? {
-        return scenedTransition[anyTransitionName]
+    internal func resolve() -> TransitionProcedure? {
+        return scenedTransitionProcedure[anyTransitionProcedureName]
     }
 
     internal init() {
-        anyTransitionName = String(reflecting: AnyTransition.self)
+        anyTransitionProcedureName = String(reflecting: AnyTransitionProcedure.self)
     }
 }
 
-public class AnyTransition: Screen {
+public class AnyTransitionProcedure: Screen {
     internal init() {}
 }

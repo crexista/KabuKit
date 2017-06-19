@@ -5,18 +5,18 @@
 import Foundation
 
 /**
- 画面遷移を示したプロトコル
+ 画面を切り替える手順を示したプロトコル
 
  */
-protocol Transition {
+protocol TransitionProcedure {
     
     typealias Rewind = () -> Void
    
     /**
-     Trnasitionを実行するために必要なパラメータをセットする
+     TransitionProcedureを実行するために必要なパラメータをセットする
      
      - Parameters:
-       - at: どこの画面のTransitionか指定するため
+       - at: どこの画面のTransitionProcedureか指定するため
        - stage: Transionを行うベースとなるメソッド
        - rewind: 前の画面に戻る為の処理
      */
@@ -25,7 +25,7 @@ protocol Transition {
     func setup<S>(at: Screen, on stage: S, with: SceneContainer, when rewind: Rewind?, _ completion: @escaping () -> Void)
     
     /**
-     Transitionを実行する
+     TransitionProcedureを実行する
      
      - Parameters: 
        - request: aa
