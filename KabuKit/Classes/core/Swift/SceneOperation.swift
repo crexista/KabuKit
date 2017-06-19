@@ -69,7 +69,6 @@ public class SceneOperation<Stage> {
     
     internal func resolve(from: Screen) -> Transition? {
         let name = String(reflecting: type(of: from))
-        print(name)
         return scenedTransition[name]
     }
     

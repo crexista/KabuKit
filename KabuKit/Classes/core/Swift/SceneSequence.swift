@@ -25,12 +25,12 @@ public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
     
     private var guide: G?
     
-    private var operation: SceneOperation<G.Stage>?
-    
     private let queue: DispatchQueue
 
     internal func add<T>(screen: Screen, context: T?, rewind: @escaping () -> Void) {
-        guard let scenario = self.operation?.resolve(from: screen) else { return }
+        let operation = SceneOperation<StageType>()
+        self.guide?.start(with: operation)
+        guard let scenario = operation.resolve(from: screen) else { return }
         let hashwrap = ScreenHashWrapper(screen)
         self.scenes.append(screen)
         transitionByScene[hashwrap] = scenario
@@ -43,6 +43,7 @@ public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
         _ = self.scenes.popLast()
         transitionByScene.removeValue(forKey: hashwrap)
         contextByScreen.removeValue(forKey: hashwrap)
+        completion()
     }
     
     /**
@@ -61,12 +62,14 @@ public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
         let operation = SceneOperation<StageType>()
         self.stage = stage
         self.guide?.start(with: operation)
-        self.operation = operation
+
         // TODO FIX, Any Pattern
         guard let scenario = operation.resolve(from: scene) else { return }
-        
         scenario.setup(at: scene, on: stage, with: self, when: nil) {
-            self.add(screen: scene, context: context, rewind: {})
+            let hashwrap = ScreenHashWrapper(scene)
+            self.scenes.append(scene)
+            transitionByScene[hashwrap] = scenario
+            contextByScreen[hashwrap] = context
             invoke(scene, stage)
         }
     }
