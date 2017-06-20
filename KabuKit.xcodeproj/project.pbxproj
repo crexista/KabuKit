@@ -20,7 +20,7 @@
 		4EC432F61EED720C00FF4145 /* SceneOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC432F51EED720C00FF4145 /* SceneOperation.swift */; };
 		4EC4333E1EEF14AF00FF4145 /* ScenarioTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC4333D1EEF14AF00FF4145 /* ScenarioTest.swift */; };
 		4EC433421EEFFAA100FF4145 /* Guide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC433411EEFFAA000FF4145 /* Guide.swift */; };
-		4EC433441EF012C400FF4145 /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC433431EF012C400FF4145 /* Transition.swift */; };
+		4EC433441EF012C400FF4145 /* TransitionProcedure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC433431EF012C400FF4145 /* TransitionProcedure.swift */; };
 		4EC4335B1EF06F5B00FF4145 /* OperationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC4335A1EF06F5B00FF4145 /* OperationTest.swift */; };
 		4ED3FEA81ED597FC004BC048 /* KabuKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED3FE9E1ED597FC004BC048 /* KabuKit.framework */; };
 		4ED3FEAD1ED597FC004BC048 /* KabuKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEAC1ED597FC004BC048 /* KabuKitTests.swift */; };
@@ -63,7 +63,7 @@
 		4EC432F51EED720C00FF4145 /* SceneOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneOperation.swift; sourceTree = "<group>"; };
 		4EC4333D1EEF14AF00FF4145 /* ScenarioTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScenarioTest.swift; sourceTree = "<group>"; };
 		4EC433411EEFFAA000FF4145 /* Guide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Guide.swift; sourceTree = "<group>"; };
-		4EC433431EF012C400FF4145 /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		4EC433431EF012C400FF4145 /* TransitionProcedure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionProcedure.swift; sourceTree = "<group>"; };
 		4EC4335A1EF06F5B00FF4145 /* OperationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationTest.swift; sourceTree = "<group>"; };
 		4ED3FE9E1ED597FC004BC048 /* KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ED3FEA11ED597FC004BC048 /* KabuKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KabuKit.h; sourceTree = "<group>"; };
@@ -201,7 +201,7 @@
 				4ED3FEC41ED5989E004BC048 /* SceneSequence.swift */,
 				4EC432F51EED720C00FF4145 /* SceneOperation.swift */,
 				4EC433411EEFFAA000FF4145 /* Guide.swift */,
-				4EC433431EF012C400FF4145 /* Transition.swift */,
+				4EC433431EF012C400FF4145 /* TransitionProcedure.swift */,
 			);
 			path = Swift;
 			sourceTree = "<group>";
@@ -390,7 +390,7 @@
 				4ED3FED21ED5989E004BC048 /* Director.swift in Sources */,
 				4EC432F61EED720C00FF4145 /* SceneOperation.swift in Sources */,
 				4ED3FED41ED5989E004BC048 /* Scenario.swift in Sources */,
-				4EC433441EF012C400FF4145 /* Transition.swift in Sources */,
+				4EC433441EF012C400FF4145 /* TransitionProcedure.swift in Sources */,
 				4ED3FED61ED5989E004BC048 /* Scene.swift in Sources */,
 				4ED3FED71ED5989E004BC048 /* SceneSequence.swift in Sources */,
 				4EC433421EEFFAA100FF4145 /* Guide.swift in Sources */,

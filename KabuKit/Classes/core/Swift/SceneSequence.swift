@@ -1,6 +1,6 @@
 import Foundation
 
-internal var transitionByScene = [ScreenHashWrapper : Transition]()
+internal var procedureByScene = [ScreenHashWrapper : TransitionProcedure]()
 
 /**
  複数のSceneを管理し、それぞれからの遷移リクエストを受け付け画面切り替えを行うクラス
@@ -17,7 +17,7 @@ public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
     
     private var scenes: [Screen]
     
-    private var currentTransition: Transition?
+    private var currentTransitionProcedure: TransitionProcedure?
     
     private let isRecordable: Bool
     
@@ -33,7 +33,7 @@ public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
         guard let scenario = operation.resolve(from: screen) else { return }
         let hashwrap = ScreenHashWrapper(screen)
         self.scenes.append(screen)
-        transitionByScene[hashwrap] = scenario
+        procedureByScene[hashwrap] = scenario
         contextByScreen[hashwrap] = context
         scenario.setup(at: screen, on: self.stage!, with: self, when: rewind)
     }
@@ -41,7 +41,7 @@ public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
     internal func remove(screen: Screen, completion: () -> Void) {
         let hashwrap = ScreenHashWrapper(screen)
         _ = self.scenes.popLast()
-        transitionByScene.removeValue(forKey: hashwrap)
+        procedureByScene.removeValue(forKey: hashwrap)
         contextByScreen.removeValue(forKey: hashwrap)
         completion()
     }
@@ -68,7 +68,7 @@ public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
         scenario.setup(at: scene, on: stage, with: self, when: nil) {
             let hashwrap = ScreenHashWrapper(scene)
             self.scenes.append(scene)
-            transitionByScene[hashwrap] = scenario
+            procedureByScene[hashwrap] = scenario
             contextByScreen[hashwrap] = context
             invoke(scene, stage)
         }

@@ -34,8 +34,8 @@ public protocol Screen : class {
 extension Screen {
 
     
-    internal var transition: Transition? {
-        return transitionByScene[ScreenHashWrapper(self)]
+    internal var TransitionProcedure: TransitionProcedure? {
+        return procedureByScene[ScreenHashWrapper(self)]
     }
     
 
@@ -45,7 +45,7 @@ extension Screen {
     
 
     public func leave(_ completion: @escaping (Bool) -> Void) -> Void {
-        self.transition?.back(completion)
+        self.TransitionProcedure?.back(completion)
     }
 
     public func send<T>(_ request: Request<T>) -> Void {
@@ -54,7 +54,7 @@ extension Screen {
     
     
     public func send<T>(_ request: Request<T>, _ completion: @escaping (Bool) -> Void) -> Void {
-        transition?.start(at: request, completion)
+        TransitionProcedure?.start(at: request, completion)
     }
 
 }

@@ -7,7 +7,7 @@ import Foundation
  一つのSceneごとにつくられる
  
  */
-public class Scenario<Current: Screen, Stage> : Transition {
+public class Scenario<Current: Screen, Stage> : TransitionProcedure {
     
     internal typealias Transitioning = (Current, Stage, Any?) -> Void
     
@@ -35,7 +35,7 @@ public class Scenario<Current: Screen, Stage> : Transition {
         name = String(reflecting: fromType)
     }
     
-    internal func setup<S>(at: Screen, on stage: S, with: SceneContainer, when rewind: Transition.Rewind?) {
+    internal func setup<S>(at: Screen, on stage: S, with: SceneContainer, when rewind: TransitionProcedure.Rewind?) {
         self.setup(at: at, on: stage, with: with, when: rewind, {})
     }
     
