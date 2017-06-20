@@ -19,7 +19,11 @@ extension Sample1AViewController: Scene {
     }
     
     func onPressPrevButton(sender: UIButton) {
-        leave()
+        leave(true)
+    }
+
+    func onPressPopButton(sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Override
@@ -34,5 +38,12 @@ extension Sample1AViewController: Scene {
         nextButtonA.addTarget(self, action: #selector(onPressAButton(sender:)), for: .touchUpInside)
         nextButtonB.addTarget(self, action: #selector(onPressBButton(sender:)), for: .touchUpInside)
         prevButton.addTarget(self, action: #selector(onPressPrevButton(sender:)), for: .touchUpInside)
+        popButton.addTarget(self, action: #selector(onPressPopButton(sender:)), for: .touchUpInside)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        if self.isMovingFromParentViewController {
+            leave(false)
+        }
     }
 }

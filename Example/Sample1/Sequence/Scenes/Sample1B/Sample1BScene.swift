@@ -22,7 +22,7 @@ extension Sample1BViewController : Scene {
     }
     
     func onPressPrevButton(sender: UIButton) {
-        leave()
+        leave(true)
     }
     
     // MARK: - Override

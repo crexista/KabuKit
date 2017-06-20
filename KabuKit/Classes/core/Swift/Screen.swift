@@ -26,9 +26,9 @@ public protocol Screen : class {
      - Attention :
      ただし、前のシーンがない場合は戻らず、何も起きない
      */
-    func leave() -> Void
+    func leave(_ needsRewind: Bool) -> Void
     
-    func leave(_ completion: @escaping (Bool) -> Void) -> Void
+    func leave(_ needsRewind: Bool, _ completion: @escaping (Bool) -> Void) -> Void
 }
 
 extension Screen {
@@ -39,13 +39,13 @@ extension Screen {
     }
     
 
-    public func leave() -> Void {
-        self.leave({ (Bool) in })
+    public func leave(_ needsRewind: Bool) -> Void {
+        self.leave(needsRewind, { (Bool) in })
     }
     
 
-    public func leave(_ completion: @escaping (Bool) -> Void) -> Void {
-        self.TransitionProcedure?.back(completion)
+    public func leave(_ needsRewind: Bool, _ completion: @escaping (Bool) -> Void) -> Void {
+        self.TransitionProcedure?.back(needsRewind, completion)
     }
 
     public func send<T>(_ request: Request<T>) -> Void {
