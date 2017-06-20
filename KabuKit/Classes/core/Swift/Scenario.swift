@@ -69,8 +69,15 @@ public class Scenario<Current: Screen, Stage> : Transition {
     
     internal func back(_ completion: @escaping (Bool) -> Void) {
         queue.async {
-            self.rewind?()
-            completion(true)
+            guard let rewind = self.rewind , let current = self.current else {
+                completion(false)
+                return
+            }
+            
+            rewind()
+            self.container?.remove(screen: current) {
+                completion(true)
+            }
         }
     }
 }
@@ -84,16 +91,20 @@ public extension Scenario where Current : Scene {
                       _ to: @escaping () -> Next,
                       _ begin: @escaping (Args<Next>) -> Rewind) -> Void where Next.ContextType == ContextType {
         
-        let linkName = String(reflecting: request)
-        
-        let transitFunc = { (from: Current, stage: Stage, context: Any?) -> Void in
+        let requestName = String(reflecting: request)
+
+        let transitFunc = { [weak self](from: Current, stage: Stage, context: Any?) -> Void in
+            guard let weakSelf = self else { return }
             let next = to()
             let args = Args<Next>(from: from, next: next, stage: stage)
-            self.destination = next
-            let f = begin(args)
-            self.container?.add(screen: next, context: context, rewind: f)
+            let rewind = begin(args)
+            weakSelf.destination = next
+            weakSelf.container?.add(screen: next, context: context) {
+                rewind()
+                weakSelf.destination = nil
+            }
         }
         
-        dic[linkName] = transitFunc
+        dic[requestName] = transitFunc
     }
 }
