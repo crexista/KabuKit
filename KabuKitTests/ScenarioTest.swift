@@ -55,7 +55,7 @@ class ScenarioTest: XCTestCase {
             }
         }
 
-        scenario.back { (completion) in
+        scenario.back(true) { (completion) in
 
         }
         XCTAssertFalse(isBeginCalled)

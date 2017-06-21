@@ -53,7 +53,7 @@ class SceneSequenceTest: XCTestCase {
             self.firstScene.send(request, { (completion) in
                 XCTAssertTrue(completion)
                 XCTAssertTrue(self.guide.calledFirstToSecond)
-                self.guide.tmpSecondScene.leave{(completion) in
+                self.guide.tmpSecondScene.leave(true) {(completion) in
                     XCTAssertFalse(self.guide.calledFirstToSecond)
                     asyncExpection?.fulfill()
                 }
