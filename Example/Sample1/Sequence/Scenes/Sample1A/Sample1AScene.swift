@@ -19,7 +19,7 @@ extension Sample1AViewController: Scene {
     }
     
     func onPressPrevButton(sender: UIButton) {
-        leave(true)
+        leave()
     }
 
     func onPressPopButton(sender: UIButton) {
@@ -31,9 +31,15 @@ extension Sample1AViewController: Scene {
         if (context == true) {
             prevButton.isEnabled = true
             prevButton.alpha = 1.0
+
+            popButton.isEnabled = true
+            popButton.alpha = 1.0
         } else {
             prevButton.isEnabled = false
             prevButton.alpha = 0.5
+
+            popButton.isEnabled = false
+            popButton.alpha = 0.5
         }
         nextButtonA.addTarget(self, action: #selector(onPressAButton(sender:)), for: .touchUpInside)
         nextButtonB.addTarget(self, action: #selector(onPressBButton(sender:)), for: .touchUpInside)
