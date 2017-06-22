@@ -40,5 +40,5 @@ protocol TransitionProcedure {
      そのさい、事前に規定されたロジックが呼ばれる
      
      */
-    func back(_ completion: @escaping (Bool) -> Void)
+    func back(_ runRewindHandler: Bool, _ completion: @escaping (Bool) -> Void)
 }

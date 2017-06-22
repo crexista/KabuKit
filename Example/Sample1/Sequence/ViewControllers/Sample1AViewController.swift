@@ -18,6 +18,8 @@ class Sample1AViewController: UIViewController {
     
     @IBOutlet weak var prevButton: UIButton!
     
+    @IBOutlet weak var popButton: UIButton!
+
     deinit {
         print("sample1A deinit")
     }

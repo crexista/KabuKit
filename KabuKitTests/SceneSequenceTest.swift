@@ -20,6 +20,9 @@ class SceneSequenceTest: XCTestCase {
         sequence = SceneSequence<Void, MockGuide>(guide)
 
         // Put setup code here. This method is called before the invocation of each test method in the class.
+
+        // rewindイベントが呼び出されたかどうかの状態を初期化
+        self.guide.wasRunRewindHandler = false
     }
     
     override func tearDown() {
@@ -53,7 +56,7 @@ class SceneSequenceTest: XCTestCase {
             self.firstScene.send(request, { (completion) in
                 XCTAssertTrue(completion)
                 XCTAssertTrue(self.guide.calledFirstToSecond)
-                self.guide.tmpSecondScene.leave{(completion) in
+                self.guide.tmpSecondScene.leave() {(completion) in
                     XCTAssertFalse(self.guide.calledFirstToSecond)
                     asyncExpection?.fulfill()
                 }
@@ -63,7 +66,63 @@ class SceneSequenceTest: XCTestCase {
         self.wait(for: [asyncExpection!], timeout: 2.0)
 
     }
-    
+
+    /**
+     Tests for leave()
+     */
+    func test_leaveが引数無しで呼び出された場合にはrewindイベントが実行される() {
+        let request = MockScenarioRequest3()
+        let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
+
+        sequence?.startWith(stage, firstScene, ()) { (scene, stage) in
+            stage.setScene(scene: scene)
+            self.firstScene.send(request, { (completion) in
+                self.guide.tmpSecondScene.leave()
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    XCTAssertTrue(self.guide.wasRunRewindHandler)
+                    asyncExpection?.fulfill()
+                }
+            })
+        }
+
+        self.wait(for: [asyncExpection!], timeout: 2.0)
+    }
+
+    /**
+     Tests for leave(_ runTransition:)
+     */
+    func leaveTest(runTransition: Bool, wasRunRewindHandlerExpectation: Bool) -> Void {
+        let request = MockScenarioRequest3()
+        let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
+
+        sequence?.startWith(stage, firstScene, ()) { (scene, stage) in
+            stage.setScene(scene: scene)
+            self.firstScene.send(request, { (completion) in
+                self.guide.tmpSecondScene.leave(runTransition)
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    if wasRunRewindHandlerExpectation {
+                        XCTAssertTrue(self.guide.wasRunRewindHandler)
+                    } else {
+                        XCTAssertFalse(self.guide.wasRunRewindHandler)
+                    }
+                    asyncExpection?.fulfill()
+                }
+            })
+        }
+
+        self.wait(for: [asyncExpection!], timeout: 2.0)
+    }
+
+    func test_leaveが引数trueで呼び出された場合にはrewindイベントが実行される() {
+        self.leaveTest(runTransition: true, wasRunRewindHandlerExpectation: true)
+    }
+
+    func test_leaveが引数falseで呼び出された場合にはrewindイベントが実行されない() {
+        self.leaveTest(runTransition: false, wasRunRewindHandlerExpectation: false)
+    }
+
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {

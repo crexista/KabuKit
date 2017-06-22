@@ -27,8 +27,12 @@ public protocol Screen : class {
      ただし、前のシーンがない場合は戻らず、何も起きない
      */
     func leave() -> Void
-    
+
+    func leave(_ runTransition: Bool) -> Void
+
     func leave(_ completion: @escaping (Bool) -> Void) -> Void
+
+    func leave(_ runTransition: Bool, _ completion: @escaping (Bool) -> Void) -> Void
 }
 
 extension Screen {
@@ -38,14 +42,20 @@ extension Screen {
         return procedureByScene[ScreenHashWrapper(self)]
     }
     
-
     public func leave() -> Void {
-        self.leave({ (Bool) in })
+        self.leave(true)
     }
-    
+
+    public func leave(_ runTransition: Bool) -> Void {
+        self.leave(runTransition, { (Bool) in })
+    }
 
     public func leave(_ completion: @escaping (Bool) -> Void) -> Void {
-        self.TransitionProcedure?.back(completion)
+        self.leave(true, completion)
+    }
+
+    public func leave(_ runTransition: Bool, _ completion: @escaping (Bool) -> Void) -> Void {
+        self.TransitionProcedure?.back(runTransition, completion)
     }
 
     public func send<T>(_ request: Request<T>) -> Void {

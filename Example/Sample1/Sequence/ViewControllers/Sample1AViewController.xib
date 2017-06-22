@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,6 +15,7 @@
                 <outlet property="label" destination="MZV-rY-bMw" id="okG-Lh-liA"/>
                 <outlet property="nextButtonA" destination="nyj-Z1-M3w" id="sH4-3A-vQ1"/>
                 <outlet property="nextButtonB" destination="rUU-tA-IW2" id="G96-dy-7zP"/>
+                <outlet property="popButton" destination="ZSh-sR-0iD" id="OuG-V2-ylB"/>
                 <outlet property="prevButton" destination="Et3-zF-D6f" id="qtz-h9-ehp"/>
                 <outlet property="view" destination="sfl-i5-ODO" id="M73-2t-zM7"/>
             </connections>
@@ -48,10 +49,18 @@
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZSh-sR-0iD">
+                    <rect key="frame" x="0.0" y="318.5" width="375" height="30"/>
+                    <state key="normal" title="pop">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.0039215686274509803" green="0.35294117647058826" blue="0.23921568627450981" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="MZV-rY-bMw" firstAttribute="centerY" secondItem="sfl-i5-ODO" secondAttribute="centerY" multiplier="0.5" id="0XP-zf-hwm"/>
+                <constraint firstItem="ZSh-sR-0iD" firstAttribute="centerY" secondItem="sfl-i5-ODO" secondAttribute="centerY" id="7WR-vq-3eV"/>
+                <constraint firstItem="ZSh-sR-0iD" firstAttribute="width" secondItem="sfl-i5-ODO" secondAttribute="width" id="Am3-Ad-GYK"/>
                 <constraint firstItem="rUU-tA-IW2" firstAttribute="centerX" secondItem="sfl-i5-ODO" secondAttribute="centerX" id="CIp-zQ-7eK"/>
                 <constraint firstItem="rUU-tA-IW2" firstAttribute="centerY" secondItem="sfl-i5-ODO" secondAttribute="centerY" multiplier="1.5" id="Dt3-QW-MNq"/>
                 <constraint firstItem="Et3-zF-D6f" firstAttribute="centerX" secondItem="sfl-i5-ODO" secondAttribute="centerX" id="RLg-s5-nIP"/>
@@ -59,6 +68,7 @@
                 <constraint firstItem="MZV-rY-bMw" firstAttribute="centerX" secondItem="sfl-i5-ODO" secondAttribute="centerX" id="apN-YX-uPn"/>
                 <constraint firstItem="nyj-Z1-M3w" firstAttribute="centerY" secondItem="sfl-i5-ODO" secondAttribute="centerY" multiplier="1.25" id="olc-dt-5FH"/>
                 <constraint firstItem="Et3-zF-D6f" firstAttribute="centerY" secondItem="sfl-i5-ODO" secondAttribute="centerY" multiplier="1.75" id="s8n-1J-1AI"/>
+                <constraint firstItem="ZSh-sR-0iD" firstAttribute="centerX" secondItem="sfl-i5-ODO" secondAttribute="centerX" id="yhK-f8-MK9"/>
             </constraints>
             <point key="canvasLocation" x="-178" y="38"/>
         </view>

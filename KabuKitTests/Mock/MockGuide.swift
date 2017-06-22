@@ -12,6 +12,9 @@ class MockGuide: Guide {
     var calledSecondToFirst: Bool = false
     
     var calledSecondToSecond: Bool = false
+
+    /// leaveを実行した際にrewindイベントが呼び出されたかどうかを保持します
+    var wasRunRewindHandler: Bool = false
     
     let tmpSecondScene: MockSecondScene = MockSecondScene()
 
@@ -39,6 +42,7 @@ class MockGuide: Guide {
             }) { (args) in
                 self.firstToSecond(args: args)
                 return {
+                    self.wasRunRewindHandler = true
                     self.reset()
                 }
             }
