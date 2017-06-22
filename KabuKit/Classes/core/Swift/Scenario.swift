@@ -67,14 +67,14 @@ public class Scenario<Current: Screen, Stage> : TransitionProcedure {
     }
     
     
-    internal func back(_ needsRewind: Bool, _ completion: @escaping (Bool) -> Void) {
+    internal func back(_ runRewindHandler: Bool, _ completion: @escaping (Bool) -> Void) {
         queue.async {
             guard let rewind = self.rewind , let current = self.current else {
                 completion(false)
                 return
             }
             
-            if needsRewind {
+            if runRewindHandler {
                 rewind()
             }
 
