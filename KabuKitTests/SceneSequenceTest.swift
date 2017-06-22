@@ -89,11 +89,10 @@ class SceneSequenceTest: XCTestCase {
         self.wait(for: [asyncExpection!], timeout: 2.0)
     }
 
-
     /**
      Tests for leave(_ runTransition:)
      */
-    func leaveTestUtility(runTransition: Bool, wasRunRewindHandlerExpectation: Bool) -> Void {
+    func leaveTest(runTransition: Bool, wasRunRewindHandlerExpectation: Bool) -> Void {
         let request = MockScenarioRequest3()
         let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
 
@@ -117,11 +116,11 @@ class SceneSequenceTest: XCTestCase {
     }
 
     func test_leaveが引数trueで呼び出された場合にはrewindイベントが実行される() {
-        self.leaveTestUtility(runTransition: true, wasRunRewindHandlerExpectation: true)
+        self.leaveTest(runTransition: true, wasRunRewindHandlerExpectation: true)
     }
 
     func test_leaveが引数falseで呼び出された場合にはrewindイベントが実行されない() {
-        self.leaveTestUtility(runTransition: false, wasRunRewindHandlerExpectation: false)
+        self.leaveTest(runTransition: false, wasRunRewindHandlerExpectation: false)
     }
 
     func testPerformanceExample() {
