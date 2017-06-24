@@ -1,116 +1,93 @@
-//
-//  Copyright © 2017 crexista
-//
-
 import Foundation
 
-public class SceneSequence<StageType: AnyObject> {
-    
-    typealias InvokeMethodType = (_ stage: StageType, _ scene: SceneBase) -> Void
-    
-    private let startQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.default)
-    
-    internal let manager: SceneManager
-    
-    private let stage: StageType
-    
-    private let baseScene: SceneBase
-    
-    private let baseSceneArgs: Any?
-    
-    private var producer: Producer? = nil
-    
-    private let invokeMethod: InvokeMethodType
-    
-    public private(set) var isStarted: Bool = false
-    
-    public func currentScene<S: Scene>() -> S? {
-        return manager.currentScene()
-    }
-    
-    /**
-     指定のSceneを有効化させます
-     
-     */
-    private func activateScene(_ stage: StageType, _ scene: SceneBase, _ args: Any?, _ onActivate: InvokeMethodType) {
-        scene.setup(sequenceObject: self, contextObject: args)
-        onActivate(stage, scene)
-    }
-    
-    /**
-     すでに起動済みの場合はt何もせずfalseを返すのみ
-     
-     */
-    internal func start(producer: Producer?) -> Bool {
-        return startQueue.sync {
-            if (isStarted) {
-                return false
-            }
-            self.producer = producer
-            activateScene(stage, baseScene, baseSceneArgs, invokeMethod)
-            isStarted = true
-            return true
-        }
-    }
-    
-    
-    internal func raiseEvent<E>(event: E) {
-        producer?.scenario?.describe(event, from: self, through: producer)
-    }
+internal var procedureByScene = [ScreenHashWrapper : TransitionProcedure]()
 
+/**
+ 複数のSceneを管理し、それぞれからの遷移リクエストを受け付け画面切り替えを行うクラス
+ 
+ - Attention:
+ このクラスの `start:` を明示的に呼ばないと内部でのSceneがリクエストしても画面遷移は行われない
+
+ */
+public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
+
+    public typealias ContextType = C
+    
+    public typealias StageType = G.Stage
+    
+    private var scenes: [Screen]
+    
+    private var currentTransitionProcedure: TransitionProcedure?
+    
+    private let isRecordable: Bool
+    
+    private var stage: StageType?
+    
+    private var guide: G?
+    
+    private let queue: DispatchQueue
+
+    internal func add<T>(screen: Screen, context: T?, rewind: @escaping () -> Void) {
+        let operation = SceneOperation<StageType>()
+        self.guide?.start(with: operation)
+        guard let scenario = operation.resolve(from: screen) else { return }
+        let hashwrap = ScreenHashWrapper(screen)
+        self.scenes.append(screen)
+        procedureByScene[hashwrap] = scenario
+        contextByScreen[hashwrap] = context
+        scenario.setup(at: screen, on: self.stage!, with: self, when: rewind)
+    }
+    
+    internal func remove(screen: Screen, completion: () -> Void) {
+        let hashwrap = ScreenHashWrapper(screen)
+        _ = self.scenes.popLast()
+        procedureByScene.removeValue(forKey: hashwrap)
+        contextByScreen.removeValue(forKey: hashwrap)
+        completion()
+    }
     
     /**
-     追加したシーンのセットアップを行い、その後
-     onPushを呼びシーンを追加する際の関数を呼び出します。
+     Sequenceをスタートさせる
      
-     このメソッドを呼ぶ前にSceneを呼ぶとdirectorはnil
-     
+     - Parameters:
+       - stage: Sceneが乗っかるstageオブジェクト
+       - scene: 起動させた際に一番最初に表示させる画面
+       - context: sceneを表示させるさいに必要となるcontextオブジェクト
+       - invoke: sceneを表示させるのに必要となる処理
      */
-    public func push(transition: SceneTransition<StageType>) {
-        activateScene(stage, transition.scene, transition.args, transition.execution)
-    }
-    
-    
-    /**
-     指定されたSceneをSequenceから外します
-     
-     - attention: 以下の場合はSequenceからSceneを外せず、falseを返します
-       - 指定したSceneがこのsequenceのcurrentSceneではない場合
-       - このSequeceに乗っているSceneが1つだけの場合
-       - 指定したSceneがそもそもこのSequeceに乗っかっていない場合
-
-     - parameters:
-       - scene: Sequenceから外される予定のScene
-     - returns: 成功した時はtrueを返します
-     */
-    public func release<S: Scene>(scene: S) -> Bool where S.RouterType.DestinationType.StageType == StageType {
-        guard manager.count > 1 else {
-            return false
-        }
-
-        guard manager.isCurrentScene(scene: scene) else {
-            return false
-        }
-        
-        scene.willRemove(from: stage)
-        (scene as SceneBase).dispose()
-        return true
-    }
-    
-    deinit {
-        self.manager.dispose()
-        isStarted = false
-    }
-    
-    public init<S: Scene>(_ stage: StageType, _ scene: S, _ context:S.ContextType?, _ onAdd: @escaping (StageType, S) -> Void) where StageType == S.RouterType.DestinationType.StageType {
-        self.manager = SceneManager()
+    public func startWith<S: Scene>(_ stage: StageType,
+                                    _ scene: S,
+                                    _ context: S.ContextType,
+                                    _ invoke: @escaping (_ scene: S, _ stage: StageType) -> Void) {
+        let operation = SceneOperation<StageType>()
         self.stage = stage
-        self.baseScene = scene
-        self.baseSceneArgs = context
-        
-        self.invokeMethod = { (_ stage: StageType, _ target: SceneBase) in
-            guard let newScene = target as? S else { return }
-            onAdd(stage, newScene)
+        self.guide?.start(with: operation)
+
+        // TODO FIX, Any Pattern
+        guard let scenario = operation.resolve(from: scene) else { return }
+        scenario.setup(at: scene, on: stage, with: self, when: nil) {
+            let hashwrap = ScreenHashWrapper(scene)
+            self.scenes.append(scene)
+            procedureByScene[hashwrap] = scenario
+            contextByScreen[hashwrap] = context
+            invoke(scene, stage)
         }
+    }
+    
+    /**
+     SceneSequenceを生成する
+     
+     - Parameters:
+       - transition:  MEMO ruleという名前の方が良いかも・・・
+       - isRecordable: trueがデフォルト。 Scene遷移の履歴を保存するのかのフラグ
+                       ここがfalseだと履歴が保存されず、Sceneを実装したクラスの方でleave()を呼んでも何も起きない
+     */
+    public init(_ guide: G?, _ isRecordable: Bool = true, _ queue: DispatchQueue = DispatchQueue.main) {
+        scenes = [Screen]()
+        self.guide = guide
+        self.isRecordable = isRecordable
+        self.queue = queue
     }
 }
+
+

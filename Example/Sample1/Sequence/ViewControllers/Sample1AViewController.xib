@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Sample1AViewController" customModule="Sample1" customModuleProvider="target">
+            <connections>
+                <outlet property="label" destination="MZV-rY-bMw" id="okG-Lh-liA"/>
+                <outlet property="nextButtonA" destination="nyj-Z1-M3w" id="sH4-3A-vQ1"/>
+                <outlet property="nextButtonB" destination="rUU-tA-IW2" id="G96-dy-7zP"/>
+                <outlet property="popButton" destination="ZSh-sR-0iD" id="OuG-V2-ylB"/>
+                <outlet property="prevButton" destination="Et3-zF-D6f" id="qtz-h9-ehp"/>
+                <outlet property="view" destination="sfl-i5-ODO" id="M73-2t-zM7"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="sfl-i5-ODO">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scene A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MZV-rY-bMw">
+                    <rect key="frame" x="156" y="156.5" width="63" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nyj-Z1-M3w">
+                    <rect key="frame" x="163" y="402" width="49" height="30"/>
+                    <state key="normal" title="Next_A">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Et3-zF-D6f">
+                    <rect key="frame" x="172" y="568.5" width="31" height="30"/>
+                    <state key="normal" title="Prev">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rUU-tA-IW2">
+                    <rect key="frame" x="163.5" y="485.5" width="48" height="30"/>
+                    <state key="normal" title="Next_B">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZSh-sR-0iD">
+                    <rect key="frame" x="0.0" y="318.5" width="375" height="30"/>
+                    <state key="normal" title="pop">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.0039215686274509803" green="0.35294117647058826" blue="0.23921568627450981" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="MZV-rY-bMw" firstAttribute="centerY" secondItem="sfl-i5-ODO" secondAttribute="centerY" multiplier="0.5" id="0XP-zf-hwm"/>
+                <constraint firstItem="ZSh-sR-0iD" firstAttribute="centerY" secondItem="sfl-i5-ODO" secondAttribute="centerY" id="7WR-vq-3eV"/>
+                <constraint firstItem="ZSh-sR-0iD" firstAttribute="width" secondItem="sfl-i5-ODO" secondAttribute="width" id="Am3-Ad-GYK"/>
+                <constraint firstItem="rUU-tA-IW2" firstAttribute="centerX" secondItem="sfl-i5-ODO" secondAttribute="centerX" id="CIp-zQ-7eK"/>
+                <constraint firstItem="rUU-tA-IW2" firstAttribute="centerY" secondItem="sfl-i5-ODO" secondAttribute="centerY" multiplier="1.5" id="Dt3-QW-MNq"/>
+                <constraint firstItem="Et3-zF-D6f" firstAttribute="centerX" secondItem="sfl-i5-ODO" secondAttribute="centerX" id="RLg-s5-nIP"/>
+                <constraint firstItem="nyj-Z1-M3w" firstAttribute="centerX" secondItem="sfl-i5-ODO" secondAttribute="centerX" id="UnN-aE-pI4"/>
+                <constraint firstItem="MZV-rY-bMw" firstAttribute="centerX" secondItem="sfl-i5-ODO" secondAttribute="centerX" id="apN-YX-uPn"/>
+                <constraint firstItem="nyj-Z1-M3w" firstAttribute="centerY" secondItem="sfl-i5-ODO" secondAttribute="centerY" multiplier="1.25" id="olc-dt-5FH"/>
+                <constraint firstItem="Et3-zF-D6f" firstAttribute="centerY" secondItem="sfl-i5-ODO" secondAttribute="centerY" multiplier="1.75" id="s8n-1J-1AI"/>
+                <constraint firstItem="ZSh-sR-0iD" firstAttribute="centerX" secondItem="sfl-i5-ODO" secondAttribute="centerX" id="yhK-f8-MK9"/>
+            </constraints>
+            <point key="canvasLocation" x="-178" y="38"/>
+        </view>
+    </objects>
+</document>
