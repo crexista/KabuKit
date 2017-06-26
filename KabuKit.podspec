@@ -1,9 +1,9 @@
 Pod::Spec.new do |kabukit|
   kabukit.name             = 'KabuKit'
-  kabukit.version          = '0.3.0'
-  kabukit.summary          = 'A short description of Proto.'
+  kabukit.version          = '0.3.1'
+  kabukit.summary          = "Tiny Application's Transition Framework"
   kabukit.description      = <<-DESC
-TODO: Add long description of the pod here.
+KabuKit is Application's Framework for routing request from scene.
 DESC
 
   kabukit.homepage         = 'https://github.com/crexista/KabuKit.git'
