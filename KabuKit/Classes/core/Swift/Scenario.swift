@@ -7,9 +7,9 @@ import Foundation
  一つのSceneごとにつくられる
  
  */
-public class Scenario<Current: Screen, Stage> : TransitionProcedure {
+public class Scenario<CurrentScreenType: Screen, StageType> : TransitionProcedure {
     
-    internal typealias Transitioning = (Current, Stage, Any?) -> Void
+    internal typealias Transitioning = (CurrentScreenType, StageType, Any?) -> Void
     
     public typealias Rewind = () -> Void
     
@@ -21,9 +21,9 @@ public class Scenario<Current: Screen, Stage> : TransitionProcedure {
 
     fileprivate var destination: Screen?
     
-    fileprivate var current: Current?
+    fileprivate var current: CurrentScreenType?
     
-    fileprivate var stage: Stage?
+    fileprivate var stage: StageType?
     
     fileprivate var exitFunc: Rewind?
     
@@ -31,7 +31,7 @@ public class Scenario<Current: Screen, Stage> : TransitionProcedure {
     
     internal let name: String
     
-    public init(_ fromType: Current.Type){
+    public init(_ fromType: CurrentScreenType.Type){
         name = String(reflecting: fromType)
     }
     
@@ -41,8 +41,8 @@ public class Scenario<Current: Screen, Stage> : TransitionProcedure {
     
     internal func setup<S>(at: Screen, on stage: S, with: SceneContainer, when rewind: Rewind?, _ completion: @escaping () -> Void) {
         queue.async {
-            guard let c = at as? Current else { return }
-            guard let stg = stage as? Stage else { return }
+            guard let c = at as? CurrentScreenType else { return }
+            guard let stg = stage as? StageType else { return }
             self.current = c
             self.stage = stg
             self.rewind = rewind
@@ -52,7 +52,7 @@ public class Scenario<Current: Screen, Stage> : TransitionProcedure {
         }
     }
     
-    internal func start<T>(at request: Request<T>, _ completion: @escaping (Bool) -> Void) -> Void {
+    internal func start<ContextType>(at request: Request<ContextType>, _ completion: @escaping (Bool) -> Void) -> Void {
         queue.async {
             guard let frm = self.current else { return }
             guard let stage = self.stage else { return }
@@ -86,20 +86,20 @@ public class Scenario<Current: Screen, Stage> : TransitionProcedure {
 }
 
 
-public extension Scenario where Current : Scene {
+public extension Scenario where CurrentScreenType : Scene {
     
-    public typealias Args<Next: Scene> = (from: Current, next: Next, stage: Stage)
+    public typealias Args<NextSceneType: Scene> = (from: CurrentScreenType, next: NextSceneType, stage: StageType)
     
-    public func given<ContextType, Next: Scene>(_ request: Request<ContextType>.Type,
-                      _ to: @escaping () -> Next,
-                      _ begin: @escaping (Args<Next>) -> Rewind) -> Void where Next.ContextType == ContextType {
+    public func given<ContextType, NextSceneType: Scene>(_ request: Request<ContextType>.Type,
+                      _ to: @escaping () -> NextSceneType,
+                      _ begin: @escaping (Args<NextSceneType>) -> Rewind) -> Void where NextSceneType.Context == ContextType {
         
         let requestName = String(reflecting: request)
 
-        let transitFunc = { [weak self](from: Current, stage: Stage, context: Any?) -> Void in
+        let transitFunc = { [weak self](from: CurrentScreenType, stage: StageType, context: Any?) -> Void in
             guard let weakSelf = self else { return }
             let next = to()
-            let args = Args<Next>(from: from, next: next, stage: stage)
+            let args = Args<NextSceneType>(from: from, next: next, stage: stage)
             let rewind = begin(args)
             weakSelf.destination = next
             weakSelf.container?.add(screen: next, context: context) {

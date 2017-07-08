@@ -11,7 +11,7 @@ import KabuKit
 
 extension Sample1BViewController : Scene {
  
-    typealias ContextType = Void
+    typealias Context = Void
 
     func onPressAButton(sender: UIButton) {
         send(SampleARequest(true))

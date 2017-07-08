@@ -4,16 +4,16 @@ internal var contextByScreen = [ScreenHashWrapper : Any]()
 
 public protocol Scene : class, Screen {
     
-    associatedtype ContextType
+    associatedtype Context
     
-    var context: ContextType? { get }
+    var context: Context? { get }
 
 }
 
 extension Screen where Self: Scene {
     
-    public var context: ContextType? {
-        return contextByScreen[ScreenHashWrapper(self)] as? Self.ContextType
+    public var context: Context? {
+        return contextByScreen[ScreenHashWrapper(self)] as? Self.Context
     }
 
 }

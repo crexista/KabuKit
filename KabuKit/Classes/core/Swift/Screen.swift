@@ -15,10 +15,10 @@ public protocol Screen : class {
      - Parameters:
        - request: 遷移先へのリンク
      */
-    func send<T>(_ request: Request<T>, _ completion: @escaping (Bool) -> Void) -> Void
+    func send<ContextType>(_ request: Request<ContextType>, _ completion: @escaping (Bool) -> Void) -> Void
     
     
-    func send<T>(_ request: Request<T>) -> Void
+    func send<ContextType>(_ request: Request<ContextType>) -> Void
     
     /**
      現在表示されているSceneを終了させ、前のSceneに戻る
@@ -58,12 +58,12 @@ extension Screen {
         self.TransitionProcedure?.back(runTransition, completion)
     }
 
-    public func send<T>(_ request: Request<T>) -> Void {
+    public func send<ContextType>(_ request: Request<ContextType>) -> Void {
         self.send(request, {(Bool) in })
     }
     
     
-    public func send<T>(_ request: Request<T>, _ completion: @escaping (Bool) -> Void) -> Void {
+    public func send<ContextType>(_ request: Request<ContextType>, _ completion: @escaping (Bool) -> Void) -> Void {
         TransitionProcedure?.start(at: request, completion)
     }
 

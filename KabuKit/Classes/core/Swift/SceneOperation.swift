@@ -8,7 +8,7 @@ import Foundation
  どのSceneでどのようなScenarioを実行するかをまとめたクラス
  
  */
-public class SceneOperation<Stage> {
+public class SceneOperation<StageType> {
     
     private var scenedTransitionProcedure = [String : TransitionProcedure]()
     
@@ -35,8 +35,8 @@ public class SceneOperation<Stage> {
        - fromType: Sceneを実装したクラスのtype
        - run: Scenarioを使ったフロー
      */
-    public func at<From: Scene>(_ fromType: From.Type, _ run: (Scenario<From, Stage>) -> Void) {
-        let scenario = Scenario<From, Stage>(fromType)
+    public func at<FromSceneType: Scene>(_ fromType: FromSceneType.Type, _ run: (Scenario<FromSceneType, StageType>) -> Void) {
+        let scenario = Scenario<FromSceneType, StageType>(fromType)
         scenedTransitionProcedure[scenario.name] = scenario
         run(scenario)
     }
@@ -60,9 +60,9 @@ public class SceneOperation<Stage> {
      - Parameters:
        - run: Scenarioを使ったフロー
      */
-    public func atAnyScene(run: (Scenario<AnyTransitionProcedure, Stage>) -> Void){
-        anyTransitionProcedure = anyTransitionProcedure ?? Scenario<AnyTransitionProcedure, Stage>(AnyTransitionProcedure.self)
-        guard let scenario = anyTransitionProcedure as? Scenario<AnyTransitionProcedure, Stage> else { return }
+    public func atAnyScene(run: (Scenario<AnyTransitionProcedure, StageType>) -> Void){
+        anyTransitionProcedure = anyTransitionProcedure ?? Scenario<AnyTransitionProcedure, StageType>(AnyTransitionProcedure.self)
+        guard let scenario = anyTransitionProcedure as? Scenario<AnyTransitionProcedure, StageType> else { return }
         scenedTransitionProcedure[anyTransitionProcedureName] = scenario
         run(scenario)
     }
