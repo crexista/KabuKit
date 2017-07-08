@@ -8,7 +8,7 @@ import KabuKit
 
 extension Sample1AViewController: Scene {
     
-    typealias ContextType = Bool
+    typealias Context = Bool
     
     func onPressAButton(sender: UIButton) {
         send(SampleARequest(true))

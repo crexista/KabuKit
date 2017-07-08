@@ -9,11 +9,11 @@ internal var procedureByScene = [ScreenHashWrapper : TransitionProcedure]()
  このクラスの `start:` を明示的に呼ばないと内部でのSceneがリクエストしても画面遷移は行われない
 
  */
-public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
+public class SceneSequence<ContextType, GuideType: Guide> : Scene, SceneContainer {
 
-    public typealias ContextType = C
+    public typealias Context = ContextType
     
-    public typealias StageType = G.Stage
+    public typealias StageType = GuideType.Stage
     
     private var scenes: [Screen]
     
@@ -23,11 +23,11 @@ public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
     
     private var stage: StageType?
     
-    private var guide: G?
+    private var guide: GuideType?
     
     private let queue: DispatchQueue
 
-    internal func add<T>(screen: Screen, context: T?, rewind: @escaping () -> Void) {
+    internal func add<ContextType>(screen: Screen, context: ContextType?, rewind: @escaping () -> Void) {
         let operation = SceneOperation<StageType>()
         self.guide?.start(with: operation)
         guard let scenario = operation.resolve(from: screen) else { return }
@@ -55,10 +55,10 @@ public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
        - context: sceneを表示させるさいに必要となるcontextオブジェクト
        - invoke: sceneを表示させるのに必要となる処理
      */
-    public func startWith<S: Scene>(_ stage: StageType,
-                                    _ scene: S,
-                                    _ context: S.ContextType,
-                                    _ invoke: @escaping (_ scene: S, _ stage: StageType) -> Void) {
+    public func startWith<SceneType: Scene>(_ stage: StageType,
+                                    _ scene: SceneType,
+                                    _ context: SceneType.Context,
+                                    _ invoke: @escaping (_ scene: SceneType, _ stage: StageType) -> Void) {
         let operation = SceneOperation<StageType>()
         self.stage = stage
         self.guide?.start(with: operation)
@@ -82,7 +82,7 @@ public class SceneSequence<C, G: Guide> : Scene, SceneContainer {
        - isRecordable: trueがデフォルト。 Scene遷移の履歴を保存するのかのフラグ
                        ここがfalseだと履歴が保存されず、Sceneを実装したクラスの方でleave()を呼んでも何も起きない
      */
-    public init(_ guide: G?, _ isRecordable: Bool = true, _ queue: DispatchQueue = DispatchQueue.main) {
+    public init(_ guide: GuideType?, _ isRecordable: Bool = true, _ queue: DispatchQueue = DispatchQueue.main) {
         scenes = [Screen]()
         self.guide = guide
         self.isRecordable = isRecordable

@@ -20,9 +20,9 @@ protocol TransitionProcedure {
        - stage: Transionを行うベースとなるメソッド
        - rewind: 前の画面に戻る為の処理
      */
-    func setup<S>(at: Screen, on stage: S, with: SceneContainer, when rewind: Rewind?)
+    func setup<StageType>(at: Screen, on stage: StageType, with: SceneContainer, when rewind: Rewind?)
     
-    func setup<S>(at: Screen, on stage: S, with: SceneContainer, when rewind: Rewind?, _ completion: @escaping () -> Void)
+    func setup<StageType>(at: Screen, on stage: StageType, with: SceneContainer, when rewind: Rewind?, _ completion: @escaping () -> Void)
     
     /**
      TransitionProcedureを実行する
@@ -32,7 +32,7 @@ protocol TransitionProcedure {
        - completion: Transtionの実行が完了した際に実行したい処理
        - setup: completionより前に呼ばれる
      */
-    func start<T>(at request: Request<T>, _ completion: @escaping (Bool) -> Void) -> Void
+    func start<ContextType>(at request: Request<ContextType>, _ completion: @escaping (Bool) -> Void) -> Void
     
     
     /**
