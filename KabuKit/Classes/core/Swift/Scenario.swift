@@ -53,6 +53,7 @@ public class Scenario<CurrentScreenType: Screen, StageType> : TransitionProcedur
     }
     
     internal func start<ContextType>(at request: Request<ContextType>, _ completion: @escaping (Bool) -> Void) -> Void {
+
         dispatchQueue.async {
             guard let currentScreen = self.current else { return }
             guard let stage = self.stage else { return }
