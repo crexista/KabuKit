@@ -13,11 +13,11 @@ public class Scenario<CurrentScreenType: Screen, StageType> : TransitionProcedur
     
     public typealias Rewind = () -> Void
     
-    private var rewind: (() -> Void)?
+    private var rewind: Rewind?
     
-    private let queue: DispatchQueue = DispatchQueue.main
+    private let dispatchQueue: DispatchQueue = DispatchQueue.main
     
-    fileprivate var dic = [String : Transitioning]()
+    fileprivate var transitionStore = [String : Transitioning]()
 
     fileprivate var destination: Screen?
     
@@ -40,11 +40,11 @@ public class Scenario<CurrentScreenType: Screen, StageType> : TransitionProcedur
     }
     
     internal func setup<S>(at: Screen, on stage: S, with: SceneContainer, when rewind: Rewind?, _ completion: @escaping () -> Void) {
-        queue.async {
-            guard let c = at as? CurrentScreenType else { return }
-            guard let stg = stage as? StageType else { return }
-            self.current = c
-            self.stage = stg
+        dispatchQueue.async {
+            guard let currentScreen = at as? CurrentScreenType else { return }
+            guard let stage = stage as? StageType else { return }
+            self.current = currentScreen
+            self.stage = stage
             self.rewind = rewind
             self.container = with
 
@@ -53,22 +53,22 @@ public class Scenario<CurrentScreenType: Screen, StageType> : TransitionProcedur
     }
     
     internal func start<ContextType>(at request: Request<ContextType>, _ completion: @escaping (Bool) -> Void) -> Void {
-        queue.async {
-            guard let frm = self.current else { return }
+        dispatchQueue.async {
+            guard let currentScreen = self.current else { return }
             guard let stage = self.stage else { return }
-            guard let tuple = self.dic[String(describing: request)] else {
+            guard let tuple = self.transitionStore[String(describing: request)] else {
                 completion(false)
                 return
             }
             
-            tuple(frm, stage, request.context)
+            tuple(currentScreen, stage, request.context)
             completion(true)
         }
     }
     
     
     internal func back(_ runRewindHandler: Bool, _ completion: @escaping (Bool) -> Void) {
-        queue.async {
+        dispatchQueue.async {
             guard let rewind = self.rewind , let current = self.current else {
                 completion(false)
                 return
@@ -108,6 +108,6 @@ public extension Scenario where CurrentScreenType : Scene {
             }
         }
         
-        dic[requestName] = transitFunc
+        transitionStore[requestName] = transitFunc
     }
 }

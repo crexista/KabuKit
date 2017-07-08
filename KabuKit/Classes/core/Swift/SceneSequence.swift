@@ -25,7 +25,7 @@ public class SceneSequence<ContextType, GuideType: Guide> : Scene, SceneContaine
     
     private var guide: GuideType?
     
-    private let queue: DispatchQueue
+    private let dispatchQueue: DispatchQueue
 
     internal func add<ContextType>(screen: Screen, context: ContextType?, rewind: @escaping () -> Void) {
         let operation = SceneOperation<StageType>()
@@ -86,7 +86,7 @@ public class SceneSequence<ContextType, GuideType: Guide> : Scene, SceneContaine
         scenes = [Screen]()
         self.guide = guide
         self.isRecordable = isRecordable
-        self.queue = queue
+        self.dispatchQueue = queue
     }
 }
 
