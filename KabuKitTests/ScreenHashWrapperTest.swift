@@ -45,5 +45,5 @@ class ScreenHashWrapperTest: XCTestCase {
 }
 
 class DummyUIViewScene: UIView, Scene {
-    typealias ContextType = Void
+    typealias Context = Void
 }
