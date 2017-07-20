@@ -110,4 +110,7 @@ public extension Scenario where CurrentScreenType : Scene {
         
         transitionStore[requestName] = transitFunc
     }
+    
+    public func given<S: Scene, NextSceneType: SceneSequence<S, Guide>>(_ reques: Request<S.Context>, to: () -> NextSceneType) {
+    }
 }

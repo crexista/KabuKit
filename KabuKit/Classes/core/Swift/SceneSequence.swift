@@ -9,9 +9,9 @@ internal var procedureByScene = [ScreenHashWrapper : TransitionProcedure]()
  このクラスの `start:` を明示的に呼ばないと内部でのSceneがリクエストしても画面遷移は行われない
 
  */
-public class SceneSequence<ContextType, GuideType: Guide> : Scene, SceneContainer {
+public class SceneSequence<FirstScene: Scene, GuideType: Guide> : Scene, SceneContainer {
 
-    public typealias Context = ContextType
+    public typealias Context = FirstScene.Context
     
     public typealias StageType = GuideType.Stage
     
@@ -25,7 +25,14 @@ public class SceneSequence<ContextType, GuideType: Guide> : Scene, SceneContaine
     
     private var guide: GuideType?
     
+
     private let dispatchQueue: DispatchQueue
+    
+    private let firstScene: FirstScene
+    
+    private var leaveFunc:(([Screen]) -> Void)?
+    
+    public private(set) var isStarted: Bool = false
 
     internal func add<ContextType>(screen: Screen, context: ContextType?, rewind: @escaping () -> Void) {
         let operation = SceneOperation<StageType>()
@@ -46,32 +53,102 @@ public class SceneSequence<ContextType, GuideType: Guide> : Scene, SceneContaine
         completion()
     }
     
+    public func contain<SceneType: Scene>(_ scene: SceneType) -> Bool {
+        return self.scenes.contains { (screen) -> Bool in
+            (scene === screen)
+        }
+    }
+   
     /**
-     Sequenceをスタートさせる
+     Sequenceをスタートさせます
+     
+     - Attention:
+     起動時の処理のみ規定するため、leaveが呼ばれてもこのsequenceを停止させる処理は動かず
+     
+     このSequenceに追加された一番最初のSceneはreleaseされません
      
      - Parameters:
-       - stage: Sceneが乗っかるstageオブジェクト
-       - scene: 起動させた際に一番最初に表示させる画面
-       - context: sceneを表示させるさいに必要となるcontextオブジェクト
-       - invoke: sceneを表示させるのに必要となる処理
+       - stage: 画面遷移の元の `stage` となるインスタンス
+       - setup: Sequenceをスタートさせる際に画面表示など必要となるメソッド
      */
-    public func startWith<SceneType: Scene>(_ stage: StageType,
-                                    _ scene: SceneType,
-                                    _ context: SceneType.Context,
-                                    _ invoke: @escaping (_ scene: SceneType, _ stage: StageType) -> Void) {
+    public func start(on stage: StageType,
+                      with setup: @escaping (_ scene: FirstScene, _ stage: StageType) -> Void) {
+        self.start(on: stage, with: setup, {})
+    }
+    
+    
+    /**
+     Sequenceをスタートさせます
+     
+     - Parameters:
+       - stage: 画面遷移の元の `stage` となるインスタンス
+       - setup: Sequenceをスタートさせる際に画面表示など必要となるメソッド
+       - completion: Sequenceのsetupが完了したら呼ばれます
+     */
+    public func start(on stage: StageType,
+                      with setup: @escaping (_ scene: FirstScene, _ stage: StageType) -> Void,
+                      _ completion: @escaping () -> Void  = {}) {
         let operation = SceneOperation<StageType>()
         self.stage = stage
         self.guide?.start(with: operation)
-
         // TODO FIX, Any Pattern
-        guard let scenario = operation.resolve(from: scene) else { return }
-        scenario.setup(at: scene, on: stage, with: self, when: nil) {
-            let hashwrap = ScreenHashWrapper(scene)
-            self.scenes.append(scene)
+        guard let scenario = operation.resolve(from: firstScene) else { return }
+        scenario.setup(at: firstScene, on: stage, with: self, when: nil) {
+            let hashwrap = ScreenHashWrapper(self.firstScene)
+            self.scenes.append(self.firstScene)
             procedureByScene[hashwrap] = scenario
-            contextByScreen[hashwrap] = context
-            invoke(scene, stage)
+            contextByScreen[hashwrap] = self.context
+            setup(self.firstScene, stage)
+            completion()
+            self.isStarted = true
         }
+    }
+
+    public func start(on stage: StageType,
+                      accordingAs transitioningRule: @escaping (_ scene: FirstScene, _ stage: StageType) -> (_ screens: [Screen]) -> Void) {
+        self.start(on: stage, accordingAs: transitioningRule, {})
+    }
+    
+    /**
+     Sequenceをスタートさせます
+     transitioningにこのSequenceが起動する際の画面遷移ロジックと
+     このSequenceがleaveする際の画面遷移ロジックを書きます
+    
+     - Parameters:
+       - stage: 画面遷移を行う `stage` となるインスタンス
+       - transitioning: Sequenceをスタートさせる際の遷移ロジック
+     */
+    public func start(on stage: StageType,
+                      accordingAs transitioningRule : @escaping (_ scene: FirstScene, _ stage: StageType) -> (_ screens: [Screen]) -> Void,
+                      _ completion: @escaping () -> Void = {}) {
+        
+        let operation = SceneOperation<StageType>()
+        self.stage = stage
+        self.guide?.start(with: operation)
+        // TODO FIX, Any Pattern
+        guard let scenario = operation.resolve(from: firstScene) else { return }
+        scenario.setup(at: firstScene, on: stage, with: self, when: nil) {
+            let hashwrap = ScreenHashWrapper(self.firstScene)
+            self.scenes.append(self.firstScene)
+            procedureByScene[hashwrap] = scenario
+            contextByScreen[hashwrap] = self.context
+            self.leaveFunc = transitioningRule(self.firstScene, stage)
+            completion()
+            self.isStarted = true
+        }
+    }
+    
+    /**
+    これはスタブコード いずれ消します
+    
+    */
+    public func leave(_ runTransition: Bool, _ completion: @escaping (Bool) -> Void) {
+        if let leaveMethod = self.leaveFunc {
+            leaveMethod(self.scenes)
+            self.scenes.removeAll()
+        }
+        self.isStarted = false
+        completion(true)
     }
     
     /**
@@ -82,11 +159,12 @@ public class SceneSequence<ContextType, GuideType: Guide> : Scene, SceneContaine
        - isRecordable: trueがデフォルト。 Scene遷移の履歴を保存するのかのフラグ
                        ここがfalseだと履歴が保存されず、Sceneを実装したクラスの方でleave()を呼んでも何も起きない
      */
-    public init(_ guide: GuideType?, _ isRecordable: Bool = true, _ queue: DispatchQueue = DispatchQueue.main) {
+    public init(_ scene: FirstScene, _ guide: GuideType?, _ context: FirstScene.Context? = nil) {
         scenes = [Screen]()
         self.guide = guide
-        self.isRecordable = isRecordable
-        self.dispatchQueue = queue
+        self.isRecordable = true
+        self.dispatchQueue = DispatchQueue.main
+        self.firstScene = scene
     }
 }
 
