@@ -123,6 +123,55 @@ class SceneSequenceTest: XCTestCase {
         self.leaveTest(runTransition: false, wasRunRewindHandlerExpectation: false)
     }
 
+    /**
+     `operation.resolve(from: scene) else { return }` の else パターンのテストのためのクラス
+     */
+    class NoTransitionDefinitionDummy {
+        class DummySceneSequence: Guide {
+            typealias Stage = UINavigationController
+
+            public var wasStartCalled = false
+
+            func start(with operation: SceneOperation<UINavigationController>) {
+                operation.at(DummyScene.self) { (scenario) in
+                    // この関数が呼ばれたかどうかを確認する
+                    self.wasStartCalled = true
+                }
+            }
+        }
+
+        class DummySceneRequest: Request<Void> {}
+
+        class DummyScene: Scene {
+            typealias Context = Void
+
+            public func transit() {
+                send(DummySceneRequest())
+            }
+        }
+    }
+
+    func test_遷移定義がない時何も実行されない() {
+        // For testing
+        let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
+
+        let dummySceneSequence = NoTransitionDefinitionDummy.DummySceneSequence()
+        let sequence = SceneSequence<Void, NoTransitionDefinitionDummy.DummySceneSequence>(dummySceneSequence)
+
+        sequence.startWith(UINavigationController(), NoTransitionDefinitionDummy.DummyScene(), ()) { (scene, stage) in
+            // 遷移を実行する
+            scene.transit()
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                XCTAssertTrue(dummySceneSequence.wasStartCalled, "startが呼ばれて何も発生しない")
+                asyncExpection?.fulfill()
+            }
+        }
+
+        // For testing
+        self.wait(for: [asyncExpection!], timeout: 3.0)
+    }
+
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
