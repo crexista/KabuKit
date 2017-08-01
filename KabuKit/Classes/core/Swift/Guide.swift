@@ -4,7 +4,7 @@
 
 import Foundation
 
-public protocol Guide {
+public protocol SequenceGuide {
 
     associatedtype Stage
     

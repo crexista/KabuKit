@@ -1,6 +1,6 @@
 import Foundation
 
-open class Request<ContextType> {
+open class TransitionRequest<ContextType> {
     
     public let context: ContextType?
     

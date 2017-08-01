@@ -11,15 +11,15 @@ extension Sample1AViewController: Scene {
     typealias Context = Bool
     
     func onPressAButton(sender: UIButton) {
-        send(SampleARequest(true))
+        sendTransitionRequest(SampleARequest(true))
     }
     
     func onPressBButton(sender: UIButton) {
-        send(SampleBRequest())
+        sendTransitionRequest(SampleBRequest())
     }
     
     func onPressPrevButton(sender: UIButton) {
-        leave()
+        leaveFromSequence()
     }
 
     func onPressPopButton(sender: UIButton) {
@@ -49,7 +49,7 @@ extension Sample1AViewController: Scene {
 
     override func viewDidDisappear(_ animated: Bool) {
         if self.isMovingFromParentViewController {
-            leave(false)
+            leaveFromSequence(false)
         }
     }
 }

@@ -15,6 +15,10 @@ public class SceneOperation<StageType> {
     private var anyTransitionProcedure: TransitionProcedure?
     
     private let anyTransitionProcedureName: String
+    
+    private let stage: StageType
+    
+    private unowned var container: SceneContainer
 
     /**
      指定したSceneでのScenarioのフローを定義します
@@ -36,7 +40,7 @@ public class SceneOperation<StageType> {
        - run: Scenarioを使ったフロー
      */
     public func at<FromSceneType: Scene>(_ fromType: FromSceneType.Type, _ run: (Scenario<FromSceneType, StageType>) -> Void) {
-        let scenario = Scenario<FromSceneType, StageType>(fromType)
+        let scenario = Scenario<FromSceneType, StageType>(fromType, container, stage)
         scenedTransitionProcedure[scenario.name] = scenario
         run(scenario)
     }
@@ -60,12 +64,12 @@ public class SceneOperation<StageType> {
      - Parameters:
        - run: Scenarioを使ったフロー
      */
-    public func atAnyScene(run: (Scenario<AnyTransitionProcedure, StageType>) -> Void){
-        anyTransitionProcedure = anyTransitionProcedure ?? Scenario<AnyTransitionProcedure, StageType>(AnyTransitionProcedure.self)
-        guard let scenario = anyTransitionProcedure as? Scenario<AnyTransitionProcedure, StageType> else { return }
-        scenedTransitionProcedure[anyTransitionProcedureName] = scenario
-        run(scenario)
-    }
+//    public func atAnyScene(run: (Scenario<AnyTransitionProcedure, StageType>) -> Void){
+//        anyTransitionProcedure = anyTransitionProcedure ?? Scenario<AnyTransitionProcedure, StageType>(AnyTransitionProcedure.self)
+//        guard let scenario = anyTransitionProcedure as? Scenario<AnyTransitionProcedure, StageType> else { return }
+//        scenedTransitionProcedure[anyTransitionProcedureName] = scenario
+//        run(scenario)
+//    }
     
     internal func resolve(from: Screen) -> TransitionProcedure? {
         let name = String(reflecting: type(of: from))
@@ -76,8 +80,10 @@ public class SceneOperation<StageType> {
         return scenedTransitionProcedure[anyTransitionProcedureName]
     }
 
-    internal init() {
+    internal init(stage: StageType, container: SceneContainer) {
         anyTransitionProcedureName = String(reflecting: AnyTransitionProcedure.self)
+        self.container = container
+        self.stage = stage
     }
 }
 

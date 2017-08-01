@@ -1,16 +1,16 @@
 import Foundation
 import KabuKit
 
-class SampleARequest : Request<Bool> {}
-class SampleBRequest : Request<Void> {}
+class SampleARequest : TransitionRequest<Bool> {}
+class SampleBRequest : TransitionRequest<Void> {}
 
-class SampleSequenceRule : Guide {
+class SampleSequenceRule : SequenceGuide {
     typealias Stage = UINavigationController
     
     func start(with operation: SceneOperation<UINavigationController>) {
         
         operation.at(Sample1AViewController.self) { (scenario) in
-            scenario.given(SampleARequest.self, { Sample1AViewController() }) { (args) in
+            scenario.given(SampleARequest.self, transitTo: { Sample1AViewController() }) { (args) in
                 args.stage.pushViewController(args.next, animated: true)
                 
                 return {
@@ -18,7 +18,7 @@ class SampleSequenceRule : Guide {
                 }
             }
             
-            scenario.given(SampleBRequest.self, { Sample1BViewController() }) { (args) in
+            scenario.given(SampleBRequest.self, transitTo: { Sample1BViewController() }) { (args) in
                 args.stage.pushViewController(args.next, animated: true)
                 return {
                     args.stage.popViewController(animated: true)
@@ -28,13 +28,13 @@ class SampleSequenceRule : Guide {
         }
         
         operation.at(Sample1BViewController.self) { (scenario) in
-            scenario.given(SampleARequest.self, { Sample1AViewController() }) { (args) in
+            scenario.given(SampleARequest.self, transitTo: { Sample1AViewController() }) { (args) in
                 args.stage.pushViewController(args.next, animated: true)
                 return {
                     args.stage.popViewController(animated: true)
                 }
             }
-            scenario.given(SampleBRequest.self, { Sample1BViewController() }) { (args) in
+            scenario.given(SampleBRequest.self, transitTo: { Sample1BViewController() }) { (args) in
                 args.stage.pushViewController(args.next, animated: true)
                 return {
                     args.stage.popViewController(animated: true)

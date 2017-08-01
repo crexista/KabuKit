@@ -12,7 +12,7 @@ class ScreenTest: XCTestCase {
     }
 
     /**
-     `send<ContextType>(_ request: Request<ContextType>) -> Void` のテストを行うためのクラス
+     `send<ContextType>(_ request: TransitionRequest<ContextType>) -> Void` のテストを行うためのクラス
      */
     class SendWithRequestDummy {
         class DummySceneSequence: Guide {

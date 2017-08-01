@@ -14,15 +14,15 @@ extension Sample1BViewController : Scene {
     typealias Context = Void
 
     func onPressAButton(sender: UIButton) {
-        send(SampleARequest(true))
+        sendTransitionRequest(SampleARequest(true))
     }
     
     func onPressBButton(sender: UIButton) {
-        send(SampleBRequest())
+        sendTransitionRequest(SampleBRequest())
     }
     
     func onPressPrevButton(sender: UIButton) {
-        leave()
+        leaveFromSequence()
     }
     
     // MARK: - Override

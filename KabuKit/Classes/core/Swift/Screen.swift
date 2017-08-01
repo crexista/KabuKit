@@ -1,6 +1,8 @@
 import Foundation
 
 
+fileprivate var rewindByScene: [ScreenHashWrapper : () -> Void] = [ScreenHashWrapper : () -> Void]()
+
 public protocol Screen : class {
     
     /**
@@ -15,10 +17,10 @@ public protocol Screen : class {
      - Parameters:
        - request: 遷移先へのリンク
      */
-    func send<ContextType>(_ request: Request<ContextType>, _ completion: @escaping (Bool) -> Void) -> Void
+    func sendTransitionRequest<ContextType>(_ request: TransitionRequest<ContextType>, _ completion: @escaping (Bool) -> Void) -> Void
     
     
-    func send<ContextType>(_ request: Request<ContextType>) -> Void
+    func sendTransitionRequest<ContextType>(_ request: TransitionRequest<ContextType>) -> Void
     
     /**
      現在表示されているSceneを終了させ、前のSceneに戻る
@@ -26,13 +28,13 @@ public protocol Screen : class {
      - Attention :
      ただし、前のシーンがない場合は戻らず、何も起きない
      */
-    func leave() -> Void
+    func leaveFromSequence() -> Void
 
-    func leave(_ runTransition: Bool) -> Void
+    func leaveFromSequence(_ runTransition: Bool) -> Void
 
-    func leave(_ completion: @escaping (Bool) -> Void) -> Void
+    func leaveFromSequence(_ completion: @escaping (Bool) -> Void) -> Void
 
-    func leave(_ runTransition: Bool, _ completion: @escaping (Bool) -> Void) -> Void
+    func leaveFromSequence(_ runTransition: Bool, _ completion: @escaping (Bool) -> Void) -> Void
 }
 
 extension Screen {
@@ -42,29 +44,55 @@ extension Screen {
         return procedureByScene[ScreenHashWrapper(self)]
     }
     
-    public func leave() -> Void {
-        self.leave(true)
+    internal var scenario: TransitionProcedure? {
+        return procedureByScene[ScreenHashWrapper(self)]
+    }
+    
+    internal var rewind: (() -> Void)? {
+        return rewindByScene[ScreenHashWrapper(self)]
+    }
+    
+    internal func registerScenario(scenario: TransitionProcedure?) {
+        procedureByScene[ScreenHashWrapper(self)] = scenario
+    }
+    
+    internal func registerRewind(f: @escaping () -> Void) {
+        rewindByScene[ScreenHashWrapper(self)] = f
+    }
+    
+    public func leaveFromSequence() -> Void {
+        self.leaveFromSequence(true)
     }
 
-    public func leave(_ runTransition: Bool) -> Void {
-        self.leave(runTransition, { (Bool) in })
+    public func leaveFromSequence(_ runTransition: Bool) -> Void {
+        self.leaveFromSequence(runTransition, { (Bool) in })
     }
 
-    public func leave(_ completion: @escaping (Bool) -> Void) -> Void {
-        self.leave(true, completion)
+    public func leaveFromSequence(_ completion: @escaping (Bool) -> Void) -> Void {
+        self.leaveFromSequence(true, completion)
     }
 
-    public func leave(_ runTransition: Bool, _ completion: @escaping (Bool) -> Void) -> Void {
-        self.TransitionProcedure?.back(runTransition, completion)
+    public func leaveFromSequence(_ runTransition: Bool, _ completion: @escaping (Bool) -> Void) -> Void {
+
+        if let method = rewind {
+            if (runTransition) {
+                method()
+            }
+            rewindByScene.removeValue(forKey: ScreenHashWrapper(self))
+            completion(true)
+            return
+        }
+        
+        completion(false)
     }
 
-    public func send<ContextType>(_ request: Request<ContextType>) -> Void {
-        self.send(request, {(Bool) in })
+    public func sendTransitionRequest<ContextType>(_ request: TransitionRequest<ContextType>) -> Void {
+        self.sendTransitionRequest(request, {(Bool) in })
     }
     
     
-    public func send<ContextType>(_ request: Request<ContextType>, _ completion: @escaping (Bool) -> Void) -> Void {
-        TransitionProcedure?.start(at: request, completion)
+    public func sendTransitionRequest<ContextType>(_ request: TransitionRequest<ContextType>, _ completion: @escaping (Bool) -> Void) -> Void {
+        self.scenario?.start(from: self, at: request, completion)
     }
 
 }

@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var root: UIViewController?
     
-    var sequence: SceneSequence<Void, SampleSequenceRule>?
+    var sequence: SceneSequence<Sample1AViewController, SampleSequenceRule>?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -31,11 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         root?.navigationController?.setNavigationBarHidden(true, animated: true)
         let scene = Sample1AViewController(nibName: "Sample1AViewController", bundle: Bundle.main)
         let rule = SampleSequenceRule()
-        sequence = SceneSequence<Void, SampleSequenceRule>(rule)
-        
-        sequence?.startWith(nav, scene, false) { (firstScene, stage) in
-            nav.pushViewController(firstScene, animated: true)
-        }
+        sequence = SceneSequence(scene: scene, guide: rule, context: false)
+
+        sequence?.start(on: nav, invoking: { (scene, stage) in
+            stage.pushViewController(scene, animated: true)
+        })
+
         return true
     }
 
