@@ -1,7 +1,7 @@
 import Foundation
 import KabuKit
 
-class MockGuide: Guide {
+class MockGuide: SequenceGuide {
     
     typealias Stage = MockStage
     
@@ -22,21 +22,21 @@ class MockGuide: Guide {
 
         operation.at(MockFirstScene.self) { (scenario) in
             
-            scenario.given(MockScenarioRequest1.self, makeFirstScene) { (args) in
+            scenario.given(MockScenarioRequest1.self, transitTo: makeFirstScene) { (args) in
                 self.firstToFirst(args: args)
                 return {
                     self.reset()
                 }
             }
             
-            scenario.given(MockScenarioRequest2.self, makeSecondScene) { (args) in
+            scenario.given(MockScenarioRequest2.self, transitTo: makeSecondScene) { (args) in
                 self.firstToSecond(args: args)
                 return {
                     self.reset()
                 }
             }
             
-            scenario.given(MockScenarioRequest3.self, { () -> MockSecondScene in
+            scenario.given(MockScenarioRequest3.self, transitTo: { () -> MockSecondScene in
                 self.calledFirstToSecond = true
                 return self.tmpSecondScene
             }) { (args) in
@@ -50,14 +50,14 @@ class MockGuide: Guide {
         
         operation.at(MockSecondScene.self) { (scenario) in
             
-            scenario.given(MockScenarioRequest1.self, makeFirstScene){ (args) in
+            scenario.given(MockScenarioRequest1.self, transitTo: makeFirstScene){ (args) in
                 self.secondToFirst(args: args)
                 return {
                     self.reset()
                 }
             }
             
-            scenario.given(MockScenarioRequest2.self, makeSecondScene){ (args) in
+            scenario.given(MockScenarioRequest2.self, transitTo: makeSecondScene){ (args) in
                 self.secondToSecond(args: args)
                 return {
                     self.reset()

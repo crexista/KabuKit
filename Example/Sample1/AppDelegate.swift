@@ -20,22 +20,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        root = UIViewController()
-        
+
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let nav = UINavigationController(rootViewController: root!)
-        self.window!.rootViewController = nav
+        self.window!.rootViewController = UIViewController()
         self.window!.makeKeyAndVisible()
 
-        root?.navigationController?.setNavigationBarHidden(true, animated: true)
         let scene = Sample1AViewController(nibName: "Sample1AViewController", bundle: Bundle.main)
         let rule = SampleSequenceRule()
-        sequence = SceneSequence(scene: scene, guide: rule, context: false)
-
-        sequence?.start(on: nav, invoking: { (scene, stage) in
-            stage.pushViewController(scene, animated: true)
+        let builder = SceneSequence.builder(scene: scene, guide: rule).setup(UINavigationController(rootViewController: UIViewController()), with: false)
+        
+        sequence = builder.build(
+            onActive: { (stage, screens) in
+                stage.isNavigationBarHidden = true
+                self.window?.rootViewController?.addChildViewController(stage)
+                self.window?.rootViewController?.view.addSubview(stage.view)
+        },
+            onInit: { (scene, stage) -> Void in
+                stage.pushViewController(scene, animated: true)
+        },
+            onSuspend: { (stage, screens) in
+                stage.view.removeFromSuperview()
+                stage.removeFromParentViewController()
         })
+        
+        sequence?.activate()
+
 
         return true
     }

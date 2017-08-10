@@ -17,27 +17,27 @@ public class Scenario<CurrentScreenType: Screen, StageType> : TransitionProcedur
     
     fileprivate var stage: StageType?
     
-    fileprivate weak var container: SceneContainer?
+    fileprivate weak var iterator: SceneIterator?
     
     internal let name: String
     
-    init(_ fromType: CurrentScreenType.Type, _ container: SceneContainer, _ stage: StageType){
+    init(_ fromType: CurrentScreenType.Type, _ iterator: SceneIterator, _ stage: StageType){
         name = String(reflecting: fromType)
-        self.container = container
+        self.iterator = iterator
         self.stage = stage
     }
 
 
     
-    internal func start<ContextType>(from current: Screen,
-                                     at request: TransitionRequest<ContextType>,
+    internal func start<ContextType, ExpectedResult>(from current: Screen,
+                                     at request: TransitionRequest<ContextType, ExpectedResult>,
                                      _ completion: @escaping (Bool) -> Void) -> Void {
         self.doStart(from: current as! CurrentScreenType, at: request, completion)
     }
     
     
-    func doStart<ContextType>(from current: CurrentScreenType,
-               at request: TransitionRequest<ContextType>,
+    func doStart<ContextType, ExpectedResult>(from current: CurrentScreenType,
+                 at request: TransitionRequest<ContextType, ExpectedResult>,
                _ completion: @escaping (Bool) -> Void) -> Void {
         dispatchQueue.async {
             guard let stage = self.stage else { return }
@@ -45,8 +45,7 @@ public class Scenario<CurrentScreenType: Screen, StageType> : TransitionProcedur
                 completion(false)
                 return
             }
-            
-            transition.start(from: current, stage: stage, context: request.context)
+            transition.start(from: current, on: stage, with: request)
             completion(true)
         }
     }
@@ -58,9 +57,11 @@ public extension Scenario where CurrentScreenType : Scene {
     
     public typealias Args<NextSceneType: Scene> = (from: CurrentScreenType, next: NextSceneType, stage: StageType)
     
-    public func given<ContextType, NextSceneType: Scene>(_ request: TransitionRequest<ContextType>.Type,
-                      transitTo next: @escaping () -> NextSceneType,
-                      with transition: @escaping (Args<NextSceneType>) -> Rewind) -> Void where NextSceneType.Context == ContextType {
+    public func given<ContextType, ExpectedResult, NextSceneType: Scene>(_ request: TransitionRequest<ContextType, ExpectedResult>.Type,
+                                                                         transitTo next: @escaping () -> NextSceneType,
+                                                                         with transition: @escaping (Args<NextSceneType>) -> Rewind) -> Void
+                                                                         where NextSceneType.Context == ContextType,
+                                                                               NextSceneType.ReturnValue == ExpectedResult {
         
         let requestName = String(reflecting: request)
         let transitioning = { (from: CurrentScreenType, next: NextSceneType, stage: Any) -> () -> Void in
@@ -68,7 +69,7 @@ public extension Scenario where CurrentScreenType : Scene {
             return transition(args)
         }
 
-        let transition = Transition(to: next, container: self.container!, with: transitioning)
+        let transition = Transition(to: next, iterator: self.iterator!, with: transitioning)
         transitionStore[requestName] = transition
     }
 }

@@ -1,8 +1,8 @@
 import Foundation
 import KabuKit
 
-class SampleARequest : TransitionRequest<Bool> {}
-class SampleBRequest : TransitionRequest<Void> {}
+class SampleARequest : TransitionRequest<Bool, String> {}
+class SampleBRequest : TransitionRequest<Void, Void> {}
 
 class SampleSequenceRule : SequenceGuide {
     typealias Stage = UINavigationController

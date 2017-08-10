@@ -18,7 +18,7 @@ public class SceneOperation<StageType> {
     
     private let stage: StageType
     
-    private unowned var container: SceneContainer
+    private unowned var iterator: SceneIterator
 
     /**
      指定したSceneでのScenarioのフローを定義します
@@ -40,7 +40,7 @@ public class SceneOperation<StageType> {
        - run: Scenarioを使ったフロー
      */
     public func at<FromSceneType: Scene>(_ fromType: FromSceneType.Type, _ run: (Scenario<FromSceneType, StageType>) -> Void) {
-        let scenario = Scenario<FromSceneType, StageType>(fromType, container, stage)
+        let scenario = Scenario<FromSceneType, StageType>(fromType, iterator, stage)
         scenedTransitionProcedure[scenario.name] = scenario
         run(scenario)
     }
@@ -80,9 +80,9 @@ public class SceneOperation<StageType> {
         return scenedTransitionProcedure[anyTransitionProcedureName]
     }
 
-    internal init(stage: StageType, container: SceneContainer) {
+    internal init(stage: StageType, iterator: SceneIterator) {
         anyTransitionProcedureName = String(reflecting: AnyTransitionProcedure.self)
-        self.container = container
+        self.iterator = iterator
         self.stage = stage
     }
 }

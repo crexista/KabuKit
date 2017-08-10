@@ -17,7 +17,6 @@ class SceneSequenceTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        sequence = SceneSequence(firstScene, guide)
 
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
@@ -30,117 +29,194 @@ class SceneSequenceTest: XCTestCase {
         super.tearDown()
     }
     
-    func test_FirstSceneからScenarioRequest1を受けたらcalledFirstToFirstが呼ばれそのあとrollbackが呼ばれたらresetされる() {
+    func test_FirstSceneからScenarioRequest1を受けたらcalledFirstToFirstが呼ばれる() {
         let request = MockScenarioRequest1()
         let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
         
         XCTAssertFalse(self.guide.calledFirstToFirst)
-        sequence?.start(on: stage, with: { (scene, stage) in
-            stage.setScene(scene: scene)
-            self.firstScene.send(request, { (completion) in
-                XCTAssertTrue(completion)
-                XCTAssertTrue(self.guide.calledFirstToFirst)
-                asyncExpection?.fulfill()
-            })
-        })
+
+//        sequence?.start(on: stage, transition: { (scene, stage) in
+//            stage.setScene(scene: scene)
+//        }, {
+//            self.firstScene.sendTransitionRequest(request, { (completion) in
+//                XCTAssertTrue(completion)
+//                XCTAssertTrue(self.guide.calledFirstToFirst)
+//                asyncExpection?.fulfill()
+//            })
+//        })
 
         self.wait(for: [asyncExpection!], timeout: 2.0)
+        XCTAssertTrue(self.guide.calledFirstToFirst)
     }
     
 
     
-    func test_leaveする際のロジックが定義されている時_Sequenceのleaveを呼んだ場合_leaveロジックが呼ばれ停止状態になる() {
+    func test_suspendする際のロジックが定義されている時_Sequenceのsuspendを呼んだ場合_suspendロジックが呼ばれ停止状態になる() {
         var isCalled = false
+        var isSuspended = false
+        var isResumed = false
 
         let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
-        sequence?.start(on: stage, accordingAs: { (scene, stage) -> ([Screen]) -> Void in
-            return { (screens: [Screen]) in
-                isCalled = true
-            }
-        }, {
-            self.sequence?.leave{ (comp) in
-                asyncExpection?.fulfill()
-            }
-        })
+//        sequence?.start(on: stage, transition: { (scene, stage) in
+//            isCalled = true
+//        }, onSuspend: { (stage, screens) in
+//            isSuspended = true
+//        }, onResume: { (stage, screens) in
+//            isResumed = true
+//        }, onLeave: { (stage, screens, returns) in
+//
+//        }, { 
+//            self.sequence?.suspend()
+//            self.sequence?.resume()
+//            asyncExpection?.fulfill()
+//        })
+
         self.wait(for: [asyncExpection!], timeout: 2.0)
 
         XCTAssertTrue(isCalled)
-    }
-/*
-    func test_leaveする際のロジックが定義されていない時_Sequenceに与えられた最初のSceneがleaveを呼んだ場合_最初のSceneはデタッチされない() {
-        sequence?.start(on: stage) { (scene, stage) -> Void in
-            
-        }
-        XCTAssertTrue(sequence!.contain(firstScene))
+        XCTAssertTrue(isSuspended)
+        XCTAssertTrue(isResumed)
     }
     
-    
-    func test_leaveする際のロジックが定義されている時_Sequenceに与えられた最初のSceneがleaveを呼んだ場合_最初のSceneはデタッチされる() {
-        sequence?.start(on: stage) { (scene, stage) -> ([Screen]) -> Void in
-            return { (screens: [Screen]) in
-            }
-        }
-
-        XCTAssertTrue(sequence!.contain(firstScene))
-        sequence?.leave()
-        XCTAssertFalse(sequence!.contain(firstScene))
-    }
-    
-    func test_leaveする際のロジックが定義されている時_Sequenceに与えられた最初のSceneがleaveを呼んだ場合_leaveロジックが呼ばれ停止状態になる() {
-        var isCalled = false
+    func test_rewindする際のロジックが定義されている時_Sequenceに与えられた最初のSceneがleaveを呼んだ場合_最初のSceneはデタッチされonLeaveが呼ばれる() {
+        var isRewind = false
+        var isLeaved = false
         let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
-        sequence?.start(on: stage, accordingAs: { (scene, stage) -> ([Screen]) -> Void in
-            return { (screens: [Screen]) in
-                isCalled = true
+        let builder = SceneContainerBuilder.builder(scene: firstScene, guide: guide) { (scene, stage) -> (() -> Void)? in
+            return { () in
+                isRewind = true
             }
-        }, {
-            self.firstScene.leave{ (comp) in
-                asyncExpection?.fulfill()
-            }
-        })
-        self.wait(for: [asyncExpection!], timeout: 2.0)
+        }
         
-        XCTAssertTrue(isCalled)
-    }
-*/
-    func test_leaveする際のロジックが定義されている時_Sequenceのleaveを呼んだ場合_最初のSceneはデタッチされる() {
-        let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
-        sequence?.start(on: stage, accordingAs: { (scene, stage) -> ([Screen]) -> Void in
-            return { (screens: [Screen]) in }
-        }, {
-            XCTAssertTrue(self.sequence!.contain(self.firstScene))
-            self.sequence?.leave{ (comp) in
-                asyncExpection?.fulfill()
-                XCTAssertFalse(self.sequence!.contain(self.firstScene))
-            }
+        sequence = builder.setStage(stage).setContext(()).build(onLeave: { (stage, screens, _: ()) in
+            isLeaved = true
         })
 
+        sequence?.activate {
+            asyncExpection?.fulfill()
+        }
+
         self.wait(for: [asyncExpection!], timeout: 2.0)
+        firstScene.leaveFromCurrent(returnValue: ())
+        XCTAssertTrue(isRewind)
+        XCTAssertTrue(isLeaved)
+        XCTAssertTrue(!sequence!.contain(firstScene))
+
     }
+
+    func test_rewindする際のロジックが定義されていない時_Sequenceに与えられた最初のSceneがleaveを呼んでも_最初のSceneはデタッチされずonLeaveも呼ばれない() {
+        var isLeave = false
+        let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
+        let builder = SceneContainerBuilder.builder(scene: firstScene, guide: guide) { (scene, stage) -> Void in }
+        sequence = builder.setContext(()).setStage(stage).build { (stage, screens, value) in
+            isLeave = true
+        }
+        
+        sequence?.activate{
+            asyncExpection?.fulfill()
+        }
+
+//        sequence?.start(on: stage, transition: { (scene, stage) -> Void in
+//
+//        }, onLeave:{ (stage, scene, returns) in
+//            isLeave = true
+//        }, {
+//            asyncExpection?.fulfill()
+//        })
+        
+        self.wait(for: [asyncExpection!], timeout: 2.0)
+        firstScene.leaveFromCurrent(returnValue: ())
+        XCTAssertTrue(sequence!.contain(firstScene))
+        XCTAssertFalse(isLeave)
+    }
+    
+    func test_rewindする際のロジックが定義されていない時でも_Sequenceのleaveを呼ぶと_最初のSceneはデタッチされonLeaveも呼ばれる() {
+        var isLeaved = false
+        let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
+        let builder = SceneContainerBuilder.builder(scene: firstScene, guide: guide) { (scene, stage) -> Void in }
+        
+        sequence = builder.setContext(()).setStage(stage).build { (stage, screens, value) in
+            isLeaved = true
+        }
+        
+        sequence?.activate{
+            asyncExpection?.fulfill()
+        }
+        sequence?.suspend()
+        
+        self.wait(for: [asyncExpection!], timeout: 2.0)
+        sequence?.leaveFromCurrent(returnValue: ())
+        XCTAssertTrue(isLeaved)
+
+    }
+    
+    func test_suspendする際のロジックが定義されている時_suspendを呼ぶと_onSuspendが呼ばれる() {
+        var isSuspend = false
+        let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
+        let builder = SceneContainerBuilder.builder(scene: firstScene, guide: guide) { (scene, stage) -> Void in }
+        
+        sequence = builder.setContext(()).setStage(stage).build (onSuspend: { (stage, screens) in
+            isSuspend = true
+        }, onResume: { (stage, screens) in
+
+        }, onLeave: { (stage, screens, value) in
+
+        })
+
+        
+        sequence?.activate{
+            asyncExpection?.fulfill()
+        }
+        sequence?.suspend()
+        self.wait(for: [asyncExpection!], timeout: 2.0)
+        XCTAssertTrue(isSuspend)
+    }
+    
+    
+    func test_rewindする際のロジックが定義されている時_Sequenceのleaveを呼ぶと_onLeaveが呼ばれるがrewindは呼ばれない() {
+        var isLeave = false
+        var isRewind = false
+        let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
+//        sequence?.start(on: stage, transitionWithRewind: { (scene, stage) -> (() -> Void)? in
+//            return { () in
+//                isRewind = true
+//            }
+//        }, onLeave:{ (stage, scene, returns) in
+//            isLeave = true
+//        }, {
+//            asyncExpection?.fulfill()
+//        })
+        
+        self.wait(for: [asyncExpection!], timeout: 2.0)
+//        sequence?.leaveFromCurrent()
+        XCTAssertTrue(isLeave)
+        XCTAssertFalse(isRewind)
+    }
+
 
     
     func test_leaveする際のロジックが定義されている時_Sequenceのleaveを呼んだ場合_leaveロジックの中で今まで追加されたSceneを取得できる() {
         let secondScreen = MockSecondScene()
         var isCalled = false
         let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
-        sequence?.start(on: stage, accordingAs: { (scene, stage) -> ([Screen]) -> Void in
-            return { (screens: [Screen]) in
-                XCTAssertTrue(screens[0] === self.firstScene)
-                XCTAssertTrue(screens[1] === secondScreen)
-                isCalled = true
-            }
-        }, {
-            self.sequence?.add(screen: secondScreen, context: (), rewind: {})
-            self.sequence?.leave{ (completion) in
-                asyncExpection?.fulfill()                
-            }
-        })
+//        sequence?.start(on: stage, transition: { (scene, stage) in
+//
+//        }, onLeave: { (stage, screens, value) in
+//            XCTAssertTrue(screens[0] === self.firstScene)
+//            XCTAssertTrue(screens[1] === secondScreen)
+//            isCalled = true
+//        }, {
+//            self.sequence?.add(screen: secondScreen, {})
+//            self.sequence?.leaveFromCurrent(completion: { (result) in
+//                asyncExpection?.fulfill()
+//            })
+//        })
         self.wait(for: [asyncExpection!], timeout: 2.0)
         XCTAssertTrue(isCalled)
 
     }
     
-
+/*
     func test_leaveする際のロジックが定義されていない時_Sequenceがleaveを呼んだ場合_最初のSceneはデタッチされない() {
         let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
         sequence?.start(on: stage, with: { (scene, stage) in }, {
@@ -220,20 +296,20 @@ class SceneSequenceTest: XCTestCase {
 
         self.wait(for: [asyncExpection!], timeout: 2.0)
     }
-
+*/
     func test_leaveが引数trueで呼び出された場合にはrewindイベントが実行される() {
-        self.leaveTest(runTransition: true, wasRunRewindHandlerExpectation: true)
+//        self.leaveTest(runTransition: true, wasRunRewindHandlerExpectation: true)
     }
 
     func test_leaveが引数falseで呼び出された場合にはrewindイベントが実行されない() {
-        self.leaveTest(runTransition: false, wasRunRewindHandlerExpectation: false)
+//        self.leaveTest(runTransition: false, wasRunRewindHandlerExpectation: false)
     }
 
     /**
      `operation.resolve(from: scene) else { return }` の else パターンのテストのためのクラス
      */
     class NoTransitionDefinitionDummy {
-        class DummySceneGuide: Guide {
+        class DummySceneGuide: SequenceGuide {
             typealias Stage = UINavigationController
 
             public var wasStartCalled = false
@@ -246,13 +322,13 @@ class SceneSequenceTest: XCTestCase {
             }
         }
 
-        class DummySceneRequest: Request<Void> {}
+        class DummySceneRequest: TransitionRequest<Void, Void> {}
 
         class DummyScene: Scene {
             typealias Context = Void
 
             public func transit() {
-                send(DummySceneRequest())
+                sendTransitionRequest(DummySceneRequest())
             }
         }
     }
@@ -262,19 +338,20 @@ class SceneSequenceTest: XCTestCase {
         let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
 
         let dummySceneGuide = NoTransitionDefinitionDummy.DummySceneGuide()
-        let sequence = SceneSequence(NoTransitionDefinitionDummy.DummyScene(), dummySceneGuide)
-        sequence.start(on: UINavigationController(), with: { (scene, stage) in
-            // 遷移を実行する
-            scene.transit()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                XCTAssertTrue(dummySceneGuide.wasStartCalled, "startが呼ばれて何も発生しない")
-                asyncExpection?.fulfill()
-            }
-        })
-
-        // For testing
-        self.wait(for: [asyncExpection!], timeout: 3.0)
+//        let sequence = SceneSequence(scene: NoTransitionDefinitionDummy.DummyScene(), guide: dummySceneGuide, context: ())
+//        sequence.start(on: UINavigationController(), transitionWithRewind: { (scene, stage) -> (() -> Void)? in
+//            // 遷移を実行する
+//            scene.transit()
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+//                XCTAssertTrue(dummySceneGuide.wasStartCalled, "startが呼ばれて何も発生しない")
+//                asyncExpection?.fulfill()
+//            }
+//
+//            return { _ in }
+//        })
+//
+//        // For testing
+//        self.wait(for: [asyncExpection!], timeout: 3.0)
     }
 
     func testPerformanceExample() {

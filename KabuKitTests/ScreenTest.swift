@@ -14,6 +14,7 @@ class ScreenTest: XCTestCase {
     /**
      `send<ContextType>(_ request: TransitionRequest<ContextType>) -> Void` のテストを行うためのクラス
      */
+/*
     class SendWithRequestDummy {
         class DummySceneSequence: Guide {
             typealias Stage = UINavigationController
@@ -46,7 +47,7 @@ class ScreenTest: XCTestCase {
             }
         }
     }
-
+*/
     func test_send_with_requestを実行し遷移することができる() {
         // For testing
 //        let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")

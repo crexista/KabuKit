@@ -9,30 +9,39 @@ internal var procedureByScene = [ScreenHashWrapper : TransitionProcedure]()
  このクラスの `start:` を明示的に呼ばないと内部でのSceneがリクエストしても画面遷移は行われない
 
  */
-public class SceneSequence<FirstScene: Scene, GuideType: SequenceGuide> : Scene, SceneContainer {
+public class SceneSequence<FirstScene: Scene, GuideType: SequenceGuide> : Scene, SceneIterator, SceneContainer {
 
     public typealias Context = FirstScene.Context
-    
+    public typealias ReturnValue = FirstScene.ReturnValue
     public typealias StageType = GuideType.Stage
     
-    private var scenes: [Screen]
+    fileprivate var scenes: [Screen]
     
     private var currentTransitionProcedure: TransitionProcedure?
     
     private let isRecordable: Bool
     
-    private var stage: StageType?
+    fileprivate var stage: StageType?
     
-    private var guide: GuideType?
+    fileprivate var guide: GuideType?
     
-    private var operation: SceneOperation<StageType>?
+    fileprivate var operation: SceneOperation<StageType>?
         
     private let firstScene: FirstScene
     
     private var leaveFunc:(([Screen]) -> Void)?
     
+    fileprivate var onInit: ((FirstScene, StageType) -> (() -> Void)?)?
+    
     public private(set) var isStarted: Bool = false
+    public private(set) var isSuspended: Bool = false
 
+    public static func builder(scene: FirstScene,
+                               guide: GuideType?) -> SceneSequenceBuilder<FirstScene, GuideType, Unbuildable, Unbuildable> {
+
+        
+        return SceneSequenceBuilder<FirstScene, GuideType, Unbuildable, Unbuildable>(scene: scene, guide: guide)
+    }
 
     /**
      ScreenをこのSequenceに追加します
@@ -41,10 +50,9 @@ public class SceneSequence<FirstScene: Scene, GuideType: SequenceGuide> : Scene,
        - screen: 新たにライフサイクルの管理を行うことになるScreen
        - onComplete: 追加作業が終わったら呼ばれるコールバック
      */
-    internal func add(screen: Screen, _ onComplete:() -> Void) {
+    internal func add<SceneType>(screen: SceneType, _ onComplete: () -> Void) where SceneType : Scene {
         guard  let operation = self.operation else { return }
 
-        self.guide?.start(with: operation)
         let scenario = operation.resolve(from: screen)
         screen.registerScenario(scenario: scenario)
         self.scenes.append(screen)
@@ -58,12 +66,11 @@ public class SceneSequence<FirstScene: Scene, GuideType: SequenceGuide> : Scene,
        - screen: 管理から外すScreen
        - completion: remove処理が終わったら呼ばれるコールバック
      */
-    internal func remove(screen: Screen, completion: () -> Void) {
+    internal func remove<SceneType>(screen: SceneType) where SceneType : Scene {
         let hashwrap = ScreenHashWrapper(screen)
         _ = self.scenes.popLast()
         procedureByScene.removeValue(forKey: hashwrap)
         contextByScreen.removeValue(forKey: hashwrap)
-        completion()
     }
 
     public func contain<SceneType: Scene>(_ scene: SceneType) -> Bool {
@@ -71,77 +78,38 @@ public class SceneSequence<FirstScene: Scene, GuideType: SequenceGuide> : Scene,
             (scene === screen)
         }
     }
-    
-    /**
-     SceneSequenceをスタートさせます
-    
-     - Attention:
-     起動時の処理のみ規定するため、leaveが呼ばれてもこのsequenceを停止させる処理は動かず
-     このSequenceに追加された一番最初のSceneはreleaseされません
-     
-     - Parameters:
-       - stage: Sequenceに追加されるSceneを乗せるView
-       - invoking: 起動時の描画処理
-       - runOn: 起動時の描画処理を行うDispatchQueue(async)
-       - completion: setup処理が完了した時に呼ばれるコールバック
-     */
-    public func start(on stage: StageType,
-                      invoking: @escaping (_ scene: FirstScene, _ stage: StageType) -> Void,
-                      runOn: DispatchQueue = DispatchQueue.main,
-                      _ completion: (() -> Void)? = nil) {
-        
-        let operation = SceneOperation(stage: stage, container: self)
-        self.stage = stage
-        self.guide?.start(with: operation)
-        self.operation = operation
 
-        firstScene.registerContext(self.context)
-        add(screen: firstScene) {
-            runOn.async {
-                invoking(self.firstScene, stage)
-                self.isStarted = true
-                completion?()
+    
+    public func suspend() {
+        onSuspend()
+        isSuspended = true
+    }
+    
+    public func resume() {
+        onResume()
+        isSuspended = false
+    }
+    
+    public func activate(runOn: DispatchQueue = DispatchQueue.main, _ completion: (() -> Void)? = nil) {
+        runOn.async {
+            self.onResume()
+            if (!self.contain(self.firstScene)) {
+                self.add(screen: self.firstScene) {
+                    guard let stage = self.stage else { return }
+                    guard let rewind = self.onInit?(self.firstScene, stage) else { return }
+                    self.firstScene.registerRewind(f: { (value) in
+                        rewind()
+                        self.remove(screen: self.firstScene)
+                        self.rewind?(value)
+                    })
+                }
             }
+            completion?()
         }
     }
-
-    /**
-     SceneSequenceをスタートさせます
-
-     - Parameters:
-       - stage: Sequenceに追加されるSceneを乗せるView
-       - transitioning: SceneSequenceを起動、終了させた時の遷移処理
-       - runOn: 遷移処理を走らせるDisptachQueue(async)
-       - didInvoked: 起動時の遷移処理がおわた時に呼ばれるコールバック
-       - didClose: このSceneSequenceの処理が終了した際に呼ばれるコールバック
-    */
-    public func start(on stage: StageType,
-                      transitioning : @escaping (_ scene: FirstScene, _ stage: StageType) -> (_ screens: [Screen]) -> Void,
-                      runOn: DispatchQueue = DispatchQueue.main,
-                      _ didInovke: (() -> Void)? = nil,
-                      _ didClose: (() -> Void)? = nil) {
-        
-        let operation = SceneOperation(stage: stage, container: self)
-        self.stage = stage
-        self.guide?.start(with: operation)
-        self.operation = operation
-        
-        firstScene.registerContext(self.context)
-        add(screen: firstScene) {
-            runOn.async {
-                let rewind = transitioning(self.firstScene, stage)
-                self.registerRewind {
-                    rewind(self.scenes)
-                    didClose?()
-
-                }
-                self.firstScene.registerRewind {
-                    self.leaveFromSequence()
-                }
-                self.isStarted = true
-                didInovke?()
-            }
-        }
+    
+    deinit {
+        self.leaveFromCurrent(returnValue: nil)
     }
     
     /**
@@ -152,13 +120,98 @@ public class SceneSequence<FirstScene: Scene, GuideType: SequenceGuide> : Scene,
        - guide: SceneSequenceのフローを書いたプロトコルクラス
        - context: 一番最初のSceneを開始する際に必要となる起動引数
      */
-    public init(scene: FirstScene, guide: GuideType?, context: FirstScene.Context) {
+    public init(scene: FirstScene, guide: GuideType?, onInit: ((FirstScene, StageType) -> (() -> Void)?)?) {
         self.scenes = [Screen]()
         self.guide = guide
         self.isRecordable = true
         self.firstScene = scene
-        self.registerContext(context)
+        self.onInit = onInit
     }
 }
 
+public class BuilderState {}
+public class Buildable: BuilderState {}
+public class Unbuildable: BuilderState {}
 
+public class SceneSequenceBuilder<FirstScene: Scene, GuideType: SequenceGuide, Context: BuilderState, Stage: BuilderState> {
+    
+    public typealias StageType = GuideType.Stage
+    public typealias ReturnValue = FirstScene.ReturnValue
+    
+    fileprivate let firstScene: FirstScene
+    
+    fileprivate let guide: GuideType?
+    
+    fileprivate var onInit: ((FirstScene, StageType) -> (() -> Void)?)?
+    
+    fileprivate var stage: StageType?
+    fileprivate var context: FirstScene.Context?
+    
+
+
+    
+    init(scene: FirstScene, guide: GuideType?) {
+        self.firstScene = scene
+        self.guide = guide
+    }
+    
+    public func setup(_ stage: StageType, with context: FirstScene.Context) -> SceneSequenceBuilder<FirstScene, GuideType, Buildable, Buildable> {
+        let builder = SceneSequenceBuilder<FirstScene, GuideType, Buildable, Buildable>(scene: firstScene, guide: self.guide)
+        builder.context = context
+        builder.stage = stage
+        return builder
+    }
+    
+    public func setContext(_ context: FirstScene.Context) -> SceneSequenceBuilder<FirstScene, GuideType, Buildable, Stage> {
+        let builder = SceneSequenceBuilder<FirstScene, GuideType, Buildable, Stage>(scene: firstScene, guide: self.guide)
+        builder.context = context
+        builder.stage = stage
+        return builder
+    }
+    
+    public func setStage(_ stage: StageType) -> SceneSequenceBuilder<FirstScene, GuideType, Context, Buildable> {
+        let builder = SceneSequenceBuilder<FirstScene, GuideType, Context, Buildable>(scene: firstScene, guide: self.guide)
+        builder.context = context
+        builder.stage = stage
+        return builder
+    }
+}
+
+public extension SceneSequenceBuilder where Context == Buildable, Stage == Buildable {
+    
+    public func build(onActive: ((StageType, [Screen]) -> Void)? = nil,
+                      onInit: ((FirstScene, StageType) -> Void)? = nil,
+                      onSuspend: ((StageType, [Screen]) -> Void)? = nil,
+                      onLeave: ((StageType, [Screen], ReturnValue?) -> Void)? = nil) -> SceneSequence<FirstScene, GuideType> {
+        return buildWithRewind(onActive: onActive,
+                               onInit: { (scene, stage) -> (() -> Void)? in
+                                onInit?(scene, stage)
+                                return nil
+                               },
+                               onSuspend: onSuspend,
+                               onLeave: onLeave)
+    }
+    
+    public func buildWithRewind(onActive: ((StageType, [Screen]) -> Void)? = nil,
+                                onInit: ((FirstScene, StageType) -> (() -> Void)?)? = nil,
+                                onSuspend: ((StageType, [Screen]) -> Void)? = nil,
+                                onLeave: ((StageType, [Screen], ReturnValue?) -> Void)? = nil) -> SceneSequence<FirstScene, GuideType> {
+        
+        guard let stage = self.stage else { fatalError() }
+        guard let context = self.context else { fatalError() }
+        
+        let sequence = SceneSequence(scene: firstScene, guide: guide, onInit: onInit)
+        let operation = SceneOperation(stage: stage, iterator: sequence)
+        
+        sequence.stage = stage
+        sequence.guide?.start(with: operation)
+        sequence.operation = operation
+        sequence.registerOnSuspend { onSuspend?(stage, sequence.scenes) }
+        sequence.registerOnResume { onActive?(stage, sequence.scenes) }
+        sequence.registerRewind { retValue in onLeave?(stage, sequence.scenes, retValue) }
+        sequence.registerContext(context)
+        
+        firstScene.registerContext(context)
+        return sequence
+    }
+}
