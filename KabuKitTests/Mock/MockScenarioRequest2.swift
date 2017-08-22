@@ -1,4 +1,4 @@
 import Foundation
 import KabuKit
 
-class MockScenarioRequest2 : Request<Void> {}
+class MockScenarioRequest2 : TransitionRequest<Void, Void> {}

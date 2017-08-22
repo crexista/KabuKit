@@ -6,7 +6,7 @@ import XCTest
 @testable import KabuKit
 
 class ScreenHashWrapperTest: XCTestCase {
-    
+
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -41,9 +41,6 @@ class ScreenHashWrapperTest: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-    
+
 }
 
-class DummyUIViewScene: UIView, Scene {
-    typealias Context = Void
-}
