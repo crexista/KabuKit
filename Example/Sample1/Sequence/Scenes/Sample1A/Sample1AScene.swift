@@ -7,19 +7,21 @@ import KabuKit
 
 
 extension Sample1AViewController: Scene {
+
     
-    typealias ContextType = Bool
+    typealias Context = Bool
+    typealias ReturnValue = String
     
     func onPressAButton(sender: UIButton) {
-        send(SampleARequest(true))
+        sendTransitionRequest(SampleARequest(true){ value in })
     }
     
     func onPressBButton(sender: UIButton) {
-        send(SampleBRequest())
+        sendTransitionRequest(SampleBRequest(), { (str) in })
     }
     
     func onPressPrevButton(sender: UIButton) {
-        leave()
+        leaveFromCurrent(returnValue: "back from sample1a", runTransition: true) { (result) in }
     }
 
     func onPressPopButton(sender: UIButton) {
@@ -49,7 +51,7 @@ extension Sample1AViewController: Scene {
 
     override func viewDidDisappear(_ animated: Bool) {
         if self.isMovingFromParentViewController {
-            leave(false)
+            leaveFromCurrent(returnValue: "test", runTransition: false)
         }
     }
 }
