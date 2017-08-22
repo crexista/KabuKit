@@ -20,31 +20,23 @@ class SceneOperationTest: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
+
     func test_atで定義したScenarioがある場合はresolveで取得できる() {
-        let operation = KabuKit.SceneOperation<MockStage>()
-        operation.at(MockFirstScene.self) { (s) in }
+        let operation = SceneOperation<MockStage>(stage: MockStage(), queue: DispatchQueue.main)
+        
+        operation.at(MockFirstScene.self) { (args) in }
         let scenario = operation.resolve(from: MockFirstScene())
         XCTAssertNotNil(scenario)
     }
     
     func test_atで定義したScenarioがない場合はresolveで取得できない() {
-        let operation = KabuKit.SceneOperation<MockStage>()
+        let operation = SceneOperation<MockStage>(stage: MockStage(), queue: DispatchQueue.main)
+        
         operation.at(MockFirstScene.self) { (s) in }
         let scenario = operation.resolve(from: MockSecondScene())
         XCTAssertNil(scenario)
     }
-    
-    func test_atAnyWhereを一度でも定義するとatで定義していないSceneでもScenarioの取得ができる() {
-        let operation = KabuKit.SceneOperation<MockStage>()
-        let scenario0 = operation.resolve()
-        XCTAssertNil(scenario0)
-        operation.atAnyScene { (s) in }
-        let scenario1 = operation.resolve()
-        XCTAssertNotNil(scenario1)
-    }
 
-    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {

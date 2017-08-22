@@ -8,64 +8,27 @@ import Foundation
  どのSceneでどのようなScenarioを実行するかをまとめたクラス
  
  */
-public class SceneOperation<StageType> {
+public class SceneOperation<Stage> {
     
     private var scenedTransitionProcedure = [String : TransitionProcedure]()
     
     private var anyTransitionProcedure: TransitionProcedure?
     
-    private let anyTransitionProcedureName: String
+    private let anyTransitionProcedureName: String = "anyTransition"
+    
+    private let stage: Stage
+    
+    private let transitionQueue: DispatchQueue
+    
+    private weak var collection: SceneCollection<Stage>?
+    
 
-    /**
-     指定したSceneでのScenarioのフローを定義します
-     
-     ```Swift
-     operation.at(SampleScene.self) { (scenario) in
-         scenario.given(request: SampleRequest.self, to: { () -> Scene in
-     
-         }, begin: { (args) in
-     
-         }, end: { (args) in
-     
-         })
-     }
-     
-     ```
-     - Parameters:
-       - fromType: Sceneを実装したクラスのtype
-       - run: Scenarioを使ったフロー
-     */
-    public func at<FromSceneType: Scene>(_ fromType: FromSceneType.Type, _ run: (Scenario<FromSceneType, StageType>) -> Void) {
-        let scenario = Scenario<FromSceneType, StageType>(fromType)
-        scenedTransitionProcedure[scenario.name] = scenario
+    public func at<FromSceneType: Scene>(_ fromType: FromSceneType.Type, _ run: (Scenario<FromSceneType, Stage>) -> Void){
+        let scenario = Scenario<FromSceneType, Stage>(stage, collection, transitionQueue)
+        scenedTransitionProcedure[String(reflecting: fromType)] = scenario
         run(scenario)
     }
     
-    
-    /**
-     Sceneを指定せずにScenarioをフローを定義します
-     
-     ```Swift
-     operation.atAnyScene { (scenario) in
-         scenario.given(request: SampleRequest.self, to: { () -> Scene in
-
-         }, begin: { (args) in
- 
-         }, end: { (args) in
-
-         })
-     }
-
-     ```     
-     - Parameters:
-       - run: Scenarioを使ったフロー
-     */
-    public func atAnyScene(run: (Scenario<AnyTransitionProcedure, StageType>) -> Void){
-        anyTransitionProcedure = anyTransitionProcedure ?? Scenario<AnyTransitionProcedure, StageType>(AnyTransitionProcedure.self)
-        guard let scenario = anyTransitionProcedure as? Scenario<AnyTransitionProcedure, StageType> else { return }
-        scenedTransitionProcedure[anyTransitionProcedureName] = scenario
-        run(scenario)
-    }
     
     internal func resolve(from: Screen) -> TransitionProcedure? {
         let name = String(reflecting: type(of: from))
@@ -75,12 +38,14 @@ public class SceneOperation<StageType> {
     internal func resolve() -> TransitionProcedure? {
         return scenedTransitionProcedure[anyTransitionProcedureName]
     }
+    
+    func setup(collection:  SceneCollection<Stage>) {
+        self.collection = collection
+    }
 
-    internal init() {
-        anyTransitionProcedureName = String(reflecting: AnyTransitionProcedure.self)
+    internal init(stage: Stage, queue: DispatchQueue) {
+        self.stage = stage
+        self.transitionQueue = queue
     }
 }
 
-public class AnyTransitionProcedure: Screen {
-    internal init() {}
-}
