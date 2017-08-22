@@ -4,12 +4,28 @@
 
 import XCTest
 @testable import KabuKit
-
+class MockRequest2: TransitionRequest<Void, Void>{}
+class MockFirstScene3: Scene {
+    typealias Context = Void
+}
 class ScenarioTest: XCTestCase {
+
+    let stage = MockStage()
+    let guide = MockGuide()
+
+    var collection: SceneCollection<MockStage>?
+    var scenario: Scenario<MockFirstScene, MockStage>?
     
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        collection = SceneCollection<MockStage>(stage: stage, guide: guide)
+        collection?.screens.append(MockFirstScene())
+        scenario = Scenario<MockFirstScene, MockStage>(MockStage(), collection, DispatchQueue.main)
+        scenario?.given(MockTransitionRequest.self, transitTo: { MockSecondScene() }) { (args) in
+            return {}
+        }
     }
     
     override func tearDown() {
@@ -17,86 +33,48 @@ class ScenarioTest: XCTestCase {
         super.tearDown()
     }
     
-    func test_givenでRequestに紐づけられたbeginのメソッドのみtransitの際に呼ばれる() {
-        let firstScene = MockFirstScene()
-        let stage = MockStage()
-        let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
-        let scenario = Scenario<MockFirstScene, MockStage>(MockFirstScene.self)
-        var isBeginCalled = false
-        var isEndCalled = false
-        var isSetupCalled = false
-        scenario.given(MockScenarioRequest1.self, { () in MockSecondScene() }) { (args) in
-            isBeginCalled = true
-            return {
-                isEndCalled = true
-            }
-        }
+    func test_生成されたScenarioに設定されているrequestをstart時に受け取った時_新しいSceneを生成およびCollectionに追加しcompletionがtrueで実行される() {
 
-        scenario.setup(at: firstScene, on: stage, with: DummyContainer(), when: nil)
-        scenario.start(at: MockScenarioRequest1()) { (complete) in
-            XCTAssertTrue(isBeginCalled)
-            isSetupCalled = true
-            asyncExpection?.fulfill()
-        }
-        self.wait(for: [asyncExpection!], timeout: 2.0)
+        let asyncExpection1: XCTestExpectation? = self.expectation(description: "wait")
+        let request = MockTransitionRequest("test") { (str) in }
+        var isCalled = false
+        XCTAssertEqual(collection?.screens.count, 1)
+        scenario?.start(atRequestOf: request, { (result) in
+            asyncExpection1?.fulfill()
+            XCTAssertTrue(result)
+            isCalled = true
+        })
+        self.wait(for: [asyncExpection1!], timeout: 1.0)
         
-        XCTAssertFalse(isEndCalled)
-        XCTAssertTrue(isSetupCalled)
+        XCTAssertTrue(isCalled)
+        XCTAssertEqual(collection?.screens.count, 2)
     }
     
-    func test_transitを呼ぶ前にbackを呼んでも何もおきない() {
-        let scenario = Scenario<MockFirstScene, MockStage>(MockFirstScene.self)
-        var isBeginCalled = false
-        var isEndCalled = false
-        scenario.given(MockScenarioRequest1.self, { () in MockSecondScene() }) { (args) in
-            isBeginCalled = true
-            return {
-                isEndCalled = true
-            }
-        }
-
-        scenario.back(true) { (completion) in
-
-        }
-        XCTAssertFalse(isBeginCalled)
-        XCTAssertFalse(isEndCalled)
+    func test_生成されたScenarioに設定されていないrequestをstart時に受け取った時_SceneCollectionにSceneは追加されずcompletionがfalseで実行される() {
+        let asyncExpection1: XCTestExpectation? = self.expectation(description: "wait")
+        let request = MockRequest2()
+        var isCalled = false
+        XCTAssertEqual(collection?.screens.count, 1)
+        scenario?.start(atRequestOf: request, { (result) in
+            asyncExpection1?.fulfill()
+            XCTAssertFalse(result)
+            isCalled = true
+        })
+        self.wait(for: [asyncExpection1!], timeout: 1.0)
+        
+        XCTAssertTrue(isCalled)
+        XCTAssertEqual(collection?.screens.count, 1)
     }
     
-    func test_givenでRequestに紐づけられたendのメソッドのみbackの際に呼ばれる() {
-        let firstScene = MockFirstScene()
-        let container = DummyContainer()
-        let stage = MockStage()
-        let scenario = Scenario<MockFirstScene, MockStage>(MockFirstScene.self)
-        let asyncExpection: XCTestExpectation? = self.expectation(description: "wait")
-        var isBeginCalled = false
-        var isEndCalled = false
-        var isSetupCalled = false
-        
-        scenario.given(MockScenarioRequest1.self, { () in MockSecondScene() }) { (args) in
-            isBeginCalled = true
-            return {
-                isEndCalled = true
-            }
-        }
-        
-        scenario.setup(at: firstScene, on: stage, with: container, when: nil)
-        scenario.start(at: MockScenarioRequest1()) { (complete) in
-            asyncExpection?.fulfill()
-            XCTAssertTrue(isBeginCalled)
-            isSetupCalled = true
-        }
-        self.wait(for: [asyncExpection!], timeout: 2.0)
-        XCTAssertFalse(isEndCalled)
-        XCTAssertTrue(isSetupCalled)
-        container.back?()
-        XCTAssertTrue(isEndCalled)
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func test_Scenarioをstartさせてrequestを実行した場合_givenで指定されたSceneがcollectionの末尾に追加される() {
+        let asyncExpection1: XCTestExpectation? = self.expectation(description: "wait")
+        scenario?.given(MockRequest2.self, transitTo: { MockFirstScene3() }, with: { (args) in {} })
+        scenario?.start(atRequestOf: MockRequest2(), { (result) in
+            asyncExpection1?.fulfill()
+            XCTAssertTrue(result)
+        })
+        self.wait(for: [asyncExpection1!], timeout: 1.0)
+        XCTAssertEqual(String(describing: collection!.screens.last!), String(describing: MockFirstScene3()))
     }
     
 }

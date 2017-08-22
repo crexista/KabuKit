@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E14F6551F4A35CA00F08375 /* SceneCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E14F6541F4A35CA00F08375 /* SceneCollectionTests.swift */; };
+		4E14F6571F4A362200F08375 /* SceneCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E14F6561F4A362200F08375 /* SceneCollection.swift */; };
+		4E14F6591F4AAB4500F08375 /* SceneSequenceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E14F6581F4AAB4500F08375 /* SceneSequenceBuilder.swift */; };
 		4E5CF2841EF58D9500F03C52 /* MockFirstScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CF2801EF58D9500F03C52 /* MockFirstScene.swift */; };
 		4E5CF2851EF58D9500F03C52 /* MockScenarioRequest1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CF2811EF58D9500F03C52 /* MockScenarioRequest1.swift */; };
 		4E5CF2861EF58D9500F03C52 /* MockSecondScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CF2821EF58D9500F03C52 /* MockSecondScene.swift */; };
@@ -14,12 +17,12 @@
 		4E5CF28B1EF5931B00F03C52 /* SceneSequenceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CF28A1EF5931B00F03C52 /* SceneSequenceTest.swift */; };
 		4E5CF28D1EF598ED00F03C52 /* MockGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CF28C1EF598ED00F03C52 /* MockGuide.swift */; };
 		4E5CF28F1EF59DDB00F03C52 /* MockScenarioRequest2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CF28E1EF59DDB00F03C52 /* MockScenarioRequest2.swift */; };
-		4E5CF2911EF6EB4900F03C52 /* DummyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CF2901EF6EB4900F03C52 /* DummyContainer.swift */; };
 		4E5CF2931EF6F98C00F03C52 /* MockScenarioRequest3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CF2921EF6F98C00F03C52 /* MockScenarioRequest3.swift */; };
 		4E5CF2951EF7F09000F03C52 /* ScreenHashWrapperTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CF2941EF7F09000F03C52 /* ScreenHashWrapperTest.swift */; };
+		4E6E2E801F4BDB4400B342E1 /* MockTransitionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6E2E7F1F4BDB4400B342E1 /* MockTransitionRequest.swift */; };
 		4EC432F61EED720C00FF4145 /* SceneOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC432F51EED720C00FF4145 /* SceneOperation.swift */; };
 		4EC4333E1EEF14AF00FF4145 /* ScenarioTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC4333D1EEF14AF00FF4145 /* ScenarioTest.swift */; };
-		4EC433421EEFFAA100FF4145 /* Guide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC433411EEFFAA000FF4145 /* Guide.swift */; };
+		4EC433421EEFFAA100FF4145 /* SequenceGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC433411EEFFAA000FF4145 /* SequenceGuide.swift */; };
 		4EC433441EF012C400FF4145 /* TransitionProcedure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC433431EF012C400FF4145 /* TransitionProcedure.swift */; };
 		4EC4335B1EF06F5B00FF4145 /* OperationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC4335A1EF06F5B00FF4145 /* OperationTest.swift */; };
 		4ED3FEA81ED597FC004BC048 /* KabuKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED3FE9E1ED597FC004BC048 /* KabuKit.framework */; };
@@ -27,8 +30,8 @@
 		4ED3FEAF1ED597FC004BC048 /* KabuKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4ED3FEA11ED597FC004BC048 /* KabuKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4ED3FECF1ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBB1ED5989E004BC048 /* .gitkeep */; };
 		4ED3FED01ED5989E004BC048 /* ScreenHashWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBD1ED5989E004BC048 /* ScreenHashWrapper.swift */; };
-		4ED3FED11ED5989E004BC048 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBE1ED5989E004BC048 /* Request.swift */; };
-		4ED3FED21ED5989E004BC048 /* SceneContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBF1ED5989E004BC048 /* SceneContainer.swift */; };
+		4ED3FED11ED5989E004BC048 /* TransitionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBE1ED5989E004BC048 /* TransitionRequest.swift */; };
+		4ED3FED21ED5989E004BC048 /* ScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBF1ED5989E004BC048 /* ScreenContainer.swift */; };
 		4ED3FED31ED5989E004BC048 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC01ED5989E004BC048 /* Screen.swift */; };
 		4ED3FED41ED5989E004BC048 /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC11ED5989E004BC048 /* Scenario.swift */; };
 		4ED3FED61ED5989E004BC048 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC31ED5989E004BC048 /* Scene.swift */; };
@@ -36,6 +39,8 @@
 		4ED3FED81ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC71ED5989E004BC048 /* .gitkeep */; };
 		4ED3FED91ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FECC1ED5989E004BC048 /* .gitkeep */; };
 		4ED3FEDA1ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FECE1ED5989E004BC048 /* .gitkeep */; };
+		7EFB0FA91F17CAA700F596FF /* SceneTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFB0FA81F17CAA700F596FF /* SceneTest.swift */; };
+		7EFB0FAB1F17D48C00F596FF /* ScreenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFB0FAA1F17D48C00F596FF /* ScreenTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +55,9 @@
 
 /* Begin PBXFileReference section */
 		330222B15BFC537DE8892BAC /* Pods_KabuKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KabuKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E14F6541F4A35CA00F08375 /* SceneCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCollectionTests.swift; sourceTree = "<group>"; };
+		4E14F6561F4A362200F08375 /* SceneCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCollection.swift; sourceTree = "<group>"; };
+		4E14F6581F4AAB4500F08375 /* SceneSequenceBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneSequenceBuilder.swift; sourceTree = "<group>"; };
 		4E5CF2801EF58D9500F03C52 /* MockFirstScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockFirstScene.swift; sourceTree = "<group>"; };
 		4E5CF2811EF58D9500F03C52 /* MockScenarioRequest1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockScenarioRequest1.swift; sourceTree = "<group>"; };
 		4E5CF2821EF58D9500F03C52 /* MockSecondScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSecondScene.swift; sourceTree = "<group>"; };
@@ -57,12 +65,12 @@
 		4E5CF28A1EF5931B00F03C52 /* SceneSequenceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneSequenceTest.swift; sourceTree = "<group>"; };
 		4E5CF28C1EF598ED00F03C52 /* MockGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockGuide.swift; sourceTree = "<group>"; };
 		4E5CF28E1EF59DDB00F03C52 /* MockScenarioRequest2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockScenarioRequest2.swift; sourceTree = "<group>"; };
-		4E5CF2901EF6EB4900F03C52 /* DummyContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyContainer.swift; sourceTree = "<group>"; };
 		4E5CF2921EF6F98C00F03C52 /* MockScenarioRequest3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockScenarioRequest3.swift; sourceTree = "<group>"; };
 		4E5CF2941EF7F09000F03C52 /* ScreenHashWrapperTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenHashWrapperTest.swift; sourceTree = "<group>"; };
+		4E6E2E7F1F4BDB4400B342E1 /* MockTransitionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTransitionRequest.swift; sourceTree = "<group>"; };
 		4EC432F51EED720C00FF4145 /* SceneOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneOperation.swift; sourceTree = "<group>"; };
 		4EC4333D1EEF14AF00FF4145 /* ScenarioTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScenarioTest.swift; sourceTree = "<group>"; };
-		4EC433411EEFFAA000FF4145 /* Guide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Guide.swift; sourceTree = "<group>"; };
+		4EC433411EEFFAA000FF4145 /* SequenceGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceGuide.swift; sourceTree = "<group>"; };
 		4EC433431EF012C400FF4145 /* TransitionProcedure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionProcedure.swift; sourceTree = "<group>"; };
 		4EC4335A1EF06F5B00FF4145 /* OperationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationTest.swift; sourceTree = "<group>"; };
 		4ED3FE9E1ED597FC004BC048 /* KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,8 +81,8 @@
 		4ED3FEAE1ED597FC004BC048 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4ED3FEBB1ED5989E004BC048 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		4ED3FEBD1ED5989E004BC048 /* ScreenHashWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenHashWrapper.swift; sourceTree = "<group>"; };
-		4ED3FEBE1ED5989E004BC048 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		4ED3FEBF1ED5989E004BC048 /* SceneContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneContainer.swift; sourceTree = "<group>"; };
+		4ED3FEBE1ED5989E004BC048 /* TransitionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionRequest.swift; sourceTree = "<group>"; };
+		4ED3FEBF1ED5989E004BC048 /* ScreenContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenContainer.swift; sourceTree = "<group>"; };
 		4ED3FEC01ED5989E004BC048 /* Screen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
 		4ED3FEC11ED5989E004BC048 /* Scenario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scenario.swift; sourceTree = "<group>"; };
 		4ED3FEC31ED5989E004BC048 /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
@@ -83,6 +91,8 @@
 		4ED3FECC1ED5989E004BC048 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		4ED3FECE1ED5989E004BC048 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		5740434980B01D42277BAE55 /* Pods_KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EFB0FA81F17CAA700F596FF /* SceneTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTest.swift; sourceTree = "<group>"; };
+		7EFB0FAA1F17D48C00F596FF /* ScreenTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,8 +123,8 @@
 				4E5CF2831EF58D9500F03C52 /* MockStage.swift */,
 				4E5CF28C1EF598ED00F03C52 /* MockGuide.swift */,
 				4E5CF28E1EF59DDB00F03C52 /* MockScenarioRequest2.swift */,
-				4E5CF2901EF6EB4900F03C52 /* DummyContainer.swift */,
 				4E5CF2921EF6F98C00F03C52 /* MockScenarioRequest3.swift */,
+				4E6E2E7F1F4BDB4400B342E1 /* MockTransitionRequest.swift */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -158,6 +168,9 @@
 				4EC4335A1EF06F5B00FF4145 /* OperationTest.swift */,
 				4E5CF28A1EF5931B00F03C52 /* SceneSequenceTest.swift */,
 				4E5CF2941EF7F09000F03C52 /* ScreenHashWrapperTest.swift */,
+				7EFB0FA81F17CAA700F596FF /* SceneTest.swift */,
+				7EFB0FAA1F17D48C00F596FF /* ScreenTest.swift */,
+				4E14F6541F4A35CA00F08375 /* SceneCollectionTests.swift */,
 			);
 			path = KabuKitTests;
 			sourceTree = "<group>";
@@ -193,15 +206,17 @@
 			isa = PBXGroup;
 			children = (
 				4ED3FEBD1ED5989E004BC048 /* ScreenHashWrapper.swift */,
-				4ED3FEBE1ED5989E004BC048 /* Request.swift */,
-				4ED3FEBF1ED5989E004BC048 /* SceneContainer.swift */,
+				4ED3FEBE1ED5989E004BC048 /* TransitionRequest.swift */,
+				4ED3FEBF1ED5989E004BC048 /* ScreenContainer.swift */,
 				4ED3FEC01ED5989E004BC048 /* Screen.swift */,
 				4ED3FEC11ED5989E004BC048 /* Scenario.swift */,
 				4ED3FEC31ED5989E004BC048 /* Scene.swift */,
 				4ED3FEC41ED5989E004BC048 /* SceneSequence.swift */,
 				4EC432F51EED720C00FF4145 /* SceneOperation.swift */,
-				4EC433411EEFFAA000FF4145 /* Guide.swift */,
+				4EC433411EEFFAA000FF4145 /* SequenceGuide.swift */,
 				4EC433431EF012C400FF4145 /* TransitionProcedure.swift */,
+				4E14F6561F4A362200F08375 /* SceneCollection.swift */,
+				4E14F6581F4AAB4500F08375 /* SceneSequenceBuilder.swift */,
 			);
 			path = Swift;
 			sourceTree = "<group>";
@@ -387,15 +402,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				4ED3FED01ED5989E004BC048 /* ScreenHashWrapper.swift in Sources */,
-				4ED3FED21ED5989E004BC048 /* SceneContainer.swift in Sources */,
+				4ED3FED21ED5989E004BC048 /* ScreenContainer.swift in Sources */,
 				4EC432F61EED720C00FF4145 /* SceneOperation.swift in Sources */,
 				4ED3FED41ED5989E004BC048 /* Scenario.swift in Sources */,
 				4EC433441EF012C400FF4145 /* TransitionProcedure.swift in Sources */,
 				4ED3FED61ED5989E004BC048 /* Scene.swift in Sources */,
 				4ED3FED71ED5989E004BC048 /* SceneSequence.swift in Sources */,
-				4EC433421EEFFAA100FF4145 /* Guide.swift in Sources */,
+				4E14F6571F4A362200F08375 /* SceneCollection.swift in Sources */,
+				4EC433421EEFFAA100FF4145 /* SequenceGuide.swift in Sources */,
+				4E14F6591F4AAB4500F08375 /* SceneSequenceBuilder.swift in Sources */,
 				4ED3FED31ED5989E004BC048 /* Screen.swift in Sources */,
-				4ED3FED11ED5989E004BC048 /* Request.swift in Sources */,
+				4ED3FED11ED5989E004BC048 /* TransitionRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,7 +422,8 @@
 			files = (
 				4E5CF2871EF58D9500F03C52 /* MockStage.swift in Sources */,
 				4ED3FEAD1ED597FC004BC048 /* KabuKitTests.swift in Sources */,
-				4E5CF2911EF6EB4900F03C52 /* DummyContainer.swift in Sources */,
+				4E14F6551F4A35CA00F08375 /* SceneCollectionTests.swift in Sources */,
+				7EFB0FA91F17CAA700F596FF /* SceneTest.swift in Sources */,
 				4E5CF2951EF7F09000F03C52 /* ScreenHashWrapperTest.swift in Sources */,
 				4E5CF2851EF58D9500F03C52 /* MockScenarioRequest1.swift in Sources */,
 				4E5CF28B1EF5931B00F03C52 /* SceneSequenceTest.swift in Sources */,
@@ -414,8 +432,10 @@
 				4EC4335B1EF06F5B00FF4145 /* OperationTest.swift in Sources */,
 				4E5CF28D1EF598ED00F03C52 /* MockGuide.swift in Sources */,
 				4E5CF2931EF6F98C00F03C52 /* MockScenarioRequest3.swift in Sources */,
+				7EFB0FAB1F17D48C00F596FF /* ScreenTest.swift in Sources */,
 				4E5CF28F1EF59DDB00F03C52 /* MockScenarioRequest2.swift in Sources */,
 				4E5CF2841EF58D9500F03C52 /* MockFirstScene.swift in Sources */,
+				4E6E2E801F4BDB4400B342E1 /* MockTransitionRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
