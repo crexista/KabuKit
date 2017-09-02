@@ -1,5 +1,6 @@
 import Foundation
 
+
 /**
  特定の`Scene`を表示している最中Requestがきたらどの画面にどのように遷移するか、
  そしてどのように画面を戻るか、を規定したクラス
@@ -7,107 +8,85 @@ import Foundation
  一つのSceneごとにつくられる
  
  */
-public class Scenario<CurrentScreenType: Screen, StageType> : TransitionProcedure {
-    
-    internal typealias Transitioning = (CurrentScreenType, StageType, Any?) -> Void
-    
+public class Scenario<From, Stage> : TransitionProcedure {
+
     public typealias Rewind = () -> Void
     
-    private var rewind: Rewind?
+    typealias Transition = (Any) -> Void
     
-    private let dispatchQueue: DispatchQueue = DispatchQueue.main
+    private let transitionQueue: DispatchQueue
     
-    fileprivate var transitionStore = [String : Transitioning]()
+    /**
+     TransitionRequestのクラス名をKeyとしてValueに遷移時の関数が入る
+     遷移時の関数はsceneとcontext
+     
+     */
+    fileprivate var transitionStore = [String: Transition]()
+    
+    fileprivate var stage: Stage
+    fileprivate weak var sceneCollection: SceneCollection<Stage>?
+    
+    
+    init(_ stage: Stage, _ collection: SceneCollection<Stage>?, _ queue: DispatchQueue) {
+        self.sceneCollection = collection
+        self.transitionQueue = queue
+        self.stage = stage
+    }
+    
 
-    fileprivate var destination: Screen?
+    /**
+     このScenarioを受け取ったリクエストに応じてスタートさせる
+     transitionが成功すればこのScenarioが参照しているSceneCollectionに新しいSceneが追加され、completionの実行の際にtrueがわたされる
+     
+     一方、存在しないリクエストを受けtransitionが実行できなかった場合completionの実行の際にfalseが渡され、
+     Sceneのコンテナに新しいSceneが追加されることもない
     
-    fileprivate var current: CurrentScreenType?
-    
-    fileprivate var stage: StageType?
-    
-    fileprivate var exitFunc: Rewind?
-    
-    fileprivate weak var container: SceneContainer?
-    
-    internal let name: String
-    
-    public init(_ fromType: CurrentScreenType.Type){
-        name = String(reflecting: fromType)
-    }
-    
-    internal func setup<S>(at: Screen, on stage: S, with: SceneContainer, when rewind: TransitionProcedure.Rewind?) {
-        self.setup(at: at, on: stage, with: with, when: rewind, {})
-    }
-    
-    internal func setup<S>(at: Screen, on stage: S, with: SceneContainer, when rewind: Rewind?, _ completion: @escaping () -> Void) {
-        dispatchQueue.async {
-            guard let currentScreen = at as? CurrentScreenType else { return }
-            guard let stage = stage as? StageType else { return }
-            self.current = currentScreen
-            self.stage = stage
-            self.rewind = rewind
-            self.container = with
-
-            completion()
-        }
-    }
-    
-    internal func start<ContextType>(at request: Request<ContextType>, _ completion: @escaping (Bool) -> Void) -> Void {
-        dispatchQueue.async {
-            guard let currentScreen = self.current else { return }
-            guard let stage = self.stage else { return }
-            guard let tuple = self.transitionStore[String(describing: request)] else {
+     - Parameters:
+       - request: transitionの契機となるrequest
+       - completion: requestの実行結果。transitionが実行されなかった場合、引数がfalseで渡って来ます
+     */
+    func start<ContextType, ExpectedResult>(atRequestOf request: TransitionRequest<ContextType, ExpectedResult>,
+                                           _ completion: @escaping (Bool) -> Void) {
+        transitionQueue.async {
+            guard let transition = self.transitionStore[String(describing: request)] else {
                 completion(false)
                 return
             }
-            
-            tuple(currentScreen, stage, request.context)
+            // 新しいSceneを作り、そのSceneから戻り遷移(rewind)をそのSceneに追加する
+            // そのあと、Sequenceに登録する。
+            // 登録の際、そのSceneにあうシナリオを選別して登録する
+            transition(request)
             completion(true)
         }
     }
+
+}
+
+
+public extension Scenario where From : Scene {
     
+    public typealias Args<NextSceneType: Scene> = (stage: Stage, next: NextSceneType, from: From)
     
-    internal func back(_ runRewindHandler: Bool, _ completion: @escaping (Bool) -> Void) {
-        dispatchQueue.async {
-            guard let rewind = self.rewind , let current = self.current else {
-                completion(false)
-                return
-            }
+    /**
+     TransitionRequestをKeyとしてValueに遷移時の関数が入る
+     遷移時の関数はsceneとcontext
+     
+     */
+    public func given<NextSceneType: Scene>(_ request: TransitionRequest<NextSceneType.Context, NextSceneType.ReturnValue>.Type,
+                      nextTo next: @escaping () -> NextSceneType,
+                      with transition: @escaping (Args<NextSceneType>) -> Rewind) -> Void {
+        
+
+        transitionStore[String(reflecting: request)] = { (transitionRequest: Any) in
+            guard let request = transitionRequest as? TransitionRequest<NextSceneType.Context, NextSceneType.ReturnValue> else { return }
             
-            if runRewindHandler {
-                rewind()
-            }
-
-            self.container?.remove(screen: current) {
-                completion(true)
-            }
+            // 新しいSceneを作り、SceneCollectionに追加登録し、sceneをactivateさせる
+            self.sceneCollection?.add(next(), with: request.context, transition: { (stage, scene, screen) -> (() -> Void)? in
+                guard let current = screen as? From else { fatalError("framework error") }
+                let args: Args<NextSceneType> = (stage: stage, next: scene, from: current)
+                return transition(args)
+            }, callbackOf: request.callback)
         }
     }
 }
 
-
-public extension Scenario where CurrentScreenType : Scene {
-    
-    public typealias Args<NextSceneType: Scene> = (from: CurrentScreenType, next: NextSceneType, stage: StageType)
-    
-    public func given<ContextType, NextSceneType: Scene>(_ request: Request<ContextType>.Type,
-                      _ to: @escaping () -> NextSceneType,
-                      _ begin: @escaping (Args<NextSceneType>) -> Rewind) -> Void where NextSceneType.Context == ContextType {
-        
-        let requestName = String(reflecting: request)
-
-        let transitFunc = { [weak self](from: CurrentScreenType, stage: StageType, context: Any?) -> Void in
-            guard let weakSelf = self else { return }
-            let next = to()
-            let args = Args<NextSceneType>(from: from, next: next, stage: stage)
-            let rewind = begin(args)
-            weakSelf.destination = next
-            weakSelf.container?.add(screen: next, context: context) {
-                rewind()
-                weakSelf.destination = nil
-            }
-        }
-        
-        transitionStore[requestName] = transitFunc
-    }
-}

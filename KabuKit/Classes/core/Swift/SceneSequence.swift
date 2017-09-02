@@ -9,85 +9,103 @@ internal var procedureByScene = [ScreenHashWrapper : TransitionProcedure]()
  このクラスの `start:` を明示的に呼ばないと内部でのSceneがリクエストしても画面遷移は行われない
 
  */
-public class SceneSequence<ContextType, GuideType: Guide> : Scene, SceneContainer {
+public class SceneSequence<FirstScene: Scene, Guide: SequenceGuide> : SceneCollection<Guide.Stage>, Scene, ScreenContainer {
 
-    public typealias Context = ContextType
+
+    public typealias Context = FirstScene.Context
+    public typealias ReturnValue = FirstScene.ReturnValue
+    public typealias StageType = Guide.Stage
     
-    public typealias StageType = GuideType.Stage
-    
-    private var scenes: [Screen]
-    
-    private var currentTransitionProcedure: TransitionProcedure?
+    typealias Stage = Guide.Stage
     
     private let isRecordable: Bool
-    
-    private var stage: StageType?
-    
-    private var guide: GuideType?
-    
-    private let dispatchQueue: DispatchQueue
+    private let firstScene: FirstScene
+    private let guide: Guide
+    private let leaveFunc: ((Guide.Stage, [Screen], ReturnValue?) -> Void)?
+    private let initFunc: (Guide.Stage, FirstScene) -> (() -> Void)?
 
-    internal func add<ContextType>(screen: Screen, context: ContextType?, rewind: @escaping () -> Void) {
-        let operation = SceneOperation<StageType>()
-        self.guide?.start(with: operation)
-        guard let scenario = operation.resolve(from: screen) else { return }
-        let hashwrap = ScreenHashWrapper(screen)
-        self.scenes.append(screen)
-        procedureByScene[hashwrap] = scenario
-        contextByScreen[hashwrap] = context
-        scenario.setup(at: screen, on: self.stage!, with: self, when: rewind)
-    }
-    
-    internal func remove(screen: Screen, completion: () -> Void) {
-        let hashwrap = ScreenHashWrapper(screen)
-        _ = self.scenes.popLast()
-        procedureByScene.removeValue(forKey: hashwrap)
-        contextByScreen.removeValue(forKey: hashwrap)
-        completion()
+    public private(set) var isStarted: Bool = false
+    public private(set) var isSuspended: Bool = false
+
+    public static func builder(scene: FirstScene,
+                               guide: Guide) -> SceneSequenceBuilder<FirstScene, Guide, Unbuildable, Unbuildable> {
+        return SceneSequenceBuilder<FirstScene, Guide, Unbuildable, Unbuildable>(scene: scene, guide: guide)
     }
     
     /**
-     Sequenceをスタートさせる
+     SequenceをSuspendします
+     現状activeなScreenもsuspendモードに入ります
+     起動してない状態時によばれたばあいは何も反応しません
      
-     - Parameters:
-       - stage: Sceneが乗っかるstageオブジェクト
-       - scene: 起動させた際に一番最初に表示させる画面
-       - context: sceneを表示させるさいに必要となるcontextオブジェクト
-       - invoke: sceneを表示させるのに必要となる処理
      */
-    public func startWith<SceneType: Scene>(_ stage: StageType,
-                                    _ scene: SceneType,
-                                    _ context: SceneType.Context,
-                                    _ invoke: @escaping (_ scene: SceneType, _ stage: StageType) -> Void) {
-        let operation = SceneOperation<StageType>()
-        self.stage = stage
-        self.guide?.start(with: operation)
-
-        // TODO FIX, Any Pattern
-        guard let scenario = operation.resolve(from: scene) else { return }
-        scenario.setup(at: scene, on: stage, with: self, when: nil) {
-            let hashwrap = ScreenHashWrapper(scene)
-            self.scenes.append(scene)
-            procedureByScene[hashwrap] = scenario
-            contextByScreen[hashwrap] = context
-            invoke(scene, stage)
+    public func suspend(_ completion: ((Bool) -> Void)?) {
+        guide.transitioningQueue.async {
+            if (!self.isStarted || self.isSuspended) {
+                completion?(false)
+                return
+            }
+            self.isSuspended = true
+            self.onSuspend()
+            self.currentTopScreen?.behavior?.isSuspended = true
+            completion?(true)
         }
+    }
+    
+    
+    /**
+     Sequenceをactivateします
+    
+     - Parameters:
+       - on: Sequenceを実行させるDispatchQueue
+       - completion: 実行完了したさいに呼ばれるコールバック
+     */
+    public func activate(_ completion: ((Bool) -> Void)?) {
+        guide.transitioningQueue.async {
+            if(self.isStarted && !self.isSuspended) {
+                completion?(false)
+                return
+            }
+            if(!self.isStarted) {
+                self.isStarted = true
+                self.add(self.firstScene, with: self.context, transition: { (stage, scene, screen) -> (() -> Void)? in
+                    return self.initFunc(stage, scene)
+                }, callbackOf: { (returnValue) in
+                    self.rewind?(returnValue)
+                })
+            }
+            self.onActivate()
+            self.isSuspended = false
+            self.currentTopScreen?.behavior?.isSuspended = false
+            completion?(true)
+        }
+    }
+    
+    deinit {
+        self.leaveFromCurrent(returnValue: nil)
     }
     
     /**
      SceneSequenceを生成する
-     
+    
      - Parameters:
-       - transition:  MEMO ruleという名前の方が良いかも・・・
-       - isRecordable: trueがデフォルト。 Scene遷移の履歴を保存するのかのフラグ
-                       ここがfalseだと履歴が保存されず、Sceneを実装したクラスの方でleave()を呼んでも何も起きない
+       - scene: 一番最初のScene
+       - guide: SceneSequenceのフローを書いたプロトコルクラス
+       - context: 一番最初のSceneを開始する際に必要となる起動引数
      */
-    public init(_ guide: GuideType?, _ isRecordable: Bool = true, _ queue: DispatchQueue = DispatchQueue.main) {
-        scenes = [Screen]()
+    public init(stage: Guide.Stage, scene: FirstScene, guide: Guide, context: FirstScene.Context,
+                onInit: @escaping (Guide.Stage, FirstScene) -> (() -> Void)?,
+                onActive: ((Guide.Stage, [Screen]) -> Void)? = nil,
+                onSuspend: ((Guide.Stage, [Screen]) -> Void)? = nil,
+                onLeave: ((Guide.Stage, [Screen], ReturnValue?) -> Void)? = nil) {
         self.guide = guide
-        self.isRecordable = isRecordable
-        self.dispatchQueue = queue
+        self.isRecordable = true
+        self.firstScene = scene
+        self.initFunc = onInit
+        self.leaveFunc = onLeave
+        super.init(stage: stage, guide: guide)
+        self.registerContext(context)
+        self.registerOnResume { onActive?(stage, self.screens) }
+        self.registerOnSuspend { onSuspend?(stage, self.screens) }
+        self.registerRewind { (value) in onLeave?(stage, self.screens, value) }
     }
 }
-
-
