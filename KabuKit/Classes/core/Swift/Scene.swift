@@ -88,7 +88,7 @@ public extension Scene where Self.ReturnValue == Void {
         leaveFromCurrent(returnValue: ())
     }
     
-    public func leaveFromCurrnt(runTransition: Bool) {
+    public func leaveFromCurrent(runTransition: Bool) {
         leaveFromCurrent(returnValue: (), runTransition: runTransition)
     }
     
@@ -96,7 +96,7 @@ public extension Scene where Self.ReturnValue == Void {
         leaveFromCurrent(returnValue: (), runTransition: true, completion)
     }
     
-    public func leaveFromCurrnt(runTransition: Bool, completion: @escaping (Bool) -> Void) -> Void {
+    public func leaveFromCurrent(runTransition: Bool, completion: @escaping (Bool) -> Void) -> Void {
         leaveFromCurrent(returnValue: (), runTransition: runTransition, completion)
     }
 }

@@ -40,7 +40,7 @@ class SceneTest: XCTestCase {
         mockScreen.registerRewind { (arg) in
             isCalled = true
         }
-        mockScreen.leaveFromCurrnt(runTransition: false) { (result) in
+        mockScreen.leaveFromCurrent(runTransition: false) { (result) in
             XCTAssertTrue(result)
         }
         XCTAssertFalse(isCalled)
