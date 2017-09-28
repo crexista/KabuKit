@@ -80,10 +80,6 @@ public class SceneSequence<FirstScene: Scene, Guide: SequenceGuide> : SceneColle
         }
     }
     
-    deinit {
-        self.leaveFromCurrent(returnValue: nil)
-    }
-    
     /**
      SceneSequenceを生成する
     

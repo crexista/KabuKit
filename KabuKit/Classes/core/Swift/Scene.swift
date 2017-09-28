@@ -15,7 +15,7 @@ public protocol Scene : class, Screen {
 
 public extension Scene {
     
-    typealias Rewind = ((ReturnValue?) -> Void)
+    typealias Rewind = ((ReturnValue) -> Void)
     
     internal var scenario: TransitionProcedure? {
         return procedureByScene[ScreenHashWrapper(self)]
@@ -29,7 +29,7 @@ public extension Scene {
         return contextByScreen[ScreenHashWrapper(self)] as! Self.Context
     }
     
-    var onLeave: ((ReturnValue?) -> Void)? {
+    var onLeave: ((ReturnValue) -> Void)? {
         return onLeaveByScene[ScreenHashWrapper(self)] as? Rewind
     }
     
@@ -37,7 +37,7 @@ public extension Scene {
         contextByScreen[ScreenHashWrapper(self)] = value as? Self.Context
     }
     
-    internal func registerRewind(f: @escaping (ReturnValue?) -> Void) {
+    internal func registerRewind(f: @escaping (ReturnValue) -> Void) {
         rewindByScene[ScreenHashWrapper(self)] = f
     }
     
@@ -45,7 +45,7 @@ public extension Scene {
         procedureByScene[ScreenHashWrapper(self)] = scenario
     }
     
-    internal func registerOnLeave(f: @escaping (ReturnValue?) -> Void) {
+    internal func registerOnLeave(f: @escaping (ReturnValue) -> Void) {
         onLeaveByScene[ScreenHashWrapper(self)] = f
     }
     
@@ -57,15 +57,15 @@ public extension Scene {
         self.scenario?.start(atRequestOf: request, completion)
     }
     
-    public func leaveFromCurrent(returnValue: ReturnValue?) {
+    public func leaveFromCurrent(returnValue: ReturnValue) {
         self.leaveFromCurrent(returnValue: returnValue, runTransition: true)
     }
     
-    public func leaveFromCurrent(returnValue: ReturnValue?, runTransition: Bool) {
+    public func leaveFromCurrent(returnValue: ReturnValue, runTransition: Bool) {
         self.leaveFromCurrent(returnValue: returnValue, runTransition: runTransition, { (Bool) in })
     }
     
-    public func leaveFromCurrent(returnValue: ReturnValue?, runTransition: Bool, _ completion: @escaping (Bool) -> Void) -> Void {
+    public func leaveFromCurrent(returnValue: ReturnValue, runTransition: Bool, _ completion: @escaping (Bool) -> Void) -> Void {
         guard let rewindMethod = rewind else {
             completion(false)
             return
