@@ -47,6 +47,15 @@ public class SceneSequenceBuilder<FirstScene: Scene, Guide: SequenceGuide, Conte
 
 public extension SceneSequenceBuilder where Context == Buildable, Stage == Buildable {
     
+    public typealias Subscriber = SceneSequence<FirstScene, Guide>.SequenceStatusSubscriber
+    
+    public typealias BuildArgument = (
+        stage: Guide.Stage,
+        firstScene: FirstScene,
+        callbacks: Subscriber
+    )
+    
+    @available(*, deprecated, message: "this method will be deleted at version 0.5.0")
     public func build(onInit: @escaping (Guide.Stage, FirstScene) -> Void,
                       onActive: ((Guide.Stage, [Screen]) -> Void)? = nil,
                       onSuspend: ((Guide.Stage, [Screen]) -> Void)? = nil,
@@ -59,7 +68,8 @@ public extension SceneSequenceBuilder where Context == Buildable, Stage == Build
                      onSuspend: onSuspend,
                      onLeave: onLeave)
     }
-    
+
+    @available(*, deprecated, message: "this method will be deleted at version 0.5.0")
     public func build(onInitWithRewind: @escaping (Guide.Stage, FirstScene) -> (() -> Void)?,
                       onActive: ((Guide.Stage, [Screen]) -> Void)? = nil,
                       onSuspend: ((Guide.Stage, [Screen]) -> Void)? = nil,
@@ -76,5 +86,21 @@ public extension SceneSequenceBuilder where Context == Buildable, Stage == Build
                              onActive: onActive,
                              onSuspend: onSuspend,
                              onLeave: onLeave)
+    }
+
+    public func build(initializer: @escaping (BuildArgument) -> (() -> Void)?) -> SceneSequence<FirstScene, Guide> {
+        guard let stage = self.stage else { fatalError() }
+        guard let context = self.context else { fatalError() }
+        let subscriber = SceneSequence<FirstScene, Guide>.SequenceStatusSubscriber()
+        let onStart = { (stage: Guide.Stage, scene: FirstScene) -> (() -> Void)? in
+            return initializer((stage, scene, subscriber))
+        }
+
+        return SceneSequence(stage: stage,
+                             scene: firstScene,
+                             guide: guide,
+                             context: context,
+                             subscriber: subscriber,
+                             onStart: onStart)
     }
 }

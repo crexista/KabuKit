@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window!.rootViewController = UIViewController()
@@ -30,20 +29,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rule = SampleSequenceRule()
         let builder = SceneSequence.builder(scene: scene, guide: rule)
             .setup(UINavigationController(rootViewController: UIViewController()), with: false)
-        
-        sequence = builder.build(onInit: { (stage, scene) in
+
+        sequence = builder.build {
+            let stage = $0.stage
+            let scene = $0.firstScene
             stage.isNavigationBarHidden = true
             stage.pushViewController(scene, animated: true)
-        }, onActive: { (stage, screens) in
-            self.window?.rootViewController?.addChildViewController(stage)
-            self.window?.rootViewController?.view.addSubview(stage.view)
-        }, onSuspend: { (stage, screens) in
-            stage.view.removeFromSuperview()
-            stage.removeFromParentViewController()
-        })
 
+            $0.callbacks.onActivate { (screens) in
+                self.window?.rootViewController?.addChildViewController(stage)
+                self.window?.rootViewController?.view.addSubview(stage.view)
+            }
+
+            $0.callbacks.onSuspend { (screens) in
+                stage.view.removeFromSuperview()
+                stage.removeFromParentViewController()
+            }
+
+            return {}
+        }
         sequence?.activate()
-
         return true
     }
 
