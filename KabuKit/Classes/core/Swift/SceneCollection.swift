@@ -29,7 +29,7 @@ class SceneCollection<Stage> {
     func add<SceneType: Scene>(_ newScene: SceneType,
              with context: SceneType.Context,
              transition: (Stage, SceneType, Screen?) -> (() -> Void)?,
-             callbackOf onPop: ((SceneType.ReturnValue?) -> Void)?) {
+             callbackOf onPop: ((SceneType.ReturnValue) -> Void)?) {
         
         
         let scenario = operation.resolve(from: newScene)
