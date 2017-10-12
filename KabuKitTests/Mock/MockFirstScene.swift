@@ -1,6 +1,7 @@
 import Foundation
 import KabuKit
 
-class MockFirstScene : Scene {
-    typealias ContextType = Void
+class MockFirstScene: Scene {
+    typealias Context = String
+    var nextScene: MockSecondScene?
 }

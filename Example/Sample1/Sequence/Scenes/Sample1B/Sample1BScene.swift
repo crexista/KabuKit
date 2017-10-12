@@ -11,18 +11,18 @@ import KabuKit
 
 extension Sample1BViewController : Scene {
  
-    typealias ContextType = Void
+    typealias Context = Void
 
     func onPressAButton(sender: UIButton) {
-        send(SampleARequest(true))
+        sendTransitionRequest(SampleARequest(true){ _ in })
     }
     
     func onPressBButton(sender: UIButton) {
-        send(SampleBRequest())
+        sendTransitionRequest(SampleBRequest())
     }
     
     func onPressPrevButton(sender: UIButton) {
-        leave()
+        leaveFromCurrent(returnValue: ())
     }
     
     // MARK: - Override

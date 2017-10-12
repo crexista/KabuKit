@@ -16,26 +16,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var root: UIViewController?
     
-    var sequence: SceneSequence<Void, SampleSequenceRule>?
+    var sequence: SceneSequence<Sample1AViewController, SampleSequenceRule>?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        root = UIViewController()
-        
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let nav = UINavigationController(rootViewController: root!)
-        self.window!.rootViewController = nav
+        self.window!.rootViewController = UIViewController()
         self.window!.makeKeyAndVisible()
 
-        root?.navigationController?.setNavigationBarHidden(true, animated: true)
         let scene = Sample1AViewController(nibName: "Sample1AViewController", bundle: Bundle.main)
         let rule = SampleSequenceRule()
-        sequence = SceneSequence<Void, SampleSequenceRule>(rule)
-        
-        sequence?.startWith(nav, scene, false) { (firstScene, stage) in
-            nav.pushViewController(firstScene, animated: true)
+        let builder = SceneSequence.builder(scene: scene, guide: rule)
+            .setup(UINavigationController(rootViewController: UIViewController()), with: false)
+
+        sequence = builder.build {
+            let stage = $0.stage
+            let scene = $0.firstScene
+            stage.isNavigationBarHidden = true
+            stage.pushViewController(scene, animated: true)
+
+            $0.callbacks.onActivate { (screens) in
+                self.window?.rootViewController?.addChildViewController(stage)
+                self.window?.rootViewController?.view.addSubview(stage.view)
+            }
+
+            $0.callbacks.onSuspend { (screens) in
+                stage.view.removeFromSuperview()
+                stage.removeFromParentViewController()
+            }
+
+            return {}
         }
+        sequence?.activate()
         return true
     }
 

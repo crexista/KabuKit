@@ -1,72 +1,83 @@
 import Foundation
 
+fileprivate var suspendCallback: [ScreenHashWrapper : () -> Void] = [ScreenHashWrapper : () -> Void]()
+fileprivate var resumeCallback: [ScreenHashWrapper : () -> Void] = [ScreenHashWrapper : () -> Void]()
 
+fileprivate var screenBehaviorContainer: [ScreenHashWrapper: ScreenBehavior] = [ScreenHashWrapper: ScreenBehavior]()
+
+/**
+ 表示される画面のProtocolです
+ 
+ */
 public protocol Screen : class {
     
+    
+    var isSuspended: Bool { get }
+        
     /**
-     リンク先に遷移する
+     画面がサスペンド状態になった際に呼ばれます
      
-     - Attention:
-     指定リンク先がなにであるかはScenario側で指定しておく必要がある
-     
-     それを忘れるとこのメソッドを呼んでもなにも起きない  
-
-     
-     - Parameters:
-       - request: 遷移先へのリンク
      */
-    func send<T>(_ request: Request<T>, _ completion: @escaping (Bool) -> Void) -> Void
-    
-    
-    func send<T>(_ request: Request<T>) -> Void
+    func onSuspend() -> Void
     
     /**
-     現在表示されているSceneを終了させ、前のSceneに戻る
+     画面がアクティブ状態になった際に呼ばれます
      
-     - Attention :
-     ただし、前のシーンがない場合は戻らず、何も起きない
      */
-    func leave() -> Void
+    func onActivate() -> Void
+}
 
-    func leave(_ runTransition: Bool) -> Void
-
-    func leave(_ completion: @escaping (Bool) -> Void) -> Void
-
-    func leave(_ runTransition: Bool, _ completion: @escaping (Bool) -> Void) -> Void
+public extension Screen {
+    public var isSuspended: Bool {
+        guard let behavior = screenBehaviorContainer[ScreenHashWrapper(self)] else {
+            // Screenは生成時必ずSuspend状態であるためtrueにしている
+            return true
+        }
+        return behavior.isSuspended
+    }
 }
 
 extension Screen {
 
     
-    internal var TransitionProcedure: TransitionProcedure? {
-        return procedureByScene[ScreenHashWrapper(self)]
+    var behavior: ScreenBehavior? {
+        return screenBehaviorContainer[ScreenHashWrapper(self)]
     }
     
-    public func leave() -> Void {
-        self.leave(true)
-    }
-
-    public func leave(_ runTransition: Bool) -> Void {
-        self.leave(runTransition, { (Bool) in })
-    }
-
-    public func leave(_ completion: @escaping (Bool) -> Void) -> Void {
-        self.leave(true, completion)
-    }
-
-    public func leave(_ runTransition: Bool, _ completion: @escaping (Bool) -> Void) -> Void {
-        self.TransitionProcedure?.back(runTransition, completion)
-    }
-
-    public func send<T>(_ request: Request<T>) -> Void {
-        self.send(request, {(Bool) in })
+    internal func registerOnSuspend(f:(() -> Void)?) {
+        suspendCallback[ScreenHashWrapper(self)] = f
     }
     
+    internal func registerOnResume(f: (() -> Void)?) {
+        resumeCallback[ScreenHashWrapper(self)] = f
+    }
     
-    public func send<T>(_ request: Request<T>, _ completion: @escaping (Bool) -> Void) -> Void {
-        TransitionProcedure?.start(at: request, completion)
+    internal func registerBehavior(behavior: ScreenBehavior) {
+        screenBehaviorContainer[ScreenHashWrapper(self)] = behavior
+    }
+    
+
+    public func onSuspend() -> Void {
+        suspendCallback[ScreenHashWrapper(self)]?()
+    }
+    
+    public func onActivate() -> Void {
+        resumeCallback[ScreenHashWrapper(self)]?()
     }
 
 }
 
-
+class ScreenBehavior {
+    typealias  Callback = () -> Void
+    let onSuspend: Callback?
+    let onActivate: Callback?
+    var isStarted: Bool = false
+    var isSuspended: Bool = false
+    
+    init(isStarted: Bool = false, isSuspended:Bool = false, onSuspend: Callback? = nil, onActivate: Callback? = nil) {
+        self.isStarted = isStarted
+        self.isSuspended = isSuspended
+        self.onSuspend = onSuspend
+        self.onActivate = onActivate
+    }
+}

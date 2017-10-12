@@ -1,6 +1,6 @@
 Pod::Spec.new do |kabukit|
   kabukit.name             = 'KabuKit'
-  kabukit.version          = '0.3.1'
+  kabukit.version          = '0.4.0'
   kabukit.summary          = "Tiny Application's Transition Framework"
   kabukit.description      = <<-DESC
 KabuKit is Application's Framework for routing request from scene.
