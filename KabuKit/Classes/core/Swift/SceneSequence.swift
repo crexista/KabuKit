@@ -11,6 +11,23 @@ internal var procedureByScene = [ScreenHashWrapper : TransitionProcedure]()
  */
 public class SceneSequence<FirstScene: Scene, Guide: SequenceGuide> : SceneCollection<Guide.Stage>, Scene, ScreenContainer {
 
+    public class SequenceStatusSubscriber {
+        var activateFunc: (([Screen]) -> Void)?
+        var suspendFunc: (([Screen]) -> Void)?
+        var leaveFunc: (([Screen], FirstScene.ReturnValue, Bool) -> Void)?
+        
+        public func onActivate(_ f: @escaping ([Screen]) -> Void) {
+            activateFunc = f
+        }
+        
+        public func onSuspend(_ f: @escaping ([Screen]) -> Void) {
+            suspendFunc = f
+        }
+        
+        public func onLeave(_ f: @escaping ([Screen], FirstScene.ReturnValue, Bool) -> Void) {
+            leaveFunc = f
+        }
+    }
 
     public typealias Context = FirstScene.Context
     public typealias ReturnValue = FirstScene.ReturnValue
@@ -21,8 +38,9 @@ public class SceneSequence<FirstScene: Scene, Guide: SequenceGuide> : SceneColle
     private let isRecordable: Bool
     private let firstScene: FirstScene
     private let guide: Guide
-    private let leaveFunc: ((Guide.Stage, [Screen], ReturnValue?) -> Void)?
+    private let leaveFunc: ((Guide.Stage, [Screen], ReturnValue) -> Void)?
     private let initFunc: (Guide.Stage, FirstScene) -> (() -> Void)?
+    private var subscriber: SequenceStatusSubscriber?
 
     public private(set) var isStarted: Bool = false
     public private(set) var isSuspended: Bool = false
@@ -88,6 +106,7 @@ public class SceneSequence<FirstScene: Scene, Guide: SequenceGuide> : SceneColle
        - guide: SceneSequenceのフローを書いたプロトコルクラス
        - context: 一番最初のSceneを開始する際に必要となる起動引数
      */
+    @available(*, deprecated, message: "this method will be deleted at ver 0.5.0")
     public init(stage: Guide.Stage, scene: FirstScene, guide: Guide, context: FirstScene.Context,
                 onInit: @escaping (Guide.Stage, FirstScene) -> (() -> Void)?,
                 onActive: ((Guide.Stage, [Screen]) -> Void)? = nil,
@@ -99,9 +118,33 @@ public class SceneSequence<FirstScene: Scene, Guide: SequenceGuide> : SceneColle
         self.initFunc = onInit
         self.leaveFunc = onLeave
         super.init(stage: stage, guide: guide)
+        self.subscriber = SequenceStatusSubscriber()
+        self.subscriber?.activateFunc = { (args: [Screen]) in onActive?(stage, args) }
+        self.subscriber?.suspendFunc = { (args: [Screen]) in onSuspend?(stage, args) }
         self.registerContext(context)
-        self.registerOnResume { onActive?(stage, self.screens) }
-        self.registerOnSuspend { onSuspend?(stage, self.screens) }
+        self.registerOnResume { self.subscriber?.activateFunc?(self.screens) }
+        self.registerOnSuspend { self.subscriber?.suspendFunc?(self.screens) }
         self.registerRewind { (value) in onLeave?(stage, self.screens, value) }
+    }
+    
+    public init(stage: Guide.Stage,
+                scene: FirstScene,
+                guide: Guide,
+                context: FirstScene.Context,
+                subscriber: SceneSequence<FirstScene, Guide>.SequenceStatusSubscriber,
+                onStart: @escaping (Guide.Stage, FirstScene) -> (() -> Void)?) {
+        self.guide = guide
+        self.isRecordable = true
+        self.firstScene = scene
+        self.subscriber = subscriber
+        self.initFunc = { (stage: Guide.Stage, scene: FirstScene) in
+            return onStart(stage, scene)
+        }
+        self.leaveFunc =  nil
+        super.init(stage: stage, guide: guide)
+        self.registerContext(context)
+        self.registerOnResume { self.subscriber?.activateFunc?(self.screens) }
+        self.registerOnSuspend { self.subscriber?.suspendFunc?(self.screens) }
+        self.registerRewind { (value) in self.subscriber?.leaveFunc?(self.screens, value, false) }
     }
 }
