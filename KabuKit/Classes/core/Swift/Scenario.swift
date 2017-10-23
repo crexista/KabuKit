@@ -65,16 +65,17 @@ public class Scenario<From: Scene, Stage> : TransitionProcedure {
 
 public extension Scenario {
     
-    public typealias Args<NextSceneType: Scene> = (stage: Stage, next: NextSceneType, from: From)
-    
+    public typealias NextSceneContext<NextSceneType: Scene> = (stage: Stage, next: NextSceneType, from: From)
+    public typealias NextSequenceContext<InitialSceneType: Scene> = (stage: Stage, next: InitialSceneType, from: From)
+
     /**
      TransitionRequestをKeyとしてValueに遷移時の関数が入る
      遷移時の関数はsceneとcontext
      
      */
     public func given<NextSceneType: Scene>(_ request: TransitionRequest<NextSceneType.Context, NextSceneType.ReturnValue>.Type,
-                      nextTo next: @escaping () -> NextSceneType,
-                      with transition: @escaping (Args<NextSceneType>) -> Rewind) -> Void {
+                                            nextTo next: @escaping () -> NextSceneType,
+                                            with transition: @escaping (NextSceneContext<NextSceneType>) -> Rewind) -> Void {
         
 
         transitionStore[String(reflecting: request)] = { (transitionRequest: Any) in
@@ -83,10 +84,18 @@ public extension Scenario {
             // 新しいSceneを作り、SceneCollectionに追加登録し、sceneをactivateさせる
             self.sceneCollection?.add(next(), with: request.context, transition: { (stage, scene, screen) -> (() -> Void)? in
                 guard let current = screen as? From else { fatalError("framework error") }
-                let args: Args<NextSceneType> = (stage: stage, next: scene, from: current)
+                let args: NextSceneContext<NextSceneType> = (stage: stage, next: scene, from: current)
                 return transition(args)
             }, callbackOf: request.callback)
         }
+    }
+    
+    public func given<InitialSceneType: Scene, Guide: SequenceGuide>(_ request: TransitionRequest<InitialSceneType.Context, InitialSceneType.ReturnValue>.Type,
+                                                                      startSequence next: @escaping () -> InitialSceneType,
+                                                                      guide: @escaping () -> Guide,
+                                                                      with transition: @escaping (SceneSequenceInitializer<InitialSceneType, Guide, NotReady>) -> Starter<InitialSceneType, Guide>) -> Void {
+
+
     }
 }
 

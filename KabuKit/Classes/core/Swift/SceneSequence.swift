@@ -5,9 +5,6 @@ internal var procedureByScene = [ScreenHashWrapper : TransitionProcedure]()
 /**
  複数のSceneを管理し、それぞれからの遷移リクエストを受け付け画面切り替えを行うクラス
  
- - Attention:
- このクラスの `start:` を明示的に呼ばないと内部でのSceneがリクエストしても画面遷移は行われない
-
  */
 public class SceneSequence<FirstScene: Scene, Stage> : SceneCollection<FirstScene, Stage>, Scene, ScreenContainer {
 
@@ -45,6 +42,10 @@ public class SceneSequence<FirstScene: Scene, Stage> : SceneCollection<FirstScen
     public static func builder<GuideType: SequenceGuide>(scene: FirstScene,
                                                          guide: GuideType) -> SceneSequenceBuilder<GuideType, Unbuildable, Unbuildable> where GuideType.FirstScene == FirstScene, GuideType.Stage == Stage {
         return SceneSequenceBuilder<GuideType, Unbuildable, Unbuildable>(scene: scene, guide: guide)
+    }
+    
+    public static func setup(scene: FirstScene, guide: Guide) -> SceneSequenceInitializer<FirstScene, Guide, NotReady> {
+        return SceneSequenceInitializer<FirstScene, Guide, NotReady>(scene: scene, guide: guide)
     }
     
     /**

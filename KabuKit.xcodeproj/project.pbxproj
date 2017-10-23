@@ -39,6 +39,8 @@
 		4ED3FED81ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC71ED5989E004BC048 /* .gitkeep */; };
 		4ED3FED91ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FECC1ED5989E004BC048 /* .gitkeep */; };
 		4ED3FEDA1ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FECE1ED5989E004BC048 /* .gitkeep */; };
+		4EE7B7F91F9D323800DBD314 /* SceneSequenceInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE7B7F71F9D323800DBD314 /* SceneSequenceInitializer.swift */; };
+		4EE7B7FA1F9D323800DBD314 /* SequenceStarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EE7B7F81F9D323800DBD314 /* SequenceStarter.swift */; };
 		7EFB0FA91F17CAA700F596FF /* SceneTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFB0FA81F17CAA700F596FF /* SceneTest.swift */; };
 		7EFB0FAB1F17D48C00F596FF /* ScreenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFB0FAA1F17D48C00F596FF /* ScreenTest.swift */; };
 /* End PBXBuildFile section */
@@ -90,6 +92,8 @@
 		4ED3FEC71ED5989E004BC048 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		4ED3FECC1ED5989E004BC048 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		4ED3FECE1ED5989E004BC048 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		4EE7B7F71F9D323800DBD314 /* SceneSequenceInitializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneSequenceInitializer.swift; sourceTree = "<group>"; };
+		4EE7B7F81F9D323800DBD314 /* SequenceStarter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceStarter.swift; sourceTree = "<group>"; };
 		5740434980B01D42277BAE55 /* Pods_KabuKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KabuKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EFB0FA81F17CAA700F596FF /* SceneTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTest.swift; sourceTree = "<group>"; };
 		7EFB0FAA1F17D48C00F596FF /* ScreenTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenTest.swift; sourceTree = "<group>"; };
@@ -205,6 +209,8 @@
 		4ED3FEBC1ED5989E004BC048 /* Swift */ = {
 			isa = PBXGroup;
 			children = (
+				4EE7B7F71F9D323800DBD314 /* SceneSequenceInitializer.swift */,
+				4EE7B7F81F9D323800DBD314 /* SequenceStarter.swift */,
 				4ED3FEBD1ED5989E004BC048 /* ScreenHashWrapper.swift */,
 				4ED3FEBE1ED5989E004BC048 /* TransitionRequest.swift */,
 				4ED3FEBF1ED5989E004BC048 /* ScreenContainer.swift */,
@@ -403,7 +409,9 @@
 			files = (
 				4ED3FED01ED5989E004BC048 /* ScreenHashWrapper.swift in Sources */,
 				4ED3FED21ED5989E004BC048 /* ScreenContainer.swift in Sources */,
+				4EE7B7FA1F9D323800DBD314 /* SequenceStarter.swift in Sources */,
 				4EC432F61EED720C00FF4145 /* SceneOperation.swift in Sources */,
+				4EE7B7F91F9D323800DBD314 /* SceneSequenceInitializer.swift in Sources */,
 				4ED3FED41ED5989E004BC048 /* Scenario.swift in Sources */,
 				4EC433441EF012C400FF4145 /* TransitionProcedure.swift in Sources */,
 				4ED3FED61ED5989E004BC048 /* Scene.swift in Sources */,
