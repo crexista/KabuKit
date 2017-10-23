@@ -8,7 +8,7 @@ import Foundation
  一つのSceneごとにつくられる
  
  */
-public class Scenario<From, Stage> : TransitionProcedure {
+public class Scenario<From: Scene, Stage> : TransitionProcedure {
 
     public typealias Rewind = () -> Void
     
@@ -24,10 +24,10 @@ public class Scenario<From, Stage> : TransitionProcedure {
     fileprivate var transitionStore = [String: Transition]()
     
     fileprivate var stage: Stage
-    fileprivate weak var sceneCollection: SceneCollection<Stage>?
+    fileprivate weak var sceneCollection: SceneCollection<From, Stage>?
     
     
-    init(_ stage: Stage, _ collection: SceneCollection<Stage>?, _ queue: DispatchQueue) {
+    init(_ stage: Stage, _ collection: SceneCollection<From, Stage>?, _ queue: DispatchQueue) {
         self.sceneCollection = collection
         self.transitionQueue = queue
         self.stage = stage
@@ -63,7 +63,7 @@ public class Scenario<From, Stage> : TransitionProcedure {
 }
 
 
-public extension Scenario where From : Scene {
+public extension Scenario {
     
     public typealias Args<NextSceneType: Scene> = (stage: Stage, next: NextSceneType, from: From)
     

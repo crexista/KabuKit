@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var root: UIViewController?
     
-    var sequence: SceneSequence<Sample1AViewController, SampleSequenceRule>?
+    var sequence: SceneSequence<Sample1AViewController, UINavigationController>?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         

@@ -8,7 +8,7 @@ import Foundation
  どのSceneでどのようなScenarioを実行するかをまとめたクラス
  
  */
-public class SceneOperation<Stage> {
+public class SceneOperation<FirstScene: Scene, Stage> {
     
     private var scenedTransitionProcedure = [String : TransitionProcedure]()
     
@@ -18,13 +18,13 @@ public class SceneOperation<Stage> {
     
     private let stage: Stage
     
-    private let transitionQueue: DispatchQueue
+    let transitionQueue: DispatchQueue
     
-    private weak var collection: SceneCollection<Stage>?
+    public private(set) weak var sequence: SceneSequence<FirstScene, Stage>?
     
 
-    public func at<FromSceneType: Scene>(_ fromType: FromSceneType.Type, _ run: (Scenario<FromSceneType, Stage>) -> Void){
-        let scenario = Scenario<FromSceneType, Stage>(stage, collection, transitionQueue)
+    public func at<FromSceneType: Scene>(_ fromType: FromSceneType.Type, _ run: (Scenario<FirstScene, Stage>) -> Void){
+        let scenario = Scenario<FirstScene, Stage>(stage, sequence, transitionQueue)
         scenedTransitionProcedure[String(reflecting: fromType)] = scenario
         run(scenario)
     }
@@ -38,14 +38,11 @@ public class SceneOperation<Stage> {
     internal func resolve() -> TransitionProcedure? {
         return scenedTransitionProcedure[anyTransitionProcedureName]
     }
-    
-    func setup(collection:  SceneCollection<Stage>) {
-        self.collection = collection
-    }
 
-    internal init(stage: Stage, queue: DispatchQueue) {
+    internal init(stage: Stage, queue: DispatchQueue, sequence: SceneSequence<FirstScene, Stage>) {
         self.stage = stage
         self.transitionQueue = queue
+        self.sequence = sequence
     }
 }
 

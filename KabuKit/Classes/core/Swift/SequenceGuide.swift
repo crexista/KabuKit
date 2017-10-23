@@ -7,10 +7,11 @@ import Foundation
 public protocol SequenceGuide {
 
     associatedtype Stage
+    associatedtype FirstScene: Scene
     
     var transitioningQueue: DispatchQueue { get }
     
-    func start(with operation: SceneOperation<Stage>) -> Void
+    func start(with operation: SceneOperation<FirstScene, Stage>) -> Void
 }
 
 public extension SequenceGuide {

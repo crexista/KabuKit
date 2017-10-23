@@ -6,9 +6,10 @@ class SampleBRequest : TransitionRequest<Void, Void> {}
 
 class SampleSequenceRule : SequenceGuide {
     typealias Stage = UINavigationController
+    typealias FirstScene = Sample1AViewController
     
-    func start(with operation: SceneOperation<UINavigationController>) {
-        
+    func start(with operation: SceneOperation<Sample1AViewController, UINavigationController>) {
+
         operation.at(Sample1AViewController.self) { (scenario) in
             scenario.given(SampleARequest.self, nextTo: { Sample1AViewController() }) { (args) in
                 args.stage.pushViewController(args.next, animated: true)

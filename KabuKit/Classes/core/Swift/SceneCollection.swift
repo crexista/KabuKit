@@ -1,8 +1,8 @@
 import Foundation
 
-class SceneCollection<Stage> {
+class SceneCollection<FirstScene: Scene, Stage> {
     
-    private let operation: SceneOperation<Stage>
+    var operation: SceneOperation<FirstScene, Stage>!
     
     let stage: Stage
     
@@ -56,10 +56,6 @@ class SceneCollection<Stage> {
     
     init<GuideType: SequenceGuide>(stage:Stage, guide: GuideType) where GuideType.Stage == Stage {
         self.stage = stage
-        self.operation = SceneOperation(stage: stage, queue: guide.transitioningQueue)
-        self.operation.setup(collection: self)
-        guide.start(with: operation)
-        
     }
     
 }
