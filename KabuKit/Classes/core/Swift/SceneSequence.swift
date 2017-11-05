@@ -32,8 +32,8 @@ public class SceneSequence<FirstScene: Scene, Stage> : SceneCollection<FirstScen
     private let isRecordable: Bool
     private let firstScene: FirstScene
     private let guide: Any
-    private let leaveFunc: ((Stage, [Screen], ReturnValue) -> Void)?
-    private let initFunc: (Stage, FirstScene) -> (() -> Void)?
+    private var leaveFunc: OnLeave?
+    private let initFunc: (Stage, FirstScene) -> OnLeave?
     private var subscriber: SequenceStatusSubscriber?
 
     public private(set) var isStarted: Bool = false
@@ -43,11 +43,12 @@ public class SceneSequence<FirstScene: Scene, Stage> : SceneCollection<FirstScen
                                                          guide: GuideType) -> SceneSequenceBuilder<GuideType, Unbuildable, Unbuildable> where GuideType.FirstScene == FirstScene, GuideType.Stage == Stage {
         return SceneSequenceBuilder<GuideType, Unbuildable, Unbuildable>(scene: scene, guide: guide)
     }
-    
-    public static func setup(scene: FirstScene, guide: Guide) -> SceneSequenceInitializer<FirstScene, Guide, NotReady> {
-        return SceneSequenceInitializer<FirstScene, Guide, NotReady>(scene: scene, guide: guide)
+
+    public static func setup<GuideType: SequenceGuide>(scene: GuideType.FirstScene,
+                                                       guide: GuideType) -> SceneSequenceInitializer<GuideType, NotReady> where GuideType.FirstScene == FirstScene, GuideType.Stage == Stage {
+        return SceneSequenceInitializer<GuideType, NotReady>(scene: scene, guide: guide)
     }
-    
+
     /**
      SequenceをSuspendします
      現状activeなScreenもsuspendモードに入ります
@@ -84,7 +85,19 @@ public class SceneSequence<FirstScene: Scene, Stage> : SceneCollection<FirstScen
             if(!self.isStarted) {
                 self.isStarted = true
                 self.add(self.firstScene, with: self.context, transition: { (stage, scene, screen) -> (() -> Void)? in
-                    return self.initFunc(stage, scene)
+                    self.leaveFunc = self.initFunc(stage, scene)
+                    self.registerRewind { _ in
+                        self.leaveFunc?(LeaveContext(screens: self.screens))
+                        self.screens.forEach {
+                            $0.dispose()
+                        }
+                        print(self.screens)
+                        self.screens.removeAll()
+                        print(self.screens)
+                    }
+                    return {
+                        self.leaveFunc?(LeaveContext(screens: self.screens))
+                    }
                 }, callbackOf: { (returnValue) in
                     self.rewind?(returnValue)
                 })
@@ -102,7 +115,7 @@ public class SceneSequence<FirstScene: Scene, Stage> : SceneCollection<FirstScen
                                           guide: GuideType,
                                           context: FirstScene.Context,
                                           subscriber: SceneSequence<FirstScene, Stage>.SequenceStatusSubscriber,
-                                          onStart: @escaping (Stage, FirstScene) -> (() -> Void)?) where GuideType.Stage == Stage, GuideType.FirstScene == FirstScene {
+                                          onStart: @escaping (Stage, FirstScene) -> OnLeave?) where GuideType.Stage == Stage, GuideType.FirstScene == FirstScene {
         self.guide = guide
         self.isRecordable = true
         self.firstScene = scene

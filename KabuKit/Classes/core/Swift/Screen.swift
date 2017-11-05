@@ -1,9 +1,8 @@
 import Foundation
 
-fileprivate var suspendCallback: [ScreenHashWrapper : () -> Void] = [ScreenHashWrapper : () -> Void]()
-fileprivate var resumeCallback: [ScreenHashWrapper : () -> Void] = [ScreenHashWrapper : () -> Void]()
-
-fileprivate var screenBehaviorContainer: [ScreenHashWrapper: ScreenBehavior] = [ScreenHashWrapper: ScreenBehavior]()
+var suspendCallback: [ScreenHashWrapper : () -> Void] = [ScreenHashWrapper : () -> Void]()
+var resumeCallback: [ScreenHashWrapper : () -> Void] = [ScreenHashWrapper : () -> Void]()
+var screenBehaviorContainer: [ScreenHashWrapper: ScreenBehavior] = [ScreenHashWrapper: ScreenBehavior]()
 
 /**
  表示される画面のProtocolです
@@ -56,6 +55,16 @@ extension Screen {
         screenBehaviorContainer[ScreenHashWrapper(self)] = behavior
     }
     
+    func dispose() {
+        let key = ScreenHashWrapper(self)
+        suspendCallback.removeValue(forKey: key)
+        resumeCallback.removeValue(forKey: key)
+        screenBehaviorContainer.removeValue(forKey: key)
+        contextByScreen.removeValue(forKey: key)
+        rewindByScene.removeValue(forKey: key)
+        onLeaveByScene.removeValue(forKey: key)
+        procedureByScene.removeValue(forKey: key)
+    }
 
     public func onSuspend() -> Void {
         suspendCallback[ScreenHashWrapper(self)]?()

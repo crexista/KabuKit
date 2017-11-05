@@ -1,8 +1,8 @@
 import Foundation
 
-fileprivate var contextByScreen = [ScreenHashWrapper : Any]()
-fileprivate var rewindByScene: [ScreenHashWrapper : Any] = [ScreenHashWrapper : Any]()
-fileprivate var onLeaveByScene: [ScreenHashWrapper : Any] = [ScreenHashWrapper : Any]()
+var contextByScreen = [ScreenHashWrapper : Any]()
+var rewindByScene: [ScreenHashWrapper : Any] = [ScreenHashWrapper : Any]()
+var onLeaveByScene: [ScreenHashWrapper : Any] = [ScreenHashWrapper : Any]()
 
 
 public protocol Scene : class, Screen {
@@ -79,6 +79,7 @@ public extension Scene {
         rewindByScene.removeValue(forKey: ScreenHashWrapper(self))
         completion(true)
     }
+
 }
 
 

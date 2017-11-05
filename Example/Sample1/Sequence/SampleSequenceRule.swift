@@ -13,7 +13,6 @@ class SampleSequenceRule : SequenceGuide {
         operation.at(Sample1AViewController.self) { (scenario) in
             scenario.given(SampleARequest.self, nextTo: { Sample1AViewController() }) { (args) in
                 args.stage.pushViewController(args.next, animated: true)
-                
                 return {
                     args.stage.popViewController(animated: true)
                 }

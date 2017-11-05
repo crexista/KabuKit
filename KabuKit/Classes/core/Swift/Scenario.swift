@@ -89,7 +89,7 @@ public extension Scenario {
             }, callbackOf: request.callback)
         }
     }
-    
+/*
     public func given<InitialSceneType: Scene, Guide: SequenceGuide>(_ request: TransitionRequest<InitialSceneType.Context, InitialSceneType.ReturnValue>.Type,
                                                                       startSequence next: @escaping () -> InitialSceneType,
                                                                       guide: @escaping () -> Guide,
@@ -97,5 +97,6 @@ public extension Scenario {
 
 
     }
+ */
 }
 

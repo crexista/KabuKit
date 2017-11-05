@@ -29,7 +29,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rule = SampleSequenceRule()
         let builder = SceneSequence.builder(scene: scene, guide: rule)
             .setup(UINavigationController(rootViewController: UIViewController()), with: false)
-
+        let seq = SceneSequence
+            .setup(scene: scene, guide: rule)
+            .on(UINavigationController(rootViewController: UIViewController()))
+            .invoke {
+                let stage = $0.stage
+                let scene = $0.firstScene
+                stage.isNavigationBarHidden = true
+                stage.pushViewController(scene, animated: true)
+                $0.callbacks.onActivate { (screens) in
+                    self.window?.rootViewController?.addChildViewController(stage)
+                    self.window?.rootViewController?.view.addSubview(stage.view)
+                }
+                return { args in
+                    stage.view.removeFromSuperview()
+                    stage.removeFromParentViewController()
+                    stage.willMove(toParentViewController: nil)
+                    stage.popViewController(animated: false)
+                }
+        }
+        sequence = seq.start(with: false)
+/*
         sequence = builder.build {
             let stage = $0.stage
             let scene = $0.firstScene
@@ -48,7 +68,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             return {}
         }
+ */
         sequence?.activate()
+        //sequence?.leaveFromCurrent(returnValue: "aaa")
         return true
     }
 

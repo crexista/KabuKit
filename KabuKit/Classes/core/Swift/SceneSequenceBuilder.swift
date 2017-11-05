@@ -60,8 +60,11 @@ public extension SceneSequenceBuilder where Context == Buildable, Stage == Build
         guard let stage = self.stage else { fatalError() }
         guard let context = self.context else { fatalError() }
         let subscriber = SceneSequence<FirstScene, Guide.Stage>.SequenceStatusSubscriber()
-        let onStart = { (stage: Guide.Stage, scene: FirstScene) -> (() -> Void)? in
-            return initializer((stage, scene, subscriber))
+        let onStart = { (stage: Guide.Stage, scene: FirstScene) -> OnLeave? in
+            let f = initializer((stage, scene, subscriber))
+            return { (context: LeaveContext) in
+                f?()
+            }
         }
 
         return SceneSequence<FirstScene, Guide.Stage>(stage: stage,
