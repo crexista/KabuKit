@@ -2,7 +2,8 @@ import Foundation
 
 fileprivate var suspendCallback: [ScreenHashWrapper : () -> Void] = [ScreenHashWrapper : () -> Void]()
 fileprivate var resumeCallback: [ScreenHashWrapper : () -> Void] = [ScreenHashWrapper : () -> Void]()
-
+fileprivate var screenContainer: [ScreenHashWrapper: Screen] = [ScreenHashWrapper: Screen]()
+fileprivate var rewindContainer: [ScreenHashWrapper: Rollback] = [ScreenHashWrapper: Rollback]()
 fileprivate var screenBehaviorContainer: [ScreenHashWrapper: ScreenBehavior] = [ScreenHashWrapper: ScreenBehavior]()
 
 /**
@@ -37,9 +38,31 @@ public extension Screen {
     }
 }
 
-extension Screen {
+struct Rollback {
+    var backTransition: (() -> Void)?
+    weak var previousScreen: Screen?
+}
 
+extension Screen {
     
+    var nextScreen: Screen? {
+        get {
+            return screenContainer[ScreenHashWrapper(self)]
+        }
+        set(value) {
+            screenContainer[ScreenHashWrapper(self)] = value
+        }
+    }
+    
+    var rewind: Rollback? {
+        get {
+            return rewindContainer[ScreenHashWrapper(self)]
+        }
+        set(value) {
+            rewindContainer[ScreenHashWrapper(self)] = value
+        }
+    }
+
     var behavior: ScreenBehavior? {
         return screenBehaviorContainer[ScreenHashWrapper(self)]
     }
@@ -56,7 +79,15 @@ extension Screen {
         screenBehaviorContainer[ScreenHashWrapper(self)] = behavior
     }
     
-
+    internal func release() {
+        if let next = self.nextScreen {
+            print("⚠️ [WARN][KabuKit.Screen:84] \(String(reflecting: next)) must be released, but that was retained!. So release it at any rate. Please call `leaveFromCurrent` correctly.")
+        }
+        nextScreen?.release()
+        rewind?.previousScreen?.nextScreen = nil
+        rewind?.backTransition = nil
+        rewind = nil
+    }
     public func onSuspend() -> Void {
         suspendCallback[ScreenHashWrapper(self)]?()
     }
