@@ -1,11 +1,11 @@
 import Foundation
 
 fileprivate var contextByScreen = [ScreenHashWrapper : Any]()
-fileprivate var rewindByScene: [ScreenHashWrapper : Any] = [ScreenHashWrapper : Any]()
+fileprivate var returnCallbacks: [ScreenHashWrapper : Any] = [ScreenHashWrapper : Any]()
 fileprivate var onLeaveByScene: [ScreenHashWrapper : Any] = [ScreenHashWrapper : Any]()
 
 
-public protocol Scene : class, Screen {
+public protocol Scene : Screen {
     
     associatedtype Context
     
@@ -15,22 +15,32 @@ public protocol Scene : class, Screen {
 
 public extension Scene {
     
-    typealias Rewind = ((ReturnValue) -> Void)
+    typealias Return = ((ReturnValue) -> Void)
     
     internal var scenario: TransitionProcedure? {
         return procedureByScene[ScreenHashWrapper(self)]
     }
 
-    internal var rewind: Rewind? {
-        return rewindByScene[ScreenHashWrapper(self)] as? Rewind
+    internal var returnCallback: Return? {
+        get {
+            return returnCallbacks[ScreenHashWrapper(self)] as? Return
+        }
+        set(value) {
+            returnCallbacks[ScreenHashWrapper(self)] = value
+        }
     }
 
-    public var context: Context {
-        return contextByScreen[ScreenHashWrapper(self)] as! Self.Context
+    public internal(set) var context: Context {
+        get {
+            return contextByScreen[ScreenHashWrapper(self)] as! Self.Context
+        }
+        set(value) {
+            contextByScreen[ScreenHashWrapper(self)] = value
+        }
     }
     
     var onLeave: ((ReturnValue) -> Void)? {
-        return onLeaveByScene[ScreenHashWrapper(self)] as? Rewind
+        return onLeaveByScene[ScreenHashWrapper(self)] as? Return
     }
     
     internal func registerContext(_ value: Any?) {
@@ -38,7 +48,7 @@ public extension Scene {
     }
     
     internal func registerRewind(f: @escaping (ReturnValue) -> Void) {
-        rewindByScene[ScreenHashWrapper(self)] = f
+        returnCallbacks[ScreenHashWrapper(self)] = f
     }
     
     internal func registerScenario(scenario: TransitionProcedure?) {
@@ -53,8 +63,13 @@ public extension Scene {
         self.sendTransitionRequest(request, {(Bool) in })
     }
     
-    public func sendTransitionRequest<ContextType, ExpectedReturnType>(_ request: TransitionRequest<ContextType, ExpectedReturnType>, _ completion: @escaping (Bool) -> Void) -> Void {
-        self.scenario?.start(atRequestOf: request, completion)
+    public func sendTransitionRequest<ContextType, ExpectedReturnType>(_ request: TransitionRequest<ContextType, ExpectedReturnType>,
+                                                                       _ completion: @escaping (Bool) -> Void) -> Void {
+        if let next = self.nextScreen {
+            print("⚠️ [WARN][KabuKit.Screen:84] \(String(reflecting: next)) must be released, but that was retained!. So release it at any rate. Please call `leaveFromCurrent` correctly.")
+        }
+        self.nextScreen?.release()
+        self.scenario?.start(atRequestOf: request, from: self, completion)
     }
     
     public func leaveFromCurrent(returnValue: ReturnValue) {
@@ -66,18 +81,20 @@ public extension Scene {
     }
     
     public func leaveFromCurrent(returnValue: ReturnValue, runTransition: Bool, _ completion: @escaping (Bool) -> Void) -> Void {
-        guard let rewindMethod = rewind else {
+        guard let returnMethod = self.returnCallback else {
             completion(false)
             return
         }
-
         if (runTransition) {
-            rewindMethod(returnValue)
+            self.rewind?.backTransition?()
         }
+        returnMethod(returnValue)
         onLeave?(returnValue)
-        onLeaveByScene.removeValue(forKey: ScreenHashWrapper(self))
-        rewindByScene.removeValue(forKey: ScreenHashWrapper(self))
+        contextByScreen.removeValue(forKey: ScreenHashWrapper(self))
+        returnCallback = nil
         completion(true)
+        nextScreen?.release()
+        release()
     }
 }
 

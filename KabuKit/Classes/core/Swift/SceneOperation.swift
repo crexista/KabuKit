@@ -24,15 +24,17 @@ public class SceneOperation<Stage> {
     
 
     public func at<FromSceneType: Scene>(_ fromType: FromSceneType.Type, _ run: (Scenario<FromSceneType, Stage>) -> Void){
-        let scenario = Scenario<FromSceneType, Stage>(stage, collection, transitionQueue)
+        let scenario = Scenario<FromSceneType, Stage>(stage, collection, self, transitionQueue)
         scenedTransitionProcedure[String(reflecting: fromType)] = scenario
         run(scenario)
     }
     
     
-    internal func resolve(from: Screen) -> TransitionProcedure? {
+    internal func resolve<SceneType: Scene>(from: SceneType) -> TransitionProcedure? {
         let name = String(reflecting: type(of: from))
-        return scenedTransitionProcedure[name]
+        guard let scenario = scenedTransitionProcedure[name] as? Scenario<SceneType, Stage> else { return nil }
+        scenario.operation = self
+        return scenario
     }
     
     internal func resolve() -> TransitionProcedure? {

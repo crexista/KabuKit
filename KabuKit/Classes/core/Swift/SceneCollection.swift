@@ -57,8 +57,8 @@ public class SceneCollection<Stage> {
     init<GuideType: SequenceGuide>(stage:Stage, guide: GuideType) where GuideType.Stage == Stage {
         self.stage = stage
         self.operation = SceneOperation(stage: stage, queue: guide.transitioningQueue)
-        self.operation.setup(collection: self)
-        guide.start(with: operation)
+//        self.operation.setup(collection: self)
+//        guide.start(with: operation)
         
     }
     

@@ -78,6 +78,10 @@ public class SceneSequence<FirstScene: Scene, Guide: SequenceGuide> : SceneColle
        - completion: 実行完了したさいに呼ばれるコールバック
      */
     public func activate(_ completion: ((Bool) -> Void)?) {
+        let operation = SceneOperation(stage: stage, queue: guide.transitioningQueue)
+        operation.setup(collection: self)
+        guide.start(with: operation)
+
         guide.transitioningQueue.async {
             if(self.isStarted && !self.isSuspended) {
                 completion?(false)
@@ -85,11 +89,9 @@ public class SceneSequence<FirstScene: Scene, Guide: SequenceGuide> : SceneColle
             }
             if(!self.isStarted) {
                 self.isStarted = true
-                self.add(self.firstScene, with: self.context, transition: { (stage, scene, screen) -> (() -> Void)? in
-                    return self.initFunc(stage, scene)
-                }, callbackOf: { (returnValue) in
-                    self.rewind?(returnValue)
-                })
+                self.firstScene.context = self.context
+                _ = self.initFunc(self.stage, self.firstScene)
+                self.firstScene.registerScenario(scenario: operation.resolve(from: self.firstScene))
             }
             self.onActivate()
             self.isSuspended = false
