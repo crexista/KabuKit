@@ -52,7 +52,7 @@ class ScenarioTest: XCTestCase {
     
     func test_生成されたScenarioに設定されていないrequestをstart時に受け取った時_SceneCollectionにSceneは追加されずcompletionがfalseで実行される() {
         let asyncExpection1: XCTestExpectation? = self.expectation(description: "wait")
-        let request = MockRequest2()
+        let request = MockRequest2(())
         var isCalled = false
         XCTAssertEqual(collection?.screens.count, 1)
         scenario?.start(atRequestOf: request, { (result) in
@@ -69,7 +69,7 @@ class ScenarioTest: XCTestCase {
     func test_Scenarioをstartさせてrequestを実行した場合_givenで指定されたSceneがcollectionの末尾に追加される() {
         let asyncExpection1: XCTestExpectation? = self.expectation(description: "wait")
         scenario?.given(MockRequest2.self, nextTo: { MockFirstScene3() }, with: { (args) in {} })
-        scenario?.start(atRequestOf: MockRequest2(), { (result) in
+        scenario?.start(atRequestOf: MockRequest2(()), { (result) in
             asyncExpection1?.fulfill()
             XCTAssertTrue(result)
         })

@@ -12,19 +12,19 @@ extension Sample1AViewController: Scene {
     typealias Context = Bool
     typealias ReturnValue = String
     
-    func onPressAButton(sender: UIButton) {
+    @objc func onPressAButton(sender: UIButton) {
         sendTransitionRequest(SampleARequest(true){ value in })
     }
     
-    func onPressBButton(sender: UIButton) {
-        sendTransitionRequest(SampleBRequest(), { (str) in })
+    @objc func onPressBButton(sender: UIButton) {
+        sendTransitionRequest(SampleBRequest(()), { (str) in })
     }
     
-    func onPressPrevButton(sender: UIButton) {
+    @objc func onPressPrevButton(sender: UIButton) {
         leaveFromCurrent(returnValue: "back from sample1a", runTransition: true) { (result) in }
     }
 
-    func onPressPopButton(sender: UIButton) {
+    @objc func onPressPopButton(sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -50,7 +50,7 @@ extension Sample1AViewController: Scene {
     }
 
     override func viewDidDisappear(_ animated: Bool) {
-        if self.isMovingFromParentViewController {
+        if self.isMovingFromParent {
             leaveFromCurrent(returnValue: "test", runTransition: false)
         }
     }

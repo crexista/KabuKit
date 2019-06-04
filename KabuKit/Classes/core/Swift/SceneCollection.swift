@@ -1,6 +1,6 @@
 import Foundation
 
-class SceneCollection<Stage> {
+public class SceneCollection<Stage> {
     
     private let operation: SceneOperation<Stage>
     

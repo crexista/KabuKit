@@ -13,15 +13,15 @@ extension Sample1BViewController : Scene {
  
     typealias Context = Void
 
-    func onPressAButton(sender: UIButton) {
+    @objc func onPressAButton(sender: UIButton) {
         sendTransitionRequest(SampleARequest(true){ _ in })
     }
     
-    func onPressBButton(sender: UIButton) {
-        sendTransitionRequest(SampleBRequest())
+    @objc func onPressBButton(sender: UIButton) {
+        sendTransitionRequest(SampleBRequest(()))
     }
     
-    func onPressPrevButton(sender: UIButton) {
+    @objc func onPressPrevButton(sender: UIButton) {
         leaveFromCurrent(returnValue: ())
     }
     
