@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var sequence: SceneSequence<Sample1AViewController, SampleSequenceRule>?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.main.bounds)
@@ -37,13 +37,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             stage.pushViewController(scene, animated: true)
 
             $0.callbacks.onActivate { (screens) in
-                self.window?.rootViewController?.addChildViewController(stage)
+                self.window?.rootViewController?.addChild(stage)
                 self.window?.rootViewController?.view.addSubview(stage.view)
             }
 
             $0.callbacks.onSuspend { (screens) in
                 stage.view.removeFromSuperview()
-                stage.removeFromParentViewController()
+                stage.removeFromParent()
             }
 
             return {}

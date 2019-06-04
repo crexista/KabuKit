@@ -28,7 +28,6 @@
 		4ED3FEA81ED597FC004BC048 /* KabuKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ED3FE9E1ED597FC004BC048 /* KabuKit.framework */; };
 		4ED3FEAD1ED597FC004BC048 /* KabuKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEAC1ED597FC004BC048 /* KabuKitTests.swift */; };
 		4ED3FEAF1ED597FC004BC048 /* KabuKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 4ED3FEA11ED597FC004BC048 /* KabuKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4ED3FECF1ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBB1ED5989E004BC048 /* .gitkeep */; };
 		4ED3FED01ED5989E004BC048 /* ScreenHashWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBD1ED5989E004BC048 /* ScreenHashWrapper.swift */; };
 		4ED3FED11ED5989E004BC048 /* TransitionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBE1ED5989E004BC048 /* TransitionRequest.swift */; };
 		4ED3FED21ED5989E004BC048 /* ScreenContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEBF1ED5989E004BC048 /* ScreenContainer.swift */; };
@@ -36,9 +35,6 @@
 		4ED3FED41ED5989E004BC048 /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC11ED5989E004BC048 /* Scenario.swift */; };
 		4ED3FED61ED5989E004BC048 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC31ED5989E004BC048 /* Scene.swift */; };
 		4ED3FED71ED5989E004BC048 /* SceneSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC41ED5989E004BC048 /* SceneSequence.swift */; };
-		4ED3FED81ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FEC71ED5989E004BC048 /* .gitkeep */; };
-		4ED3FED91ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FECC1ED5989E004BC048 /* .gitkeep */; };
-		4ED3FEDA1ED5989E004BC048 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4ED3FECE1ED5989E004BC048 /* .gitkeep */; };
 		7EFB0FA91F17CAA700F596FF /* SceneTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFB0FA81F17CAA700F596FF /* SceneTest.swift */; };
 		7EFB0FAB1F17D48C00F596FF /* ScreenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFB0FAA1F17D48C00F596FF /* ScreenTest.swift */; };
 /* End PBXBuildFile section */
@@ -362,6 +358,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 4ED3FE941ED597FC004BC048;
@@ -380,10 +377,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4ED3FED91ED5989E004BC048 /* .gitkeep in Resources */,
-				4ED3FECF1ED5989E004BC048 /* .gitkeep in Resources */,
-				4ED3FED81ED5989E004BC048 /* .gitkeep in Resources */,
-				4ED3FEDA1ED5989E004BC048 /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,7 +560,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -587,7 +580,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
